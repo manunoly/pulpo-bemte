@@ -1,0 +1,18 @@
+.welcome-card ion-img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+img{
+  height: 400px;
+  width: 100%;
+}
+
+ion-fab-button{
+  background-color: transparent !important;
+}
+
+.bottomWhite {
+  border-bottom: 25px solid var(--ion-color-light);
+}
+
