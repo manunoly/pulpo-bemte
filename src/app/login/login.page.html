@@ -1,9 +1,46 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-text-center">
 
-<ion-content>
 
+  <!-- <ion-fab horizontal="start" slot="fixed" padding-top>
+    <ion-fab-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-fab-button>
+  </ion-fab> -->
+
+
+  <ion-grid padding>
+    <form [formGroup]="authForm" (ngSubmit)="login()">
+
+      <ion-row padding>
+        <ion-col size="6" offset="3">
+          <ion-img src="/assets/img/logo.png"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row padding>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-input formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row padding>
+        <ion-col>
+          <ion-button [disabled]="!authForm.valid" type="submit" padding expand="block" shape="round" color="primary">
+            Iniciar Sesión</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+    <ion-row padding>
+      <ion-col>
+        <ion-button padding expand="block" (click)="registrar()" shape="round" color="primary">
+          Registrarse</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

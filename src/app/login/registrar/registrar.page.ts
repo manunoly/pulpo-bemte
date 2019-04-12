@@ -1,3 +1,4 @@
+import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrarPage implements OnInit {
 
-  constructor() { }
+  constructor(public alertController: AlertController) { }
 
   ngOnInit() {
   }
+  paso = 1;
 
+
+  siguiente(paso = 1) {
+    this.paso = paso;
+  }
+
+  async confirmar() {
+    const alert = await this.alertController.create({
+      header: 'Terminos y condiciones!',
+      message: 'Si continuas aceptas los terminos!',
+      buttons: [
+        {
+          text: 'Leer',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('leer terminos');
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 }

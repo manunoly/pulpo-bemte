@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,34 +8,11 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  paso = 1;
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController, private router: Router) { }
 
-  siguiente(paso = 1) {
-    this.paso = paso;
+  ir(url){
+    this.router.navigateByUrl(url);
   }
 
-  async confirmar() {
-    const alert = await this.alertController.create({
-      header: 'Terminos y condiciones!',
-      message: 'Si continuas aceptas los terminos!',
-      buttons: [
-        {
-          text: 'Leer',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('leer terminos');
-          }
-        }, {
-          text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
 }

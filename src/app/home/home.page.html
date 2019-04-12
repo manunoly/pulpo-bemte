@@ -1,109 +1,67 @@
-<ion-content padding>
-  <div *ngIf="paso === 1">
-    <ion-grid padding>
-      <ion-row>
-        <ion-col padding-top size="6" offset="3">
-          <ion-img src="/assets/img/logo.png"></ion-img>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-padding-top">
-        <ion-col> 
-          <h5 class="ion-text-uppercase"> <strong>Bienvenido</strong></h5>
-          <p> <strong> Ingresa tu número de teléfono </strong></p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+<ion-content>
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
 
-    <ion-grid padding>
-      <ion-row>
-        <ion-col>
-          <ion-fab horizontal="center">
-            <ion-fab-button class="oscuroB">
-              <ion-button fill="clear">
-                <ion-icon size="large" slot="icon-only" color="light" name="phone-portrait"> </ion-icon>
-              </ion-button>
-            </ion-fab-button>
-          </ion-fab>
-        </ion-col>
-      </ion-row>
-      <br>
-      <ion-row class="oscuroB round">
-        <ion-col>
-          <ion-item class="ion-padding-top">
-            <ion-input class="bottomWhite" type="tel" padding class="ion-text-center"></ion-input>
-          </ion-item>
-          <ion-button (click)="siguiente(2)" padding expand="block" shape="round" color="primary">SIGUIENTE</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <div *ngIf="paso === 2">
-    <ion-grid padding>
-      <ion-row>
-        <ion-col padding-top size="6" offset="3">
-          <ion-img src="/assets/img/logo.png"></ion-img>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-padding-top">
-        <ion-col>
-          <h5 class="ion-text-uppercase"> <strong>Correo Electrónico</strong></h5>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <div style="padding-top: 80px;">
 
-    <ion-grid padding>
-      <ion-row>
-        <ion-col>
-          <ion-item class="oscuroB roundItem">
-            <ion-icon name="person" slot="start"></ion-icon>
-            <ion-input type="email" padding></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="siguiente(1)" padding expand="block" shape="round" color="primary">ATRAS</ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button (click)="siguiente(3)" padding expand="block" shape="round" color="primary">SIGUIENTE</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
-  <div *ngIf="paso === 3">
-      <ion-grid padding>
-        <ion-row>
-          <ion-col padding-top size="6" offset="3">
-            <ion-img src="/assets/img/logo.png"></ion-img>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-  
-      <ion-grid padding>
-        <ion-row>
-          <ion-col>
-            <ion-item class="oscuroB roundItem">
-              <ion-label  position="stacked"> NOMBRE </ion-label>
-              <ion-input type="text" padding></ion-input>
-            </ion-item>
-            <ion-item class="oscuroB roundItem">
-              <ion-label  position="stacked"> APELLIDO </ion-label>
-              <ion-input type="text" padding></ion-input>
-            </ion-item>
-            <ion-item class="oscuroB roundItem">
-              <ion-label  position="stacked"> APODO </ion-label>
-              <ion-input type="text" padding></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="siguiente(2)" padding expand="block" shape="round" color="primary">ATRAS</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button (click)="confirmar()" padding expand="block" shape="round" color="primary">SIGUIENTE</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-padding-end">
+        <ion-list style="background: #243356" lines="none">
+          <ion-row>
+            <ion-col class="ion-padding-start">
+              Bienvenido Señor Profesor
+            </ion-col>
+            <ion-col class="ion-padding-start">
+              <small> Horas disponibles: 34 </small>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label>
+              4.8 <ion-icon name="star" color="warning"></ion-icon>
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('mi-cuenta')">
+            <ion-label>
+              Mi Cuenta
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('register-profesor')">
+            <ion-label>
+              Genera ganancia con tu mente
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('combos')">
+            <ion-label>
+              Comprar combos
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('clases')">
+            <ion-label>
+              Mis clases
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('proyectos')">
+            <ion-label>
+              Mis proyectos
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('')">
+            <ion-label>
+              Perfil de Profesores
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="ir('ayuda')">
+            <ion-label>
+              Ayuda
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
