@@ -1,9 +1,10 @@
 import { UtilService } from './util.service';
 import { DbService } from './db.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Observable } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +19,15 @@ export class AuthService {
   constructor(
     private db: DbService,
     private http: HttpClient,
-    private util: UtilService
+    private util: UtilService,
+    private router: Router
   ) { }
 
   async login(data) {
-    try {
-      const user = await this.db.post('login', data);
-      if (user) {
-        this.setAuth(user);
-        return true;
-      }
-    } catch (error) {
-      return false;
+    const user = await this.db.post('login', data);
+    if (user) {
+      this.setAuth(user);
+      return true;
     }
   }
 
@@ -39,9 +37,14 @@ export class AuthService {
     this.isAuthenticatedSubject.next(true);
   }
 
+  get user(): Observable<any> {
+    return this.currentUserSubject;
+  }
+
   purgeAuth() {
     this.util.removeStorage('jwt');
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
+    this.router.navigateByUrl('login');
   }
 }

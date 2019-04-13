@@ -20,8 +20,8 @@ export class LoginPage implements OnInit {
 
   ) {
     this.authForm = this.fb.group({
-      'email': ['', (Validators.required, Validators.email)],
-      'password': ['', Validators.required]
+      'email': ['bemte@bemte.com', (Validators.required, Validators.email)],
+      'password': ['123456', Validators.required]
     });
   }
 
@@ -38,7 +38,6 @@ export class LoginPage implements OnInit {
       }
     } catch (error) {
       await this.util.dismissLoading();
-      this.util.showMessage(error);
     }
   }
   async registrar() {

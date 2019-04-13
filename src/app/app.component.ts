@@ -20,9 +20,19 @@ export class AppComponent {
       icon: 'person'
     },
     {
-      title: 'List',
-      url: '/list',
+      title: 'Clases',
+      url: '/clases',
       icon: 'list'
+    },
+    {
+      title: 'Combos',
+      url: '/combos',
+      icon: 'list'
+    },
+    {
+      title: 'Mi perfil',
+      url: '/perfil',
+      icon: 'man'
     }
   ];
 

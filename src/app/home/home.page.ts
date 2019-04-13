@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from './../servicios/auth.service';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -7,11 +8,18 @@ import { Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  user;
 
-  constructor(public alertController: AlertController, private router: Router) { }
+  constructor(public alertController: AlertController, private router: Router, private auth: AuthService) { }
 
-  ir(url){
+  async ngOnInit() {
+    this.auth.currentUser.subscribe(user => {
+      this.user = user;
+    })
+  }
+
+  ir(url) {
     this.router.navigateByUrl(url);
   }
 

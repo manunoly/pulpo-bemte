@@ -1,5 +1,6 @@
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrarPage implements OnInit {
 
-  constructor(public alertController: AlertController) { }
+  constructor(public alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
   }
@@ -29,11 +30,15 @@ export class RegistrarPage implements OnInit {
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('leer terminos');
+            this.router.navigateByUrl('home');
+
           }
         }, {
           text: 'Aceptar',
           handler: () => {
             console.log('Confirm Okay');
+            this.router.navigateByUrl('home');
+
           }
         }
       ]
