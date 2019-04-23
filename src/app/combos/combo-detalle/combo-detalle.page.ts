@@ -16,7 +16,7 @@ export class ComboDetallePage implements OnInit {
     if (!param) {
       this.util.showMessage('No se ha podido obtener los datos del combo el combo');
     } else
-    this.combo = JSON.parse(param)
+    this.combo = JSON.parse(param);
     console.log(this.combo);
   }
 
