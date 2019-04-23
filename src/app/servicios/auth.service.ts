@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
@@ -21,20 +22,42 @@ export class AuthService {
     private http: HttpClient,
     private util: UtilService,
     private router: Router
-  ) { }
+  ) {
+    this.loadFromLocal();
+    this.currentUserSubject.subscribe(data => {
+      console.log(data);
+    })
+  }
 
   async login(data) {
     const user = await this.db.post('login', data);
     if (user) {
-      this.setAuth(user);
+      this.setAuth(JSON.stringify(user.profile));
       return true;
+    }
+  }
+
+  async loadFromLocal() {
+    try {
+      let user = await this.util.getStorage('user');
+      console.log(user);
+      if (user) {
+        this.currentUserSubject.next(JSON.parse(user));
+        this.isAuthenticatedSubject.next(true);
+
+        this.router.navigateByUrl('inicio');
+      }
+    } catch (error) {
+      console.log('auth load from local storage user', error);
     }
   }
 
   setAuth(user) {
     this.util.setStorage('token', user.token);
-    this.currentUserSubject.next(user);
+    this.util.setStorage('user', user);
+    this.currentUserSubject.next(JSON.parse(user));
     this.isAuthenticatedSubject.next(true);
+    this.router.navigateByUrl('login');
   }
 
   get user(): Observable<any> {
@@ -42,7 +65,8 @@ export class AuthService {
   }
 
   purgeAuth() {
-    this.util.removeStorage('jwt');
+    this.util.removeStorage('token');
+    this.util.removeStorage('user');
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
     this.router.navigateByUrl('login');

@@ -6,45 +6,112 @@
     </ion-buttons>
   </ion-fab>
 
-  <ion-grid style="padding-top: 80px;">
-    <ion-row>
-      <ion-col class="ion-padding-end">
-        <ion-list style="background: #243356" lines="none">
-          <ion-item>
-            <ion-avatar slot="start">
-              <img src="/assets/img/logo.png">
+  <ion-grid style="padding-top: 80px;" *ngIf="auth.currentUser | async as user">
+    <div *ngIf="editar">
+      <form [formGroup]="registroForm" (ngSubmit)="editarPerfil()">
+        <!-- <ion-list lines="none"> -->
+        <ion-row padding>
+          <ion-col padding-top size="6" offset="3">
+            <ion-avatar>
+              <ion-img src="/assets/img/logo.png"></ion-img>
             </ion-avatar>
-            <ion-label>
-              {{usuario?.nombre}}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              {{usuario?.apodo}}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              {{usuario?.telefono}}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              {{usuario?.email}}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              {{usuario?.direccion}}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>
-              {{usuario?.universidad}}
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label position="stacked"> Nombre </ion-label>
+          <ion-input formControlName="nombres" text-center class="oscuroB roundItem" type="text" padding></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Apellido </ion-label>
+          <ion-input formControlName="apellidos" text-center class="oscuroB roundItem" type="text" padding>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Apodo </ion-label>
+          <ion-input formControlName="apodo" text-center class="oscuroB roundItem" type="text" padding>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Celular </ion-label>
+          <ion-input formControlName="celular" readonly text-center class="oscuroB roundItem" type="tel" padding>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Correo </ion-label>
+          <ion-input formControlName="correo" readonly text-center class="oscuroB roundItem" type="email" padding>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Ciudad </ion-label>
+          <ion-input formControlName="ciudad" readonly text-center class="oscuroB roundItem" type="text" padding>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Tipo </ion-label>
+          <ion-input formControlName="tipo" readonly text-center class="oscuroB roundItem" type="text" padding>
+          </ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col size="6" offset="3">
+            <ion-button size="block" type="submit" [disabled]="!registroForm.valid"> Guardar </ion-button>
+          </ion-col>
+        </ion-row>
+        <!-- </ion-list> -->
+      </form>
+    </div>
+
+    <div *ngIf="!editar">
+      <ion-item lines="none">
+        <ion-button (click)="buildForm(user)" slot="end">
+          Editar
+        </ion-button>
+      </ion-item>
+      <ion-row>
+        <ion-col class="ion-padding-end">
+          <ion-list style="background: #243356" lines="none">
+            <ion-item>
+              <ion-avatar slot="start">
+                <img src="/assets/img/logo.png">
+              </ion-avatar>
+              <ion-label>
+                {{user?.nombres}} {{user?.apellidos}}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{user?.apodo}}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{user?.celular}}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{user?.correo}}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{user?.ubicacion}}
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                {{user?.universidad}}
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

@@ -1,3 +1,6 @@
+import { UtilService } from './../../servicios/util.service';
+import { DbService } from './../../servicios/db.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -8,10 +11,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./registrar.page.scss'],
 })
 export class RegistrarPage implements OnInit {
+  registroForm: FormGroup;
 
-  constructor(public alertController: AlertController, private router: Router) { }
+  constructor(public alertController: AlertController, private router: Router,
+    private fb: FormBuilder, private db: DbService, public util: UtilService
+  ) {
+    this.registroForm = this.fb.group({
+      'celular': ['1231231', Validators.required],
+      'email': ['manuel@bemte.com', (Validators.required, Validators.email)],
+      'password': ['123456', (Validators.required, Validators.min(6))],
+      'nombre': ['juan', Validators.required],
+      'apellido': ['fonseca', Validators.required],
+      'apodo': ['señor x', Validators.required],
+      'cedula': [''],
+      'ciudad': ['Quito', Validators.required],
+      'tipo': ['Alumno', Validators.required],
+      'ubicacion': ['ubicacion', Validators.required]
+    });
+  }
 
   ngOnInit() {
+
   }
   paso = 1;
 
@@ -29,15 +49,22 @@ export class RegistrarPage implements OnInit {
           text: 'Leer',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('leer terminos');
-            this.router.navigateByUrl('home');
-
+            this.util.showMessage('Vamos a leer los terminos');
           }
         }, {
           text: 'Aceptar',
-          handler: () => {
-            console.log('Confirm Okay');
-            this.router.navigateByUrl('home');
+          handler: async () => {
+            this.util.showLoading();
+            try {
+              const registrar = await this.db.post('registro', this.registroForm.value);
+              console.log(registrar);
+              this.util.dismissLoading();
+              this.util.showMessage(registrar.success);
+              this.router.navigateByUrl('login');
+            } catch (error) {
+              console.log(error);
+              this.util.dismissLoading();
+            }
 
           }
         }

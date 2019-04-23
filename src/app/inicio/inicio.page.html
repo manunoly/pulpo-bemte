@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
+
+  <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    Bienvenido {{ user?.nombres }} {{ user?.apellidos }}<br>
+    ¿Necesitas un profesor?
+  </h3>
+  <div style="padding-top: 20%">
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <ion-item (click)="goTo('combos')" class="oscuroB roundItem" lines="none">
+          <ion-icon color="light" name="school" slot="start"></ion-icon>
+          <ion-label>CLASES</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <ion-item (click)="goTo('proyectos')" class="oscuroB roundItem" lines="none">
+          <ion-icon color="light" name="school" slot="start"></ion-icon>
+          <ion-label>PROYECTOS</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

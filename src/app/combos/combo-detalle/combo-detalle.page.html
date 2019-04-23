@@ -1,0 +1,37 @@
+<ion-content>
+
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
+
+  <ion-grid style="padding-top: 80px;">
+    <ion-row>
+      <ion-col class="ion-padding-end">
+        <ion-list style="background: #243356" lines="none">
+          <ion-item>
+            <ion-label text-center>
+              <h1>{{combo?.nombre}}</h1>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label text-center>
+              <h4>{{combo?.descripcion}}</h4>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label text-center>
+              <div [innerHTML]="combo?.beneficios"></div>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-button slot="end" (click)="goToHour()">
+              <ion-icon slot="icon-only" name="arrow-round-forward"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

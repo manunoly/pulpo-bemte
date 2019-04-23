@@ -1,10 +1,10 @@
 import { UtilService } from './util.service';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+// import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -45,15 +45,35 @@ export class DbService {
 
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
+      console.log('es error del evento ErrorEvent');
       errorMessage = `Error: ${error.error.message}`;
     } else {
       if (error.error.error instanceof Object) {
+        console.log('el error es Objeto error.error.error instanceof Object');
         for (let x in error.error.error) {
           errorMessage += error.error.error[x] + ' ';
         }
-      } else
-        errorMessage = error.error.error;
+      } else {
+        if (error.error.error)
+          errorMessage = error.error.error;
+        else {
+          if (error.error instanceof Object) {
+            console.log('el error es Objeto error.error instanceof Object');
+            if (error.status === 0) {
+              errorMessage = 'Ha ocurrido un error inesperado ' + error.statusText;
+            } else {
+              for (let x in error.error) {
+                errorMessage += error.error[x] + ' ';
+              }
+            }
+
+          }
+          else
+            errorMessage = 'Ha ocurrido un error inesperado.';
+        }
+      }
     }
+
     setTimeout(async () => {
       await this.util.showMessage(errorMessage);
     }, 1);
@@ -106,5 +126,4 @@ export class DbService {
     }
 
   }
-
 }

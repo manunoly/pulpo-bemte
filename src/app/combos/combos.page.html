@@ -5,33 +5,34 @@
     </ion-buttons>
   </ion-fab>
 
-  <h3 padding style="padding-top: 20%">
-    Jefferson Almeida no dispones
-    suficientes horas, elige un COMBO
+  <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    {{ user?.nombres }} {{ user?.apellidos }},no dispones suficientes horas, elige un COMBO
   </h3>
+  <div style="padding-top: 20%">
+  </div>
   <div style="padding-top: 10%">
   </div>
   <ion-grid>
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <ion-item class="oscuroB roundItem" lines="none">
-          <ion-label text-center>Elite</ion-label>
+    <ion-row *ngFor="let combo of combos | async">
+      <ion-col *ngIf="combo | json as data" size="8" offset="2">
+        <ion-item [routerLink]="['/combo-detalle', data]" class="oscuroB roundItem" lines="none">
+          <ion-label text-center>{{combo?.nombre}}</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <!--     <ion-row>
       <ion-col size="8" offset="2">
-        <ion-item class="oscuroB roundItem" lines="none">
+        <ion-item [routerLink]="['/combo-detalle', 'elite']" class="oscuroB roundItem" lines="none">
           <ion-label text-center>Premium Domicilio</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="8" offset="2">
+      <ion-col [routerLink]="['/combo-detalle', 'elite']" size="8" offset="2">
         <ion-item class="oscuroB roundItem" lines="none">
           <ion-label text-center>Premium</ion-label>
         </ion-item>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

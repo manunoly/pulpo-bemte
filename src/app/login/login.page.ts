@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
 
   ) {
     this.authForm = this.fb.group({
-      'email': ['bemte@bemte.com', (Validators.required, Validators.email)],
+      'email': ['manuel5@bemte.com', (Validators.required, Validators.email)],
       'password': ['123456', Validators.required]
     });
   }
@@ -30,11 +30,11 @@ export class LoginPage implements OnInit {
 
   async  login() {
     try {
-      await this.util.presentLoading();
+      await this.util.showLoading();
       const resp = await this.auth.login(this.authForm.value);
       await this.util.dismissLoading();
       if (resp) {
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('inicio');
       }
     } catch (error) {
       await this.util.dismissLoading();
@@ -42,6 +42,5 @@ export class LoginPage implements OnInit {
   }
   async registrar() {
     this.router.navigateByUrl('registrar');
-
   }
 }

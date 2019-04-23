@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'inicio',
     pathMatch: 'full'
   },
   {
@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: 'materias', loadChildren: './materias/materias.module#MateriasPageModule' },
   { path: 'tareas', loadChildren: './tareas/tareas.module#TareasPageModule' },
   { path: 'clases', loadChildren: './clases/clases.module#ClasesPageModule' },
-  { path: 'combos', loadChildren: './combos/combos.module#CombosPageModule' }
+  { path: 'combos', loadChildren: './combos/combos.module#CombosPageModule' },
+  { path: 'combo-detalle', loadChildren: './combos/combo-detalle/combo-detalle.module#ComboDetallePageModule' },
+  { path: 'inicio', loadChildren: './inicio/inicio.module#InicioPageModule' },
+  { path: 'proyectos', loadChildren: './proyectos/proyectos.module#ProyectosPageModule' }
 ];
 
 @NgModule({

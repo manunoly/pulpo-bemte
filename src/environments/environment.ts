@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://192.168.0.12/api/'
+  api_url: 'https://pulpo.digital/bemte-backend/public/index.php/api/'
 };
 
 /*

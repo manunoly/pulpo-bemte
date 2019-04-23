@@ -62,16 +62,18 @@ export class UtilService {
     }
   }
 
-  async presentLoading() {
+  async showLoading() {
     this.loading = await this.loadingController.create({
       message: 'Espere',
-      duration: 9000
+      duration: 14000
     });
     await this.loading.present();
 
   }
 
   async dismissLoading() {
-    await this.loading.dismiss();
+    try {
+      await this.loading.dismiss();
+    } catch (error) { }
   }
 }
