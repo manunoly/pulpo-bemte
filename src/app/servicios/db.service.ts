@@ -24,7 +24,7 @@ export class DbService {
   }
 
   async getHeader() {
-    const headersConfig = {
+    let headersConfig = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };

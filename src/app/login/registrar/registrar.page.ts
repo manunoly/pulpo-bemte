@@ -17,12 +17,12 @@ export class RegistrarPage implements OnInit {
     private fb: FormBuilder, private db: DbService, public util: UtilService
   ) {
     this.registroForm = this.fb.group({
-      'celular': ['1231231', Validators.required],
-      'email': ['manuel@bemte.com', (Validators.required, Validators.email)],
-      'password': ['123456', (Validators.required, Validators.min(6))],
-      'nombre': ['juan', Validators.required],
-      'apellido': ['fonseca', Validators.required],
-      'apodo': ['señor x', Validators.required],
+      'celular': ['', Validators.required],
+      'email': ['', (Validators.required, Validators.email)],
+      'password': ['', (Validators.required, Validators.min(6))],
+      'nombre': ['', Validators.required],
+      'apellido': ['', Validators.required],
+      'apodo': ['', Validators.required],
       'cedula': [''],
       'ciudad': ['Quito', Validators.required],
       'tipo': ['Alumno', Validators.required],
