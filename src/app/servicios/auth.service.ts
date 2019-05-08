@@ -24,9 +24,9 @@ export class AuthService {
     private router: Router
   ) {
     this.loadFromLocal();
-    this.currentUserSubject.subscribe(data => {
-      console.log(data);
-    })
+    // this.currentUserSubject.subscribe(data => {
+    //   console.log(data);
+    // })
   }
 
   async login(data) {
@@ -40,7 +40,6 @@ export class AuthService {
   async loadFromLocal() {
     try {
       let user = await this.util.getStorage('user');
-      console.log(user);
       if (user) {
         this.currentUserSubject.next(JSON.parse(user));
         this.isAuthenticatedSubject.next(true);

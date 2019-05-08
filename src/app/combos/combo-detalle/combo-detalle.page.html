@@ -11,17 +11,13 @@
       <ion-col class="ion-padding-end">
         <ion-list style="background: #243356" lines="none">
           <ion-item>
-            <ion-label text-center>
-              <h1>{{combo?.nombre}}</h1>
+            <ion-label>
+              <h1 text-center><strong> {{combo?.nombre}}</strong></h1>
             </ion-label>
           </ion-item>
           <ion-item>
-            <ion-label text-center>
+            <ion-label>
               <h4>{{combo?.descripcion}}</h4>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label text-center>
               <div [innerHTML]="combo?.beneficios"></div>
             </ion-label>
           </ion-item>

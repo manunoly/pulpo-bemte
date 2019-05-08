@@ -62,9 +62,9 @@ export class UtilService {
     }
   }
 
-  async showLoading() {
+  async showLoading(msg = 'Espere') {
     this.loading = await this.loadingController.create({
-      message: 'Espere',
+      message: msg,
       duration: 14000
     });
     await this.loading.present();

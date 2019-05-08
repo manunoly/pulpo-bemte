@@ -2,17 +2,17 @@
 
   <div style="padding-top: 20%">
   </div>
-  <ion-grid>
-    <h3 *ngIf="combo" padding>
+  <ion-grid *ngIf="!confirmar">
+    <h3 *ngIf="combo" padding text-center>
       {{ combo }}
     </h3>
     <ion-row>
       <ion-col>
         <ion-list style="background: transparent">
-          <ion-radio-group>
+          <ion-radio-group [(ngModel)]="horaSeleccionada">
             <ion-item *ngFor="let hora of horas | async">
               <ion-label>{{hora.hora}} Horas</ion-label>
-              <ion-radio slot="start" [value]="hora.hora"></ion-radio>
+              <ion-radio slot="start" [value]="hora"></ion-radio>
               <div slot="end" text-center>
                 {{hora.inversion}}<br>
                 <small><del> Antes {{hora.descuento}} </del></small>
@@ -27,7 +27,42 @@
         <ion-button size="block">Atras</ion-button>
       </ion-col>
       <ion-col size="4" offset="1">
-        <ion-button (click)="confirmarHora()" size="block">Confirmar
+        <ion-button [disabled]="!horaSeleccionada" (click)="confirmar = true" size="block">Confirmar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- paso confirmar -->
+  <ion-grid *ngIf="confirmar" text-center>
+    <h3 *ngIf="combo" padding>
+      {{ combo }}
+    </h3>
+    <ion-list style="background: transparent">
+      <ion-item class="ion-padding-horizontal">
+        <ion-label>
+          Precion Promocion:
+        </ion-label>
+        <div slot="end">
+          $ {{horaSeleccionada?.inversion}}
+        </div>
+      </ion-item>
+      <ion-item class="ion-padding-horizontal">
+        <ion-label>
+          Combo:
+        </ion-label>
+        <div slot="end">
+          {{horaSeleccionada?.hora}} Horas
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <ion-row>
+      <ion-col size="4" offset="1">
+        <ion-button size="block" (click)="confirmar = false">Atras</ion-button>
+      </ion-col>
+      <ion-col size="4" offset="1">
+        <ion-button [disabled]="!horaSeleccionada" (click)="confirmarHora()" size="block">Confirmar
         </ion-button>
       </ion-col>
     </ion-row>

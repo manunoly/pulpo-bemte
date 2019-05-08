@@ -1,0 +1,16 @@
+<ion-content>
+
+  <ion-content>
+    <ion-fab style="padding-top: 20px;">
+      <ion-buttons>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-fab>
+
+    <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+      {{ user?.nombres }} {{ user?.apellidos }}<br>
+      Estado de tu tarea
+    </h3>
+
+    
+  </ion-content>

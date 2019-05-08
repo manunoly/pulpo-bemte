@@ -46,7 +46,15 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label>Hora entrega</ion-label>
-                        <ion-datetime formControlName="hora_entrega" display-format="HH:mm"></ion-datetime>
+                        <ion-datetime formControlName="hora_inicio" display-format="HH:mm"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-label>Hora</ion-label>
+                        <ion-datetime formControlName="hora_fin" display-format="HH:mm"></ion-datetime>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -63,7 +71,7 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label>Formato</ion-label>
-                        <ion-select formControlName="formato">
+                        <ion-select formControlName="formato_entrega">
                             <ion-select-option value="word">Word</ion-select-option>
                             <ion-select-option value="pdf">PDF</ion-select-option>
                         </ion-select>

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.prod';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 // import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -59,8 +60,9 @@ export class DbService {
         else {
           if (error.error instanceof Object) {
             console.log('el error es Objeto error.error instanceof Object');
-            if (error.status === 0) {
-              errorMessage = 'Ha ocurrido un error inesperado ' + error.statusText;
+            
+            if (error.status != 401) {
+              errorMessage = 'Ha ocurrido un error inesperado ' + error.status + error.statusText;
             } else {
               for (let x in error.error) {
                 errorMessage += error.error[x] + ' ';
@@ -82,7 +84,7 @@ export class DbService {
 
   async get(path: string, params: HttpParams = new HttpParams()): Promise<any> {
     try {
-      return await this.http.get(`${environment.api_url}${path}`, { params, headers: await this.getHeader() }).toPromise();
+      return await this.http.get(`${environment.api_url}${path}`, { params, headers: await this.getHeader() }).pipe(shareReplay(1)).toPromise();
     } catch (error) {
       this.handleError(error);
     }

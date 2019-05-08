@@ -14,7 +14,6 @@ export class CombosPage implements OnInit {
 
   async ngOnInit() {
     this.combos = this.db.get('lista-combos');
-    console.log(this.combos);
   }
 
 }

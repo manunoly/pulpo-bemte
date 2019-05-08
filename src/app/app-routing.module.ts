@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: 'combo-detalle', loadChildren: './combos/combo-detalle/combo-detalle.module#ComboDetallePageModule' },
   { path: 'inicio', loadChildren: './inicio/inicio.module#InicioPageModule' },
   { path: 'proyectos', loadChildren: './proyectos/proyectos.module#ProyectosPageModule' },
-  { path: 'combo-hora', loadChildren: './combos/combo-hora/combo-hora.module#ComboHoraPageModule' }
+  { path: 'combo-hora', loadChildren: './combos/combo-hora/combo-hora.module#ComboHoraPageModule' },
+  { path: 'estado', loadChildren: './tareas/estado/estado.module#EstadoPageModule' }
 ];
 
 @NgModule({

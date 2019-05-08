@@ -11,7 +11,9 @@ import { UtilService } from 'src/app/servicios/util.service';
 export class ComboHoraPage implements OnInit {
   combo;
   horas;
-
+  horaSeleccionada;
+  confirmar = false;
+  
   constructor(private route: ActivatedRoute, private util: UtilService, private db: DbService) { }
 
   async ngOnInit() {
@@ -26,6 +28,7 @@ export class ComboHoraPage implements OnInit {
   }
 
   confirmarHora() {
+    
     this.util.showMessage("Si, vamos a confirmar la hora");
   }
 }
