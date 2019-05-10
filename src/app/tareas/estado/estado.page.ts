@@ -51,9 +51,9 @@ export class EstadoPage implements OnInit {
     }
   }
 
-  pagar(tarea, modo) {
+  pagar(tareaD, modo) {
     if (modo === 'transferencia') {
-      this.router.navigateByUrl('tareas-pagar');
+      this.router.navigateByUrl('tareas-pagar', { queryParams: { tarea: tareaD } });
     } else {
       this.router.navigateByUrl('combos');
     }

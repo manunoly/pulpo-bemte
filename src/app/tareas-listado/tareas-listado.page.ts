@@ -20,7 +20,7 @@ export class TareasListadoPage implements OnInit {
     this.auth.currentUser.subscribe(user => {
       console.log(user);
       if (user) {
-        this.tareas = this.db.get('tareas-disponibles?user_id=12');
+        this.tareas = this.db.get('tareas-disponibles?user_id=14');
         // this.tareas = this.db.get('tareas-disponibles?user_id=' + user.user_id);
         this.user = user;
       }
@@ -60,7 +60,7 @@ export class TareasListadoPage implements OnInit {
             this.util.showLoading();
             try {
               const postData = {
-                user_id: 13,
+                user_id: 14,
                 tarea_id: tarea.id,
                 ...data
               }

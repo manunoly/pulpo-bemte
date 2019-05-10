@@ -28,7 +28,8 @@ const routes: Routes = [
   { path: 'combo-hora', loadChildren: './combos/combo-hora/combo-hora.module#ComboHoraPageModule' },
   { path: 'tarea-estado', loadChildren: './tareas/estado/estado.module#EstadoPageModule' },
   { path: 'tareas-listado', loadChildren: './tareas-listado/tareas-listado.module#TareasListadoPageModule' },
-  { path: 'tareas-pagar', loadChildren: './tareas/tareas-pagar/tareas-pagar.module#TareasPagarPageModule' }
+  { path: 'tareas-pagar', loadChildren: './tareas/tareas-pagar/tareas-pagar.module#TareasPagarPageModule' },
+  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
 ];
 
 @NgModule({

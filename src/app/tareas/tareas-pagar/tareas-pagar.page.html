@@ -9,7 +9,7 @@
 
     <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
-      Realice el pago de la tarea.
+      Realice el pago de la <strong>{{tipo?tipo:'clase'}}</strong>
     </h3>
 
     <ion-grid padding class="ion-text-wrap">
