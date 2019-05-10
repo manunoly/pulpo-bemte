@@ -4,8 +4,6 @@ import { environment } from 'src/environments/environment.prod';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
-// import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +82,7 @@ export class DbService {
 
   async get(path: string, params: HttpParams = new HttpParams()): Promise<any> {
     try {
-      return await this.http.get(`${environment.api_url}${path}`, { params, headers: await this.getHeader() }).pipe(shareReplay(1)).toPromise();
+      return await this.http.get(`${environment.api_url}${path}`, { params, headers: await this.getHeader() }).toPromise();
     } catch (error) {
       this.handleError(error);
     }

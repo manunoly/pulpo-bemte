@@ -12,5 +12,83 @@
       Estado de tu tarea
     </h3>
 
-    
+    <ion-grid *ngIf="tarea | async as tareaD; else loadD" padding class="ion-text-wrap">
+      <ion-row>
+        <ion-col>
+          <div text-center>
+            <ion-button size="small" (click)="actualizar()">Actualizar</ion-button>
+            <ion-button size="small" (click)="terminar(tareaD)">Terminar</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="tareaD?.estado != 'Confirmado'">
+        <ion-col>
+          <h3 text-center class="ion-padding-horizontal">Datos de la Tarea</h3>
+          <h5>
+            Materia: {{tareaD?.materia}} <br>
+            Tema: {{tareaD?.tema}} ({{tareaD?.formato_entrega}})</h5>
+          <h5>
+            Entregar {{tareaD?.fecha_entrega}} <br>
+            {{tareaD?.hora_inicio}} - {{tareaD?.hora_fin}} </h5>
+          <p>Descripcion: {{tareaD?.descripcion}}</p>
+          <h5>Estado de la tarea: <strong>{{tareaD?.estado}}</strong></h5>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="tareaD?.estado == 'Solicitado'">
+        <ion-col text-center>
+          <p>
+            <ion-spinner></ion-spinner><br>
+            <small>Esperando profesor</small>
+          </p>
+          <h5> Tu tarea está siendo procesada</h5>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="tareaD?.estado == 'Sin_Profesor'">
+        <ion-col text-center>
+          <p>
+            <small><strong>Por favor intenta mas tarde e ingresa diferente hora</strong></small>
+          </p>
+          <h5> <strong> Tu tarea no ha sido confirmada </strong></h5>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tareaD?.estado == 'Confirmado'">
+        <ion-col text-center>
+          <h3 text-center class="ion-padding-horizontal">Tarea confirmada</h3>
+          <ion-row>
+            <ion-col size="5"> Profesor: </ion-col>
+            <ion-col> {{tareaD?.profesor}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5">Tiempo:</ion-col>
+            <ion-col> {{tareaD?.tiempo_estimado}} Horas</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5">Inversión:</ion-col>
+            <ion-col>${{tareaD?.inversion}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col text-center>
+              <h3 padding small>Proceda a realizar el pago</h3>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <div>
+                <ion-button size="small" (click)="pagar(tareaD,'transferencia')">Transferencia</ion-button>
+                <ion-button size="small" (click)="pagar(tareaD, 'combo')">Combo</ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+    <ng-template #loadD>
+      <div text-center>
+        <ion-spinner></ion-spinner>
+        <h3>Espere por favor</h3>
+      </div>
+    </ng-template>
   </ion-content>

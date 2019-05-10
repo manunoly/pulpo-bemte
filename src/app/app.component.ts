@@ -12,7 +12,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Inicio',
-      url: '/home',
+      url: '/inicio',
       icon: 'home'
     }, {
       title: 'Iniciar Sesión',
@@ -21,12 +21,17 @@ export class AppComponent {
     },
     {
       title: 'Clases',
-      url: '/clases',
+      url: '/inicio',
       icon: 'list'
     },
     {
       title: 'Combos',
       url: '/combos',
+      icon: 'list'
+    },
+    {
+      title: 'Solicitudes de Tareas',
+      url: '/tareas-listado',
       icon: 'list'
     },
     {

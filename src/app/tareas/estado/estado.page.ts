@@ -10,10 +10,53 @@ import { Router } from '@angular/router';
   styleUrls: ['./estado.page.scss'],
 })
 export class EstadoPage implements OnInit {
+  tarea;
+  user;
 
-  constructor(public auth: AuthService, private db: DbService, private router: Router,  public util: UtilService) { }
+  constructor(public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    if (this.user) {
+      this.actualizar();
+    }
+  }
+
+  async ngOnInit() {
+    this.auth.currentUser.subscribe(user => {
+      console.log('me subscribo al user');
+      if (user) {
+        this.tarea = this.db.get('tarea-activa?user_id=' + user.user_id);
+        this.user = user;
+      }
+    });
+  }
+
+  async actualizar() {
+    this.tarea = this.db.get('tarea-activa?user_id=' + this.user.user_id);
+  }
+
+  async terminar(tarea) {
+    try {
+      this.util.showLoading();
+      const resp = await this.db.post('tarea-terminar', { tarea_id: tarea.id });
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        setTimeout(() => {
+          this.router.navigateByUrl('tareas');
+        }, 1);
+      }
+      this.util.dismissLoading();
+    } catch (error) {
+      this.util.dismissLoading();
+    }
+  }
+
+  pagar(tarea, modo) {
+    if (modo === 'transferencia') {
+      this.router.navigateByUrl('tareas-pagar');
+    } else {
+      this.router.navigateByUrl('combos');
+    }
   }
 
   atras() {

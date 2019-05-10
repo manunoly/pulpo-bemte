@@ -26,7 +26,9 @@ const routes: Routes = [
   { path: 'inicio', loadChildren: './inicio/inicio.module#InicioPageModule' },
   { path: 'proyectos', loadChildren: './proyectos/proyectos.module#ProyectosPageModule' },
   { path: 'combo-hora', loadChildren: './combos/combo-hora/combo-hora.module#ComboHoraPageModule' },
-  { path: 'estado', loadChildren: './tareas/estado/estado.module#EstadoPageModule' }
+  { path: 'tarea-estado', loadChildren: './tareas/estado/estado.module#EstadoPageModule' },
+  { path: 'tareas-listado', loadChildren: './tareas-listado/tareas-listado.module#TareasListadoPageModule' },
+  { path: 'tareas-pagar', loadChildren: './tareas/tareas-pagar/tareas-pagar.module#TareasPagarPageModule' }
 ];
 
 @NgModule({
