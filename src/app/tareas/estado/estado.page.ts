@@ -39,13 +39,11 @@ export class EstadoPage implements OnInit {
     try {
       this.util.showLoading();
       const resp = await this.db.post('tarea-terminar', { tarea_id: tarea.id });
+      this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        setTimeout(() => {
-          this.router.navigateByUrl('tareas');
-        }, 1);
+        this.router.navigateByUrl('tareas');
       }
-      this.util.dismissLoading();
     } catch (error) {
       this.util.dismissLoading();
     }

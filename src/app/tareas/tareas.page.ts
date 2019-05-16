@@ -56,12 +56,12 @@ export class TareasPage implements OnInit {
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-tarea', this.tareaForm.value);
+      this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.router.navigateByUrl('tarea-estado');
 
       }
-      this.util.dismissLoading();
     } catch (error) {
       this.util.dismissLoading();
       console.log('error', error);

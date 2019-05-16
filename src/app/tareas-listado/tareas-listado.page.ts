@@ -66,9 +66,9 @@ export class TareasListadoPage implements OnInit {
               }
               console.log(postData);
               const resp = await this.db.post('aplicar-tarea', postData);
+              this.util.dismissLoading();
               if (resp && resp.success)
                 this.util.showMessage(resp.success);
-              this.util.dismissLoading();
 
             } catch (error) {
               console.log(error);

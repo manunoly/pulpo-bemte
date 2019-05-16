@@ -43,10 +43,6 @@ export class ClasesPage implements OnInit {
         // }
         this.materias = this.db.get('lista-materias');
         this.sedes = this.db.get('lista-sedes');
-        setTimeout(async () => {
-          console.log(await this.db.get('lista-sedes'));
-        }, 1);
-
         this.claseForm.controls['user_id'].setValue(user.user_id);
       }
     });
@@ -76,12 +72,11 @@ export class ClasesPage implements OnInit {
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-clase', this.claseForm.value);
+      this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.router.navigateByUrl('clase-estado');
-
       }
-      this.util.dismissLoading();
     } catch (error) {
       this.util.dismissLoading();
       console.log('error', error);

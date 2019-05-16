@@ -44,11 +44,11 @@ export class ProyectosPage implements OnInit {
     try {
       this.util.showLoading();
       const resp = await this.db.post(this.proyectoForm.value);
+      this.util.dismissLoading();
       if (resp) {
         this.util.showMessage(resp as any);
         this.util.setStorage('tarea',resp);
       }
-      this.util.dismissLoading();
     } catch (error) {
       this.util.dismissLoading();
       console.log('error', error);

@@ -44,11 +44,11 @@ export class TareasPagarPage implements OnInit {
     try {
       this.util.showLoading();
       const resp = await this.db.post('subir-transferencia', postData);
+      this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
 
       }
-      this.util.dismissLoading();
     } catch (error) {
       this.util.dismissLoading();
     }

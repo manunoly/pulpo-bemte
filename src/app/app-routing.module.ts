@@ -29,7 +29,8 @@ const routes: Routes = [
   { path: 'tarea-estado', loadChildren: './tareas/estado/estado.module#EstadoPageModule' },
   { path: 'tareas-listado', loadChildren: './tareas-listado/tareas-listado.module#TareasListadoPageModule' },
   { path: 'tareas-pagar', loadChildren: './tareas/tareas-pagar/tareas-pagar.module#TareasPagarPageModule' },
-  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
+  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
+  { path: 'clase-estado', loadChildren: './clases/clase-estado/clase-estado.module#ClaseEstadoPageModule' }
 ];
 
 @NgModule({
