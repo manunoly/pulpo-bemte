@@ -1,7 +1,8 @@
 import { DbService } from './../../servicios/db.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/servicios/util.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-combo-hora',
@@ -13,8 +14,8 @@ export class ComboHoraPage implements OnInit {
   horas;
   horaSeleccionada;
   confirmar = false;
-  
-  constructor(private route: ActivatedRoute, private util: UtilService, private db: DbService) { }
+
+  constructor(private router: Router, private navigation: Location, private route: ActivatedRoute, private util: UtilService, private db: DbService) { }
 
   async ngOnInit() {
 
@@ -28,7 +29,11 @@ export class ComboHoraPage implements OnInit {
   }
 
   confirmarHora() {
-    
-    this.util.showMessage("Si, vamos a confirmar la hora");
+    this.router.navigateByUrl('clase', { queryParams: { hora: this.horaSeleccionada, combo: this.combo } });
   }
+
+  atras() {
+    this.navigation.back();
+  }
+
 }

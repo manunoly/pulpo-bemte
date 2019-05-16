@@ -8,9 +8,9 @@
     </h3>
     <ion-row>
       <ion-col>
-        <ion-list style="background: transparent">
+        <ion-list *ngIf="horas | async as horaD; else loadD" style="background: transparent">
           <ion-radio-group [(ngModel)]="horaSeleccionada">
-            <ion-item *ngFor="let hora of horas | async">
+            <ion-item *ngFor="let hora of horaD">
               <ion-label>{{hora.hora}} Horas</ion-label>
               <ion-radio slot="start" [value]="hora"></ion-radio>
               <div slot="end" text-center>
@@ -22,9 +22,15 @@
         </ion-list>
       </ion-col>
     </ion-row>
+    <ng-template #loadD>
+      <div text-center>
+        <ion-spinner></ion-spinner>
+        <h3>Espere por favor</h3>
+      </div>
+    </ng-template>
     <ion-row>
       <ion-col size="4" offset="1">
-        <ion-button size="block">Atras</ion-button>
+        <ion-button (click)="atras()" size="block">Atras</ion-button>
       </ion-col>
       <ion-col size="4" offset="1">
         <ion-button [disabled]="!horaSeleccionada" (click)="confirmar = true" size="block">Confirmar

@@ -21,7 +21,7 @@ export class AppComponent {
     },
     {
       title: 'Clases',
-      url: '/inicio',
+      url: '/clases',
       icon: 'list'
     },
     {

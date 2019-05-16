@@ -29,6 +29,13 @@ export class UtilService {
     toast.present();
   }
 
+  async getSo() {
+    if (this.platform.is('ios')) {
+      return 'ios';
+    } else
+      return 'android';
+  }
+
   async setStorage(key: string, val: any) {
     try {
       return this.storage.set(key, val);

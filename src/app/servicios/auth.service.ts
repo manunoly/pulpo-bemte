@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 
 export class AuthService {
+  userD;
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
@@ -24,9 +25,9 @@ export class AuthService {
     private router: Router
   ) {
     this.loadFromLocal();
-    // this.currentUserSubject.subscribe(data => {
-    //   console.log(data);
-    // })
+    this.currentUserSubject.subscribe(user => {
+      this.userD = user;
+    })
   }
 
   async login(data) {
@@ -61,6 +62,12 @@ export class AuthService {
 
   get user(): Observable<any> {
     return this.currentUserSubject;
+  }
+
+  async getUserData(){
+    if (!this.userD)
+      this.userD = await this.util.getStorage('user');
+    return this.userD;
   }
 
   purgeAuth() {

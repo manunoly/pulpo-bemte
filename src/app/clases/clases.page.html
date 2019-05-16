@@ -1,32 +1,71 @@
 <ion-content>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
+    <ion-fab style="padding-top: 20px;">
+        <ion-buttons>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-fab>
 
-  <h3 padding style="padding-top: 20%">
-    Bienvenido Jefferson Almeida
-    ¿Necesitas un profesor?
-  </h3>
-  <div style="padding-top: 20%">
-  </div>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <ion-item [routerLink]="['/combos']" class="oscuroB roundItem" lines="none">
-          <ion-icon color="light" name="school" slot="start"></ion-icon>
-          <ion-label>CLASES</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="8" offset="2">
-        <ion-item [routerLink]="['/proyectos']" class="oscuroB roundItem" lines="none">
-          <ion-icon color="light" name="school" slot="start"></ion-icon>
-          <ion-label>TAREAS</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+        {{ user?.nombres }} {{ user?.apellidos }}<br>
+        Describe tu clase
+    </h3>
+
+    <ion-grid>
+        <form [formGroup]="claseForm">
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-label>Materia</ion-label>
+                        <ion-select formControlName="materia">
+                            <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
+                                {{materia?.nombre}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Tema</ion-label>
+                        <ion-textarea formControlName="tema" class="ion-text-end">
+                        </ion-textarea>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label># Alumnos</ion-label>
+                        <ion-input type="number" formControlName="alumnos" class="ion-text-end"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Ejercicios</ion-label>
+                        <ion-input type="number" formControlName="ejercicios" class="ion-text-end"></ion-input>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Fecha</ion-label>
+                        <ion-datetime formControlName="fecha" display-format="DD-MM-YYYY"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Hora 1</ion-label>
+                        <ion-datetime formControlName="hora1" display-format="HH:mm"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Hora 2</ion-label>
+                        <ion-datetime formControlName="hora2" display-format="HH:mm"></ion-datetime>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Ubicación</ion-label>
+                        <ion-select formControlName="ubicacion">
+                            <ion-select-option *ngFor="let sede of sedes | async" [value]="sede.nombre">
+                                {{sede.nombre}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4" offset="1">
+                    <ion-button (click)="atras()" size="block">Atras</ion-button>
+                </ion-col>
+                <ion-col size="4" offset="1">
+                    <ion-button [disabled]="!claseForm.valid" (click)="confirmarClase()" size="block">Confirmar
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </form>
+    </ion-grid>
 </ion-content>

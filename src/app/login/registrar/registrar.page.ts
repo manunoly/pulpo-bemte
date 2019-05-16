@@ -1,3 +1,4 @@
+import { FcmService } from './../../servicios/fcm.service';
 import { UtilService } from './../../servicios/util.service';
 import { DbService } from './../../servicios/db.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,8 +13,9 @@ import { Router } from '@angular/router';
 })
 export class RegistrarPage implements OnInit {
   registroForm: FormGroup;
+  paso = 1;
 
-  constructor(public alertController: AlertController, private router: Router,
+  constructor(private fcm: FcmService, public alertController: AlertController, private router: Router,
     private fb: FormBuilder, private db: DbService, public util: UtilService
   ) {
     this.registroForm = this.fb.group({
@@ -24,17 +26,20 @@ export class RegistrarPage implements OnInit {
       'apellido': ['', Validators.required],
       'apodo': ['', Validators.required],
       'cedula': [''],
+      'token': [''],
+      'so': [''],
       'ciudad': ['Quito', Validators.required],
       'tipo': ['Alumno', Validators.required],
       'ubicacion': ['ubicacion', Validators.required]
     });
   }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+    const token = this.fcm.getToken();
+    if (token)
+      this.registroForm.controls['token'].setValue(token);
+    this.registroForm.controls['token'].setValue(this.util.getSo());
   }
-  paso = 1;
-
 
   siguiente(paso = 1) {
     this.paso = paso;

@@ -14,7 +14,7 @@
 
     <ion-list style="background: transparent">
       <ion-item *ngFor="let tarea of tareas | async">
-        <ion-label>
+        <ion-label class="ion-text-wrap ion-padding-left" >
           <h1>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h1>
           <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
           <h5>{{tarea?.descripcion}}</h5>

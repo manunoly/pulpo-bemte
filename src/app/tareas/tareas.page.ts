@@ -58,7 +58,6 @@ export class TareasPage implements OnInit {
       const resp = await this.db.post('solicitar-tarea', this.tareaForm.value);
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.util.setStorage('tarea', true);
         this.router.navigateByUrl('tarea-estado');
 
       }
@@ -84,6 +83,7 @@ export class TareasPage implements OnInit {
   }
 
   subir(){
+    
     this.util.showMessage('en construcción');
   }
 
