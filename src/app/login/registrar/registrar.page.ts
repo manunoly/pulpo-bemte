@@ -15,8 +15,9 @@ export class RegistrarPage implements OnInit {
   registroForm: FormGroup;
   paso = 1;
 
-  constructor(private fcm: FcmService, public alertController: AlertController, private router: Router,
-    private fb: FormBuilder, private db: DbService, public util: UtilService
+  constructor(public alertController: AlertController, private router: Router,
+    private fb: FormBuilder, private db: DbService, public util: UtilService,
+    private fcm: FcmService
   ) {
     this.registroForm = this.fb.group({
       'celular': ['', Validators.required],
@@ -35,6 +36,8 @@ export class RegistrarPage implements OnInit {
   }
 
   async ngOnInit() {
+    if (!this.util.isMobile()) 
+      return
     const token = this.fcm.getToken();
     if (token)
       this.registroForm.controls['token'].setValue(token);

@@ -1,23 +1,48 @@
+import { AuthService } from './servicios/auth.service';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  public appPages = [
+  user;
+
+  public appPages = [];
+
+  public inicio = [{
+    title: 'Iniciar Sesión',
+    url: '/login',
+    icon: 'person'
+  }];
+
+  public profesorPages = [{
+    title: 'Iniciar Sesión',
+    url: '/login',
+    icon: 'person'
+  },
+  {
+    title: 'Solicitudes de Tareas',
+    url: '/tareas-listado',
+    icon: 'list'
+  },
+  {
+    title: 'Mi perfil',
+    url: '/perfil',
+    icon: 'man'
+  }];
+
+  public estudiantePages = [
     {
       title: 'Inicio',
       url: '/inicio',
       icon: 'home'
-    }, {
-      title: 'Iniciar Sesión',
-      url: '/login',
-      icon: 'person'
     },
     {
       title: 'Clases',
@@ -30,11 +55,6 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Solicitudes de Tareas',
-      url: '/tareas-listado',
-      icon: 'list'
-    },
-    {
       title: 'Mi perfil',
       url: '/perfil',
       icon: 'man'
@@ -44,7 +64,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public auth: AuthService,
+    public menuCtrl: MenuController
   ) {
     this.initializeApp();
   }
@@ -53,6 +75,23 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.checkRoll();
     });
+  }
+
+  async checkRoll() {
+    this.auth.user.subscribe(user => {
+      this.user = user;
+      if (user)
+        this.appPages = this.estudiantePages;
+      else
+        this.appPages = this.inicio;
+    });
+  }
+
+  exit() {
+    this.menuCtrl.toggle();
+    this.auth.purgeAuth();
+
   }
 }

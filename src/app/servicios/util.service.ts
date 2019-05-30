@@ -83,4 +83,9 @@ export class UtilService {
       await this.loading.dismiss();
     } catch (error) { }
   }
+
+  isMobile() {
+    return this.platform.is('cordova');
+  }
+
 }
