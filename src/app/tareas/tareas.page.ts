@@ -1,9 +1,11 @@
+import { UploadService } from './../servicios/upload.service';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tareas',
@@ -15,9 +17,10 @@ export class TareasPage implements OnInit {
   materias;
   user;
   rangosHorarios = [{ hora_inicio: '12:00', hora_fin: '13:00' }, { hora_inicio: '14:00', hora_fin: '16:00' }];
+  img;
 
   constructor(public auth: AuthService, private db: DbService, private router: Router,
-    private fb: FormBuilder, public util: UtilService) {
+    private fb: FormBuilder, public util: UtilService, public upload: UploadService) {
     this.buildForm();
   }
 
@@ -82,9 +85,14 @@ export class TareasPage implements OnInit {
     });
   }
 
-  subir(){
-    
-    this.util.showMessage('en construcción');
+  async subir() {
+    try {
+      await this.upload.selectImage();
+      this.img = await this.upload.loadStoredImages();
+    } catch (error) {
+
+    }
+
   }
 
   atras() {
