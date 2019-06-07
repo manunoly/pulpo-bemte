@@ -50,6 +50,21 @@ export class AppComponent {
       icon: 'list'
     },
     {
+      title: 'Listado de Clases',
+      url: '/lista-clases',
+      icon: 'list'
+    },
+    {
+      title: 'Tareas',
+      url: '/tareas',
+      icon: 'list'
+    },
+    {
+      title: 'Listado de Tareas',
+      url: '/lista-tareas',
+      icon: 'list'
+    },
+    {
       title: 'Combos',
       url: '/combos',
       icon: 'list'
@@ -58,7 +73,13 @@ export class AppComponent {
       title: 'Mi perfil',
       url: '/perfil',
       icon: 'man'
+    },
+    {
+      title: 'Quiero ser Profesor',
+      url: '/solicitar-ser-profesor',
+      icon: 'man'
     }
+    
   ];
 
   constructor(

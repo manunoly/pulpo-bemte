@@ -29,7 +29,7 @@ export class ComboHoraPage implements OnInit {
   }
 
   confirmarHora() {
-    this.router.navigateByUrl('clase', { queryParams: { hora: this.horaSeleccionada, combo: this.combo } });
+    this.router.navigateByUrl('clases', { queryParams: { hora: this.horaSeleccionada, combo: this.combo } });
   }
 
   atras() {

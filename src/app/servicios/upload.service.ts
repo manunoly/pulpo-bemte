@@ -176,7 +176,7 @@ export class UploadService {
     });
     await loading.present();
 
-    this.http.post("http://192.168.0.5/upload.php", formData)
+    this.http.post(environment.api_url+"/subir-archivo", formData)
       .pipe(
         finalize(() => {
           loading.dismiss();

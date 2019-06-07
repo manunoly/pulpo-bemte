@@ -7,14 +7,8 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  },
+  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
+  { path: 'list', loadChildren: './list/list.module#ListPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'registrar', loadChildren: './login/registrar/registrar.module#RegistrarPageModule' },
   { path: 'perfil', loadChildren: './perfil/perfil.module#PerfilPageModule' },
@@ -30,7 +24,10 @@ const routes: Routes = [
   { path: 'tareas-listado', loadChildren: './tareas-listado/tareas-listado.module#TareasListadoPageModule' },
   { path: 'tareas-pagar', loadChildren: './tareas/tareas-pagar/tareas-pagar.module#TareasPagarPageModule' },
   { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' },
-  { path: 'clase-estado', loadChildren: './clases/clase-estado/clase-estado.module#ClaseEstadoPageModule' }
+  { path: 'clase-estado', loadChildren: './clases/clase-estado/clase-estado.module#ClaseEstadoPageModule' },
+  { path: 'lista-tareas', loadChildren: './lista-tareas/lista-tareas.module#ListaTareasPageModule' },
+  { path: 'lista-clases', loadChildren: './lista-clases/lista-clases.module#ListaClasesPageModule' },
+  { path: 'solicitar-ser-profesor', loadChildren: './solicitar-ser-profesor/solicitar-ser-profesor.module#SolicitarSerProfesorPageModule' }
 ];
 
 @NgModule({
@@ -39,4 +36,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
