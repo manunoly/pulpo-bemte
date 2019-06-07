@@ -16,6 +16,8 @@ export class ClasesPage implements OnInit {
   materias;
   user;
   sedes;
+  combos;
+  horasCombo;
 
   constructor(private navigation: Location, public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService) {
@@ -32,20 +34,28 @@ export class ClasesPage implements OnInit {
   }
 
   async ngOnInit() {
+    this.util.showLoading();
     this.auth.currentUser.subscribe(async (user) => {
       if (user) {
         this.user = user;
-        // const clase = await this.db.get('clase-activa?user_id=' + user.user_id);
-        // if (clase != null && clase.hasOwnProperty('id')) {
-        //   this.util.showMessage('Tiene una clase en proceso');
-        //   this.router.navigateByUrl('clase-estado');
-        //   return;
-        // }
         this.materias = this.db.get('lista-materias');
         this.sedes = this.db.get('lista-sedes');
+        this.combos = this.db.get('lista-combos');
         this.claseForm.controls['user_id'].setValue(user.user_id);
       }
+      setTimeout(() => {
+        this.util.dismissLoading();
+      }, 1000);
     });
+  }
+
+
+  loadHoras(combo) {
+    this.util.showLoading();
+    this.horasCombo = this.db.get('combo-horas?combo=' + combo);
+    setTimeout(() => {
+      this.util.dismissLoading();
+    }, 1000);
   }
 
   buildForm() {
@@ -53,11 +63,15 @@ export class ClasesPage implements OnInit {
       'user_id': ['', Validators.required],
       'materia': ['', Validators.required],
       'tema': ['', Validators.required],
-      'alumnos': ['', Validators.required],
+      'personas': ['', Validators.required],
       'ejercicios': [''],
       'fecha': ['', Validators.required],
       'hora1': [''],
       'hora2': [''],
+      'combo': [''],
+      'duracion': [''],
+      'hora': [''],
+      'selProfesor': ['false'],
       'ubicacion': ['', Validators.required]
     });
   }
@@ -67,8 +81,12 @@ export class ClasesPage implements OnInit {
   }
 
   async confirmarClase() {
+    // hora_fin: "13:00"hora1: "2019-06-07T11:10:08.543-05:00"
+    // hora_inicio: "12:00"
     try {
       this.claseForm.controls['fecha'].setValue(this.claseForm.value.fecha.slice(0, 10));
+      this.claseForm.controls['hora1'].setValue(this.claseForm.value.hora1.slice(11, 16));
+      this.claseForm.controls['hora2'].setValue(this.claseForm.value.hora2.slice(11, 16));
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-clase', this.claseForm.value);

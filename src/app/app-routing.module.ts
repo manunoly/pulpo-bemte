@@ -27,7 +27,8 @@ const routes: Routes = [
   { path: 'clase-estado', loadChildren: './clases/clase-estado/clase-estado.module#ClaseEstadoPageModule' },
   { path: 'lista-tareas', loadChildren: './lista-tareas/lista-tareas.module#ListaTareasPageModule' },
   { path: 'lista-clases', loadChildren: './lista-clases/lista-clases.module#ListaClasesPageModule' },
-  { path: 'solicitar-ser-profesor', loadChildren: './solicitar-ser-profesor/solicitar-ser-profesor.module#SolicitarSerProfesorPageModule' }
+  { path: 'solicitar-ser-profesor', loadChildren: './solicitar-ser-profesor/solicitar-ser-profesor.module#SolicitarSerProfesorPageModule' },
+  { path: 'clases-pagar', loadChildren: './clases/clases-pagar/clases-pagar.module#ClasesPagarPageModule' }
 ];
 
 @NgModule({

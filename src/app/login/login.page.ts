@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
       'email': ['manuel@bemte.com', (Validators.required, Validators.email)],
       // 'email': ['', (Validators.required, Validators.email)],
       // 'password': ['123456', Validators.required]
-      'password': ['123456', Validators.required]
+      'password': ['123456', (Validators.required,Validators.minLength(6))]
     });
   }
 

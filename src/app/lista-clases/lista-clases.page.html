@@ -12,8 +12,8 @@
       Listado de Clases
     </h3>
   
-    <ion-list style="background: transparent">
-      <ion-item *ngFor="let tarea of clases | async">
+    <ion-list *ngIf="clases | async as clasesD; else loadD"  style="background: transparent">
+      <ion-item *ngFor="let tarea of clasesD">
         <ion-label class="ion-text-wrap ion-padding-left" >
           <h1>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h1>
           <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
@@ -21,10 +21,13 @@
           <h5>{{tarea?.formato_entrega}}</h5>
         </ion-label>
       </ion-item>
+      <div text-center *ngIf="clasesD.length === 0">
+        <h3>No hay datos para mostrar</h3>
+      </div>
     </ion-list>
 
-    <div *ngIf="!clases" text-center>
+    <ng-template #loadD text-center>
       <ion-spinner></ion-spinner>
       <h3>Espere por favor</h3>
-    </div>
+    </ng-template>
   </ion-content>

@@ -24,6 +24,7 @@ export class PerfilPage implements OnInit {
   }
   registroForm: FormGroup;
   editar;
+  user;
 
   constructor(
     private router: Router,
@@ -33,30 +34,46 @@ export class PerfilPage implements OnInit {
     public util: UtilService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
   }
 
-  editarPerfil() {
-    this.editar = false;
-    this.util.showMessage('Vamos a guardar los datos')
-    console.log(this.registroForm.value);
+  async editarPerfil() {
+    try {
+      this.util.showLoading();
+      const resp = await this.db.post('actualizar-cuenta', this.registroForm.value);
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        this.editar = false;
+      }
+      this.util.dismissLoading();
+    } catch (error) {
+      this.util.dismissLoading();
+    }
   }
 
-  buildForm(user) {
+  async buildForm(user) {
+    console.log(user);
     this.editar = true;
     this.registroForm = this.fb.group({
+      'user_id': [''],
       'avatar': [user.avatar],
       'calificacion': [user.calificacion],
       'celular': [user.celular, Validators.required],
-      'correo': [user.correo, (Validators.required, Validators.email)],
-      'password': [''],
-      'nombres': [user.nombres, Validators.required],
-      'apellidos': [user.apellidos, Validators.required],
+      'email': [user.correo, (Validators.required, Validators.email)],
+      'hojaVida': [''],
+      'titulo': [''],
+      'nombre': [user.nombres, Validators.required],
+      'apellido': [user.apellidos, Validators.required],
       'apodo': [user.apodo, Validators.required],
       'cedula': [user.cedula],
       'ciudad': [user.ciudad, Validators.required],
       'tipo': [user.tipo, Validators.required],
       'ubicacion': [user.ubicacion, Validators.required]
     });
+    this.user = await this.auth.getUserData();
+    if (this.user)
+      this.registroForm.controls['user_id'].setValue(this.user.user_id);
+
   }
 }
