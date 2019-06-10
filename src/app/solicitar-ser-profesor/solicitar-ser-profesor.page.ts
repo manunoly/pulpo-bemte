@@ -14,7 +14,7 @@ import { of } from 'rxjs';
   styleUrls: ['./solicitar-ser-profesor.page.scss'],
 })
 export class SolicitarSerProfesorPage implements OnInit {
-  tareaForm: FormGroup;
+  profesorForm: FormGroup;
 
   constructor(public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService, public upload: UploadService) { this.buildForm() }
@@ -23,16 +23,13 @@ export class SolicitarSerProfesorPage implements OnInit {
   }
 
   buildForm() {
-    this.tareaForm = this.fb.group({
-      'user_id': ['', Validators.required],
-      'materia': ['', Validators.required],
-      'tema': ['', Validators.required],
-      'fecha_entrega': ['', Validators.required],
-      'hora_rango': ['', Validators.required],
-      'hora_inicio': [''],
-      'hora_fin': [''],
-      'descripcion': ['', Validators.required],
-      'formato_entrega': ['', Validators.required]
+    this.profesorForm = this.fb.group({
+      'user_id': [''],
+      'cedula': ['1234567890', [Validators.minLength(10), Validators.maxLength(10), Validators.required]],
+      'clases': ['false'],
+      'tareas': ['false'],
+      'hojaVida': [''],
+      'titulo': ['']
     });
   }
 
@@ -53,7 +50,19 @@ export class SolicitarSerProfesorPage implements OnInit {
     }
   }
 
-  async solitar(){
-    // 'aplicar-profesor'
+  async solitar() {
+    const user = await this.auth.getUserData();
+    if (user) {
+      this.profesorForm.controls['user_id'].setValue(user.user_id);
+      const resp = await this.db.post('aplicar-profesor', this.profesorForm.value);
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        setTimeout(() => {
+          this.router.navigateByUrl('inicio');
+        }, 2000);
+      }
+    } else
+      this.util.showMessage('No hemos podido resolver los datos del usuario');
+    // 
   }
 }
