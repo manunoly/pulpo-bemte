@@ -7,7 +7,7 @@
       </ion-buttons>
     </ion-fab>
 
-    <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
       Estado de tu tarea
     </h3>
@@ -21,7 +21,7 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="tareaD?.estado != 'Confirmado'">
+      <!-- <ion-row *ngIf="tareaD?.estado != 'Confirmado'">
         <ion-col>
           <h3 text-center class="ion-padding-horizontal">Datos de la Tarea</h3>
           <h5>
@@ -33,7 +33,7 @@
           <p>Descripcion: {{tareaD?.descripcion}}</p>
           <h5>Estado de la tarea: <strong>{{tareaD?.estado}}</strong></h5>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row *ngIf="tareaD?.estado == 'Solicitado'">
         <ion-col text-center>
           <p>
@@ -43,6 +43,7 @@
           <h5> Tu tarea está siendo procesada</h5>
         </ion-col>
       </ion-row>
+
       <ion-row *ngIf="tareaD?.estado == 'Sin_Profesor'">
         <ion-col text-center>
           <p>
@@ -51,6 +52,16 @@
           <h5> <strong> Tu tarea no ha sido confirmada </strong></h5>
         </ion-col>
       </ion-row>
+
+      <ion-row *ngIf="tareaD?.estado == 'Sin_Pago'">
+          <ion-col text-center>
+            <p>
+              El pago no ha sido realizado o ha expirado el tiempo.
+            </p>
+            <h5> <strong> Por favor vuelva a intentarlo </strong></h5>
+          </ion-col>
+        </ion-row>
+  
       <ion-row *ngIf="tareaD?.estado == 'Aceptado'">
         <ion-col text-center>
           <h5> <strong> Tu tarea ha sido aceptada y pagada, el chat esta habilitado </strong></h5>
@@ -68,6 +79,22 @@
         </ion-row>
       </ion-row>
 
+      <ion-row *ngIf="tareaD?.estado == 'Pago_Rechazado'">
+        <ion-col text-center>
+          <h5> <strong> Pago Rechazado. </strong></h5>
+          <p padding>Si cree que es un error, envianos un whatsapp al <strong> 0983444463 </strong></p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="tareaD?.estado == 'Confirmando_Pago'">
+        <ion-col text-center>
+          <h5> <strong> Confirmando Pago </strong></h5>
+          <ion-spinner></ion-spinner><br>
+          <p padding>Por favor espere, estamos verificando su pago, si desea pueda contactar al
+            <strong> 0983444463</strong>
+          </p>
+        </ion-col>
+      </ion-row>
 
       <ion-row *ngIf="tareaD?.estado == 'Confirmado'">
         <ion-col text-center>

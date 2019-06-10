@@ -4,7 +4,7 @@ import { AuthService } from './../../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
+import { switchMap, shareReplay, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
@@ -57,5 +57,20 @@ export class ClaseEstadoPage implements OnInit {
 
   atras() {
     this.router.navigateByUrl('inicio');
+  }
+
+  async setDireccion(calle, referencia, preguntarPor, id) {
+    console.log(calle);
+    try {
+      this.util.showLoading();
+      const data = { clase_id: id, calle: calle, referencia: referencia, quien_preguntar: preguntarPor }
+      const resp = await this.db.post('clase-confirmar', data);
+      if (resp && resp.success)
+        this.util.showMessage(resp.success);
+      this.actualizar();
+      this.util.dismissLoading();
+    } catch (error) {
+      this.util.dismissLoading();
+    }
   }
 }

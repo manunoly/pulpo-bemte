@@ -37,7 +37,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label>Horas</ion-label>
-                        <ion-select formControlName="hora">
+                        <ion-select [disabled]="!horasCombo" formControlName="hora">
                             <ion-select-option *ngFor="let hora of horasCombo | async" [value]="hora?.id">
                                 {{hora.hora}} Horas
                             </ion-select-option>

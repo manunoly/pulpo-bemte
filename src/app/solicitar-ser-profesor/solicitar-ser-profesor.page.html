@@ -1,9 +1,57 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>solicitar-ser-profesor</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
 
+  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    {{ user?.nombres }} {{ user?.apellidos }}<br>
+    Genial, por favor completa la información.
+  </h3>
+
+  <!-- <ion-grid>
+    <form [formGroup]="tareaForm">
+      <ion-list style="background: #243356">
+        <ion-item>
+          <ion-label position="floating">Calle #</ion-label>
+          <ion-input #calle> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Referencia</ion-label>
+          <ion-input #referencia> </ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-row>
+        <ion-col *ngIf="!img || img.length === 0; else imgData" size="6" offset="3">
+          <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
+          <ion-button size="block" (click)="transferir()">Transferir</ion-button>
+        </ion-col>
+        <ng-template #imgData>
+          <ion-col size="6" offset="3">
+            <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
+              <ion-thumbnail slot="start">
+                <ion-img [src]="img.path"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                {{ imgD.name }}
+              </ion-label>
+              <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" offset="1">
+          <ion-button (click)="atras()" size="block">Atras</ion-button>
+        </ion-col>
+        <ion-col size="4" offset="1">
+          <ion-button [disabled]="!tareaForm.valid" (click)="confirmarTarea()" size="block">Confirmar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid> -->
 </ion-content>

@@ -16,7 +16,7 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label>Materia</ion-label>
-                        <ion-select formControlName="materia">
+                        <ion-select [disabled]="!materias" formControlName="materia">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
@@ -55,6 +55,7 @@
             <ion-row>
                 <ion-col *ngIf="!img || img.length === 0; else imgData" size="6" offset="3">
                     <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
+                    <ion-button size="block" (click)="transferir()">Transferir</ion-button>
                 </ion-col>
                 <ng-template #imgData>
                     <ion-col size="6" offset="3">

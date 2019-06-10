@@ -3,16 +3,18 @@ import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { async } from '@angular/core/testing';
+import { switchMap, shareReplay, first } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-tareas',
   templateUrl: './tareas.page.html',
   styleUrls: ['./tareas.page.scss'],
 })
-export class TareasPage implements OnInit {
+export class TareasPage {
+  // export class TareasPage implements OnInit {
   tareaForm: FormGroup;
   materias;
   user;
@@ -24,29 +26,52 @@ export class TareasPage implements OnInit {
     this.buildForm();
   }
 
-  async ionViewWillEnter() {
-    if (this.user) {
-      const tarea = await this.db.get('tarea-activa?user_id=' + this.user.user_id);
-      if (tarea != null && tarea.hasOwnProperty('id')) {
-        this.router.navigateByUrl('tarea-estado');
-      }
-    }
-  }
+  // async ionViewWillEnter() {
+  //   if (this.user) {
+  //     const tarea = await this.db.get('tarea-activa?user_id=' + this.user.user_id);
+  //     if (tarea != null && tarea.hasOwnProperty('id')) {
+  //       this.router.navigateByUrl('tarea-estado');
+  //     }
+  //   }
+  // }
 
-  async ngOnInit() {
-    this.auth.currentUser.subscribe(async (user) => {
+  async ionViewWillEnter() {
+    this.util.showLoading();
+    this.auth.currentUser.pipe(switchMap(user => {
       if (user) {
         this.user = user;
-        const tarea = await this.db.get('tarea-activa?user_id=' + user.user_id);
-        if (tarea != null && tarea.hasOwnProperty('id')) {
-          this.util.showMessage('Tiene una tarea en proceso');
-          this.router.navigateByUrl('tarea-estado');
-          return;
-        }
-        this.materias = this.db.get('lista-materias');
-        this.tareaForm.controls['user_id'].setValue(user.user_id);
+        return this.db.get('tarea-activa?user_id=' + user.user_id);
       }
-    });
+      return of(null);
+    }), shareReplay(), first()).subscribe(tarea => {
+      if (tarea != null && tarea.hasOwnProperty('id')) {
+        this.util.dismissLoading();
+        this.router.navigateByUrl('tarea-estado');
+      } else {
+        if (this.user) {
+          this.tareaForm.controls['user_id'].setValue(this.user.user_id);
+          this.materias = this.db.get('lista-materias');
+        } else
+          this.router.navigateByUrl('inicio');
+      }
+      setTimeout(() => {
+        this.util.dismissLoading();
+      }, 1000);
+    })
+
+    // this.auth.currentUser.subscribe(async (user) => {
+    //   if (user) {
+    //     this.user = user;
+    //     const tarea = await this.db.get('tarea-activa?user_id=' + user.user_id);
+    //     if (tarea != null && tarea.hasOwnProperty('id')) {
+    //       this.util.showMessage('Tiene una tarea en proceso');
+    //       this.router.navigateByUrl('tarea-estado');
+    //       return;
+    //     }
+    //     this.materias = this.db.get('lista-materias');
+    //     this.tareaForm.controls['user_id'].setValue(user.user_id);
+    //   }
+    // });
   }
 
   async confirmarTarea() {
@@ -74,6 +99,7 @@ export class TareasPage implements OnInit {
   buildForm() {
     this.tareaForm = this.fb.group({
       'user_id': ['', Validators.required],
+      // 'materia': new FormControl({ value: !this.materias, disabled: true }, Validators.required),
       'materia': ['', Validators.required],
       'tema': ['', Validators.required],
       'fecha_entrega': ['', Validators.required],
@@ -88,11 +114,18 @@ export class TareasPage implements OnInit {
   async subir() {
     try {
       await this.upload.selectImage();
-      this.img = await this.upload.loadStoredImages();
+      // this.img = await this.upload.loadStoredImages();
     } catch (error) {
-
     }
+  }
 
+  async transferir() {
+    try {
+      const resp = await this.upload.startUpload();
+      this.util.showMessage(JSON.stringify(resp));
+    } catch (error) {
+      this.util.showMessage(JSON.stringify(error));
+    }
   }
 
   atras() {

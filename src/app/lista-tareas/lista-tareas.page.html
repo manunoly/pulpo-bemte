@@ -7,7 +7,7 @@
       </ion-buttons>
     </ion-fab>
 
-    <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
       Listado de tareas
     </h3>
@@ -26,8 +26,10 @@
       </div>
     </ion-list>
 
-    <ng-template #loadD text-center>
+    <ng-template #loadD>
+        <div padding text-center>
       <ion-spinner></ion-spinner>
       <h3>Espere por favor</h3>
+      </div>
     </ng-template>
   </ion-content>

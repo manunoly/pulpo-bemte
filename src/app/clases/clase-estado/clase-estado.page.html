@@ -7,7 +7,7 @@
       </ion-buttons>
     </ion-fab>
 
-    <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
       Estado de tu clase
     </h3>
@@ -21,19 +21,24 @@
           </div>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="claseD?.estado != 'Confirmado'">
+      <!-- <ion-row *ngIf="claseD?.estado == 'Confirmado'">
         <ion-col>
           <h3 text-center class="ion-padding-horizontal">Datos de la clase</h3>
           <h5>
             Materia: {{claseD?.materia}} <br>
             Tema: {{claseD?.tema}}</h5>
-          <h5>
-            Fecha {{claseD?.fecha}} <br>
-            {{claseD?.hora1}} o {{claseD?.hora2}} </h5>
-            <p>Almumnos {{claseD?.personas}}</p>
+          <h5>Fecha {{claseD?.fecha}} <br>
+            {{claseD?.hora_prof}}
+          </h5>
+          <h5> Profesor: {{claseD?.profesor}} </h5>
+          <p>Almumnos {{claseD?.personas}}</p>
+          <p>Ubicación {{claseD?.ubicacion}}</p>
+          <p>Combo {{claseD?.combo}}</p>
+          <ion-spinner></ion-spinner><br>
+
           <h5>Estado de la clase: <strong>{{claseD?.estado}}</strong></h5>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row *ngIf="claseD?.estado == 'Solicitado'">
         <ion-col text-center>
           <p>
@@ -43,6 +48,7 @@
           <h5> Tu clase está siendo procesada</h5>
         </ion-col>
       </ion-row>
+
       <ion-row *ngIf="claseD?.estado == 'Sin_Profesor'">
         <ion-col text-center>
           <p>
@@ -51,38 +57,59 @@
           <h5> <strong> Tu clase no ha sido confirmada </strong></h5>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="claseD?.estado == 'Aceptado'">
+
+      <ion-row *ngIf="claseD?.estado == 'Sin_Pago'">
         <ion-col text-center>
-          <h5> <strong> Tu clase ha sido aceptada y pagada, el chat esta habilitado </strong></h5>
+          <p>
+            El pago no ha sido realizado o ha expirado el tiempo.
+          </p>
+          <h5> <strong> Por favor vuelva a intentarlo </strong></h5>
         </ion-col>
-        <ion-row>
-          <ion-col size="5"> Profesor: </ion-col>
-          <ion-col> {{claseD?.profesor}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col text-center>
-            <div>
-              <ion-button size="large" [routerLink]="['/chat']">Chat</ion-button>
-            </div>
-          </ion-col>
-        </ion-row>
       </ion-row>
 
+      <ion-row *ngIf="claseD?.estado == 'Aceptado'">
+        <ion-row>
+          <ion-col text-center>
+            <h5> <strong> Tu clase ha sido aceptada y pagada, el chat esta habilitado </strong></h5>
+            <ion-row padding>
+              <ion-col>
+                <h5>Profesor: {{claseD?.profesor}}</h5>
+                <p>{{claseD?.hora_prof}}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>
+                <div>
+                  <ion-button size="large" [routerLink]="['/chat']">Chat</ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+      </ion-row>
+
+      <ion-row *ngIf="claseD?.estado == 'Pago_Rechazado'">
+        <ion-col text-center>
+          <h5> <strong> Pago Rechazado. </strong></h5>
+          <p padding>Si cree que es un error, envianos un whatsapp al <strong> 0983444463 </strong></p>
+        </ion-col>
+      </ion-row>
 
       <ion-row *ngIf="claseD?.estado == 'Confirmado'">
         <ion-col text-center>
-          <h3 text-center class="ion-padding-horizontal">clase confirmada</h3>
+          <h3 text-center class="ion-padding-horizontal">Clase Confirmada</h3>
           <ion-row>
             <ion-col size="5"> Profesor: </ion-col>
             <ion-col> {{claseD?.profesor}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="5">Tiempo:</ion-col>
-            <ion-col> {{claseD?.tiempo_estimado}} Horas</ion-col>
+            <ion-col> {{claseD?.duracion}} Horas</ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="5">Inversión:</ion-col>
-            <ion-col>${{claseD?.inversion}}</ion-col>
+            <ion-col size="5">Hora:</ion-col>
+            <ion-col>{{claseD?.hora_prof}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col text-center>
@@ -96,6 +123,39 @@
                 </ion-button>
                 <ion-button size="small" [routerLink]="['/combos']">Combo</ion-button>
               </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="claseD?.estado == 'Pago_Aprobado'">
+        <ion-col text-center>
+          <h3 text-center class="ion-padding-horizontal">Pago Exitoso</h3>
+          <h5>Por favor ingrese su dirección</h5>
+
+          <ion-row padding>
+            <ion-col>
+              <ion-list style="background: #243356">
+                <ion-item>
+                  <ion-label position="floating">Calle #</ion-label>
+                  <ion-input #calle> </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Referencia</ion-label>
+                  <ion-input #referencia> </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Por quién preguntar</ion-label>
+                  <ion-input #preguntarPor> </ion-input>
+                </ion-item>
+                <ion-row>
+                  <ion-col size="6" offset="3">
+                    <ion-button [disabled]="!calle.value || !referencia.value || !preguntarPor.value"
+                      (click)="setDireccion(calle.value, referencia.value, preguntarPor.value, claseD.id)" size="block">
+                      Enviar</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-list>
             </ion-col>
           </ion-row>
         </ion-col>

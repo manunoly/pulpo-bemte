@@ -1,5 +1,6 @@
+import { AuthService } from './auth.service';
 import { UtilService } from './util.service';
-import { Injectable,  } from '@angular/core';
+import { Injectable, } from '@angular/core';
 
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
@@ -25,7 +26,8 @@ export class UploadService {
   constructor(private camera: Camera, private file: File, private http: HttpClient, private webview: WebView,
     private actionSheetController: ActionSheetController, private toastController: ToastController,
     private storage: Storage, private plt: Platform, private loadingController: LoadingController,
-    private filePath: FilePath, public util: UtilService, private platform: Platform) { }
+    private filePath: FilePath, public util: UtilService, private platform: Platform,
+    private auth: AuthService) { }
 
 
   createFileName() {
@@ -163,7 +165,7 @@ export class UploadService {
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
-      formData.append('mimeType', 'multipart/form-data'); 
+      formData.append('mimeType', 'multipart/form-data');
       formData.append('file', imgBlob, file.name);
       this.uploadImageData(formData);
     };
@@ -171,25 +173,31 @@ export class UploadService {
   }
 
   async uploadImageData(formData: FormData) {
+    const user = await this.auth.getUserData();
+    formData.append('user_id', user.user_id);
     const loading = await this.loadingController.create({
       message: 'Subiendo...' + JSON.stringify(formData),
     });
     await loading.present();
 
-    this.http.post(environment.api_url+"/subir-archivo", formData)
+    this.http.post(environment.api_url + "subir-archivo", formData)
       .pipe(
         finalize(() => {
           loading.dismiss();
         })
       )
       .subscribe(res => {
+        alert(JSON.stringify(res));
         if (res['success']) {
           this.presentToast('File upload complete.')
         } else {
           this.presentToast('File upload failed.')
         }
       }, error => {
-        this.presentToast('File upload failed por error.')
+        setTimeout(() => {
+          alert(JSON.stringify(error));
+        }, 2000);
+        this.presentToast('error ' + JSON.stringify(error.error));
 
       });
   }

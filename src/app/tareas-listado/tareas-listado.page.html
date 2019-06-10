@@ -7,14 +7,14 @@
       </ion-buttons>
     </ion-fab>
 
-    <h3 *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
       Solicitudes de tareas (profesor debes ser)
     </h3>
 
-    <ion-list *ngIf="tareas | async as tareasD; else loadD"  style="background: transparent">
+    <ion-list *ngIf="tareas | async as tareasD; else loadD" style="background: transparent">
       <ion-item *ngFor="let tarea of tareasD">
-        <ion-label class="ion-text-wrap ion-padding-left" >
+        <ion-label class="ion-text-wrap ion-padding-left">
           <h1>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h1>
           <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
           <h5>{{tarea?.descripcion}}</h5>
@@ -24,8 +24,10 @@
       </ion-item>
     </ion-list>
 
-    <ng-template #loadD text-center>
-      <ion-spinner></ion-spinner>
-      <h3>Espere por favor</h3>
+    <ng-template #loadD>
+      <div padding text-center>
+        <ion-spinner></ion-spinner>
+        <h3>Espere por favor</h3>
+      </div>
     </ng-template>
   </ion-content>

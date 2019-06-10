@@ -3,7 +3,9 @@ import { DbService } from './../../servicios/db.service';
 import { AuthService } from './../../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
- 
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 @Component({
   selector: 'app-estado',
   templateUrl: './estado.page.html',
@@ -15,24 +17,24 @@ export class EstadoPage implements OnInit {
 
   constructor(public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
-  ionViewWillEnter() {
-    if (this.user) {
-      this.actualizar();
-    }
-  }
+  // ionViewWillEnter() {
+  //   this.actualizar();
+  // }
 
   async ngOnInit() {
-    this.auth.currentUser.subscribe(user => {
-      console.log('me subscribo al user');
-      if (user) {
-        this.tarea = this.db.get('tarea-activa?user_id=' + user.user_id);
-        this.user = user;
-      }
-    });
+    this.actualizar();
   }
 
   async actualizar() {
-    this.tarea = this.db.get('tarea-activa?user_id=' + this.user.user_id);
+    this.tarea = this.auth.user.pipe(
+      switchMap(user => {
+        this.user = user;
+        if (user)
+          return this.db.get('tarea-activa?user_id=' + user.user_id)
+        return of(null)
+      }
+      ));
+    // this.tarea = this.db.get('tarea-activa?user_id=' + this.user.user_id);
   }
 
   async terminar(tarea) {

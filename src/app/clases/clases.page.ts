@@ -5,13 +5,16 @@ import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { switchMap, shareReplay, first } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-clases',
   templateUrl: './clases.page.html',
   styleUrls: ['./clases.page.scss'],
 })
-export class ClasesPage implements OnInit {
+export class ClasesPage  {
+  // export class ClasesPage implements OnInit {
   claseForm: FormGroup;
   materias;
   user;
@@ -25,29 +28,47 @@ export class ClasesPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    if (this.user) {
-      const clase = await this.db.get('clase-activa?user_id=' + this.user.user_id);
-      if (clase != null && clase.hasOwnProperty('id')) {
-        this.router.navigateByUrl('clase-estado');
-      }
-    }
-  }
-
-  async ngOnInit() {
     this.util.showLoading();
-    this.auth.currentUser.subscribe(async (user) => {
+    this.auth.currentUser.pipe(switchMap(user => {
       if (user) {
         this.user = user;
-        this.materias = this.db.get('lista-materias');
-        this.sedes = this.db.get('lista-sedes');
-        this.combos = this.db.get('lista-combos');
-        this.claseForm.controls['user_id'].setValue(user.user_id);
+        return this.db.get('clase-activa?user_id=' + user.user_id);
+      }
+      return of(null);
+    }), shareReplay(), first()).subscribe(tarea => {
+      if (tarea != null && tarea.hasOwnProperty('id')) {
+        this.util.dismissLoading();
+        this.router.navigateByUrl('clase-estado');
+      } else {
+        if (this.user) {
+          this.materias = this.db.get('lista-materias');
+          this.sedes = this.db.get('lista-sedes');
+          this.combos = this.db.get('lista-combos');
+          this.claseForm.controls['user_id'].setValue(this.user.user_id);
+        } else
+          this.router.navigateByUrl('inicio');
       }
       setTimeout(() => {
         this.util.dismissLoading();
       }, 1000);
-    });
+    })
   }
+
+  // async ngOnInit() {
+  //   this.util.showLoading();
+  //   this.auth.currentUser.subscribe(async (user) => {
+  //     if (user) {
+  //       this.user = user;
+  //       this.materias = this.db.get('lista-materias');
+  //       this.sedes = this.db.get('lista-sedes');
+  //       this.combos = this.db.get('lista-combos');
+  //       this.claseForm.controls['user_id'].setValue(user.user_id);
+  //     }
+  //     setTimeout(() => {
+  //       this.util.dismissLoading();
+  //     }, 1000);
+  //   });
+  // }
 
 
   loadHoras(combo) {
