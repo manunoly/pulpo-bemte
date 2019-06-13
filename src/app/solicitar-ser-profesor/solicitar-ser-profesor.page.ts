@@ -5,7 +5,7 @@ import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap, shareReplay, first } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({

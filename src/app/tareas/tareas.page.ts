@@ -5,7 +5,7 @@ import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap, shareReplay, first } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
@@ -43,7 +43,7 @@ export class TareasPage {
         return this.db.get('tarea-activa?user_id=' + user.user_id);
       }
       return of(null);
-    }), shareReplay(), first()).subscribe(tarea => {
+    }), first()).subscribe(tarea => {
       if (tarea != null && tarea.hasOwnProperty('id')) {
         this.util.dismissLoading();
         this.router.navigateByUrl('tarea-estado');

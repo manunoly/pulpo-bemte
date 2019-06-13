@@ -17,7 +17,7 @@
         <ion-col>
           <div text-center>
             <ion-button size="small" (click)="actualizar()">Actualizar</ion-button>
-            <ion-button size="small" (click)="terminar(claseD)">Terminar</ion-button>
+            <ion-button size="small" (click)="terminar(claseD)">Cancelar</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -45,7 +45,7 @@
             <ion-spinner></ion-spinner><br>
             <small>Esperando profesor</small>
           </p>
-          <h5> Tu clase está siendo procesada</h5>
+          <h5> Tu clase está siendo confirmada</h5>
         </ion-col>
       </ion-row>
 
@@ -67,27 +67,42 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="claseD?.estado == 'Aceptado'">
+      <ion-row *ngIf="claseD?.estado == 'Confirmando_Pago'">
+        <ion-col text-center>
+          <p>
+            Gracias por realizar su pago. En breves momentos se acreditará su combo...
+          </p>
+        </ion-col>
+      </ion-row>
+
+      <div padding *ngIf="claseD?.estado == 'Aceptado'">
+        <h5> <strong> Clase confirmada </strong></h5>
+        <ion-list padding text-center style="background: #243356">
+          <ion-item>
+            <ion-label>{{claseD?.materia}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{claseD?.tema}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Hora: {{claseD?.hora_prof}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Fecha: {{claseD?.fecha}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="ion-text-wrap">Profesor: {{claseD?.profesor}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Horas Reservadas: {{claseD?.duracion}}</ion-label>
+          </ion-item>
+        </ion-list>
         <ion-row>
           <ion-col text-center>
-            <h5> <strong> Tu clase ha sido aceptada y pagada, el chat esta habilitado </strong></h5>
-            <ion-row padding>
-              <ion-col>
-                <h5>Profesor: {{claseD?.profesor}}</h5>
-                <p>{{claseD?.hora_prof}}</p>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col text-center>
-                <div>
-                  <ion-button size="large" [routerLink]="['/chat']">Chat</ion-button>
-                </div>
-              </ion-col>
-            </ion-row>
+            <ion-button size="large" [routerLink]="['/chat']">Chat</ion-button>
           </ion-col>
         </ion-row>
-
-      </ion-row>
+      </div>
 
       <ion-row *ngIf="claseD?.estado == 'Pago_Rechazado'">
         <ion-col text-center>
@@ -96,35 +111,76 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="claseD?.estado == 'Confirmado'">
+      <ion-row *ngIf="claseD?.estado == 'Confirmado' && horasCombo | async as horasComboD">
         <ion-col text-center>
-          <h3 text-center class="ion-padding-horizontal">Clase Confirmada</h3>
-          <ion-row>
-            <ion-col size="5"> Profesor: </ion-col>
-            <ion-col> {{claseD?.profesor}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="5">Tiempo:</ion-col>
-            <ion-col> {{claseD?.duracion}} Horas</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="5">Hora:</ion-col>
-            <ion-col>{{claseD?.hora_prof}}</ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col text-center>
-              <h3 padding small>Proceda a realizar el pago</h3>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <div>
-                <ion-button size="small" [routerLink]="['/clases-pagar', {tipo:'clase',data:claseD?.id}]">Transferencia
+          <div *ngIf="horasComboD.length > 0; else subirTransferencia">
+            <ion-list padding text-center style="background: #243356">
+              <ion-item>
+                <ion-label>
+                  <ion-row>
+                    <ion-col size="6"> Horas Disponible: </ion-col>
+                    <ion-col> {{horasComboD[0]?.horas}}</ion-col>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-row>
+                    <ion-col size="6"> Horas Clase: </ion-col>
+                    <ion-col> {{claseD?.duracion}}</ion-col>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+              </ion-list>
+              <p padding>¿Pagar con COMBO?</p>
+              <ion-row padding>
+                <ion-col size="4" offset="1">
+                  <ion-button shape="round" expand="block" size="small" (click)="atras()">ATRAS</ion-button>
+                </ion-col>
+                <ion-col size="4" offset="1">
+                  <ion-button shape="round" expand="block" size="small" (click)="pagarComboTieneHoras(claseD)">CONFIRMAR
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+          </div>
+
+          <ng-template #subirTransferencia>
+            <h3 text-center class="ion-padding-horizontal">Clase Confirmada</h3>
+            <ion-row>
+              <ion-col size="5"> Profesor: </ion-col>
+              <ion-col> {{claseD?.profesor}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="5">Tiempo:</ion-col>
+              <ion-col> {{claseD?.duracion}} Horas</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="5">Hora:</ion-col>
+              <ion-col>{{claseD?.hora_prof}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col text-center>
+                <h5 padding small>Proceda a realizar el pago</h5>
+                <h5>Tiene 20 min. <br>
+                  CC: 22xxx00982 BEMTE</h5>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6" offset="3">
+                <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="4" offset="1">
+                <ion-button shape="round" expand="block" size="small" (click)="atras()">ATRAS</ion-button>
+              </ion-col>
+              <ion-col size="4" offset="1">
+                <ion-button shape="round" expand="block" size="small" (click)="pagarClaseConTransferencia(claseD)">
+                  ACEPTAR
                 </ion-button>
-                <ion-button size="small" [routerLink]="['/combos']">Combo</ion-button>
-              </div>
-            </ion-col>
-          </ion-row>
+              </ion-col>
+            </ion-row>
+          </ng-template>
         </ion-col>
       </ion-row>
 

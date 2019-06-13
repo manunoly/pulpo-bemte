@@ -27,7 +27,7 @@
                         <ion-textarea formControlName="tema" class="ion-text-end">
                         </ion-textarea>
                     </ion-item>
-                    <ion-item>
+                    <ion-item *ngIf="!comboToBuy" >
                         <ion-label>Combos</ion-label>
                         <ion-select formControlName="combo" (ionChange)="loadHoras($event?.detail?.value)">
                             <ion-select-option *ngFor="let combo of combos | async" [value]="combo?.nombre">
@@ -35,22 +35,29 @@
                             </ion-select-option>
                         </ion-select>
                     </ion-item>
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label>Horas</ion-label>
                         <ion-select [disabled]="!horasCombo" formControlName="hora">
                             <ion-select-option *ngFor="let hora of horasCombo | async" [value]="hora?.id">
                                 {{hora.hora}} Horas
                             </ion-select-option>
                         </ion-select>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label># Alumnos</ion-label>
-                        <ion-input type="number" formControlName="personas" class="ion-text-end"></ion-input>
-                    </ion-item>
+                    </ion-item> -->
                     <ion-item>
                         <ion-label>Ejercicios</ion-label>
                         <ion-input type="number" formControlName="ejercicios" class="ion-text-end"></ion-input>
                     </ion-item>
+
+                    <ion-item>
+                        <ion-label># Alumnos</ion-label>
+                        <ion-input type="number" formControlName="personas" class="ion-text-end"></ion-input>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label>Duración</ion-label>
+                        <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input>
+                    </ion-item>
+
                     <ion-item>
                         <ion-label>Fecha</ion-label>
                         <ion-datetime formControlName="fecha" display-format="DD-MM-YYYY"></ion-datetime>
@@ -63,10 +70,7 @@
                         <ion-label>Hora 2</ion-label>
                         <ion-datetime formControlName="hora2" display-format="HH:mm"></ion-datetime>
                     </ion-item>
-                    <ion-item>
-                        <ion-label>Duración</ion-label>
-                        <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input>
-                    </ion-item>
+
                     <ion-item>
                         <ion-label>Ubicación</ion-label>
                         <ion-select formControlName="ubicacion">

@@ -13,12 +13,15 @@
     </h3>
 
     <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
-      <ion-item *ngFor="let tarea of clasesD">
+      <ion-item *ngFor="let clase of clasesD">
         <ion-label class="ion-text-wrap ion-padding-left">
-          <h1>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h1>
-          <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
-          <h5>{{tarea?.descripcion}}</h5>
-          <h5>{{tarea?.formato_entrega}}</h5>
+          <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>
+          <h3>Combo: {{clase?.combo}}</h3>
+          <h3>Fecha: {{clase?.fecha}} ( {{clase?.hora_prof}})</h3>
+          <h5>No. Alumnos: {{clase?.personas}}</h5>
+          <h5>Ubicación: {{clase?.ubicacion}}</h5>
+          <h5>Estado: {{clase?.estado.replace('_', ' ')}}</h5>
+
         </ion-label>
       </ion-item>
       <div text-center *ngIf="clasesD.length === 0">

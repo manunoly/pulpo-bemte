@@ -41,36 +41,62 @@
 
   <!-- paso confirmar -->
   <ion-grid *ngIf="confirmar" text-center>
-    <h3 *ngIf="combo" padding>
-      {{ combo }}
-    </h3>
-    <ion-list style="background: transparent">
-      <ion-item class="ion-padding-horizontal">
-        <ion-label>
-          Precion Promocion:
-        </ion-label>
-        <div slot="end">
-          $ {{horaSeleccionada?.inversion}}
-        </div>
-      </ion-item>
-      <ion-item class="ion-padding-horizontal">
-        <ion-label>
-          Combo:
-        </ion-label>
-        <div slot="end">
-          {{horaSeleccionada?.hora}} Horas
-        </div>
-      </ion-item>
-    </ion-list>
+    <div *ngIf="!pagarCombo">
+      <h3 *ngIf="combo" padding>
+        {{ combo }}
+      </h3>
+      <ion-list style="background: transparent">
+        <ion-item class="ion-padding-horizontal">
+          <ion-label>
+            Precio Promocion:
+          </ion-label>
+          <div slot="end">
+            $ {{horaSeleccionada?.inversion}}
+          </div>
+        </ion-item>
+        <ion-item class="ion-padding-horizontal">
+          <ion-label>
+            Combo:
+          </ion-label>
+          <div slot="end">
+            {{horaSeleccionada?.hora}} Horas
+          </div>
+        </ion-item>
+      </ion-list>
 
-    <ion-row>
-      <ion-col size="4" offset="1">
-        <ion-button size="block" (click)="confirmar = false">Atras</ion-button>
-      </ion-col>
-      <ion-col size="4" offset="1">
-        <ion-button [disabled]="!horaSeleccionada" (click)="confirmarHora()" size="block">Confirmar
-        </ion-button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col size="4" offset="1">
+          <ion-button size="block" (click)="confirmar = false">Atras</ion-button>
+        </ion-col>
+        <ion-col size="4" offset="1">
+          <ion-button [disabled]="!horaSeleccionada" (click)="confirmarHora()" size="block">Confirmar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div *ngIf="pagarCombo">
+      <ion-row>
+        <ion-col text-center>
+          <h5 padding small>Proceda a realizar el pago</h5>
+          <h5>Tiene 20 min. <br>
+            CC: 22xxx00982 BEMTE</h5>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" offset="3">
+          <ion-button size="block" (click)="upload.selectImage()">Adjuntar archivo</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4" offset="1">
+          <ion-button shape="round" expand="block" size="small" (click)="atras()">ATRAS</ion-button>
+        </ion-col>
+        <ion-col size="4" offset="1">
+          <ion-button shape="round" expand="block" size="small" (click)="pagarComboConTransferencia()">
+            ACEPTAR
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-grid>
 </ion-content>

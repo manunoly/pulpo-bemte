@@ -10,6 +10,7 @@ import { throwError } from 'rxjs';
 })
 export class DbService {
   token;
+  combo;
 
   constructor(
     private http: HttpClient,
@@ -58,7 +59,7 @@ export class DbService {
         else {
           if (error.error instanceof Object) {
             console.log('el error es Objeto error.error instanceof Object');
-            
+
             if (error.status != 401) {
               errorMessage = 'Ha ocurrido un error inesperado ' + error.status + error.statusText;
             } else {
@@ -124,6 +125,14 @@ export class DbService {
     } catch (error) {
       this.handleError(error);
     }
+  }
 
+  setComboToBuy(combo) {
+    this.combo = combo;
+  }
+
+
+  getComboToBuy() {
+    return this.combo ? this.combo : '';
   }
 }
