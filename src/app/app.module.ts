@@ -16,6 +16,8 @@ import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
+import { FCM } from '@ionic-native/fcm/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -33,7 +35,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
     Camera,
     File,
     WebView,
-    FilePath
+    FilePath,
+    FCM
   ],
   bootstrap: [AppComponent]
 })

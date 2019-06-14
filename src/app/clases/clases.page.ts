@@ -44,7 +44,7 @@ export class ClasesPage {
       } else {
 
         this.comboToBuy = this.db.getComboToBuy();
-        if (!this.comboToBuy) {
+        if (!this.comboToBuy || this.comboToBuy['type'] == 'tareas' || this.comboToBuy.horas == undefined) {
           this.util.dismissLoading();
           this.db.setComboToBuy({ type: 'clases' })
           this.router.navigateByUrl('combos');
