@@ -78,6 +78,9 @@ export class TareasPage {
     try {
       const hora = this.tareaForm.value.hora_rango;
       console.log(hora);
+      if (this.img.length > 0) {
+        this.tareaForm.controls['archivo'].setValue(this.img[0].name);
+      }
       this.tareaForm.controls['hora_inicio'].setValue(hora.hora_inicio);
       this.tareaForm.controls['hora_fin'].setValue(hora.hora_fin);
       this.tareaForm.controls['fecha_entrega'].setValue(this.tareaForm.value.fecha_entrega.slice(0, 10));
@@ -86,6 +89,7 @@ export class TareasPage {
       const resp = await this.db.post('solicitar-tarea', this.tareaForm.value);
       this.util.dismissLoading();
       if (resp && resp.success) {
+        await this.transferir();
         this.util.showMessage(resp.success);
         this.router.navigateByUrl('tarea-estado');
 
@@ -106,6 +110,7 @@ export class TareasPage {
       'hora_rango': ['', Validators.required],
       'hora_inicio': [''],
       'hora_fin': [''],
+      'archivo': [''],
       'descripcion': ['', Validators.required],
       'formato_entrega': ['', Validators.required]
     });
@@ -113,18 +118,18 @@ export class TareasPage {
 
   async subir() {
     try {
+      this.upload.imagesSubject.subscribe(img => this.img = img);
       await this.upload.selectImage();
-      // this.img = await this.upload.loadStoredImages();
     } catch (error) {
     }
   }
 
   async transferir() {
     try {
-      const resp = await this.upload.startUpload();
-      this.util.showMessage(JSON.stringify(resp));
+      return await this.upload.startUpload();
+      // this.util.showMessage(JSON.stringify(resp));
     } catch (error) {
-      this.util.showMessage(JSON.stringify(error));
+      // this.util.showMessage(JSON.stringify(error));
     }
   }
 

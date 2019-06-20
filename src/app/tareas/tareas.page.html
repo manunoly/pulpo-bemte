@@ -55,22 +55,22 @@
             <ion-row>
                 <ion-col *ngIf="!img || img.length === 0; else imgData" size="6" offset="3">
                     <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
-                    <ion-button size="block" (click)="transferir()">Transferir</ion-button>
+                    <!-- <ion-button size="block" (click)="transferir()">Transferir</ion-button> -->
                 </ion-col>
                 <ng-template #imgData>
-                    <ion-col size="6" offset="3">
+                    <ion-col size="10" offset="1">
                         <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
                             <ion-thumbnail slot="start">
-                                <ion-img [src]="img.path"></ion-img>
+                                <ion-img [src]="imgD.path"></ion-img>
                             </ion-thumbnail>
                             <ion-label>
-                                {{ imgD.name }}
+                                <h5>{{ imgD.name }}</h5>
                             </ion-label>
                             <!-- <ion-button slot="end" fill="clear" (click)="upload.startUpload(imgD)">
                                 <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
                             </ion-button> -->
                             <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
-                                <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
                             </ion-button>
                         </ion-item>
                     </ion-col>

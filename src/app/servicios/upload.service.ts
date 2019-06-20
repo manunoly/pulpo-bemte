@@ -13,6 +13,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment.prod';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const STORAGE_KEY = 'my_images';
 
@@ -22,6 +23,7 @@ const STORAGE_KEY = 'my_images';
 })
 export class UploadService {
   images = [];
+  public imagesSubject = new BehaviorSubject(this.images);
 
   constructor(private camera: Camera, private file: File, private http: HttpClient, private webview: WebView,
     private actionSheetController: ActionSheetController, private toastController: ToastController,
@@ -29,6 +31,9 @@ export class UploadService {
     private filePath: FilePath, public util: UtilService, private platform: Platform,
     private auth: AuthService) { }
 
+  get imagesO(): Observable<any> {
+    return this.imagesSubject;
+  }
 
   createFileName() {
     var d = new Date(),
@@ -42,9 +47,9 @@ export class UploadService {
       this.updateStoredImages(newFileName);
 
     }, error => {
-      this.presentToast('Error while storing file.');
+      this.presentToast('Error mientras se capturaba el archivo.');
     }).catch(error => {
-      this.presentToast('Error while storing file.');
+      this.presentToast('Error mientras se capturaba el archivo.');
     });
   }
 
@@ -108,6 +113,7 @@ export class UploadService {
         let newImages = [name];
         this.storage.set(STORAGE_KEY, JSON.stringify(newImages));
       } else {
+        // este codigo agrega las imagenes al local, por ahora sera solo 1 
         arr.push(name);
         this.storage.set(STORAGE_KEY, JSON.stringify(arr));
       }
@@ -121,13 +127,15 @@ export class UploadService {
         filePath: filePath
       };
 
-      this.images = [newEntry, ...this.images];
+      this.images = [newEntry];
+      this.imagesSubject.next(this.images);
+      // this.images = [newEntry, ...this.images];
       // trigger change detection cycle   this.ref.detectChanges();
     });
   }
 
 
-  deleteImage(imgEntry, position) {
+  deleteImage(imgEntry, position = 1) {
     this.images.splice(position, 1);
 
     this.storage.get(STORAGE_KEY).then(images => {
@@ -138,7 +146,8 @@ export class UploadService {
       var correctPath = imgEntry.filePath.substr(0, imgEntry.filePath.lastIndexOf('/') + 1);
 
       this.file.removeFile(correctPath, imgEntry.name).then(res => {
-        this.presentToast('File removed.');
+        this.presentToast('Eliminado.');
+        this.imagesSubject.next(this.images);
       });
     });
   }
@@ -154,7 +163,8 @@ export class UploadService {
         (<FileEntry>entry).file(file => this.readFile(file))
       })
       .catch(err => {
-        this.presentToast('Error while reading file.');
+        this.presentToast('Error while reading file to upload.');
+        return false;
       });
   }
 
@@ -176,7 +186,7 @@ export class UploadService {
     const user = await this.auth.getUserData();
     formData.append('user_id', user.user_id);
     const loading = await this.loadingController.create({
-      message: 'Subiendo...' + JSON.stringify(formData),
+      message: 'Subiendo...',
     });
     await loading.present();
 
@@ -187,18 +197,18 @@ export class UploadService {
         })
       )
       .subscribe(res => {
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if (res['success']) {
-          this.presentToast('File upload complete.')
+          this.presentToast('Archivo subido exitosamente.');
         } else {
-          this.presentToast('File upload failed.')
+          this.presentToast('Error subiendo archivo.');
         }
       }, error => {
-        setTimeout(() => {
-          alert(JSON.stringify(error));
-        }, 2000);
-        this.presentToast('error ' + JSON.stringify(error.error));
-
+        this.presentToast('Error subiendo archivo.');
+        // setTimeout(() => {
+        //   alert(JSON.stringify(error));
+        // }, 2000);
+        // this.presentToast('error ' + JSON.stringify(error.error));
       });
   }
 
