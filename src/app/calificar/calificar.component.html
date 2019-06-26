@@ -1,0 +1,21 @@
+<ion-list lines="none">
+    <ion-item>
+      <ion-label text-center>
+        <ion-icon name="star" size="large" *ngFor="let num of [1,2,3,4,5]" (click)="rate(num)"
+          [ngStyle]="{'color':getColor(num)}"></ion-icon>
+      </ion-label>
+    </ion-item>
+    <ion-item text-center>
+      <ion-textarea text-center [value]="opinion" style="border: solid 0.1px;" #opinionD>
+      </ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label text-center>
+        <div text-center>
+          <ion-button shape="round" [disabled]="!rating" (click)="calificar(opinionD.value)">
+            Calificar
+          </ion-button>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>

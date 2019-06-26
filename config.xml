@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="bemte.ecuador" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Bemte</name>
+    <name>BemteAlumnos</name>
     <description>Bembe be my teacher</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -88,4 +88,5 @@
     <plugin name="cordova-plugin-filepath" spec="1.5.5" />
     <plugin name="cordova-sqlite-storage" spec="3.2.0" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
 </widget>

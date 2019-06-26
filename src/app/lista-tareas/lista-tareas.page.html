@@ -21,6 +21,7 @@
           <h5>{{tarea?.formato_entrega}}</h5>
           <h5>Estado: {{tarea?.estado.replace('_', ' ')}}</h5>
         </ion-label>
+        <ion-button (click)="calificar(tarea)"  slot="end">Calificar</ion-button>
       </ion-item>
       <div text-center *ngIf="tareasD.length === 0">
         <h3>No hay datos para mostrar</h3>

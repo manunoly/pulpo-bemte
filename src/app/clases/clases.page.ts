@@ -37,20 +37,24 @@ export class ClasesPage {
         return this.db.get('clase-activa?user_id=' + user.user_id);
       }
       return of(null);
-    }), first()).subscribe(clase => {
+    }), first()).subscribe(async (clase) => {
       if (clase != null && clase.hasOwnProperty('id')) {
         this.util.dismissLoading();
         this.router.navigateByUrl('clase-estado');
       } else {
-
         this.comboToBuy = this.db.getComboToBuy();
         if (!this.comboToBuy || this.comboToBuy['type'] == 'tareas' || this.comboToBuy.horas == undefined) {
           this.util.dismissLoading();
+          const horasDisponibles = await this.db.get('horas-alumno?user_id=' + this.user.user_id);
+
           this.db.setComboToBuy({ type: 'clases' })
-          this.router.navigateByUrl('combos');
-          return;
+
+          if (horasDisponibles.length == 0 || horasDisponibles[0] == 0) {
+            this.router.navigateByUrl('combos');
+            return;
+          }
         }
-        console.log('este es el combo que voy a comprar ', this.comboToBuy);
+        // console.log('este es el combo que voy a comprar ', this.comboToBuy);
         /**
          * TODO: buscar horas y combos disponibles
          */

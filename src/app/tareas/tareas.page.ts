@@ -51,7 +51,7 @@ export class TareasPage {
         if (this.user) {
           this.tareaForm.controls['user_id'].setValue(this.user.user_id);
           this.materias = this.db.get('lista-materias');
-        } else
+        } else 
           this.router.navigateByUrl('inicio');
       }
       setTimeout(() => {

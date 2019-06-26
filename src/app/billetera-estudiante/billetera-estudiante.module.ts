@@ -1,4 +1,3 @@
-import { MapPageModule } from './../map/map.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { InicioPage } from './inicio.page';
+import { BilleteraEstudiantePage } from './billetera-estudiante.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: InicioPage
+    component: BilleteraEstudiantePage
   }
 ];
 
@@ -19,10 +18,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    MapPageModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [InicioPage]
+  declarations: [BilleteraEstudiantePage]
 })
-export class InicioPageModule {}
+export class BilleteraEstudiantePageModule {}

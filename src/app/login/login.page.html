@@ -31,15 +31,20 @@
       <ion-row padding>
         <ion-col>
           <ion-button [disabled]="!authForm.valid" type="submit" padding expand="block" shape="round" color="primary">
-            Iniciar Sesión</ion-button>
+            Iniciar Sesión
+          </ion-button>
+          <ion-button (click)="olvideContrasena()" padding expand="block" shape="round" color="primary">
+            Olvidé mi contraseña
+          </ion-button>
         </ion-col>
       </ion-row>
-
     </form>
+
     <ion-row padding>
       <ion-col>
         <ion-button padding expand="block" (click)="registrar()" shape="round" color="primary">
-          Registrarse</ion-button>
+          Registrarse
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

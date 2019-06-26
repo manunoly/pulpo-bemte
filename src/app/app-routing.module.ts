@@ -29,7 +29,9 @@ const routes: Routes = [
   { path: 'lista-clases', loadChildren: './lista-clases/lista-clases.module#ListaClasesPageModule' },
   { path: 'solicitar-ser-profesor', loadChildren: './solicitar-ser-profesor/solicitar-ser-profesor.module#SolicitarSerProfesorPageModule' },
   { path: 'clases-pagar', loadChildren: './clases/clases-pagar/clases-pagar.module#ClasesPagarPageModule' },
-  { path: 'transferencias', loadChildren: './transferencias/transferencias.module#TransferenciasPageModule' }
+  { path: 'transferencias', loadChildren: './transferencias/transferencias.module#TransferenciasPageModule' },
+  { path: 'map', loadChildren: './map/map.module#MapPageModule' },
+  { path: 'billetera-estudiante', loadChildren: './billetera-estudiante/billetera-estudiante.module#BilleteraEstudiantePageModule' }
 ];
 
 @NgModule({

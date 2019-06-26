@@ -1,0 +1,30 @@
+<ion-content>
+  <ion-content>
+    <ion-fab style="padding-top: 20px;">
+      <ion-buttons>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-fab>
+
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+      {{ user?.nombres }} {{ user?.apellidos }}<br>
+      Estado de tu billetera
+    </h3>
+
+    <ion-grid *ngIf="horasCombos | async as horasCombosD; else loadD" padding class="ion-text-wrap">
+      <ion-row>
+        <ion-col>
+          <div text-center>
+            <p>{{horasCombosD |json}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ng-template #loadD>
+      <div text-center>
+        <ion-spinner></ion-spinner>
+        <h3>Espere por favor</h3>
+      </div>
+    </ng-template>
+  </ion-content>

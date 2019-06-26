@@ -1,9 +1,10 @@
+import { CalificarComponent } from './../calificar/calificar.component';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 
 import { of } from 'rxjs';
@@ -17,7 +18,7 @@ import { of } from 'rxjs';
 export class ListaTareasPage implements OnInit {
   tareas;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) { }
 
   async ngOnInit() {
     this.tareas = this.auth.user.pipe(
@@ -27,9 +28,14 @@ export class ListaTareasPage implements OnInit {
         return of(null)
       }
       ));
+  }
 
-    // this.tareas.subscribe(arg => console.log(arg));
-
+  async calificar(tarea) {
+    const modal = await this.modalController.create({
+      component: CalificarComponent,
+      componentProps: { idProfesor: tarea.user_id_pro, tarea: tarea.id }
+    });
+    return await modal.present();
   }
 
 }

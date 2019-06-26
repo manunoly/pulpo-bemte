@@ -17,6 +17,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { FCM } from '@ionic-native/fcm/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +37,8 @@ import { FCM } from '@ionic-native/fcm/ngx';
     File,
     WebView,
     FilePath,
-    FCM
+    FCM,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })

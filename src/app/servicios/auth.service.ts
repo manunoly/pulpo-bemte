@@ -64,7 +64,7 @@ export class AuthService {
     return this.currentUserSubject;
   }
 
-  async getUserData(){
+  async getUserData() {
     if (!this.userD)
       this.userD = await this.util.getStorage('user');
     return this.userD;
@@ -76,5 +76,17 @@ export class AuthService {
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
     this.router.navigateByUrl('login');
+  }
+
+  async olvidarContrasena(email) {
+    try {
+      this.util.showLoading();
+      const resp = await this.db.post('olvidar', { email: email });
+      if (resp && resp.success)
+        this.util.showMessage(resp.success);
+      this.util.dismissLoading();
+    } catch (error) {
+      this.util.dismissLoading();
+    }
   }
 }
