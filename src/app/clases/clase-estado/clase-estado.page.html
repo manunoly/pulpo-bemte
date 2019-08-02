@@ -1,13 +1,12 @@
 <ion-content>
 
-  <ion-content>
     <ion-fab style="padding-top: 20px;">
       <ion-buttons>
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
     </ion-fab>
 
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 10%">
       {{ user?.nombres }} {{ user?.apellidos }}<br>
       Estado de tu clase
     </h3>
@@ -17,7 +16,7 @@
         <ion-col>
           <div text-center>
             <ion-button size="small" (click)="actualizar()">Actualizar</ion-button>
-            <ion-button size="small" (click)="terminar(claseD)">Cancelar</ion-button>
+            <ion-button size="small" (click)="confirmarCancelar(claseD)">Cancelar</ion-button>
           </div>
         </ion-col>
       </ion-row>
@@ -113,62 +112,48 @@
 
       <ion-row *ngIf="claseD?.estado == 'Confirmado' && horasCombo | async as horasComboD">
         <ion-col text-center>
-          <div *ngIf="horasComboD.length > 0; else subirTransferencia">
-            <ion-list padding text-center style="background: #243356">
-              <ion-item>
-                <ion-label>
-                  <ion-row>
-                    <ion-col size="6"> Horas Disponible: </ion-col>
-                    <ion-col> {{horasComboD[0]?.horas}}</ion-col>
-                  </ion-row>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-row>
-                    <ion-col size="6"> Horas Clase: </ion-col>
-                    <ion-col> {{claseD?.duracion}}</ion-col>
-                  </ion-row>
-                </ion-label>
-              </ion-item>
-              </ion-list>
-              <p padding>¿Pagar con COMBO?</p>
-              <ion-row padding>
-                <ion-col size="4" offset="1">
-                  <ion-button shape="round" expand="block" size="small" (click)="atras()">ATRAS</ion-button>
-                </ion-col>
-                <ion-col size="4" offset="1">
-                  <ion-button shape="round" expand="block" size="small" (click)="pagarComboTieneHoras(claseD)">CONFIRMAR
-                  </ion-button>
-                </ion-col>
-              </ion-row>
+          <div *ngIf="horasComboD.length > 0;">
+            <p text-center padding>¿Pagar con COMBO?</p>
+            <ion-row padding>
+              <ion-col size="4" offset="1">
+                <ion-button shape="round" expand="block" size="small" (click)="atras()">ATRAS</ion-button>
+              </ion-col>
+              <ion-col size="4" offset="1">
+                <ion-button shape="round" expand="block" size="small" (click)="pagarComboTieneHoras(claseD)">Pagar
+                </ion-button>
+              </ion-col>
+            </ion-row>
           </div>
 
-          <ng-template #subirTransferencia>
-            <h3 text-center class="ion-padding-horizontal">Clase Confirmada</h3>
-            <ion-row>
-              <ion-col size="5"> Profesor: </ion-col>
-              <ion-col> {{claseD?.profesor}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="5">Tiempo:</ion-col>
-              <ion-col> {{claseD?.duracion}} Horas</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="5">Hora:</ion-col>
-              <ion-col>{{claseD?.hora_prof}}</ion-col>
-            </ion-row>
+          <div>
             <ion-row>
               <ion-col text-center>
-                <h5 padding small>Proceda a realizar el pago</h5>
+                <h5 padding small>Pagar con transferencia</h5>
                 <h5>Tiene 20 min. <br>
                   CC: 22xxx00982 BEMTE</h5>
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col size="6" offset="3">
-                <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
+              <ion-col *ngIf="!img || img.length === 0; else imgData" size="8" offset="2">
+                <ion-button size="block" (click)="subir()">Adjuntar Imagen</ion-button>
               </ion-col>
+
+              <ng-template #imgData>
+                <ion-col size="10" offset="1">
+                  <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
+                    <ion-thumbnail slot="start">
+                      <ion-img [src]="imgD.path"></ion-img>
+                    </ion-thumbnail>
+                    <ion-label>
+                      <h5>{{ imgD.name }}</h5>
+                    </ion-label>
+                    <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
+                      <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+              </ng-template>
+
             </ion-row>
             <ion-row>
               <ion-col size="4" offset="1">
@@ -176,11 +161,11 @@
               </ion-col>
               <ion-col size="4" offset="1">
                 <ion-button shape="round" expand="block" size="small" (click)="pagarClaseConTransferencia(claseD)">
-                  ACEPTAR
+                  Pagar
                 </ion-button>
               </ion-col>
             </ion-row>
-          </ng-template>
+          </div>
         </ion-col>
       </ion-row>
 
@@ -225,4 +210,4 @@
         <h3>Espere por favor</h3>
       </div>
     </ng-template>
-  </ion-content>
+</ion-content>

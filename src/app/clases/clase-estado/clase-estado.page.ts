@@ -1,3 +1,4 @@
+import { AlertController } from '@ionic/angular';
 import { UploadService } from './../../servicios/upload.service';
 import { UtilService } from './../../servicios/util.service';
 import { DbService } from './../../servicios/db.service';
@@ -17,8 +18,8 @@ export class ClaseEstadoPage implements OnInit {
   clase;
   user;
   horasCombo;
-
-  constructor(public upload: UploadService, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  img;
+  constructor(private alertController: AlertController, public upload: UploadService, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   ngOnInit() {
     this.actualizar();
@@ -77,6 +78,15 @@ export class ClaseEstadoPage implements OnInit {
       valor: claseD.precioCombo
     };
     try {
+      if (this.img.length > 0) {
+        data['archivo'] = this.img[0].name;
+        await this.upload.startUpload();
+      }
+      else {
+        this.util.showMessage('Por favor adjuntar imagen de pago');
+        return;
+      }
+
       this.util.showLoading();
       const resp = await this.db.post('subir-transferencia', data);
       if (resp && resp.success)
@@ -87,14 +97,40 @@ export class ClaseEstadoPage implements OnInit {
     }
   }
 
+  async confirmarCancelar(clase) {
+    const alert = await this.alertController.create({
+      header: 'Cancelar!',
+      message: 'Está seguro que desea cancelar? Puede implicar una penalización!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.terminar(clase);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async terminar(clase) {
     try {
       this.util.showLoading();
-      const resp = await this.db.post('clase-terminar', { clase_id: clase.id });
+      const user = await this.auth.getUserData();
+      const resp = await this.db.post('clase-terminar', { clase_id: clase.id, user_id: user.user_id, cancelar: 1, profesor: 0 });
       this.util.dismissLoading();
+      this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.router.navigateByUrl('clases');
+        this.router.navigateByUrl('inicio');
       }
     } catch (error) {
       this.util.dismissLoading();
@@ -103,8 +139,8 @@ export class ClaseEstadoPage implements OnInit {
 
   async subir() {
     try {
+      this.upload.imagesSubject.subscribe(img => this.img = img);
       await this.upload.selectImage();
-      // this.img = await this.upload.loadStoredImages();
     } catch (error) {
     }
   }

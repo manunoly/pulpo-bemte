@@ -20,9 +20,21 @@ export class TareasPage {
   user;
   rangosHorarios = [{ hora_inicio: '12:00', hora_fin: '13:00' }, { hora_inicio: '14:00', hora_fin: '16:00' }];
   img;
+  fechaMaxima;
+  fechaMinima;
+  hoy;
 
   constructor(public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService, public upload: UploadService) {
+      let currentDate = new Date();
+      this.hoy = currentDate;
+      this.hoy.setHours(1);
+      this.hoy = this.hoy.toISOString();
+      currentDate.setDate(1);
+      this.fechaMinima = currentDate.toISOString();
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      this.fechaMaxima = currentDate.toISOString();
+
     this.buildForm();
   }
 
@@ -126,7 +138,7 @@ export class TareasPage {
 
   async transferir() {
     try {
-      return await this.upload.startUpload();
+      return await this.upload.startUpload(); 
       // this.util.showMessage(JSON.stringify(resp));
     } catch (error) {
       // this.util.showMessage(JSON.stringify(error));

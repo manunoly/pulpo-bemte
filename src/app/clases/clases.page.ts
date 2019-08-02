@@ -23,9 +23,23 @@ export class ClasesPage {
   horasCombo;
   comprar;
   comboToBuy;
+  fechaMaxima;
+  fechaMinima;
+  hoy;
 
   constructor(private navigation: Location, public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService) {
+
+    let x = 12; //or whatever offset
+    let currentDate = new Date();
+    this.hoy = currentDate;
+    this.hoy.setHours(1);
+    this.hoy = this.hoy.toISOString();
+    currentDate.setDate(1);
+    this.fechaMinima = currentDate.toISOString();
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    this.fechaMaxima = currentDate.toISOString();
+
     this.buildForm();
   }
 
@@ -43,16 +57,18 @@ export class ClasesPage {
         this.router.navigateByUrl('clase-estado');
       } else {
         this.comboToBuy = this.db.getComboToBuy();
+        console.log('este es el combo a comprar', this.comboToBuy);
         if (!this.comboToBuy || this.comboToBuy['type'] == 'tareas' || this.comboToBuy.horas == undefined) {
           this.util.dismissLoading();
-          const horasDisponibles = await this.db.get('horas-alumno?user_id=' + this.user.user_id);
+          // const horasDisponibles = await this.db.get('horas-alumno?user_id=' + this.user.user_id);
 
           this.db.setComboToBuy({ type: 'clases' })
+          this.router.navigateByUrl('combos');
 
-          if (horasDisponibles.length == 0 || horasDisponibles[0] == 0) {
-            this.router.navigateByUrl('combos');
-            return;
-          }
+          // if (horasDisponibles.length == 0 || horasDisponibles[0] == 0) {
+          //   this.router.navigateByUrl('combos');
+          //   return;
+          // }
         }
         // console.log('este es el combo que voy a comprar ', this.comboToBuy);
         /**
@@ -89,8 +105,8 @@ export class ClasesPage {
       'personas': ['', Validators.required],
       'ejercicios': [''],
       'fecha': ['', Validators.required],
-      'hora1': [''],
-      'hora2': [''],
+      'hora1': ['', Validators.required],
+      'hora2': ['', Validators.required],
       'combo': [''],
       'horasCombo': [''],
       'precioCombo': [''],

@@ -11,13 +11,18 @@
       Estado de tu billetera
     </h3>
 
-    <ion-grid *ngIf="horasCombos | async as horasCombosD; else loadD" padding class="ion-text-wrap">
+    <ion-grid text-center *ngIf="horasCombos | async as horasCombosD; else loadD" padding class="ion-text-wrap">
       <ion-row>
-        <ion-col>
-          <div text-center>
-            <p>{{horasCombosD |json}}</p>
-          </div>
+        <ion-col size="8">
+          <h3> Combo </h3>
         </ion-col>
+        <ion-col size="4">
+          <h3> Horas </h3>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let combo of horasCombosD">
+        <ion-col size="8"> {{combo.combo}} </ion-col>
+        <ion-col size="4"> {{combo.horas}} </ion-col>
       </ion-row>
     </ion-grid>
 

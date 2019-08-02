@@ -1,3 +1,4 @@
+import { AuthService } from './../../servicios/auth.service';
 import { UtilService } from './../../servicios/util.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ComboDetallePage implements OnInit {
   combo;
-  constructor(private route: ActivatedRoute, private util: UtilService) { }
+  constructor(public auth: AuthService, private route: ActivatedRoute, private util: UtilService) { }
 
   ngOnInit() {
     const param = this.route.snapshot.paramMap.get('combo');
@@ -18,5 +19,5 @@ export class ComboDetallePage implements OnInit {
     } else
     this.combo = JSON.parse(param);
   }
-
+ 
 }

@@ -6,7 +6,12 @@
     </ion-buttons>
   </ion-fab>
 
-  <ion-grid style="padding-top: 80px;">
+  <ion-grid style="padding-top: 30px;">
+
+  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+      {{ user?.nombres }} {{ user?.apellidos }}<br>
+      Has escogido el combo {{combo?.nombre}}
+    </h3>
     <ion-row>
       <ion-col class="ion-padding-end">
         <ion-list style="background: #243356" lines="none">
@@ -17,7 +22,6 @@
           </ion-item>
           <ion-item>
             <ion-label>
-              <h4>{{combo?.nombre}}</h4>
               <div  class="ion-text-wrap" [innerHTML]="combo?.beneficios"></div>
             </ion-label>
           </ion-item>

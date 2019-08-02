@@ -21,8 +21,8 @@
           <h5>No. Alumnos: {{clase?.personas}}</h5>
           <h5>Ubicación: {{clase?.ubicacion}}</h5>
           <h5>Estado: {{clase?.estado.replace('_', ' ')}}</h5>
-
         </ion-label>
+        <ion-button (click)="calificar(clase)"  slot="end">Calificar</ion-button>
       </ion-item>
       <div text-center *ngIf="clasesD.length === 0">
         <h3>No hay datos para mostrar</h3>

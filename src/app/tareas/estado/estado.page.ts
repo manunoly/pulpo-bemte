@@ -1,3 +1,4 @@
+import { AlertController } from '@ionic/angular';
 import { UploadService } from './../../servicios/upload.service';
 import { UtilService } from './../../servicios/util.service';
 import { DbService } from './../../servicios/db.service';
@@ -19,7 +20,7 @@ export class EstadoPage implements OnInit {
   comboPago;
   comboHoras;
 
-  constructor(public upload: UploadService, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(private alertController: AlertController, public upload: UploadService, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   // ionViewWillEnter() {
   //   this.actualizar();
@@ -50,14 +51,41 @@ export class EstadoPage implements OnInit {
     // this.tarea = this.db.get('tarea-activa?user_id=' + this.user.user_id);
   }
 
+
+  async confirmarCancelar(tarea) {
+    const alert = await this.alertController.create({
+      header: 'Cancelar!',
+      message: 'Está seguro que desea cancelar? Puede implicar una penalización!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.terminar(tarea);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async terminar(tarea) {
     try {
       this.util.showLoading();
-      const resp = await this.db.post('tarea-terminar', { tarea_id: tarea.id });
+      const user = await this.auth.getUserData();
+      const resp = await this.db.post('tarea-terminar', { tarea_id: tarea.id, user_id: user.user_id, cancelar: 1, profesor: 0 });
       this.util.dismissLoading();
+      this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.router.navigateByUrl('tareas');
+        this.router.navigateByUrl('inicio');
       }
     } catch (error) {
       this.util.dismissLoading();

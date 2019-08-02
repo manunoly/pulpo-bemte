@@ -8,8 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { MapPage } from './map.page';
 
 const routes: Routes = [
-  {
-    path: ':id',
+ {
+    path: ':clase-ubicacion',
     component: MapPage
   }
 ];
@@ -23,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [MapPage]
 })
-export class MapPageModule {}
+export class MapPageModule { }

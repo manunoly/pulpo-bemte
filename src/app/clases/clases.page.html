@@ -27,7 +27,7 @@
                         <ion-textarea formControlName="tema" class="ion-text-end">
                         </ion-textarea>
                     </ion-item>
-                    <ion-item *ngIf="!comboToBuy" >
+                    <ion-item *ngIf="!comboToBuy">
                         <ion-label>Combos</ion-label>
                         <ion-select formControlName="combo" (ionChange)="loadHoras($event?.detail?.value)">
                             <ion-select-option *ngFor="let combo of combos | async" [value]="combo?.nombre">
@@ -45,14 +45,14 @@
                     </ion-item> -->
                     <ion-item>
                         <ion-label>Ejercicios</ion-label>
-                        <ion-input type="number" formControlName="ejercicios" class="ion-text-end"></ion-input>
+                        <ion-input type="text" formControlName="ejercicios" class="ion-text-end"></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label># Alumnos</ion-label>
                         <ion-input type="number" formControlName="personas" class="ion-text-end"></ion-input>
                     </ion-item>
-                    
+
                     <ion-item>
                         <ion-label>Duración</ion-label>
                         <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input>
@@ -60,8 +60,14 @@
 
                     <ion-item>
                         <ion-label>Fecha</ion-label>
-                        <ion-datetime formControlName="fecha" display-format="DD-MM-YYYY"></ion-datetime>
+                        <ion-datetime [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha"
+                            display-format="DD-MM-YYYY"></ion-datetime>
                     </ion-item>
+
+                    <h3 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
+                        Revise las fechas por favor
+                    </h3>
+
                     <ion-item>
                         <ion-label>Hora 1</ion-label>
                         <ion-datetime formControlName="hora1" display-format="HH:mm"></ion-datetime>

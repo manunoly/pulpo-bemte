@@ -27,10 +27,16 @@
                         <ion-textarea formControlName="tema" class="ion-text-end">
                         </ion-textarea>
                     </ion-item>
+
                     <ion-item lines="none">
                         <ion-label>Fecha entrega</ion-label>
-                        <ion-datetime formControlName="fecha_entrega" display-format="DD-MM-YYYY"></ion-datetime>
+                        <ion-datetime  [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha_entrega" display-format="DD-MM-YYYY"></ion-datetime>
                     </ion-item>
+
+                    <h3 *ngIf="tareaForm.value.fecha_entrega && tareaForm.value.fecha_entrega < hoy">
+                            Revise las fechas por favor
+                        </h3>
+
                     <ion-item lines="none">
                         <ion-label>Hora entrega</ion-label>
                         <ion-select formControlName="hora_rango">
@@ -54,7 +60,7 @@
             </ion-row>
             <ion-row>
                 <ion-col *ngIf="!img || img.length === 0; else imgData" size="6" offset="3">
-                    <ion-button size="block" (click)="subir()">Adjuntar archivo</ion-button>
+                    <ion-button size="block" (click)="subir()">Adjuntar Imagen</ion-button>
                     <!-- <ion-button size="block" (click)="transferir()">Transferir</ion-button> -->
                 </ion-col>
                 <ng-template #imgData>

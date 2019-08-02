@@ -6,7 +6,8 @@
   </ion-fab>
 
   <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-    {{ user?.nombres }} {{ user?.apellidos }},no dispones suficientes horas, elige un COMBO
+    {{ user?.nombres }} {{ user?.apellidos }}, <br>
+    elige un COMBO
   </h3>
   <div style="padding-top: 20%">
   </div>

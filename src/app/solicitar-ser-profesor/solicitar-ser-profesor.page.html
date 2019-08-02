@@ -7,10 +7,16 @@
 
   <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
     {{ user?.nombres }} {{ user?.apellidos }}<br>
-    Genial, por favor completa la información.
+    
   </h3>
 
-  <form [formGroup]="profesorForm">
+    <div text-center>
+      <ion-button (click)="goto()">Genera ganancias con tu mente </ion-button>
+    </div>
+
+
+
+  <!-- <form [formGroup]="profesorForm">
     <ion-list padding>
       <ion-item>
         <ion-label position="floating">Cédula</ion-label>
@@ -40,5 +46,5 @@
         <ion-button [disabled]="!profesorForm.valid" (click)="solitar()" size="block">Solicitar</ion-button>
       </ion-col>
     </ion-row>
-  </form>
+  </form> -->
 </ion-content>

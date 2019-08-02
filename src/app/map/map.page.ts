@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { UtilService } from './../servicios/util.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -20,40 +21,49 @@ export class MapPage implements OnInit {
   constructor(private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
-    console.log(this.ubicacion);
+    console.log('la ubicacion', this.ubicacion);
     this.loadMap();
   }
 
   async loadMap() {
-    this.util.showLoading();
-    let myLatLng
-    try {
-      myLatLng = await this.getLocation();
-    } catch (error) {
+    // this.util.showLoading();
+    let myLatLng = { lat: -0.1740159, lng: -78.463816299 };
+    if (this.ubicacion)
+      myLatLng = this.ubicacion;
+    else {
+      try {
+        myLatLng = await this.getLocation();
+      } catch (error) {
+        console.log('error capturando la geolocalizacion', error);
+      }
     }
-
     const mapEle: HTMLElement = document.getElementById('map');
     // const mapEle: HTMLElement = this.mapElement.nativeElement;
     this.mapRef = new google.maps.Map(mapEle, {
       center: myLatLng,
       zoom: 12
     });
+
     google.maps.event
       .addListenerOnce(this.mapRef, 'idle', () => {
+        console.log('esta listo el mapa');
         this.addMaker(myLatLng.lat, myLatLng.lng);
-        this.util.dismissLoading();
+        setTimeout(async () => {
+          await this.util.dismissLoading();
+        }, 100);
       });
   }
 
-  private addMaker(lat: number, lng: number) {
+  addMaker(lat: number, lng: number) {
     this.markerUbicacion = new google.maps.Marker({
       position: { lat, lng },
       map: this.mapRef,
+      draggable: this.ubicacion ? false : true,
       title: 'Ubicación!'
     });
   }
 
-  private async getLocation() {
+  async getLocation() {
     const rta = await this.geolocation.getCurrentPosition();
     return {
       lat: rta.coords.latitude,
@@ -62,6 +72,14 @@ export class MapPage implements OnInit {
   }
 
   close() {
-    this.modalController.dismiss();
+    let ubicacionClase;
+    /**
+     * FIXME: verificar el codigo que captura la ubicacion de un marcador.
+     */
+    if (!this.ubicacion) {
+      ubicacionClase = { lat: this.markerUbicacion.getPosition().lat(), lng: this.markerUbicacion.getPosition().lng() };
+      console.log('estas coordenadas para la clase', ubicacionClase);
+    }
+    this.modalController.dismiss(ubicacionClase);
   }
 }

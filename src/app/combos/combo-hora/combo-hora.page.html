@@ -41,6 +41,10 @@
 
   <!-- paso confirmar -->
   <ion-grid *ngIf="confirmar" text-center>
+    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+      {{ user?.nombres }} {{ user?.apellidos }}<br>
+      Has escogido el combo
+    </h3>
     <div *ngIf="!pagarCombo">
       <h3 *ngIf="combo" padding>
         {{ combo }}

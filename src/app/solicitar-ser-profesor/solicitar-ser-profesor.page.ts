@@ -22,6 +22,10 @@ export class SolicitarSerProfesorPage implements OnInit {
   ngOnInit() {
   }
 
+  goto(){
+    window.location.assign('https://play.google.com/store/apps');
+  }
+
   buildForm() {
     this.profesorForm = this.fb.group({
       'user_id': [''],

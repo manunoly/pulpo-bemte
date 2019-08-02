@@ -23,8 +23,8 @@ export class InicioPage implements OnInit {
 
   async map(){
     const modal = await this.modalController.create({
-      component: MapPage,
-      componentProps: { ubicacion: 'races' }
+      component: MapPage, 
+      // componentProps: { ubicacion: { lat: -0.1740159, lng: -78.463816299 } }
     });
     return await modal.present();
   }
