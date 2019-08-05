@@ -87,6 +87,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.1" />
     <plugin name="cordova-plugin-filepath" spec="1.5.5" />
     <plugin name="cordova-sqlite-storage" spec="3.2.0" />
-    <engine name="android" spec="7.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <engine name="android" spec="7.1.4" />
 </widget>

@@ -21,6 +21,7 @@ export class CalificarComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.idProfesor);
+    console.log('la clase ',this.clase);
    }
 
 

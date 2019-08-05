@@ -31,6 +31,7 @@ export class ListaClasesPage implements OnInit {
 
 
   async calificar(clase) {
+    console.log('califica esta clase', clase);
     const modal = await this.modalController.create({
       component: CalificarComponent,
       componentProps: { idProfesor: clase.user_id_pro, clase: clase.id }

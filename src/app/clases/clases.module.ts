@@ -1,3 +1,4 @@
+import { MapPageModule } from './../map/map.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    MapPageModule,
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)

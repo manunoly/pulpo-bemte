@@ -50,7 +50,7 @@
 
                     <ion-item>
                         <ion-label># Alumnos</ion-label>
-                        <ion-input type="number" formControlName="personas" class="ion-text-end"></ion-input>
+                        <ion-input type="number" min="1" max="5" formControlName="personas" class="ion-text-end"></ion-input>
                     </ion-item>
 
                     <ion-item>
@@ -77,14 +77,22 @@
                         <ion-datetime formControlName="hora2" display-format="HH:mm"></ion-datetime>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label>Ubicación</ion-label>
-                        <ion-select formControlName="ubicacion">
-                            <ion-select-option *ngFor="let sede of sedes | async" [value]="sede.nombre">
-                                {{sede.nombre}}
-                            </ion-select-option>
-                        </ion-select>
+                    <ion-item *ngIf="map; else notMap" (click)="goToMap()">
+                        <ion-icon color="light" name="school" slot="start"></ion-icon>
+                        <ion-label>Ubicación en el mapa</ion-label>
                     </ion-item>
+
+                    <ng-template #notMap>
+                        <ion-item class="ion-text-wrap">
+                            <ion-label>Ubicación</ion-label>
+                            <ion-select formControlName="ubicacion">
+                                <ion-select-option *ngFor="let sede of sedes | async" [value]="sede.nombre">
+                                    {{sede.nombre}}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </ng-template>
+
                 </ion-col>
             </ion-row>
             <ion-row>

@@ -1,3 +1,5 @@
+import { MapPage } from './../map/map.page';
+import { ModalController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
@@ -26,8 +28,9 @@ export class ClasesPage {
   fechaMaxima;
   fechaMinima;
   hoy;
+  map;
 
-  constructor(private navigation: Location, public auth: AuthService, private db: DbService, private router: Router,
+  constructor(private modalController: ModalController, private navigation: Location, public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService) {
 
     let x = 12; //or whatever offset
@@ -78,8 +81,12 @@ export class ClasesPage {
         if (this.user) {
           this.materias = this.db.get('lista-materias');
           this.sedes = this.db.get('lista-sedes');
-          this.combos = this.db.get('lista-combos');
           this.claseForm.controls['user_id'].setValue(this.user.user_id);
+          this.db.get('lista-combos').then(resp => {
+            const combo = resp.filter(x => x.nombre == this.comboToBuy.combo);
+            this.map = combo && combo[0] && combo[0]['direccion'] == 1 ? true : false;
+          })
+
         } else
           this.router.navigateByUrl('inicio');
       }
@@ -102,18 +109,19 @@ export class ClasesPage {
       'user_id': ['', Validators.required],
       'materia': ['', Validators.required],
       'tema': ['', Validators.required],
-      'personas': ['', Validators.required],
+      'personas': ['1', [Validators.required,Validators.min(1),Validators.max(5)]],
       'ejercicios': [''],
       'fecha': ['', Validators.required],
       'hora1': ['', Validators.required],
-      'hora2': ['', Validators.required],
+      'hora2': ['', ],
       'combo': [''],
       'horasCombo': [''],
       'precioCombo': [''],
-      'duracion': [''],
+      'duracion': ['2', [Validators.required,Validators.min(2),Validators.max(8)]],
       'hora': [''],
       'selProfesor': ['false'],
-      'ubicacion': ['', Validators.required]
+      'ubicacion': ['', Validators.required],
+      'coordenadas': ['']
     });
   }
 
@@ -165,7 +173,8 @@ export class ClasesPage {
       this.claseForm.controls['precioCombo'].setValue(precio);
       this.claseForm.controls['fecha'].setValue(this.claseForm.value.fecha.slice(0, 10));
       this.claseForm.controls['hora1'].setValue(this.claseForm.value.hora1.slice(11, 16));
-      this.claseForm.controls['hora2'].setValue(this.claseForm.value.hora2.slice(11, 16));
+      if(this.claseForm.value.hora2)
+        this.claseForm.controls['hora2'].setValue(this.claseForm.value.hora2.slice(11, 16));
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-clase', this.claseForm.value);
@@ -185,4 +194,17 @@ export class ClasesPage {
     this.navigation.back();
   }
 
+  async goToMap(){
+    const modal = await this.modalController.create({
+      component: MapPage, 
+      // componentProps: { ubicacion: { lat: -0.1740159, lng: -78.463816299 } }
+    });
+    modal.onDidDismiss().then(data=>{
+      if(data){
+        this.claseForm.controls['ubicacion'].setValue('mapa');
+        this.claseForm.controls['coordenadas'].setValue(JSON.stringify(data.data));
+      }
+    })
+    return await modal.present();
+  }
 }
