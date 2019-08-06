@@ -43,19 +43,35 @@
                             </ion-select-option>
                         </ion-select>
                     </ion-item> -->
-                    <ion-item>
+                    <!-- <ion-item>
                         <ion-label>Ejercicios</ion-label>
                         <ion-input type="text" formControlName="ejercicios" class="ion-text-end"></ion-input>
-                    </ion-item>
+                    </ion-item> -->
 
                     <ion-item>
-                        <ion-label># Alumnos</ion-label>
-                        <ion-input type="number" min="1" max="5" formControlName="personas" class="ion-text-end"></ion-input>
+                        <ion-label>Alumnos</ion-label>
+                        <ion-select formControlName="personas">
+                            <ion-select-option value="1">1</ion-select-option>
+                            <ion-select-option value="2">2</ion-select-option>
+                            <ion-select-option value="3">3</ion-select-option>
+                            <ion-select-option value="4">4</ion-select-option>
+                            <ion-select-option value="5">5</ion-select-option>
+                          </ion-select>
+                        <!-- <ion-input type="number" min="1" max="5" formControlName="personas" class="ion-text-end"></ion-input> -->
                     </ion-item>
 
                     <ion-item>
                         <ion-label>Duración</ion-label>
-                        <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input>
+                        <!-- <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input> -->
+                        <ion-select formControlName="duracion">
+                            <ion-select-option value="2">2</ion-select-option>
+                            <ion-select-option value="3">3</ion-select-option>
+                            <ion-select-option value="4">4</ion-select-option>
+                            <ion-select-option value="5">5</ion-select-option>
+                            <ion-select-option value="6">6</ion-select-option>
+                            <ion-select-option value="7">7</ion-select-option>
+                            <ion-select-option value="8">8</ion-select-option>
+                          </ion-select>
                     </ion-item>
 
                     <ion-item>
@@ -70,11 +86,11 @@
 
                     <ion-item>
                         <ion-label>Hora 1</ion-label>
-                        <ion-datetime formControlName="hora1" display-format="HH:mm"></ion-datetime>
+                        <ion-datetime formControlName="hora1" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
                     </ion-item>
                     <ion-item>
                         <ion-label>Hora 2</ion-label>
-                        <ion-datetime formControlName="hora2" display-format="HH:mm"></ion-datetime>
+                        <ion-datetime formControlName="hora2" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
                     </ion-item>
 
                     <ion-item *ngIf="map; else notMap" (click)="goToMap()">

@@ -110,7 +110,7 @@ export class ClasesPage {
       'materia': ['', Validators.required],
       'tema': ['', Validators.required],
       'personas': ['1', [Validators.required,Validators.min(1),Validators.max(5)]],
-      'ejercicios': [''],
+      // 'ejercicios': [''],
       'fecha': ['', Validators.required],
       'hora1': ['', Validators.required],
       'hora2': ['', ],
