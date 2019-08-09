@@ -26,6 +26,7 @@ export class InicioPage implements OnInit {
       component: MapPage, 
       // componentProps: { ubicacion: { lat: -0.1740159, lng: -78.463816299 } }
     });
+    modal.onDidDismiss().then(data=>console.log(data))
     return await modal.present();
   }
 }

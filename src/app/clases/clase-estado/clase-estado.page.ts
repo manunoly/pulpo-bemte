@@ -98,9 +98,11 @@ export class ClaseEstadoPage implements OnInit {
   }
 
   async confirmarCancelar(clase) {
+    if(!clase || clase == {})
+      return;
     const alert = await this.alertController.create({
       header: 'Cancelar!',
-      message: 'Está seguro que desea cancelar? Puede implicar una penalización!',
+      message: 'Al cancelar se le descuenta 1 hora, si es 3 horas o menos de la clase se descuentan todas las horas, Desea cancelar?',
       buttons: [
         {
           text: 'No',

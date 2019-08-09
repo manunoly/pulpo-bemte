@@ -145,6 +145,38 @@ export class TareasPage {
     }
   }
 
+
+  async validarHora(fechaD) {
+    let fecha = new Date(fechaD);
+    let hoy = new Date(this.hoy);
+
+
+    let diff = fecha.getTime() - hoy.getTime();
+    if(diff/(1000*60*60*24) > 30){
+      this.util.showMessage("Solicite su tarea con 30 días máximo de antelación");
+      this.tareaForm.controls["hora_rango"].setValue("");
+      this.tareaForm.controls["fecha_entrega"].setValue("");
+      return;
+    }
+
+    if (hoy.getMonth() == fecha.getMonth() && hoy.getDate() > fecha.getDate()) {
+      this.tareaForm.controls["fecha_entrega"].setValue("");
+      this.tareaForm.controls["hora_rango"].setValue("");
+      this.util.showMessage("Revise las fechas por favor");
+      return;
+    }
+    if (
+      hoy.getMonth() == fecha.getMonth() &&
+      hoy.getDate() == fecha.getDate()
+    ) {
+      this.util.showMessage("La tarea debe ser solicitada con 3 horas de antelación");
+
+      // FIXME:arreglar la validacion para la fecha del mismo dia
+      // console.log("la fecha es hoy");
+      // this.tareaForm.controls["hora_rango"].setValue("");
+    }
+  }
+
   atras() {
     this.router.navigateByUrl('inicio');
   }

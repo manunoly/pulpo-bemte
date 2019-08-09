@@ -71,15 +71,45 @@ export class MapPage implements OnInit {
     };
   }
 
-  close() {
+  async close() {
     let ubicacionClase;
+    let lugar
     /**
      * FIXME: verificar el codigo que captura la ubicacion de un marcador.
      */
     if (!this.ubicacion) {
       ubicacionClase = { lat: this.markerUbicacion.getPosition().lat(), lng: this.markerUbicacion.getPosition().lng() };
-      console.log('estas coordenadas para la clase', ubicacionClase);
+      try {
+        lugar = await this.geocodeTransform(ubicacionClase);
+      } catch (error) {
+        console.log('error capturando la direccion segun las coordenadas', error);
+      }
+      console.log('estas coordenadas para la clase', ubicacionClase, lugar);
+      this.modalController.dismiss({ coordenadas: ubicacionClase, ubicacion: lugar });
+      return
     }
-    this.modalController.dismiss(ubicacionClase);
+    this.modalController.dismiss()
+  }
+
+  async geocodeTransform(location) {
+
+    let to = { latLng: location };
+    const geocoder = new google.maps.Geocoder();
+
+
+    const geocoderQuery = new Promise((resolve, reject) => {
+      geocoder.geocode(to, (results, status) => {
+        if (status === "OK") {
+          let locate;
+
+          locate = results[0].formatted_address;
+          return resolve(locate);
+        } else {
+          console.log("Error - ", results, " & Status - ", status);
+          return resolve(status);
+        }
+      });
+    });
+    return await geocoderQuery;
   }
 }

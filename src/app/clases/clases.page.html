@@ -76,33 +76,38 @@
 
                     <ion-item>
                         <ion-label>Fecha</ion-label>
-                        <ion-datetime [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha"
+                        <ion-datetime (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha"
                             display-format="DD-MM-YYYY"></ion-datetime>
                     </ion-item>
 
-                    <h3 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
+                    <!-- <h3 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
                         Revise las fechas por favor
-                    </h3>
+                    </h3> -->
 
                     <ion-item>
                         <ion-label>Hora 1</ion-label>
-                        <ion-datetime formControlName="hora1" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
+                        <ion-datetime [disabled]="!claseForm.value.fecha" formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
                     </ion-item>
                     <ion-item>
                         <ion-label>Hora 2</ion-label>
-                        <ion-datetime formControlName="hora2" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
+                        <ion-datetime [disabled]="!claseForm.value.fecha"  formControlName="hora2" [hourValues]="minHora"  minuteValues="0,30" display-format="HH:mm"></ion-datetime>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label class="ion-text-wrap" >Solicitar último profesor</ion-label>
+                        <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
 
                     <ion-item *ngIf="map; else notMap" (click)="goToMap()">
-                        <ion-icon color="light" name="school" slot="start"></ion-icon>
-                        <ion-label>Ubicación en el mapa</ion-label>
+                        <ion-icon color="light" name="locate" slot="start"></ion-icon>
+                        <ion-label class="ion-text-wrap" >Ubicación {{claseForm?.value?.ubicacion}}</ion-label>
                     </ion-item>
 
                     <ng-template #notMap>
-                        <ion-item class="ion-text-wrap">
+                        <ion-item>
                             <ion-label>Ubicación</ion-label>
-                            <ion-select formControlName="ubicacion">
-                                <ion-select-option *ngFor="let sede of sedes | async" [value]="sede.nombre">
+                            <ion-select class="ion-text-wrap" formControlName="ubicacion">
+                                <ion-select-option  class="ion-text-wrap" *ngFor="let sede of sedes | async" [value]="sede.nombre">
                                     {{sede.nombre}}
                                 </ion-select-option>
                             </ion-select>
