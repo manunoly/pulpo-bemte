@@ -90,6 +90,7 @@ export class UploadService {
         this.images.push({ name: img, path: resPath, filePath: filePath });
       }
     }
+    this.imagesSubject.next(this.images);
     return this.images;
   }
 
@@ -185,8 +186,10 @@ export class UploadService {
       );
 
       this.file.removeFile(correctPath, imgEntry.name).then(res => {
-        this.presentToast("Imagen temporal eliminada");
-        this.imagesSubject.next(this.images);
+        // this.presentToast("Imagen temporal eliminada");
+        setTimeout(() => {
+          this.loadStoredImages();
+        }, 1000);
       });
     });
   }
@@ -244,8 +247,10 @@ export class UploadService {
             this.presentToast("Archivo subido exitosamente.");
             setTimeout(async () => {
               const imgs = await this.loadStoredImages();
-              if (this.images && this.images.length > 0)
-                this.deleteImage(this.images[0]);
+              if (imgs && imgs.length > 0)
+                imgs.forEach(element => {
+                  this.deleteImage(element);
+                });
             }, 2000);
           } else {
             this.presentToast("Error subiendo archivo.");

@@ -11,6 +11,12 @@
       Estado de tu billetera
     </h3>
 
+    <div text-center>
+    <ion-button (click)="recargarCombos()">
+        <ion-icon slot="start" name="wallet"></ion-icon>
+        Recargar Horas
+      </ion-button>
+    </div>
     <ion-grid text-center *ngIf="horasCombos | async as horasCombosD; else loadD" padding class="ion-text-wrap">
       <ion-row>
         <ion-col size="8">

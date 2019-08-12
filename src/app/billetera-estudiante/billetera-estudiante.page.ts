@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../servicios/auth.service';
 import { DbService } from './../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ import { of } from 'rxjs';
 export class BilleteraEstudiantePage implements OnInit {
   horasCombos;
 
-  constructor(public auth: AuthService, private db: DbService) { }
+  constructor(private router: Router, public auth: AuthService, private db: DbService) { }
 
   ngOnInit() {
     this.horasCombos = this.auth.user.pipe(
@@ -24,4 +25,8 @@ export class BilleteraEstudiantePage implements OnInit {
       ));
   }
 
+  recargarCombos(){
+    this.db.setComboToBuy('');
+    this.router.navigateByUrl('combos');
+  }
 }

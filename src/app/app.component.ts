@@ -64,11 +64,12 @@ export class AppComponent {
       url: '/lista-tareas',
       icon: 'list'
     },
+    // {
+    //   title: 'Combos',
+    //   url: '/combos',
+    //   icon: 'list'
+    // },
     {
-      title: 'Combos',
-      url: '/combos',
-      icon: 'list'
-    },{
       title: 'Mi Billeta',
       url: '/billetera-estudiante',
       icon: 'logo-usd'

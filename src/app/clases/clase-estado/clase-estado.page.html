@@ -112,6 +112,7 @@
 
       <ion-row *ngIf="claseD?.estado == 'Confirmado' && horasCombo | async as horasComboD">
         <ion-col text-center>
+          <h3>Clase aceptada por el profesor: {{claseD?.aplica_prof}}</h3>
           <div *ngIf="horasComboD.length > 0;">
             <p text-center padding>¿Pagar con COMBO?</p>
             <ion-row padding>
