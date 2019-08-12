@@ -1,0 +1,30 @@
+<ion-content>
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
+
+  <h3
+    text-center
+    *ngIf="auth.currentUser | async as user"
+    padding
+    style="padding-top: 20%"
+  >
+    {{ user?.nombres }} {{ user?.apellidos }}<br />
+  </h3>
+
+  <div text-center>
+    <ion-button (click)="goto()">
+      <ion-icon slot="start" name="logo-youtube"></ion-icon>
+      Canal de Youtube
+    </ion-button>
+  </div>
+  <br>
+  <ion-item>
+    <ion-label>
+      <h1 text-center>Ayuda</h1>
+      <div class="ion-text-wrap" [innerHTML]="ayuda"></div>
+    </ion-label>
+  </ion-item>
+</ion-content>

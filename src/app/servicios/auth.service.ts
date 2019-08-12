@@ -57,7 +57,6 @@ export class AuthService {
     this.util.setStorage('user', user);
     this.currentUserSubject.next(JSON.parse(user));
     this.isAuthenticatedSubject.next(true);
-    this.router.navigateByUrl('login');
   }
 
   get user(): Observable<any> {
@@ -81,7 +80,7 @@ export class AuthService {
   async olvidarContrasena(email) {
     try {
       this.util.showLoading();
-      const resp = await this.db.post('olvidar', { email: email });
+      const resp = await this.db.post('resetPass', { email: email });
       if (resp && resp.success)
         this.util.showMessage(resp.success);
       this.util.dismissLoading();

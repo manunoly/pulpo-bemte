@@ -1,35 +1,54 @@
-import { AuthService } from './auth.service';
-import { UtilService } from './util.service';
-import { Injectable, } from '@angular/core';
+import { AuthService } from "./auth.service";
+import { UtilService } from "./util.service";
+import { Injectable } from "@angular/core";
 
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-import { ActionSheetController, ToastController, Platform, LoadingController } from '@ionic/angular';
-import { File, FileEntry } from '@ionic-native/file/ngx';
-import { HttpClient } from '@angular/common/http';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { Storage } from '@ionic/storage';
-import { FilePath } from '@ionic-native/file-path/ngx';
+import {
+  Camera,
+  CameraOptions,
+  PictureSourceType
+} from "@ionic-native/camera/ngx";
+import {
+  ActionSheetController,
+  ToastController,
+  Platform,
+  LoadingController
+} from "@ionic/angular";
+import { File, FileEntry } from "@ionic-native/file/ngx";
+import { HttpClient } from "@angular/common/http";
+import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { Storage } from "@ionic/storage";
+import { FilePath } from "@ionic-native/file-path/ngx";
 
-import { finalize } from 'rxjs/operators';
+import { finalize } from "rxjs/operators";
 
-import { environment } from 'src/environments/environment.prod';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from "src/environments/environment.prod";
+import { BehaviorSubject, Observable } from "rxjs";
+import { async } from "@angular/core/testing";
 
-const STORAGE_KEY = 'my_images';
-
+const STORAGE_KEY = "my_images";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UploadService {
   images = [];
   public imagesSubject = new BehaviorSubject(this.images);
 
-  constructor(private camera: Camera, private file: File, private http: HttpClient, private webview: WebView,
-    private actionSheetController: ActionSheetController, private toastController: ToastController,
-    private storage: Storage, private plt: Platform, private loadingController: LoadingController,
-    private filePath: FilePath, public util: UtilService, private platform: Platform,
-    private auth: AuthService) { }
+  constructor(
+    private camera: Camera,
+    private file: File,
+    private http: HttpClient,
+    private webview: WebView,
+    private actionSheetController: ActionSheetController,
+    private toastController: ToastController,
+    private storage: Storage,
+    private plt: Platform,
+    private loadingController: LoadingController,
+    private filePath: FilePath,
+    public util: UtilService,
+    private platform: Platform,
+    private auth: AuthService
+  ) {}
 
   get imagesO(): Observable<any> {
     return this.imagesSubject;
@@ -43,14 +62,19 @@ export class UploadService {
   }
 
   copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file.copyFile(namePath, currentName, this.file.dataDirectory, newFileName).then(success => {
-      this.updateStoredImages(newFileName);
-
-    }, error => {
-      this.presentToast('Error mientras se capturaba el archivo.');
-    }).catch(error => {
-      this.presentToast('Error mientras se capturaba el archivo.');
-    });
+    this.file
+      .copyFile(namePath, currentName, this.file.dataDirectory, newFileName)
+      .then(
+        success => {
+          this.updateStoredImages(newFileName);
+        },
+        error => {
+          this.presentToast("Error mientras se capturaba el archivo.");
+        }
+      )
+      .catch(error => {
+        this.presentToast("Error mientras se capturaba el archivo.");
+      });
   }
 
   async loadStoredImages() {
@@ -58,7 +82,7 @@ export class UploadService {
 
     this.images = [];
     if (images) {
-      console.log('tengo imagenes');
+      console.log("tengo imagenes");
       let arr = JSON.parse(images);
       for (let img of arr) {
         let filePath = this.file.dataDirectory + img;
@@ -71,7 +95,7 @@ export class UploadService {
 
   pathForImage(img) {
     if (img === null) {
-      return '';
+      return "";
     } else {
       let converted = this.webview.convertFileSrc(img);
       return converted;
@@ -84,24 +108,37 @@ export class UploadService {
 
   takePicture(sourceType: PictureSourceType) {
     var options: CameraOptions = {
-      quality: 100,
+      quality: 40,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
-      correctOrientation: true,
+      correctOrientation: true
     };
 
     this.camera.getPicture(options).then(imagePath => {
-      if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-        this.filePath.resolveNativePath(imagePath)
-          .then(filePath => {
-            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-            let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-          });
+      if (
+        this.platform.is("android") &&
+        sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
+      ) {
+        this.filePath.resolveNativePath(imagePath).then(filePath => {
+          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+          let currentName = imagePath.substring(
+            imagePath.lastIndexOf("/") + 1,
+            imagePath.lastIndexOf("?")
+          );
+          this.copyFileToLocalDir(
+            correctPath,
+            currentName,
+            this.createFileName()
+          );
+        });
       } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
+        var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
+        this.copyFileToLocalDir(
+          correctPath,
+          currentName,
+          this.createFileName()
+        );
       }
     });
   }
@@ -113,7 +150,7 @@ export class UploadService {
         let newImages = [name];
         this.storage.set(STORAGE_KEY, JSON.stringify(newImages));
       } else {
-        // este codigo agrega las imagenes al local, por ahora sera solo 1 
+        // este codigo agrega las imagenes al local, por ahora sera solo 1
         arr.push(name);
         this.storage.set(STORAGE_KEY, JSON.stringify(arr));
       }
@@ -134,7 +171,6 @@ export class UploadService {
     });
   }
 
-
   deleteImage(imgEntry, position = 1) {
     this.images.splice(position, 1);
 
@@ -143,10 +179,13 @@ export class UploadService {
       let filtered = arr.filter(name => name != imgEntry.name);
       this.storage.set(STORAGE_KEY, JSON.stringify(filtered));
 
-      var correctPath = imgEntry.filePath.substr(0, imgEntry.filePath.lastIndexOf('/') + 1);
+      var correctPath = imgEntry.filePath.substr(
+        0,
+        imgEntry.filePath.lastIndexOf("/") + 1
+      );
 
       this.file.removeFile(correctPath, imgEntry.name).then(res => {
-        this.presentToast('Eliminado.');
+        this.presentToast("Imagen temporal eliminada");
         this.imagesSubject.next(this.images);
       });
     });
@@ -158,12 +197,13 @@ export class UploadService {
       imgEntry = imgs[0];
     }
 
-    this.file.resolveLocalFilesystemUrl(imgEntry.filePath)
+    return this.file
+      .resolveLocalFilesystemUrl(imgEntry.filePath)
       .then(entry => {
-        (<FileEntry>entry).file(file => this.readFile(file))
+        (<FileEntry>entry).file(file => this.readFile(file));
       })
       .catch(err => {
-        this.presentToast('Error while reading file to upload.');
+        this.presentToast("Error al leer el archivo.");
         return false;
       });
   }
@@ -175,8 +215,8 @@ export class UploadService {
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
-      formData.append('mimeType', 'multipart/form-data');
-      formData.append('file', imgBlob, file.name);
+      formData.append("mimeType", "multipart/form-data");
+      formData.append("file", imgBlob, file.name);
       this.uploadImageData(formData);
     };
     reader.readAsArrayBuffer(file);
@@ -184,53 +224,63 @@ export class UploadService {
 
   async uploadImageData(formData: FormData) {
     const user = await this.auth.getUserData();
-    formData.append('user_id', user.user_id);
+    formData.append("user_id", user.user_id);
     const loading = await this.loadingController.create({
-      message: 'Subiendo...',
+      message: "Subiendo imagen..."
     });
     await loading.present();
 
-    this.http.post(environment.api_url + "subir-archivo", formData)
+    return this.http
+      .post(environment.api_url + "subir-archivo", formData)
       .pipe(
         finalize(() => {
           loading.dismiss();
         })
       )
-      .subscribe(res => {
-        // alert(JSON.stringify(res));
-        if (res['success']) {
-          this.presentToast('Archivo subido exitosamente.');
-        } else {
-          this.presentToast('Error subiendo archivo.');
+      .subscribe(
+        res => {
+          // alert(JSON.stringify(res));
+          if (res["success"]) {
+            this.presentToast("Archivo subido exitosamente.");
+            setTimeout(async () => {
+              const imgs = await this.loadStoredImages();
+              if (this.images && this.images.length > 0)
+                this.deleteImage(this.images[0]);
+            }, 2000);
+          } else {
+            this.presentToast("Error subiendo archivo.");
+          }
+        },
+        error => {
+          this.presentToast("Error subiendo archivo.");
+          // setTimeout(() => {
+          //   alert(JSON.stringify(error));
+          // }, 2000);
+          // this.presentToast('error ' + JSON.stringify(error.error));
         }
-      }, error => {
-        this.presentToast('Error subiendo archivo.');
-        // setTimeout(() => {
-        //   alert(JSON.stringify(error));
-        // }, 2000);
-        // this.presentToast('error ' + JSON.stringify(error.error));
-      });
+      );
   }
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Selecciona imagen",
-      buttons: [{
-        text: 'Cargar desde galeria local',
-        handler: () => {
-          return this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+      buttons: [
+        {
+          text: "Cargar desde galeria local",
+          handler: () => {
+            return this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        {
+          text: "Usar Camara",
+          handler: () => {
+            return this.takePicture(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: "Cancelar",
+          role: "cancel"
         }
-      },
-      {
-        text: 'Usar Camara',
-        handler: () => {
-          return this.takePicture(this.camera.PictureSourceType.CAMERA);
-        }
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel'
-      }
       ]
     });
     await actionSheet.present();

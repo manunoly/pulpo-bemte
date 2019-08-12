@@ -1,0 +1,41 @@
+<ion-content>
+  <ion-fab style="padding-top: 20px;">
+    <ion-buttons>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-fab>
+
+  <h3
+    text-center
+    *ngIf="auth.currentUser | async as user"
+    padding
+    style="padding-top: 20%"
+  >
+    {{ user?.nombres }} {{ user?.apellidos }}, <br />
+    Prueba una clase gratis
+  </h3>
+  <div style="padding-top: 10%"></div>
+  <ion-grid *ngIf="clases | async as clasesD; else loadD">
+    <ion-row *ngFor="let clase of clasesD">
+      <ion-col *ngIf="clase | json as data" size="8" offset="2">
+        <ion-item
+          (click)="goto(clase.url)"
+          class="oscuroB roundItem"
+          lines="none"
+        >
+          <ion-label text-center>
+            <h1>{{ clase?.nombre }}</h1>
+            <h3>{{ clase.descripcion }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ng-template #loadD>
+    <div text-center>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
+    </div>
+  </ng-template>
+</ion-content>

@@ -29,7 +29,7 @@ export class UtilService {
     toast.present();
   }
 
-  async getSo() {
+  getSo() {
     if (this.platform.is('ios')) {
       return 'ios';
     } else

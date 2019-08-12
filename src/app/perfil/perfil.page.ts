@@ -44,6 +44,7 @@ export class PerfilPage implements OnInit {
       const resp = await this.db.post('actualizar-cuenta', this.registroForm.value);
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
+        this.auth.setAuth(JSON.stringify(resp.profile));
         this.editar = false;
       }
       this.util.dismissLoading();

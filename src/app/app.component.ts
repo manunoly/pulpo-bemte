@@ -72,6 +72,10 @@ export class AppComponent {
       title: 'Mi Billeta',
       url: '/billetera-estudiante',
       icon: 'logo-usd'
+    },{
+      title: 'Clase gratis',
+      url: '/clase-gratis',
+      icon: 'school'
     },
     {
       title: 'Mi perfil',
@@ -82,6 +86,11 @@ export class AppComponent {
       title: 'Quiero ser Profesor',
       url: '/solicitar-ser-profesor',
       icon: 'man'
+    },
+    {
+      title: 'Ayuda',
+      url: '/ayuda',
+      icon: 'help'
     }
     
   ];

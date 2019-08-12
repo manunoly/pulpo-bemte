@@ -76,7 +76,7 @@ export class LoginPage implements OnInit {
             if (emailRegex.test(data.email)) {
               this.auth.olvidarContrasena(data.email);
             } else
-              this.util.showMessage('Su email no es correcto!');
+              this.util.showMessage('Por favor revise el email introducido!');
             console.log(data);
           }
         }
