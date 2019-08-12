@@ -191,12 +191,12 @@ export class ClasesPage {
       TODO: aumentar horas solicitadas por la cantidad de alumnos.
       if(this.claseForm.value.alumnos > 1)
        */
-      if (this.claseForm.value.duracion > horas) {
-        this.util.showMessage(
-          "Las horas solicitadas para la clase es mayor a la cantidad disponible "
-        );
-        return;
-      }
+      // if (this.claseForm.value.duracion > horas) {
+      //   this.util.showMessage(
+      //     "Las horas solicitadas para la clase es mayor a la cantidad disponible "
+      //   );
+      //   return;
+      // }
 
       this.claseForm.controls["combo"].setValue(this.comboToBuy.combo);
       this.claseForm.controls["horasCombo"].setValue(horas);
