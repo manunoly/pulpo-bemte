@@ -1,4 +1,4 @@
-import { CalificarComponent } from './../calificar/calificar.component';
+import { CalificarComponent } from '../share/calificar/calificar.component';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';

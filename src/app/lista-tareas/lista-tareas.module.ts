@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ListaTareasPage } from './lista-tareas.page';
-import { SharedCalificarModule } from '../calificar/share.calificar.module';
+import { SharedModule } from '../share/share.module';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedCalificarModule,
+    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

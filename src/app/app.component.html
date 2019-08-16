@@ -1,6 +1,31 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <p style="float: left;">test text</p>
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button>
+        <ion-icon name="logo-vimeo"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="start">
+      <ion-fab-button>
+        <ion-icon name="logo-instagram"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <!-- <ion-split-pane> -->
+  <!-- <ion-menu>
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
@@ -16,7 +41,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle  auto-hide="false" *ngIf="user">
+          <ion-menu-toggle auto-hide="false" *ngIf="user">
             <ion-item (click)="exit()">
               <ion-icon slot="start" name="exit"></ion-icon>
               <ion-label>
@@ -26,7 +51,9 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
+    </ion-menu> -->
+
+
+  <ion-router-outlet main></ion-router-outlet>
+  <!-- </ion-split-pane> -->
 </ion-app>

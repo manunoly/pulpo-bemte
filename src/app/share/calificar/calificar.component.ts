@@ -1,8 +1,8 @@
 import { ModalController } from '@ionic/angular';
-import { UtilService } from './../servicios/util.service';
-import { AuthService } from './../servicios/auth.service';
+import { UtilService } from '../../servicios/util.service';
+import { AuthService } from '../../servicios/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DbService } from '../servicios/db.service';
+import { DbService } from '../../servicios/db.service';
 
 @Component({
   selector: 'app-calificar',

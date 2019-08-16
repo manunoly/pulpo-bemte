@@ -1,4 +1,4 @@
-import { SharedCalificarModule } from './../calificar/share.calificar.module';
+import { SharedModule } from '../share/share.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedCalificarModule,
+    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
