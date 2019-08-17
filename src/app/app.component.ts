@@ -90,7 +90,7 @@ export class AppComponent {
     },
     {
       title: 'Ayuda',
-      url: '/ayuda',
+      url: 'https://ionicframework.com/docs/layout/css-utilities#element-placement',
       icon: 'help'
     }
     

@@ -4,23 +4,8 @@
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button>
-        <p style="float: left;">test text</p>
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button>
-        <ion-icon name="logo-vimeo"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-    <ion-fab-list side="start">
-      <ion-fab-button>
-        <ion-icon name="logo-instagram"></ion-icon>
+      <ion-fab-button color="primary" *ngFor="let p of appPages" [routerLink]="[p.url]">
+        <ion-icon [name]="p.icon"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>

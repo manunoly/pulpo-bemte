@@ -1,43 +1,31 @@
 <app-header-bemte></app-header-bemte>
 <ion-content>
+  <br>
   <app-header-user></app-header-user>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
+  <ion-text color="secondary">
+    <h1 text-center *ngIf="auth.currentUser | async as user" padding>
+      <strong> Bienvenid@ {{ user?.nombres }} </strong><br>
+    </h1>
+  </ion-text>
+  <ion-text color="secondary">
+    <h3 text-center>Necesitas ayuda con:</h3>
+  </ion-text>
 
-  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-    Bienvenido {{ user?.nombres }} {{ user?.apellidos }}<br>
-    ¿Necesitas un profesor?
-  </h3>
-  <div style="padding-top: 20%">
-  </div>
   <ion-grid>
     <ion-row>
-      <ion-col size="8" offset="2">
-        <ion-item (click)="goTo('clases')" class="oscuroB roundItem" lines="none">
-          <ion-icon color="light" name="school" slot="start"></ion-icon>
-          <ion-label>CLASES</ion-label>
-        </ion-item>
+      <ion-col size="6" offset="3">
+        <ion-button expand="block" shape="round" (click)="goTo('clases')" lines="none">
+          <b>CLASES</b>
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col size="8" offset="2">
-        <ion-item (click)="goTo('tareas')" class="oscuroB roundItem" lines="none">
-          <ion-icon color="light" name="school" slot="start"></ion-icon>
-          <ion-label>TAREAS</ion-label>
-        </ion-item>
+      <ion-col size="6" offset="3">
+        <ion-button expand="block" shape="round" (click)="goTo('tareas')" lines="none">
+          <b>TAREAS</b>
+        </ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
-        <ion-col size="8" offset="2">
-          <ion-item (click)="goTo('billetera-estudiante')" class="oscuroB roundItem" lines="none">
-            <ion-icon color="light" name="wallet" slot="start"></ion-icon>
-            <ion-label>Mi Billetera</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
     <!-- <ion-row>
       <ion-col size="8" offset="2">
         <ion-item (click)="map()" class="oscuroB roundItem" lines="none">
