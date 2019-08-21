@@ -1,40 +1,28 @@
+<app-header-bemte></app-header-bemte>
+
 <ion-content>
-    <ion-fab style="padding-top: 20px;">
-        <ion-buttons>
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-    </ion-fab>
-
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-        {{ user?.nombres }} {{ user?.apellidos }}<br>
-        Describe tu clase
-    </h3>
-
-    <ion-grid>
+    <app-header-user></app-header-user>
+    <ion-grid padding>
         <form [formGroup]="claseForm">
             <ion-row>
                 <ion-col>
-                    <ion-item>
-                        <ion-label>Materia</ion-label>
-                        <ion-select formControlName="materia" [disabled]="!materias">
+                    <ion-item lines="none">
+                        <ion-label position="stacked">
+                            <h2><b>Materia</b></h2>
+                        </ion-label>
+                        <ion-select class="ion-text-center" formControlName="materia" [disabled]="!materias">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
-                        <ion-label>Tema</ion-label>
-                        <ion-textarea formControlName="tema" class="ion-text-end">
-                        </ion-textarea>
+                        <ion-label position="stacked">
+                            <h2><b>Tema</b></h2>
+                        </ion-label>
+                        <ion-input formControlName="tema"></ion-input>
                     </ion-item>
-                    <ion-item *ngIf="!comboToBuy">
-                        <ion-label>Combos</ion-label>
-                        <ion-select formControlName="combo" (ionChange)="loadHoras($event?.detail?.value)">
-                            <ion-select-option *ngFor="let combo of combos | async" [value]="combo?.nombre">
-                                {{combo?.nombre}}
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item>
+
                     <!-- <ion-item>
                         <ion-label>Horas</ion-label>
                         <ion-select [disabled]="!horasCombo" formControlName="hora">
@@ -48,80 +36,98 @@
                         <ion-input type="text" formControlName="ejercicios" class="ion-text-end"></ion-input>
                     </ion-item> -->
 
-                    <ion-item>
-                        <ion-label>Alumnos</ion-label>
-                        <ion-select formControlName="personas">
+                    <ion-item lines="none">
+                        <ion-label position="stacked">
+                            <h2><b>Cantidad de Alumnos</b></h2>
+                        </ion-label>
+                        <ion-select class="ion-text-center" formControlName="personas">
                             <ion-select-option value="1">1</ion-select-option>
                             <ion-select-option value="2">2</ion-select-option>
                             <ion-select-option value="3">3</ion-select-option>
                             <ion-select-option value="4">4</ion-select-option>
                             <ion-select-option value="5">5</ion-select-option>
-                          </ion-select>
+                        </ion-select>
                         <!-- <ion-input type="number" min="1" max="5" formControlName="personas" class="ion-text-end"></ion-input> -->
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label>Duración</ion-label>
-                        <!-- <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input> -->
-                        <ion-select formControlName="duracion">
-                            <ion-select-option value="2">2</ion-select-option>
-                            <ion-select-option value="3">3</ion-select-option>
-                            <ion-select-option value="4">4</ion-select-option>
-                            <ion-select-option value="5">5</ion-select-option>
-                            <ion-select-option value="6">6</ion-select-option>
-                            <ion-select-option value="7">7</ion-select-option>
-                            <ion-select-option value="8">8</ion-select-option>
-                          </ion-select>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">
+                            <h2><b>Fecha</b></h2>
+                        </ion-label>
+                        <ion-datetime class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)"
+                            [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha" display-format="DD-MM-YYYY">
+                        </ion-datetime>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label>Fecha</ion-label>
-                        <ion-datetime (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha"
-                            display-format="DD-MM-YYYY"></ion-datetime>
-                    </ion-item>
-
-                    <!-- <h3 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
+                    <!-- <h2 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
                         Revise las fechas por favor
-                    </h3> -->
+                    </h2> -->
 
-                    <ion-item>
-                        <ion-label>Hora 1</ion-label>
-                        <ion-datetime [disabled]="!claseForm.value.fecha" formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm"></ion-datetime>
+                    <ion-item lines="none">
+                        <ion-label position="stacked">
+                            <h2><b>Hora</b></h2>
+                        </ion-label>
+                        <ion-datetime class="ion-text-center" [disabled]="!claseForm.value.fecha"
+                            formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm">
+                        </ion-datetime>
                     </ion-item>
-                    <ion-item>
+
+                    <ion-item lines="none">
+                        <ion-label position="stacked">
+                            <h2><b>Duración</b></h2>
+                        </ion-label>
+                        <!-- <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input> -->
+                        <ion-select class="ion-text-center" formControlName="duracion">
+                            <ion-select-option value="2">2 horas</ion-select-option>
+                            <ion-select-option value="3">3 horas</ion-select-option>
+                            <ion-select-option value="4">4 horas</ion-select-option>
+                            <ion-select-option value="5">5 horas</ion-select-option>
+                            <ion-select-option value="6">6 horas</ion-select-option>
+                            <ion-select-option value="7">7 horas</ion-select-option>
+                            <ion-select-option value="8">8 horas</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <!-- <ion-item>
                         <ion-label>Hora 2</ion-label>
-                        <ion-datetime [disabled]="!claseForm.value.fecha"  formControlName="hora2" [hourValues]="minHora"  minuteValues="0,30" display-format="HH:mm"></ion-datetime>
-                    </ion-item>
+                        <ion-datetime [disabled]="!claseForm.value.fecha" formControlName="hora2" [hourValues]="minHora"
+                            minuteValues="0,30" display-format="HH:mm"></ion-datetime>
+                    </ion-item> -->
 
                     <ion-item>
-                        <ion-label class="ion-text-wrap" >Solicitar último profesor</ion-label>
+                        <ion-label class="ion-text-wrap">Solicitar último profesor</ion-label>
                         <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
 
                     <ion-item *ngIf="map; else notMap" (click)="goToMap()">
                         <ion-icon color="light" name="locate" slot="start"></ion-icon>
-                        <ion-label class="ion-text-wrap" >Ubicación {{claseForm?.value?.ubicacion}}</ion-label>
+                        <ion-label class="ion-text-wrap">
+                            <h2><b>Ubicación</b></h2> {{claseForm?.value?.ubicacion}}
+                        </ion-label>
                     </ion-item>
 
                     <ng-template #notMap>
-                        <ion-item>
-                            <ion-label>Ubicación</ion-label>
-                            <ion-select class="ion-text-wrap" formControlName="ubicacion">
-                                <ion-select-option  class="ion-text-wrap" *ngFor="let sede of sedes | async" [value]="sede.nombre">
+                        <ion-item lines="none">
+                            <ion-label position="stacked">
+                                <h2><b>Ubicación</b></h2>
+                            </ion-label>
+                            <ion-select class="ion-text-wrap ion-text-center" formControlName="ubicacion">
+                                <ion-select-option class="ion-text-wrap" *ngFor="let sede of sedes | async"
+                                    [value]="sede.nombre">
                                     {{sede.nombre}}
                                 </ion-select-option>
                             </ion-select>
                         </ion-item>
                     </ng-template>
-
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col size="4" offset="1">
-                    <ion-button (click)="atras()" size="block">Atras</ion-button>
+                    <ion-button (click)="atras()" shape="round" expand="block" size="small" color="secondary">Atras
+                    </ion-button>
                 </ion-col>
                 <ion-col size="4" offset="1">
-                    <ion-button [disabled]="!claseForm.valid" (click)="confirmarClase()" size="block">Confirmar
+                    <ion-button [disabled]="!claseForm.valid" (click)="confirmarClase()" shape="round" expand="block"
+                        size="small">Siguiente
                     </ion-button>
                 </ion-col>
             </ion-row>

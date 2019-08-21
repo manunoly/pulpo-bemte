@@ -1,3 +1,4 @@
+import { SharedModule } from './../share/share.module';
 import { MapPageModule } from './../map/map.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     MapPageModule,
     ReactiveFormsModule,
+    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

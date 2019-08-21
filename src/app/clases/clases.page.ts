@@ -60,60 +60,60 @@ export class ClasesPage {
 
   async ionViewWillEnter() {
     this.util.showLoading();
-    this.auth.currentUser
-      .pipe(
-        switchMap(user => {
-          if (user) {
-            this.user = user;
-            return this.db.get("clase-activa?user_id=" + user.user_id);
-          }
-          return of(null);
-        }),
-        first()
-      )
-      .subscribe(async clase => {
-        if (clase != null && clase.hasOwnProperty("id")) {
-          this.util.dismissLoading();
-          this.router.navigateByUrl("clase-estado");
-        } else {
-          this.comboToBuy = this.db.getComboToBuy();
-          console.log("este es el combo a comprar", this.comboToBuy);
-          if (
-            !this.comboToBuy ||
-            this.comboToBuy["type"] == "tareas" ||
-            this.comboToBuy.horas == undefined
-          ) {
-            this.util.dismissLoading();
-            // const horasDisponibles = await this.db.get('horas-alumno?user_id=' + this.user.user_id);
+    // this.auth.currentUser
+    //   .pipe(
+    //     switchMap(user => {
+    //       if (user) {
+    //         this.user = user;
+    //         return this.db.get("clase-activa?user_id=" + user.user_id);
+    //       }
+    //       return of(null);
+    //     }),
+    //     first()
+    //   )
+    //   .subscribe(async clase => {
+    //     if (clase != null && clase.hasOwnProperty("id")) {
+    //       this.util.dismissLoading();
+    //       this.router.navigateByUrl("clase-estado");
+    //     } else {
+    //       this.comboToBuy = this.db.getComboToBuy();
+    //       console.log("este es el combo a comprar", this.comboToBuy);
+    //       if (
+    //         !this.comboToBuy ||
+    //         this.comboToBuy["type"] == "tareas" ||
+    //         this.comboToBuy.horas == undefined
+    //       ) {
+    //         this.util.dismissLoading();
+    //         // const horasDisponibles = await this.db.get('horas-alumno?user_id=' + this.user.user_id);
 
-            this.db.setComboToBuy({ type: "clases" });
-            this.router.navigateByUrl("combos");
+    //         this.db.setComboToBuy({ type: "clases" });
+    //         this.router.navigateByUrl("combos");
 
-            // if (horasDisponibles.length == 0 || horasDisponibles[0] == 0) {
-            //   this.router.navigateByUrl('combos');
-            //   return;
-            // }
-          }
-          // console.log('este es el combo que voy a comprar ', this.comboToBuy);
-          /**
-           * TODO: buscar horas y combos disponibles
-           */
-
+    //         // if (horasDisponibles.length == 0 || horasDisponibles[0] == 0) {
+    //         //   this.router.navigateByUrl('combos');
+    //         //   return;
+    //         // }
+    //       }
+    //       // console.log('este es el combo que voy a comprar ', this.comboToBuy);
+    //       /**
+    //        * TODO: buscar horas y combos disponibles
+    //        */
+          this.user = await this.auth.getUserData();
           if (this.user) {
             this.materias = this.db.get("lista-materias");
             this.sedes = this.db.get("lista-sedes");
             this.claseForm.controls["user_id"].setValue(this.user.user_id);
-            this.db.get("lista-combos").then(resp => {
-              const combo = resp.filter(x => x.nombre == this.comboToBuy.combo);
-              this.map =
-                combo && combo[0] && combo[0]["direccion"] == 1 ? true : false;
-            });
+            // this.db.get("lista-combos").then(resp => {
+            //   const combo = resp.filter(x => x.nombre == this.comboToBuy.combo);
+            //   this.map =
+            //     combo && combo[0] && combo[0]["direccion"] == 1 ? true : false;
+            // });
           } else this.router.navigateByUrl("inicio");
-        }
+        // }
         setTimeout(() => {
           this.util.dismissLoading();
         }, 1000);
-      });
+      // });
   }
 
   loadHoras(combo) {
