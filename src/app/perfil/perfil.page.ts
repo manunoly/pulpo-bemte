@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from '../servicios/util.service';
-import { first, take } from 'rxjs/operators';
-import { async } from 'q';
 
 @Component({
   selector: 'app-perfil',
@@ -32,7 +30,17 @@ export class PerfilPage implements OnInit {
     private db: DbService,
     public auth: AuthService,
     public util: UtilService
-  ) { }
+  ) {
+    this.auth.getUserData().then(user => {
+      this.user = user;
+      console.log(this.user);
+      this.buildForm(this.user);
+    }).catch(error => {
+      this.util.showMessage('Error cargando datos del usuario');
+      console.log(error);
+      this.router.navigateByUrl('inicio');
+    });
+  }
 
   async ngOnInit() {
 
@@ -61,9 +69,12 @@ export class PerfilPage implements OnInit {
       'avatar': [user.avatar],
       'calificacion': [user.calificacion],
       'celular': [user.celular, Validators.required],
-      'email': [user.correo, (Validators.required, Validators.email)],
+      'email': [user.correo, [Validators.required, Validators.email]],
       'hojaVida': [''],
       'titulo': [''],
+      'oldPassword': [''],
+      'newPassword': [''],
+      'newPasswordConfirm': [''],
       'nombre': [user.nombres, Validators.required],
       'apellido': [user.apellidos, Validators.required],
       'apodo': [user.apodo, Validators.required],

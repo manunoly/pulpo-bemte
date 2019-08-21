@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab *ngIf="auth.currentUser | async"  vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>

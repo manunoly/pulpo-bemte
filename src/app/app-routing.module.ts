@@ -33,7 +33,9 @@ const routes: Routes = [
   { path: 'map', loadChildren: './map/map.module#MapPageModule' },
   { path: 'billetera-estudiante', loadChildren: './billetera-estudiante/billetera-estudiante.module#BilleteraEstudiantePageModule' },
   { path: 'clase-gratis', loadChildren: './clase-gratis/clase-gratis.module#ClaseGratisPageModule' },
-  { path: 'ayuda', loadChildren: './ayuda/ayuda.module#AyudaPageModule' }
+  { path: 'ayuda', loadChildren: './ayuda/ayuda.module#AyudaPageModule' },
+  { path: 'registrarse', loadChildren: './login/registrarse/registrarse.module#RegistrarsePageModule' },
+  { path: 'registrarse-confirm', loadChildren: './login/registrarse-confirm/registrarse-confirm.module#RegistrarseConfirmPageModule' }
 ];
 
 @NgModule({

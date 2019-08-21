@@ -1,0 +1,61 @@
+<ion-content padding class="ion-text-center ion-padding">
+
+  <ion-grid class="ion-padding">
+    <form [formGroup]="registroForm" (ngSubmit)="confirmarCuenta()">
+        <ion-row padding>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Nombres*</ion-label>
+                <ion-input formControlName="nombre"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Apellidos*</ion-label>
+                <ion-input formControlName="apellido"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="stacked">Celular*</ion-label>
+                  <ion-input type="tel" formControlName="celular"></ion-input>
+                </ion-item>
+              
+            </ion-col>
+          </ion-row>
+      <ion-row padding>
+        <ion-col>
+            <ion-item>
+                <ion-label position="stacked">Apodo*</ion-label>
+                <ion-input formControlName="apodo" placeholder="Protege tu identidad" type="email"></ion-input>
+              </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Correo electrónico*</ion-label>
+            <ion-input formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Contraseña*</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row pading>
+
+      </ion-row>
+      <ion-row pading>
+        <ion-col padding size="6">
+          <ion-button color="secondary" size="small" expand="block" (click)="back()" shape="round">
+            <b>
+              Atras
+            </b>
+          </ion-button>
+        </ion-col>
+        <ion-col padding size="6">
+          <ion-button [disabled]="!registroForm.valid" type="submit" size="small" expand="block" shape="round"
+            color="primary">
+            <b>
+              Registrar
+            </b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>

@@ -1,117 +1,90 @@
-<ion-content>
+<ion-content padding>
 
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
+  <ion-grid padding *ngIf="auth.currentUser | async as user">
+    <ion-row class="ion-text-center ion-no-padding ion-no-margin">
+      <ion-col size="6" offset="3">
+        <ion-avatar style="display:block; margin:auto;">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
+          <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star"></ion-icon>
+        </p>
+      </ion-col>
+    </ion-row>
 
-  <ion-grid style="padding-top: 80px;" *ngIf="auth.currentUser | async as user">
-    <div *ngIf="editar">
-      <form [formGroup]="registroForm" (ngSubmit)="editarPerfil()">
-        <!-- <ion-list lines="none"> -->
-        <ion-row padding>
-          <ion-col padding-top size="6" offset="3">
-            <ion-avatar>
-              <ion-img src="/assets/img/logo.png"></ion-img>
-            </ion-avatar>
-          </ion-col>
-        </ion-row>
-
-        <ion-item>
-          <ion-label position="stacked"> Nombre </ion-label>
-          <ion-input formControlName="nombre" text-center class="oscuroB roundItem" type="text" padding></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Apellido </ion-label>
-          <ion-input formControlName="apellido" text-center class="oscuroB roundItem" type="text" padding>
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Apodo </ion-label>
-          <ion-input formControlName="apodo" text-center class="oscuroB roundItem" type="text" padding>
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Celular </ion-label>
-          <ion-input formControlName="celular" readonly text-center class="oscuroB roundItem" type="tel" padding>
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Correo </ion-label>
-          <ion-input formControlName="email" readonly text-center class="oscuroB roundItem" type="email" padding>
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Ciudad </ion-label>
-          <ion-input formControlName="ciudad" readonly text-center class="oscuroB roundItem" type="text" padding>
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked"> Tipo </ion-label>
-          <ion-input formControlName="tipo" readonly text-center class="oscuroB roundItem" type="text" padding>
-          </ion-input>
-        </ion-item>
-        <ion-row>
-          <ion-col size="6" offset="3">
-            <ion-button size="block" type="submit" [disabled]="!registroForm.valid"> Guardar </ion-button>
-          </ion-col>
-        </ion-row>
-        <!-- </ion-list> -->
-      </form>
-    </div>
-
-    <div *ngIf="!editar">
-      <ion-item lines="none">
-        <ion-button (click)="buildForm(user)" slot="end">
-          Editar
-        </ion-button>
-      </ion-item>
+    <form [formGroup]="registroForm" (ngSubmit)="editarPerfil()">
       <ion-row>
-        <ion-col class="ion-padding-end">
-          <ion-list style="background: #243356" lines="none">
-            <ion-item>
-              <ion-avatar slot="start">
-                <img src="/assets/img/logo.png">
-              </ion-avatar>
-              <ion-label>
-                {{user?.nombres}} {{user?.apellidos}}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>
-                {{user?.apodo}}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>
-                {{user?.celular}}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>
-                {{user?.correo}}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>
-                {{user?.ubicacion}}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>
-                {{user?.universidad}}
-              </ion-label>
-            </ion-item>
-          </ion-list>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="stacked"> Correo </ion-label>
+            <ion-input formControlName="email" readonly type="email">
+            </ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked"> Nombres </ion-label>
+            <ion-input formControlName="nombre" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked"> Apellidos </ion-label>
+            <ion-input formControlName="apellido" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked"> Cambiar Contraseña </ion-label>
+            <ion-input formControlName="oldPassword" placeholder="Contraseña Actual" type="password">
+            </ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-input formControlName="newPassword" placeholder="Contraseña nueva" type="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="newPasswordConfirm" placeholder="Confirmar Contraseña Nueva" type="password">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"> Apodo </ion-label>
+            <ion-input formControlName="apodo" type="text">
+            </ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"> Celular </ion-label>
+            <ion-input formControlName="celular" type="tel">
+            </ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"> Ciudad </ion-label>
+            <ion-input formControlName="ciudad" type="text">
+            </ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked"> Tipo </ion-label>
+            <ion-input formControlName="tipo" readonly type="text">
+            </ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
-    </div>
+      <ion-row>
+        <ion-col size="6" offset="3">
+          <ion-button size="block" type="submit" [disabled]="!registroForm.valid"> Actualizar </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
   </ion-grid>
 </ion-content>

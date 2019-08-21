@@ -46,3 +46,9 @@
 //     -webkit-border-radius: 50px;
 //     border-radius: 10px;
 // }
+
+
+ion-item {
+    --border-color: var(--ion-color-primary);
+    --highlight-height: 2px;
+  }

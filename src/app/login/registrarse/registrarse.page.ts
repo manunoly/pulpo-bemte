@@ -1,19 +1,21 @@
+import { Component, OnInit } from '@angular/core';
 import { FcmService } from "./../../servicios/fcm.service";
 import { UtilService } from "./../../servicios/util.service";
 import { DbService } from "./../../servicios/db.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertController } from "@ionic/angular";
-import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { RegistrarseConfirmPage } from '../registrarse-confirm/registrarse-confirm.page';
+import { ModalController } from "@ionic/angular";
 
 @Component({
-  selector: "app-registrar",
-  templateUrl: "./registrar.page.html",
-  styleUrls: ["./registrar.page.scss"]
+  selector: 'app-registrarse',
+  templateUrl: './registrarse.page.html',
+  styleUrls: ['./registrarse.page.scss'],
 })
-export class RegistrarPage implements OnInit {
+export class RegistrarsePage implements OnInit {
   registroForm: FormGroup;
-  paso = 1;
+
 
   constructor(
     public alertController: AlertController,
@@ -21,12 +23,13 @@ export class RegistrarPage implements OnInit {
     private fb: FormBuilder,
     private db: DbService,
     public util: UtilService,
-    private fcm: FcmService
+    private fcm: FcmService,
+    private modalController: ModalController
   ) {
     this.registroForm = this.fb.group({
       celular: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.min(6)]],
+      password: ["", [Validators.required, Validators.minLength(6)]],
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
       apodo: ["", Validators.required],
@@ -47,18 +50,27 @@ export class RegistrarPage implements OnInit {
     }
   }
 
-  siguiente(paso = 1) {
-    this.paso = paso;
+  async confirmarCuenta() {
+    const modal = await this.modalController.create({
+      component: RegistrarseConfirmPage
+    });
+
+    modal.onDidDismiss().then(data => {
+      if (data.data) {
+        this.registrarCuenta();
+      }
+    });
+    return await modal.present();
   }
 
   async confirmar() {
     const alert = await this.alertController.create({
-      header: "Terminos y condiciones!",
+      header: `<h1> 'Terminos y condiciones!' </h1>`,
       message: "Si continuas aceptas los terminos!",
       buttons: [
         {
           text: "Leer",
-          cssClass: "secondary",
+          cssClass: "registrarse",
           handler: blah => {
             this.util.showMessage("Vamos a leer los terminos");
           }
@@ -66,20 +78,7 @@ export class RegistrarPage implements OnInit {
         {
           text: "Aceptar",
           handler: async () => {
-            this.util.showLoading();
-            try {
-              const registrar = await this.db.post(
-                "registro",
-                this.registroForm.value
-              );
-              console.log(registrar);
-              this.util.dismissLoading();
-              this.util.showMessage(registrar.success);
-              this.router.navigateByUrl("login");
-            } catch (error) {
-              console.log(error);
-              this.util.dismissLoading();
-            }
+            this.registrarCuenta();
           }
         }
       ]
@@ -87,4 +86,28 @@ export class RegistrarPage implements OnInit {
 
     await alert.present();
   }
+
+  async registrarCuenta() {
+    this.util.showLoading();
+    try {
+      const registrar = await this.db.post(
+        "registro",
+        this.registroForm.value
+      );
+      console.log(registrar);
+      this.util.dismissLoading();
+      if (registrar && registrar.success) {
+        this.util.showMessage(registrar.success);
+        this.router.navigateByUrl("login");
+      }
+    } catch (error) {
+      console.log(error);
+      this.util.dismissLoading();
+    }
+  }
+
+  back() {
+    this.router.navigateByUrl('login');
+  }
+
 }

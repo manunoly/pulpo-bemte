@@ -101,7 +101,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public auth: AuthService,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
   ) {
     this.initializeApp();
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header-bemte',
@@ -7,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderBemteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
 
   goTo(url) {
-    console.log(url);
+    this.router.navigateByUrl(url);
   }
 }

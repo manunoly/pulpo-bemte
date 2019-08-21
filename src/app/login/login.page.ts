@@ -13,7 +13,10 @@ import { async } from 'q';
 })
 export class LoginPage implements OnInit {
   authForm: FormGroup;
-
+  backdropDismiss = false;
+  showBackdrop = false;
+  shouldPropagate = false;
+  
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -23,10 +26,9 @@ export class LoginPage implements OnInit {
 
   ) {
     this.authForm = this.fb.group({
-      'email': ['manunoly@gmail.com', (Validators.required, Validators.email)],
-      // 'email': ['', (Validators.required, Validators.email)],
+      'email': ['', [Validators.required, Validators.email]],
       // 'password': ['', Validators.required]
-      'password': ['123456', (Validators.required, Validators.minLength(6))]
+      'password': ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -34,6 +36,11 @@ export class LoginPage implements OnInit {
   }
 
   async  login() {
+    if(!this.authForm.value.password || !this.authForm.value.email){
+      this.util.showMessage('Favor verifique los datos');
+      return;
+    }
+    
     try {
       await this.util.showLoading();
       const resp = await this.auth.login(this.authForm.value);
@@ -47,7 +54,7 @@ export class LoginPage implements OnInit {
   }
 
   async registrar() {
-    this.router.navigateByUrl('registrar');
+    this.router.navigateByUrl('registrarse');
   }
 
   async olvideContrasena() {

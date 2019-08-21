@@ -1,51 +1,52 @@
-<ion-content class="ion-text-center">
+<ion-content  class="ion-text-center ion-padding">
 
-
-  <!-- <ion-fab horizontal="start" slot="fixed" padding-top>
-    <ion-fab-button>
-      <ion-menu-button></ion-menu-button>
-    </ion-fab-button>
-  </ion-fab> -->
-
-
-  <ion-grid padding>
+  <ion-grid padding style="padding-top: 30%;">
     <form [formGroup]="authForm" (ngSubmit)="login()">
-
-      <ion-row padding>
-        <ion-col size="6" offset="3">
-          <ion-img src="/assets/img/logo.png"></ion-img>
-        </ion-col>
-      </ion-row>
       <ion-row padding>
         <ion-col>
           <ion-item>
-            <ion-label position="floating">Correo electrónico</ion-label>
+            <ion-label position="stacked">Correo electrónico</ion-label>
             <ion-input formControlName="email" type="email"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Contraseña</ion-label>
+            <ion-label position="stacked">Contraseña</ion-label>
             <ion-input formControlName="password" type="password"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row padding>
         <ion-col>
-          <ion-button [disabled]="!authForm.valid" type="submit" padding expand="block" shape="round" color="primary">
-            Iniciar Sesión
+          <ion-button class="linea-baja" padding fill="clear" (click)="olvideContrasena()" padding expand="block"
+            shape="round" color="secondary">
+            <ion-text color="secondary">
+              <small>
+                <b>
+                  Olvidé mi contraseña
+                </b>
+              </small>
+            </ion-text>
           </ion-button>
-          <ion-button (click)="olvideContrasena()" padding expand="block" shape="round" color="primary">
-            Olvidé mi contraseña
+        </ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col  size="6" offset="3">
+          <ion-button [disabled]="!authForm.valid" type="submit" size="small" expand="block" shape="round"
+            color="primary">
+            <b>
+              Ingresar
+            </b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" offset="3">
+          <ion-button color="secondary" size="small" expand="block" (click)="registrar()" shape="round">
+            <b>
+              Registrarse
+            </b>
           </ion-button>
         </ion-col>
       </ion-row>
     </form>
-
-    <ion-row padding>
-      <ion-col>
-        <ion-button padding expand="block" (click)="registrar()" shape="round" color="primary">
-          Registrarse
-        </ion-button>
-      </ion-col>
-    </ion-row>
   </ion-grid>
 </ion-content>

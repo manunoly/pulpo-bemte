@@ -6,12 +6,12 @@
     </ion-fab-button>
 
     <ion-title no-padding no-margin text-center>
-      <img style="height: 50px; width: 50px; padding: 0px; margin: 0px;"
+      <img (click)="goTo('inicio')" style="height: 50px; width: 50px; padding: 0px; margin: 0px;"
         src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
     </ion-title>
 
     <!-- <ion-badge>99</ion-badge> -->
-    <ion-fab-button size="small" slot="end" (click)="goTo('notificacioens')">
+    <ion-fab-button size="small" slot="end" (click)="goTo('inicio')">
       <ion-icon name="notifications"></ion-icon>
     </ion-fab-button>
   </ion-toolbar>
