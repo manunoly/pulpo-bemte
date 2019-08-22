@@ -9,7 +9,7 @@
   <ion-grid *ngIf="clases | async as clasesD; else loadD">
     <ion-row *ngFor="let clase of clasesD">
       <ion-col *ngIf="clase | json as data" size="8" offset="2">
-        <ion-item (click)="goto(clase.url)" class="oscuroB roundItem" lines="none">
+        <ion-item (click)="goto(clase.url)">
           <ion-label text-center>
             <h1>{{ clase?.nombre }}</h1>
             <h3>{{ clase.descripcion }}</h3>

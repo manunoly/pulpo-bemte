@@ -40,17 +40,12 @@ export class AppComponent {
 
   public estudiantePages = [
     {
-      title: 'Inicio',
-      url: '/inicio',
-      icon: 'home'
-    },
-    {
       title: 'Clases',
       url: '/clases',
       icon: 'list'
     },
     {
-      title: 'Listado de Clases',
+      title: 'Mis Clases',
       url: '/lista-clases',
       icon: 'list'
     },
@@ -60,7 +55,7 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Listado de Tareas',
+      title: 'Mis Tareas',
       url: '/lista-tareas',
       icon: 'list'
     },
@@ -77,16 +72,6 @@ export class AppComponent {
       title: 'Clase gratis',
       url: '/clase-gratis',
       icon: 'school'
-    },
-    {
-      title: 'Mi perfil',
-      url: '/perfil',
-      icon: 'man'
-    },
-    {
-      title: 'Quiero ser Profesor',
-      url: '/solicitar-ser-profesor',
-      icon: 'man'
     },
     {
       title: 'Ayuda',

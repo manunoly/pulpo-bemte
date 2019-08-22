@@ -16,6 +16,7 @@ import { of } from 'rxjs';
 })
 export class ListaClasesPage implements OnInit {
   clases;
+  anteriores = true;
 
   constructor(public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 

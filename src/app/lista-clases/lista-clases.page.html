@@ -2,12 +2,26 @@
 
 <ion-content>
 
-  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+  <!-- <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
     {{ user?.nombres }} {{ user?.apellidos }}<br>
     Listado de Clases
-  </h3>
+  </h3> -->
 
-  <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
+  <ion-text text-center color="primay">
+      <h1>Mis Clases</h1>
+  </ion-text>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+          <ion-button shape="round" color="primary" [fill]="anteriores"expand="block" (click)="anteriores=false">Solicitadas</ion-button>
+      </ion-col>
+      <ion-col size="6">
+          <ion-button shape="round" shape="round" color="primary" [fill]="!anteriores"expand="block" (click)="anteriores=true">Anteriores</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="clases | async as clasesD; else loadD">
     <ion-item *ngFor="let clase of clasesD">
       <ion-label class="ion-text-wrap ion-padding-left">
         <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>

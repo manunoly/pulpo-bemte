@@ -1,12 +1,15 @@
 <ion-app>
-  <ion-fab *ngIf="auth.currentUser | async"  vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab *ngIf="auth.currentUser | async" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary" *ngFor="let p of appPages" [routerLink]="[p.url]">
-        <ion-icon [name]="p.icon"></ion-icon>
-      </ion-fab-button>
+      <ng-container *ngFor="let p of appPages">
+        <ion-fab-button class="ion-fab-button-class" color="primary" [routerLink]="[p.url]">
+          <ion-icon [name]="p.icon"></ion-icon>
+        </ion-fab-button>
+        <ion-label>{{p.title}}</ion-label>
+      </ng-container>
     </ion-fab-list>
   </ion-fab>
   <!-- <ion-split-pane> -->

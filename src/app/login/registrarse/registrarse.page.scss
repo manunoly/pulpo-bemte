@@ -1,8 +1,7 @@
-
 ion-grid{
     background-color: white;
     border-radius: 20px;
 }
-
-
-// --border-width: var(--border-top) var(--border-horizontal) var(--border-bottom);
+ion-content {
+    --background: url(/assets/img/background_on.png) no-repeat 52% center/cover;
+}
