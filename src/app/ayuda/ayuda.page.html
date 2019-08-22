@@ -1,19 +1,8 @@
-<ion-content>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
+<app-header-bemte></app-header-bemte>
 
-  <h3
-    text-center
-    *ngIf="auth.currentUser | async as user"
-    padding
-    style="padding-top: 20%"
-  >
-    {{ user?.nombres }} {{ user?.apellidos }}<br />
-  </h3>
-
+<ion-content padding>
+ <br>
+ 
   <div text-center>
     <ion-button (click)="goto()">
       <ion-icon slot="start" name="logo-youtube"></ion-icon>

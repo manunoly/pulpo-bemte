@@ -1,41 +1,89 @@
+<app-header-bemte></app-header-bemte>
+
 <ion-content>
-  <ion-content>
-    <ion-fab style="padding-top: 20px;">
-      <ion-buttons>
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-fab>
 
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-      {{ user?.nombres }} {{ user?.apellidos }}<br>
-      Estado de tu billetera
-    </h3>
+  <ion-grid padding *ngIf="auth.currentUser | async as user">
+    <ion-row class="ion-text-center ion-no-padding ion-no-margin">
+      <ion-col size="6" offset="3">
+        <ion-avatar style="display:block; margin:auto;">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
+          <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star"></ion-icon>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-chip style="background-color: transparent">
+          <ion-avatar>
+            <img src="/assets/img/ganancias_menu.png">
+          </ion-avatar>
+          <ion-label color="primary">
+            <h1>Billetera</h1>
+          </ion-label>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-text color="secondary">
+          <h3>Horas Disponibles</h3> <br>
+          <span style="font-size: 40px"> 8 </span>
+        </ion-text>
+      </ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col text-center>
+        <ion-text color="primary">
+        <h3>Comprar horas</h3>
+      </ion-text>
+      <ion-text  color="secondary">        
+      <h3>Elige un combo</h3>
+      </ion-text>
+        <ion-list>
+          <ion-row no-padding no-margin color="primary">
+            <ion-col size="4">
+              Horas
+            </ion-col>
+            <ion-col>
+              Inversión
+            </ion-col>
+          </ion-row>
+
+          <ion-item>
+            <ion-label>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button fill="clear">
+                    <ion-text color="secondary">
+                      2
+                    </ion-text>
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button fill="clear">
+                    <ion-text color="danger">
+                      <del>$40</del>
+                    </ion-text>
+                  </ion-button>
+                  <ion-button shape="round" color="primary"> $40 </ion-button>
+
+                </ion-col>
+              </ion-row>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ng-template #loadD>
     <div text-center>
-    <ion-button (click)="recargarCombos()">
-        <ion-icon slot="start" name="wallet"></ion-icon>
-        Recargar Horas
-      </ion-button>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
     </div>
-    <ion-grid text-center *ngIf="horasCombos | async as horasCombosD; else loadD" padding class="ion-text-wrap">
-      <ion-row>
-        <ion-col size="8">
-          <h3> Combo </h3>
-        </ion-col>
-        <ion-col size="4">
-          <h3> Horas </h3>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngFor="let combo of horasCombosD">
-        <ion-col size="8"> {{combo.combo}} </ion-col>
-        <ion-col size="4"> {{combo.horas}} </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <ng-template #loadD>
-      <div text-center>
-        <ion-spinner></ion-spinner>
-        <h3>Espere por favor</h3>
-      </div>
-    </ng-template>
-  </ion-content>
+  </ng-template>
+</ion-content>

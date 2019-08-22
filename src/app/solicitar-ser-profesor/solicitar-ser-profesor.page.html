@@ -1,9 +1,6 @@
+<app-header-bemte></app-header-bemte>
+
 <ion-content>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
 
   <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
     {{ user?.nombres }} {{ user?.apellidos }}<br>

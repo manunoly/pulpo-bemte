@@ -1,16 +1,7 @@
-<ion-content>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
+<app-header-bemte></app-header-bemte>
 
-  <h3
-    text-center
-    *ngIf="auth.currentUser | async as user"
-    padding
-    style="padding-top: 20%"
-  >
+<ion-content>
+  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
     {{ user?.nombres }} {{ user?.apellidos }}, <br />
     Prueba una clase gratis
   </h3>
@@ -18,11 +9,7 @@
   <ion-grid *ngIf="clases | async as clasesD; else loadD">
     <ion-row *ngFor="let clase of clasesD">
       <ion-col *ngIf="clase | json as data" size="8" offset="2">
-        <ion-item
-          (click)="goto(clase.url)"
-          class="oscuroB roundItem"
-          lines="none"
-        >
+        <ion-item (click)="goto(clase.url)" class="oscuroB roundItem" lines="none">
           <ion-label text-center>
             <h1>{{ clase?.nombre }}</h1>
             <h3>{{ clase.descripcion }}</h3>

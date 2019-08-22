@@ -1,38 +1,33 @@
+<app-header-bemte></app-header-bemte>
+
 <ion-content>
 
-  <ion-content>
-    <ion-fab style="padding-top: 20px;">
-      <ion-buttons>
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-fab>
+  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
+    {{ user?.nombres }} {{ user?.apellidos }}<br>
+    Listado de Clases
+  </h3>
 
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-      {{ user?.nombres }} {{ user?.apellidos }}<br>
-      Listado de Clases
-    </h3>
+  <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
+    <ion-item *ngFor="let clase of clasesD">
+      <ion-label class="ion-text-wrap ion-padding-left">
+        <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>
+        <h3>Combo: {{clase?.combo}}</h3>
+        <h3>Fecha: {{clase?.fecha}} ( {{clase?.hora_prof}})</h3>
+        <h5>No. Alumnos: {{clase?.personas}}</h5>
+        <h5>Ubicación: {{clase?.ubicacion}}</h5>
+        <h5>Estado: {{clase?.estado.replace('_', ' ')}}</h5>
+      </ion-label>
+      <ion-button *ngIf="clase.user_id_pro" (click)="calificar(clase)" slot="end">Calificar</ion-button>
+    </ion-item>
+    <div text-center *ngIf="clasesD.length === 0">
+      <h3>No hay datos para mostrar</h3>
+    </div>
+  </ion-list>
 
-    <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
-      <ion-item *ngFor="let clase of clasesD">
-        <ion-label class="ion-text-wrap ion-padding-left">
-          <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>
-          <h3>Combo: {{clase?.combo}}</h3>
-          <h3>Fecha: {{clase?.fecha}} ( {{clase?.hora_prof}})</h3>
-          <h5>No. Alumnos: {{clase?.personas}}</h5>
-          <h5>Ubicación: {{clase?.ubicacion}}</h5>
-          <h5>Estado: {{clase?.estado.replace('_', ' ')}}</h5>
-        </ion-label>
-        <ion-button *ngIf="clase.user_id_pro"  (click)="calificar(clase)"  slot="end">Calificar</ion-button>
-      </ion-item>
-      <div text-center *ngIf="clasesD.length === 0">
-        <h3>No hay datos para mostrar</h3>
-      </div>
-    </ion-list>
-
-    <ng-template #loadD>
-      <div padding text-center>
-        <ion-spinner></ion-spinner>
-        <h3>Espere por favor</h3>
-      </div>
-    </ng-template>
-  </ion-content>
+  <ng-template #loadD>
+    <div padding text-center>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
+    </div>
+  </ng-template>
+</ion-content>

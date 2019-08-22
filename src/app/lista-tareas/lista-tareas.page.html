@@ -1,37 +1,32 @@
+<app-header-bemte></app-header-bemte>
+
 <ion-content>
 
-  <ion-content>
-    <ion-fab style="padding-top: 20px;">
-      <ion-buttons>
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-fab>
+  <h3 text-center *ngIf="auth.currentUser | async as user" padding>
+    {{ user?.nombres }} {{ user?.apellidos }}<br>
+    Listado de tareas
+  </h3>
 
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-      {{ user?.nombres }} {{ user?.apellidos }}<br>
-      Listado de tareas
-    </h3>
-  
-    <ion-list *ngIf="tareas | async as tareasD; else loadD"  style="background: transparent">
-      <ion-item *ngFor="let tarea of tareasD">
-        <ion-label class="ion-text-wrap ion-padding-left" >
-          <h3>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h3>
-          <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
-          <h5>{{tarea?.descripcion}}</h5>
-          <h5>{{tarea?.formato_entrega}}</h5>
-          <h5>Estado: {{tarea?.estado.replace('_', ' ')}}</h5>
-        </ion-label>
-        <ion-button (click)="calificar(tarea)"  slot="end">Calificar</ion-button>
-      </ion-item>
-      <div text-center *ngIf="tareasD.length === 0">
-        <h3>No hay datos para mostrar</h3>
-      </div>
-    </ion-list>
+  <ion-list *ngIf="tareas | async as tareasD; else loadD" style="background: transparent">
+    <ion-item *ngFor="let tarea of tareasD">
+      <ion-label class="ion-text-wrap ion-padding-left">
+        <h3>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h3>
+        <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
+        <h5>{{tarea?.descripcion}}</h5>
+        <h5>{{tarea?.formato_entrega}}</h5>
+        <h5>Estado: {{tarea?.estado.replace('_', ' ')}}</h5>
+      </ion-label>
+      <ion-button (click)="calificar(tarea)" slot="end">Calificar</ion-button>
+    </ion-item>
+    <div text-center *ngIf="tareasD.length === 0">
+      <h3>No hay datos para mostrar</h3>
+    </div>
+  </ion-list>
 
-    <ng-template #loadD>
-        <div padding text-center>
+  <ng-template #loadD>
+    <div padding text-center>
       <ion-spinner></ion-spinner>
       <h3>Espere por favor</h3>
-      </div>
-    </ng-template>
-  </ion-content>
+    </div>
+  </ng-template>
+</ion-content>
