@@ -11,11 +11,13 @@ import { throwError } from 'rxjs';
 export class DbService {
   token;
   combo;
+  headers;
 
   constructor(
     private http: HttpClient,
     public util: UtilService
   ) {
+    this.getHeader();
   }
 
   async getToken() {
@@ -36,7 +38,7 @@ export class DbService {
       if (token)
         headersConfig['Authorization'] = token;
     }
-
+    this.headers = headersConfig;
     return headersConfig;
   }
 
@@ -81,15 +83,17 @@ export class DbService {
     return throwError(errorMessage);
   }
 
-  async get(path: string, params: HttpParams = new HttpParams()): Promise<any> {
+  get(path: string, params: HttpParams = new HttpParams()): Promise<any> {
+    this.getHeader();
     try {
-      return await this.http.get(`${environment.api_url}${path}`, { params, headers: await this.getHeader() }).toPromise();
+      return this.http.get(`${environment.api_url}${path}`, { params, headers: this.headers }).toPromise();
     } catch (error) {
       this.handleError(error);
     }
   }
 
   async put(path: string, body: Object = {}): Promise<any> {
+    this.getHeader();
     try {
       return await this.http.put(
         `${environment.api_url}${path}`,

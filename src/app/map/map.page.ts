@@ -75,16 +75,16 @@ export class MapPage implements OnInit {
     let ubicacionClase;
     let lugar
     /**
-     * FIXME: verificar el codigo que captura la ubicacion de un marcador.
+     * FIXME: en el address component []=> buscar el type locality => shortname, si no existe locality utilizar el 0 de address component 
      */
     if (!this.ubicacion) {
       ubicacionClase = { lat: this.markerUbicacion.getPosition().lat(), lng: this.markerUbicacion.getPosition().lng() };
       try {
+        console.log(this.markerUbicacion);
         lugar = await this.geocodeTransform(ubicacionClase);
       } catch (error) {
         console.log('error capturando la direccion segun las coordenadas', error);
       }
-      console.log('estas coordenadas para la clase', ubicacionClase, lugar);
       this.modalController.dismiss({ coordenadas: ubicacionClase, ubicacion: lugar });
       return
     }
@@ -101,7 +101,7 @@ export class MapPage implements OnInit {
       geocoder.geocode(to, (results, status) => {
         if (status === "OK") {
           let locate;
-
+          console.log('esta el texto ',results);
           locate = results[0].formatted_address;
           return resolve(locate);
         } else {

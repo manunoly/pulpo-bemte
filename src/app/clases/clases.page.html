@@ -1,7 +1,9 @@
 <app-header-bemte></app-header-bemte>
 
 <ion-content>
+
     <app-header-user></app-header-user>
+
     <ion-grid padding>
         <form [formGroup]="claseForm">
             <ion-row>
@@ -87,37 +89,19 @@
                             <ion-select-option value="8">8 horas</ion-select-option>
                         </ion-select>
                     </ion-item>
-                    <!-- <ion-item>
-                        <ion-label>Hora 2</ion-label>
-                        <ion-datetime [disabled]="!claseForm.value.fecha" formControlName="hora2" [hourValues]="minHora"
-                            minuteValues="0,30" display-format="HH:mm"></ion-datetime>
-                    </ion-item> -->
 
                     <ion-item>
                         <ion-label class="ion-text-wrap">Solicitar último profesor</ion-label>
                         <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
 
-                    <ion-item (click)="goToMap()">
-                        <ion-icon color="light" name="locate" slot="start"></ion-icon>
-                        <ion-label class="ion-text-wrap">
-                            <h2><b>Ubicación</b></h2> {{claseForm?.value?.ubicacion}}
+                    <ion-item lines="none" (click)="goToMap()">
+                        <ion-icon color="primary" size="large" name="pin" slot="start"></ion-icon>
+                        <ion-label text-center class="ion-text-wrap" no-padding no margin>
+                            <h2 no-padding no margin><b>Ubicación</b></h2> {{claseForm?.value?.ubicacion}}
                         </ion-label>
+                        <ion-button slot="end" shape="round" size="small">Mapa</ion-button>
                     </ion-item>
-
-                    <!-- <ng-template #notMap>
-                        <ion-item lines="none">
-                            <ion-label position="stacked">
-                                <h2><b>Ubicación</b></h2>
-                            </ion-label>
-                            <ion-select class="ion-text-wrap ion-text-center" formControlName="ubicacion">
-                                <ion-select-option class="ion-text-wrap" *ngFor="let sede of sedes | async"
-                                    [value]="sede.nombre">
-                                    {{sede.nombre}}
-                                </ion-select-option>
-                            </ion-select>
-                        </ion-item>
-                    </ng-template> -->
                 </ion-col>
             </ion-row>
             <ion-row>

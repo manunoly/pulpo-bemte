@@ -18,7 +18,7 @@ export class InicioPage implements OnInit {
     private router: Router,
     public auth: AuthService,
     private modalController: ModalController
-  ) {}
+  ) { }
 
   async ngOnInit() {
     if (this.util.isMobile()) {
@@ -28,7 +28,7 @@ export class InicioPage implements OnInit {
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
         }
-      } catch (error) {}
+      } catch (error) { }
     }
   }
 
@@ -43,5 +43,9 @@ export class InicioPage implements OnInit {
     });
     modal.onDidDismiss().then(data => console.log(data));
     return await modal.present();
+  }
+
+  accionHoras($event) {
+    console.log($event);
   }
 }

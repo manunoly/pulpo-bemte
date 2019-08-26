@@ -2,6 +2,11 @@
 <ion-content>
   <br>
   <app-header-user></app-header-user>
+
+  <div padding>
+    <app-horas-seleccionar [clase_tarea]="'1'" (accion)="accionHoras($event)"></app-horas-seleccionar>
+    <app-subir-transferencia></app-subir-transferencia>
+  </div>
   <ion-text color="secondary">
     <h1 text-center *ngIf="auth.currentUser | async as user" padding>
       <strong> Bienvenid@ {{ user?.nombres }} </strong><br>
