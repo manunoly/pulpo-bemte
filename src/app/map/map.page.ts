@@ -21,7 +21,7 @@ export class MapPage implements OnInit {
   constructor(private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
-    console.log('la ubicacion', this.ubicacion);
+    console.log('la ubicacion recibida', this.ubicacion);
     this.loadMap();
   }
 

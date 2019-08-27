@@ -1,4 +1,5 @@
-import { SharedModule } from 'src/app/share/share.module';
+import { ChatPageModule } from './../../chat/chat.module';
+import { MapPageModule } from './../../map/map.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +7,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ChatPage } from './chat.page';
+import { ClaseDetallesPage } from './clase-detalles.page';
+import { SharedModule } from 'src/app/share/share.module';
 
 const routes: Routes = [
   {
-    path: ':clase/:tarea',
-    component: ChatPage
+    path: ':id',
+    component: ClaseDetallesPage
   }
 ];
 
@@ -20,9 +22,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     SharedModule,
+    MapPageModule,
+    ChatPageModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ChatPage]
+  declarations: [ClaseDetallesPage]
 })
-export class ChatPageModule {}
+export class ClaseDetallesPageModule {}

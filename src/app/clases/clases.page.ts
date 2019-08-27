@@ -119,10 +119,6 @@ export class ClasesPage {
     });
   }
 
-  subir() {
-    this.util.showMessage("en construcción");
-  }
-
   async confirmarClase() {
     // hora_fin: "13:00"hora1: "2019-06-07T11:10:08.543-05:00"
     // hora_inicio: "12:00"
@@ -147,8 +143,10 @@ export class ClasesPage {
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.db.setComboToBuy("");
-        this.router.navigateByUrl("clase-estado");
+        if(resp.clase && resp.clase.estado === 'Sin_Horas'){
+          this.router.navigateByUrl('clases-pagar');
+        }else
+        this.router.navigateByUrl("clase-detalles");
       }
     } catch (error) {
       this.util.dismissLoading();
@@ -205,7 +203,7 @@ export class ClasesPage {
       // componentProps: { ubicacion: { lat: -0.1740159, lng: -78.463816299 } }
     });
     modal.onDidDismiss().then(data => {
-      if (data) {
+      if (data && data.data && data.data.ubicacion) {
         console.log(data);
         this.claseForm.controls["ubicacion"].setValue(data.data.ubicacion);
         this.claseForm.controls["coordenadas"].setValue(

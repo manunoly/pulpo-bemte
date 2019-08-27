@@ -1,17 +1,50 @@
-<ion-content>
-  <ion-content>
-    <ion-fab style="padding-top: 20px;">
-      <ion-buttons>
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    </ion-fab>
+<app-header-bemte></app-header-bemte>
 
+<ion-content text-center>
+  <ion-fab vertical="top" horizontal="start" slot="fixed" (click)="close()">
+    <ion-button size="small">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-fab>
+  <div *ngIf="clase">
+    <ion-text color="primary">
+      <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
+    </ion-text>
 
-    <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-      {{ user?.nombres }} {{ user?.apellidos }}<br>
-      Bienvenido al Chat
-    </h3>
+    <ion-grid>
+      <ion-row class="lineBotton">
+        <ion-col offset="2" size="4">
+          <img style="height: 60px; width: 60px;" src="/assets/img/chat.png">
+        </ion-col>
+        <ion-col size="6">
+          <ion-text text-left color="secondary">
+            <h1 style="font-size: 2em"><b>Chat</b></h1>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="(chat | async) as chatD">
+        <ion-row *ngFor="let item of chatD">
+          <ion-col>
+            {{item?.text}}
+          </ion-col>
+        </ion-row>
 
+        <ion-text *ngIf="chatD.length == 0" color="secondary">
+          <h5>Sin Historial</h5>
+        </ion-text>
 
-    <h3 padding>Aqui construiremos el chat</h3>
-  </ion-content>
+      </div>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-item class="borderC">
+    <ion-input spellcheck="true" autoComplete="true" autocorrect="true" maxlength="500" type="text"
+      (keyup.enter)="enviarChat(newMessage); newMessage=''" placeholder="..." [(ngModel)]="newMessage"></ion-input>
+    <ion-button fill="clear" slot="end" [disabled]="!newMessage && !img"
+      (click)="enviarChat(newMessage); newMessage=''">
+      <ion-icon size="large" color="secondary" name="send" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

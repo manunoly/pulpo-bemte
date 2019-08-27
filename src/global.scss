@@ -47,6 +47,14 @@
 //     border-radius: 10px;
 // }
 
+.lineBotton {
+  border-bottom: 2px var(--ion-color-primary) solid;
+}
+
+.lineLateral {
+  border-left: 1px var(--ion-color-primary) solid;
+}
+
 ion-item {
   --border-color: var(--ion-color-primary);
   --highlight-height: 2px;
@@ -59,7 +67,6 @@ ion-item {
   z-index: 99;
   background: red !important;
 }
-
 
 ion-fab-list {
   ion-label {

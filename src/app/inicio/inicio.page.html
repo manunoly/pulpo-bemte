@@ -4,6 +4,10 @@
   <app-header-user></app-header-user>
 
   <div padding>
+      <div text-center>
+          <ion-button size="large" [routerLink]="['/clase-detalles/1']">claseDetalles</ion-button>
+        </div>
+
     <app-horas-seleccionar [clase_tarea]="'1'" (accion)="accionHoras($event)"></app-horas-seleccionar>
     <app-subir-transferencia></app-subir-transferencia>
   </div>

@@ -88,4 +88,43 @@ export class UtilService {
     return this.platform.is('cordova');
   }
 
+  estados(estado) {
+    switch (estado) {
+      case 'Sin_Horas':
+        return 'Por Pagar';
+
+      case 'Solicitado':
+        return 'Solicitada';
+
+      case 'Confirmado':
+        return 'Confirmado';
+
+      case 'Aceptado':
+        return 'Confirmado';
+
+      case 'Terminado':
+        return 'Terminado';
+
+      case 'Calificado':
+        return 'Terminado';
+
+      case 'Cancelado':
+        return 'Terminado';
+
+      case 'Sin_Profesor':
+        return 'Terminado';
+
+      case 'Sin_Pago':
+        return 'Terminado';
+
+      case 'Pago_Rechazado':
+        return 'Rechazado';
+
+      case 'Confirmando_Pago':
+        return 'Confirmado';
+
+      default:
+        return 'Clase Estado';
+    }
+  }
 }

@@ -1,8 +1,10 @@
 <ion-content>
   <ion-fab color="dark" slot="fixed" (click)="close()">
-    <ion-icon color="dark" size="large" name="close"></ion-icon>
+    <ion-button>
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
   </ion-fab>
-  <ion-fab vertical="bottom" slot="fixed" color="dark" (click)="close()">
+  <ion-fab *ngIf="!ubicacion" vertical="bottom" slot="fixed" color="dark" (click)="close()">
     <ion-button>
       Establecer ubicación de la clase
     </ion-button>

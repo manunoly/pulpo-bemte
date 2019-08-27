@@ -1,0 +1,13 @@
+// .roundI {
+//   border: 1px var(--ion-color-primary) solid;
+//   border-radius: 10px !important;
+// }
+
+.borderC {
+  --border-radius: 20px 20px 20px 20px;
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+
+  //   --border-radius: 15px !important;
+//   --border-color: var(--ion-color-primary) 1px solid !important;
+}

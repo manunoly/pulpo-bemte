@@ -16,20 +16,29 @@ import { of } from 'rxjs';
 })
 export class ListaClasesPage implements OnInit {
   clases;
-  anteriores = true;
+  tipo = 'ACTUAL';
 
   constructor(public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.cargarClases();
+  }
+
+  setTipoClase(tipo){
+    this.tipo = tipo;
+    this.cargarClases();
+  }
+
+  async cargarClases(){
     this.clases = this.auth.user.pipe(
       switchMap(user => {
-        if (user)
-          return this.db.get('lista-clases?user_id=' + user.user_id)
-        return of(null)
+        if (user){
+          return this.db.get('lista-clases?user_id=' + user.user_id + '&tipo='+this.tipo);
+        }
+        return of(null);
       }
       ));
   }
-
 
   async calificar(clase) {
     console.log('califica esta clase', clase);
