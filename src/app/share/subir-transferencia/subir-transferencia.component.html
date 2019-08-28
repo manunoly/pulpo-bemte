@@ -15,8 +15,11 @@
     <ion-col size="7">2204547712</ion-col>
     <ion-col size="5">Cedula:</ion-col>
     <ion-col size="7">1500640147</ion-col>
-    <ion-col size="9">
-      <ion-item class="ion-no-padding ion-no-margin" lines="none">
+  </ion-row>
+
+  <ion-row>
+    <ion-col *ngIf="!img || img.length === 0; else imgData" size="10" offset="1">
+      <ion-item (click)="subir()" class="ion-no-padding ion-no-margin" lines="none">
         <ion-label>
           <ion-button fill="outline" shape="round">
             Adjuntar imagen
@@ -25,6 +28,29 @@
         <ion-icon slot="end" color="primary" size="large" fill="outline" name="camera"></ion-icon>
       </ion-item>
     </ion-col>
+
+    <ng-template #imgData>
+      <ion-col size="10" offset="1">
+        <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
+          <ion-thumbnail slot="start">
+            <ion-img [src]="imgD.path"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h5>{{ imgD.name }}</h5>
+          </ion-label>
+          <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
+            <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6" offset="3">
+        <ion-button expand="block" shape="round" (click)="uploadData()" lines="none">
+          <b>Confirmar</b>
+        </ion-button>
+      </ion-col>
+    </ng-template>
+
   </ion-row>
 
 </ion-grid>

@@ -37,7 +37,8 @@ const routes: Routes = [
   { path: 'registrarse', loadChildren: './login/registrarse/registrarse.module#RegistrarsePageModule' },
   { path: 'registrarse-confirm', loadChildren: './login/registrarse-confirm/registrarse-confirm.module#RegistrarseConfirmPageModule' },
   { path: 'comprar-horas', loadChildren: './comprar-horas/comprar-horas.module#ComprarHorasPageModule' },
-  { path: 'clase-detalles', loadChildren: './clases/clase-detalles/clase-detalles.module#ClaseDetallesPageModule' }
+  { path: 'clase-detalles', loadChildren: './clases/clase-detalles/clase-detalles.module#ClaseDetallesPageModule' },
+  { path: 'clase-detalles/:id', loadChildren: './clases/clase-detalles/clase-detalles.module#ClaseDetallesPageModule' }
 ];
 
 @NgModule({

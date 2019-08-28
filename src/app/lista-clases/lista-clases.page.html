@@ -22,7 +22,7 @@
     </ion-row>
   </ion-grid>
   <ion-list *ngIf="clases | async as clasesD; else loadD">
-    <ion-item *ngFor="let clase of clasesD">
+    <ion-item *ngFor="let clase of clasesD" [routerLink]="['/clase-detalles/'+clase.id]">
       <ion-label class="ion-text-wrap ion-padding-left">
         <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>
         <h3>Combo: {{clase?.combo}}</h3>

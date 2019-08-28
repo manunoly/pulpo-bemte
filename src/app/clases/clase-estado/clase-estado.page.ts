@@ -139,7 +139,7 @@ export class ClaseEstadoPage implements OnInit {
     }
   }
 
-  async subir() {
+  async subir() { 
     try {
       this.upload.imagesSubject.subscribe(img => this.img = img);
       await this.upload.selectImage();

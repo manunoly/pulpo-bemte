@@ -12,7 +12,8 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ClaseDetallesPage implements OnInit {
   claseId;
-  clase = {
+  claseO;
+  claseObjet = {
     "user_id": 24,
     "materia": "Economia",
     "tema": "mi tema eco",
@@ -24,7 +25,7 @@ export class ClaseDetallesPage implements OnInit {
     "combo": "COMBO",
     "ubicacion": "El Comercio 125, Quito 170135, Ecuador",
     "coordenadas": '{"lat":-0.1754103046461042,"lng":-78.48091638172303}',
-    "estado": "Sin_Horas",
+    "estado": "Sin_Pago",
     "seleccion_profesor": false,
     "activa": true,
     "horasCombo": null,
@@ -40,22 +41,21 @@ export class ClaseDetallesPage implements OnInit {
 
   ngOnInit() {
     this.claseId = this.route.snapshot.paramMap.get("id");
+    this.cargarClase();
     console.log(this.claseId);
   }
 
   cargarClase() {
-    // this.clase = this.db.get('clase?'+this.claseId);
-    console.log('recargo la clase');
+    this.claseO = this.db.get('devuelve-clase?clase_id=' + this.claseId);
   }
 
   accionHoras($event) {
-    if ($event)
-      this.cargarClase();
+    console.log('la accion de las horas es', $event);
+    this.cargarClase();
   }
 
 
   async map(coordenadas) {
-    console.log('paso estas coordenadas', coordenadas);
     const modal = await this.modalController.create({
       component: MapPage,
       componentProps: { ubicacion: JSON.parse(coordenadas) }

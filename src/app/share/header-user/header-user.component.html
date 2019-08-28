@@ -1,11 +1,11 @@
 <ion-grid class="lineBotton" no-padding no-margin *ngIf="auth.currentUser | async as user">
-  <ion-row class="ion-text-center ion-no-padding ion-no-margin">
+  <ion-row *ngIf="(userD | async) as userDatos"  class="ion-text-center ion-no-padding ion-no-margin">
     <ion-col size="4">
       <ion-avatar style="display:block; margin:auto;">
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
       <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-        <ion-icon *ngFor="let item of [1,2,3,4,5]" name="star"></ion-icon>
+        <ion-icon *ngFor="let item of crearArreglo(userDatos?.ranking)" name="star"></ion-icon>
       </p>
     </ion-col>
     <ion-col size="8">
@@ -26,13 +26,13 @@
           <span>Tareas</span>
         </ion-col>
         <ion-col size="4" class="ion-no-padding">
-          <h3>0</h3>
+          <h3>{{userDatos?.horas}}</h3>
         </ion-col>
         <ion-col size="4" class="ion-no-padding">
-          <h3>0</h3>
+          <h3>{{userDatos?.clases}}</h3>
         </ion-col>
         <ion-col size="4" class="ion-no-padding">
-          <h3>0</h3>
+          <h3>{{userDatos?.tareas}}</h3>
         </ion-col>
       </ion-row>
     </ion-col>

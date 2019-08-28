@@ -87,7 +87,7 @@ export class ClasesPage {
     if (this.user) {
       try {
         this.materias = this.db.get("lista-materias");
-        this.horasDisponibles = await this.db.get('horas-totales?user_id=' + this.user.user_id);
+        // this.horasDisponibles = await this.db.get('horas-totales?user_id=' + this.user.user_id);
         this.claseForm.controls["user_id"].setValue(this.user.user_id);
       } catch (error) {
         this.router.navigateByUrl("inicio");
@@ -143,10 +143,11 @@ export class ClasesPage {
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        if(resp.clase && resp.clase.estado === 'Sin_Horas'){
-          this.router.navigateByUrl('clases-pagar');
-        }else
-        this.router.navigateByUrl("clase-detalles");
+        if (resp.clase && resp.clase.estado) {
+          this.router.navigateByUrl('clase-detalles/' + resp.clase.id);
+          // this.router.navigate(['clase-detalles'], {queryParams: {idUser: event.value}});
+
+        }
       }
     } catch (error) {
       this.util.dismissLoading();
