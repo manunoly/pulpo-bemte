@@ -17,6 +17,7 @@ import { of } from 'rxjs';
 export class ListaClasesPage implements OnInit {
   clases;
   tipo = 'ACTUAL';
+  detallesClaseId;
 
   constructor(public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
@@ -24,20 +25,24 @@ export class ListaClasesPage implements OnInit {
     this.cargarClases();
   }
 
-  setTipoClase(tipo){
+  setTipoClase(tipo) {
     this.tipo = tipo;
     this.cargarClases();
   }
 
-  async cargarClases(){
+  async cargarClases() {
     this.clases = this.auth.user.pipe(
       switchMap(user => {
-        if (user){
-          return this.db.get('lista-clases?user_id=' + user.user_id + '&tipo='+this.tipo);
+        if (user) {
+          return this.db.get('lista-clases?user_id=' + user.user_id + '&tipo=' + this.tipo);
         }
         return of(null);
       }
       ));
+  }
+
+  setDetallesClaseId(id) {
+    this.detallesClaseId = id;
   }
 
   async calificar(clase) {
@@ -49,4 +54,7 @@ export class ListaClasesPage implements OnInit {
     return await modal.present();
   }
 
+  getColor(estado) {
+    return 'secondary';
+  }
 }

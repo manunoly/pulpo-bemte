@@ -2,9 +2,9 @@ import { DbService } from './../servicios/db.service';
 import { UtilService } from './../servicios/util.service';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from './../servicios/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { switchMap, map } from 'rxjs/operators';
+import { of, interval } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -14,14 +14,16 @@ import { of } from 'rxjs';
 export class ChatPage implements OnInit {
   clase;
   user
-  chat;
+  chatD;
   tarea;
   img;
   newMessage;
-
+  @ViewChild('content') private content: any;
+  $counter;
+  cant = 0;
   constructor(private db: DbService, public util: UtilService, public auth: AuthService, private modalController: ModalController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('recibo esto', this.clase);
     if (!this.clase) {
       this.util.showMessage('No hemos podido obtener los datos');
@@ -30,29 +32,45 @@ export class ChatPage implements OnInit {
       }, 1000);
       return;
     }
+    this.user = await this.auth.getUserData();
     this.cargarChat();
+    this.recargarChatAutomatico();
   }
 
-  cargarChat() {
-    this.chat = this.auth.user.pipe(
-      switchMap(user => {
-        if (user) {
-          this.user = user;
-          let tareaid = '0';
-          let claseid = '0';
-
-          if (this.clase && this.clase.id)
-            claseid = this.clase.id
-
-          if (this.tarea && this.tarea.id)
-            tareaid = this.tarea.id;
-
-          return this.db.get('obtener-chat?user_id=' + user.user_id + '&tarea_id=' + tareaid + '&clase_id=' + claseid);
-        }
-        return of(null);
-      }
-      ));
+  ionViewDidLeave() {
+    this.$counter.unsubscribe();
   }
+
+  recargarChatAutomatico() {
+    this.$counter = interval(5000).pipe(
+      switchMap(() => this.cargarChat())
+    ).subscribe();
+  }
+
+  async cargarChat() {
+    if (this.user) {
+      let tareaid = '0';
+      let claseid = '0';
+
+      if (this.clase && this.clase.id)
+        claseid = this.clase.id
+
+      if (this.tarea && this.tarea.id)
+        tareaid = this.tarea.id;
+
+      const chats = await this.db.get('obtener-chat?user_id=' + this.user.user_id + '&tarea_id=' + tareaid + '&clase_id=' + claseid);
+      this.scrollToBottomOnInit(chats);
+    }
+  }
+
+  async scrollToBottomOnInit(chats) {
+    if (this.cant != chats.length) {
+      this.chatD = chats;
+      this.cant = this.chatD.length;
+      this.content.scrollToBottom(100);
+    }
+  }
+
 
   enviarChat(textSend = null) {
     let tareaid = '0';

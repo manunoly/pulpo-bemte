@@ -2,41 +2,107 @@
 
 <ion-content>
 
-  <!-- <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-    {{ user?.nombres }} {{ user?.apellidos }}<br>
-    Listado de Clases
-  </h3> -->
-
-  <ion-text text-center color="primary">
-      <h1><b> Clases</b></h1>
-  </ion-text>
-
   <ion-grid>
-    <ion-row>
+    <ion-row class="lineBotton">
+      <ion-col>
+        <ion-text text-center color="primary">
+          <h1 no-padding no-margin><b> Clases</b></h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="lineBotton">
       <ion-col size="6">
-          <ion-button shape="round" color="primary" [fill]="tipo=='ACTUAL'?'solid':'clear'" expand="block" (click)="setTipoClase('ACTUAL')">Solicitadas</ion-button>
+        <ion-button shape="round" color="primary" [fill]="tipo=='ACTUAL'?'solid':'clear'" expand="block"
+          (click)="setTipoClase('ACTUAL')">Solicitadas</ion-button>
       </ion-col>
       <ion-col size="6">
-          <ion-button shape="round" color="primary" [fill]="tipo=='ANTERIOR'?'solid':'clear'" expand="block" (click)="setTipoClase('ANTERIOR')">Anteriores</ion-button>
+        <ion-button shape="round" color="primary" [fill]="tipo=='ANTERIOR'?'solid':'clear'" expand="block"
+          (click)="setTipoClase('ANTERIOR')">Anteriores</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-list *ngIf="clases | async as clasesD; else loadD">
-    <ion-item *ngFor="let clase of clasesD" [routerLink]="['/clase-detalles/'+clase.id]">
-      <ion-label class="ion-text-wrap ion-padding-left">
-        <h3>Materia: {{clase?.materia}} ({{clase?.tema}})</h3>
-        <h3>Combo: {{clase?.combo}}</h3>
-        <h3>Fecha: {{clase?.fecha}} ( {{clase?.hora_prof}})</h3>
-        <h5>No. Alumnos: {{clase?.personas}}</h5>
-        <h5>Ubicación: {{clase?.ubicacion}}</h5>
-        <h5>Estado: {{clase?.estado.replace('_', ' ')}}</h5>
-      </ion-label>
-      <ion-button *ngIf="clase.user_id_pro" (click)="calificar(clase)" slot="end">Calificar</ion-button>
-    </ion-item>
+  <ion-grid *ngIf="clases | async as clasesD; else loadD">
+    <ion-row padding-bottom class="lineBotton" *ngFor="let clase of clasesD" (click)="setDetallesClaseId(clase?.id)">
+      <ion-col size="8">
+        <ion-item lines="none">
+          <ion-thumbnail slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap ion-padding-left">
+            <h2> {{clase?.materia}} </h2>
+            <h5> {{clase?.tema}}</h5>
+          </ion-label>
+          <ion-button *ngIf="clase?.user_id_pro && clase?.estado == 'Terminado'" (click)="calificar(clase)" slot="end">
+            Calificar</ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col class="ion-align-self-center lineLateral" text-center size="4">
+        <ion-text color="secondary">
+          <p no-padding no-margin><strong> Estado </strong></p>
+          <ion-button shape="round" [color]="getColor(util.estados(clase?.estado))" size="small">
+            <small no-padding no-margin>{{util.estados(clase?.estado)}}</small>
+          </ion-button>
+        </ion-text>
+      </ion-col>
+
+      <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">
+
+        <ion-row *ngIf="clase?.descripccion" class="lineBotton">
+          <ion-col>
+            <ion-text color="secondary">
+              <small>Descripción</small><br>
+              {{clase?.descripccion}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="lineBotton">
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.hora1}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="3">
+            <small>Duración</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.duracion}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="4">
+            <small>Duración</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.fecha}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="2">
+            <small>Alumnos</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.personas}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="clase?.coordenadas">
+          <ion-col class="ion-align-self-center" size="1">
+            <ion-icon size="large" name="pin" color="primary"></ion-icon>
+          </ion-col>
+          <ion-col text-center no-padding no-margin>
+            <ion-text color="secondary">
+              <h5> {{clase?.ubicacion}} </h5>
+            </ion-text>
+          </ion-col>
+          <ion-col class="ion-align-self-center" size="3">
+            <ion-button size="small" shape="round">Mapa</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-row>
+
     <div text-center *ngIf="clasesD.length === 0">
       <h3>No hay datos para mostrar</h3>
     </div>
-  </ion-list>
+  </ion-grid>
 
   <ng-template #loadD>
     <div padding text-center>

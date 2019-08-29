@@ -9,5 +9,15 @@
   --border-width: 1px;
 
   //   --border-radius: 15px !important;
-//   --border-color: var(--ion-color-primary) 1px solid !important;
+  //   --border-color: var(--ion-color-primary) 1px solid !important;
+}
+
+.borderUser {
+  --border-radius: 10px 10px 0px 10px;
+  --border-color: var(--ion-color-secondary);
+}
+
+.borderOtherUser {
+  --border-radius: 10px 10px 10px 0px;
+  --border-color: var(--ion-color-secondary);
 }

@@ -41,10 +41,10 @@ export class SubirTransferenciaComponent implements OnInit {
       user_id: user.user_id,
       tarea_id: this.tarea_id,
       clase_id: this.clase_id,
-      combo: '0'
+      combo_id: '0'
     }
     if (this.tarea_id == 0 && this.clase_id == 0)
-      data['combo'] = 'COMBO';
+      data['combo_id'] = 'COMBO';
 
     try {
       if (this.img.length > 0) {
@@ -57,10 +57,10 @@ export class SubirTransferenciaComponent implements OnInit {
         return;
       }
 
-      this.util.showLoading();
       const resp = await this.db.post('subir-transferencia', data);
       if (resp && resp.success) {
         setTimeout(() => {
+          this.util.showMessage(resp.success);
           this.change.emit(true);
         }, 2000);
       } else {

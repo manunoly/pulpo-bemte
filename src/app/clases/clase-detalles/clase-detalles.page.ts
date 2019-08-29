@@ -32,7 +32,7 @@ export class ClaseDetallesPage implements OnInit {
     "precioCombo": null,
     "updated_at": "2019-08-27 09:44:04",
     "created_at": "2019-08-27 09:44:04",
-    "id": 57
+    "id": 64
   };
   constructor(private route: ActivatedRoute,
     private db: DbService,
@@ -43,7 +43,7 @@ export class ClaseDetallesPage implements OnInit {
     this.claseId = this.route.snapshot.paramMap.get("id");
     this.cargarClase();
     console.log(this.claseId);
-  }
+  } 
 
   cargarClase() {
     this.claseO = this.db.get('devuelve-clase?clase_id=' + this.claseId);

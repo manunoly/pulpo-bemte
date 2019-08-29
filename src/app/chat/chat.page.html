@@ -1,6 +1,6 @@
 <app-header-bemte></app-header-bemte>
 
-<ion-content text-center>
+<ion-content text-center #content>
   <ion-fab vertical="top" horizontal="start" slot="fixed" (click)="close()">
     <ion-button size="small">
       <ion-icon slot="icon-only" name="close"></ion-icon>
@@ -22,18 +22,38 @@
           </ion-text>
         </ion-col>
       </ion-row>
-      <div *ngIf="(chat | async) as chatD">
+      <ion-row class="lineBotton">
+        <ion-col offset="1" size="3" class="ion-no-padding">
+          <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+clase.materia + '.png'">
+        </ion-col>
+        <ion-col class="ion-text-left">
+          <ion-text color="secondary">
+            <h5 no-padding no-margin>{{clase?.materia}}</h5>
+            <small text-wrap>{{clase?.tema}}</small>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <div *ngIf="chatD">
         <ion-row *ngFor="let item of chatD">
-          <ion-col>
-            {{item?.text}}
+          <ion-col [offset]="user.user_id == item.user_escribe ? 4 : 0 " size="8">
+            <ion-item lines="none" no-padding>
+              <ion-label no-padding text-wrap
+                [ngClass]="user.user_id == item.user_escribe ? 'ion-text-end':'ion-text-start'">
+                <ion-text color="secondary">
+                  {{item?.texto}}
+                </ion-text>
+              </ion-label>
+            </ion-item>
+
           </ion-col>
+          <br>
         </ion-row>
 
         <ion-text *ngIf="chatD.length == 0" color="secondary">
           <h5>Sin Historial</h5>
         </ion-text>
-
       </div>
+
     </ion-grid>
   </div>
 </ion-content>
