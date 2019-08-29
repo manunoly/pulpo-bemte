@@ -35,7 +35,7 @@ export class HorasSeleccionarComponent implements OnInit {
     if (accion) {
       try {
         if (this.clase_id == 0 && this.tarea_id == 0)
-          return this.util.showMessage('No hemos podido determinar el combo a recargar, reintentar!');
+          return this.change.emit(this.horaSeleccionada);
 
         const user = await this.auth.getUserData();
         if (user) {

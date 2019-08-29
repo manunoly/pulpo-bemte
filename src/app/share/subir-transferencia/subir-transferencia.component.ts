@@ -14,6 +14,7 @@ export class SubirTransferenciaComponent implements OnInit {
   img;
   @Input() clase_id = 0;
   @Input() tarea_id = 0
+  @Input() combo = 0
   @Output('accion')
   change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -43,8 +44,11 @@ export class SubirTransferenciaComponent implements OnInit {
       clase_id: this.clase_id,
       combo_id: '0'
     }
-    if (this.tarea_id == 0 && this.clase_id == 0)
+    if (this.tarea_id == 0 && this.clase_id == 0) {
       data['combo_id'] = 'COMBO';
+      data['valor'] = this.combo['descuento'];
+      data['horas'] = this.combo['hora'];;
+    }
 
     try {
       if (this.img.length > 0) {

@@ -12,21 +12,29 @@ import { of } from 'rxjs';
 })
 export class BilleteraEstudiantePage implements OnInit {
   horasCombos;
+  horasComprar;
 
   constructor(private router: Router, public auth: AuthService, private db: DbService) { }
 
-  ngOnInit() {
-    this.horasCombos = this.auth.user.pipe(
-      switchMap(user => {
-        if (user)
-          return this.db.get('horas-alumno?user_id=' + user.user_id);
-        return of(null)
-      }
-      ));
+  async ngOnInit() {
+    const user = await this.auth.getUserData();
+    this.horasCombos = await this.db.get('horas-totales?user_id=' + user['user_id']);
   }
 
-  recargarCombos(){
+  recargarCombos() {
     this.db.setComboToBuy('');
     this.router.navigateByUrl('combos');
+  }
+
+  setHoras($event) {
+    this.horasComprar = $event;
+    console.log(this.horasComprar);
+  }
+
+  pagadasHoras(estado) {
+    if (estado)
+      this.router.navigateByUrl('inicio');
+    else
+      this.horasComprar = '';
   }
 }
