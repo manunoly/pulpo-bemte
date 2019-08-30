@@ -2,29 +2,29 @@
 
   <ion-grid class="ion-padding">
     <form [formGroup]="registroForm" (ngSubmit)="confirmarCuenta()">
-        <ion-row padding>
-            <ion-col>
-              <ion-item>
-                <ion-label position="stacked">Nombres*</ion-label>
-                <ion-input formControlName="nombre"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked">Apellidos*</ion-label>
-                <ion-input formControlName="apellido"></ion-input>
-              </ion-item>
-              <ion-item>
-                  <ion-label position="stacked">Celular*</ion-label>
-                  <ion-input type="tel" formControlName="celular"></ion-input>
-                </ion-item>
-              
-            </ion-col>
-          </ion-row>
       <ion-row padding>
         <ion-col>
-            <ion-item>
-                <ion-label position="stacked">Apodo*</ion-label>
-                <ion-input formControlName="apodo" placeholder="Protege tu identidad" type="email"></ion-input>
-              </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Nombre*</ion-label>
+            <ion-input text-capitalize formControlName="nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Apellido*</ion-label>
+            <ion-input text-capitalize formControlName="apellido"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Celular*</ion-label>
+            <ion-input type="tel" formControlName="celular"></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+      <ion-row padding>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Apodo*</ion-label>
+            <ion-input formControlName="apodo" placeholder="Protege tu identidad" type="email"></ion-input>
+          </ion-item>
           <ion-item>
             <ion-label position="stacked">Correo electrónico*</ion-label>
             <ion-input formControlName="email" type="email"></ion-input>
@@ -32,6 +32,12 @@
           <ion-item>
             <ion-label position="stacked">Contraseña*</ion-label>
             <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Confirmar Contraseña
+              <span *ngIf="registroForm.value.password !=registroForm.value.password1"><b> deben coincidir </b></span>
+            </ion-label>
+            <ion-input formControlName="password1" type="password"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

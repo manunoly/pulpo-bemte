@@ -1,7 +1,7 @@
 <ion-list lines="none">
     <ion-item>
       <ion-label text-center>
-        <ion-icon name="star" size="large" *ngFor="let num of [1,2,3,4,5]" (click)="rate(num)"
+        <ion-icon name="star" size="large"  color="warning" *ngFor="let num of [1,2,3,4,5]" (click)="rate(num)"
           [ngStyle]="{'color':getColor(num)}"></ion-icon>
       </ion-label>
     </ion-item>

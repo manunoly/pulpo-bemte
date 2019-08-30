@@ -8,8 +8,14 @@
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-avatar>
         <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-          <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star"></ion-icon>
+          <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star" color="warning"></ion-icon>
         </p>
+
+        <a (click)="auth.purgeAuth()">
+          <ion-text color="secondary">
+            Cerrar Sesión
+          </ion-text>
+        </a>
       </ion-col>
     </ion-row>
 

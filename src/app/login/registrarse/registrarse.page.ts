@@ -29,7 +29,8 @@ export class RegistrarsePage implements OnInit {
     this.registroForm = this.fb.group({
       celular: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
-      password: ["", [Validators.required, Validators.minLength(6)]],
+      password: ["", [Validators.required, Validators.minLength(8)]],
+      password1: ["", [Validators.required, Validators.minLength(8)]],
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
       apodo: ["", Validators.required],
@@ -51,6 +52,8 @@ export class RegistrarsePage implements OnInit {
   }
 
   async confirmarCuenta() {
+    if (this.registroForm.value.password != this.registroForm.value.password1)
+      return this.util.showMessage('Contraseñas iguales');
     const modal = await this.modalController.create({
       component: RegistrarseConfirmPage
     });

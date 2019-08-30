@@ -40,18 +40,8 @@ export class AppComponent {
 
   public estudiantePages = [
     {
-      title: 'Clases',
-      url: '/clases',
-      icon: 'list'
-    },
-    {
       title: 'Mis Clases',
       url: '/lista-clases',
-      icon: 'list'
-    },
-    {
-      title: 'Tareas',
-      url: '/tareas',
       icon: 'list'
     },
     {
@@ -59,11 +49,6 @@ export class AppComponent {
       url: '/lista-tareas',
       icon: 'list'
     },
-    // {
-    //   title: 'Combos',
-    //   url: '/combos',
-    //   icon: 'list'
-    // },
     {
       title: 'Mi Billeta',
       url: '/billetera-estudiante',

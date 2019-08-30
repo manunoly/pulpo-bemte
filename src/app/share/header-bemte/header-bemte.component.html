@@ -5,10 +5,18 @@
       <ion-icon name="person"></ion-icon>
     </ion-fab-button>
 
-    <ion-title no-padding no-margin text-center>
-      <img (click)="goTo('inicio')" style="height: 50px; width: 50px; padding: 0px; margin: 0px;"
-        src="/assets/img/logo_header.png">
-    </ion-title>
+        <ion-fab-button class="center" size="large" >
+            <img (click)="goTo('inicio')" class="imagenCentro" src="/assets/img/logo_header.png">
+          </ion-fab-button>
+      
+
+    <!-- <ion-title no-padding no-margin text-center>
+        <ion-fab-button size="small" (click)="goTo('perfil')">
+            <ion-icon name="person"></ion-icon>
+          </ion-fab-button> -->
+      <!-- <img (click)="goTo('inicio')" class="imagenCentro"
+        src="/assets/img/logo_header.png"> -->
+    <!-- </ion-title> -->
 
     <!-- <ion-badge>99</ion-badge> -->
     <ion-fab-button size="small" slot="end" (click)="goTo('inicio')">
