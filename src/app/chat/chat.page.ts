@@ -21,11 +21,15 @@ export class ChatPage implements OnInit {
   @ViewChild('content') private content: any;
   $counter;
   cant = 0;
+  datosMostrar;
+  tipo;
+
   constructor(private db: DbService, public util: UtilService, public auth: AuthService, private modalController: ModalController) { }
 
   async ngOnInit() {
-    console.log('recibo esto', this.clase);
-    if (!this.clase) {
+    console.log('recibo clase', this.clase);
+    console.log('recibo tarea', this.tarea);
+    if (!this.clase && !this.tarea) {
       this.util.showMessage('No hemos podido obtener los datos');
       setTimeout(() => {
         this.close()
@@ -42,7 +46,7 @@ export class ChatPage implements OnInit {
   }
 
   recargarChatAutomatico() {
-    this.$counter = interval(5000).pipe(
+    this.$counter = interval(9000).pipe(
       switchMap(() => this.cargarChat())
     ).subscribe();
   }
@@ -52,11 +56,17 @@ export class ChatPage implements OnInit {
       let tareaid = '0';
       let claseid = '0';
 
-      if (this.clase && this.clase.id)
+      if (this.clase && this.clase.id) {
         claseid = this.clase.id
+        this.datosMostrar = this.clase;
+        this.tipo = ' CLASE';
+      }
 
-      if (this.tarea && this.tarea.id)
+      if (this.tarea && this.tarea.id) {
         tareaid = this.tarea.id;
+        this.datosMostrar = this.tarea;
+        this.tipo = ' TAREA';
+      }
 
       const chats = await this.db.get('obtener-chat?user_id=' + this.user.user_id + '&tarea_id=' + tareaid + '&clase_id=' + claseid);
       this.scrollToBottomOnInit(chats);

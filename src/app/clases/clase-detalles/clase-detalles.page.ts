@@ -34,6 +34,7 @@ export class ClaseDetallesPage implements OnInit {
     "created_at": "2019-08-27 09:44:04",
     "id": 64
   };
+  
   constructor(private route: ActivatedRoute,
     private db: DbService,
     private modalController: ModalController

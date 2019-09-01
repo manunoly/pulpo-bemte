@@ -33,7 +33,6 @@ export class PerfilPage implements OnInit {
   ) {
     this.auth.getUserData().then(user => {
       this.user = user;
-      console.log(this.user);
       this.buildForm(this.user);
     }).catch(error => {
       this.util.showMessage('Error cargando datos del usuario');
@@ -62,7 +61,6 @@ export class PerfilPage implements OnInit {
   }
 
   async buildForm(user) {
-    console.log(user);
     this.editar = true;
     this.registroForm = this.fb.group({
       'user_id': [''],
@@ -72,9 +70,9 @@ export class PerfilPage implements OnInit {
       'email': [user.correo, [Validators.required, Validators.email]],
       'hojaVida': [''],
       'titulo': [''],
-      'oldPassword': [''],
-      'newPassword': [''],
-      'newPasswordConfirm': [''],
+      'oldPassword': ['',Validators.minLength(6)],
+      'newPassword': ['',Validators.minLength(8)],
+      'newPasswordConfirm': ['',Validators.minLength(8)],
       'nombre': [user.nombres, Validators.required],
       'apellido': [user.apellidos, Validators.required],
       'apodo': [user.apodo, Validators.required],

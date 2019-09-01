@@ -17,17 +17,23 @@ import { of } from 'rxjs';
 })
 export class ListaTareasPage implements OnInit {
   tareas;
+  tipo = 'ACTUAL';
+  detallesTareaId;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) { }
+  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) {
+    this.cargarTareas();
+  }
 
-  async ngOnInit() {
+  ngOnInit() {
+  }
+
+  cargarTareas() {
     this.tareas = this.auth.user.pipe(
       switchMap(user => {
         if (user)
-          return this.db.get('lista-tareas?user_id=' + user.user_id)
+          return this.db.get('lista-tareas?user_id=' + user.user_id + '&tipo=' + this.tipo)
         return of(null)
-      }
-      ));
+      }));
   }
 
   async calificar(tarea) {
@@ -38,4 +44,16 @@ export class ListaTareasPage implements OnInit {
     return await modal.present();
   }
 
+  setDetallesTareaId(id) {
+    this.detallesTareaId = id;
+  }
+
+  setTipoTarea(tipo) {
+    this.tipo = tipo;
+    this.cargarTareas();
+  }
+
+  getColor(estado) {
+    return 'secondary';
+  }
 }

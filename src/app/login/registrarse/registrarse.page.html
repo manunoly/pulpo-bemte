@@ -1,8 +1,8 @@
-<ion-content padding class="ion-text-center ion-padding">
+<ion-content class="ion-text-center ion-padding">
 
   <ion-grid class="ion-padding">
     <form [formGroup]="registroForm" (ngSubmit)="confirmarCuenta()">
-      <ion-row padding>
+      <ion-row>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Nombre*</ion-label>
@@ -12,14 +12,24 @@
             <ion-label position="stacked">Apellido*</ion-label>
             <ion-input text-capitalize formControlName="apellido"></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Celular*</ion-label>
-            <ion-input type="tel" formControlName="celular"></ion-input>
-          </ion-item>
-
         </ion-col>
-      </ion-row>
-      <ion-row padding>
+        <ion-row no-padding>
+          <ion-col size="4">
+            <ion-label position="stacked">
+              Celular*
+            </ion-label>
+            <ion-select class="ion-text-center" formControlName="paisCelular">
+              <ion-select-option *ngFor="let paisN of paisNumber | async" [value]="paisN?.codigo">
+                {{paisN?.codigo}}
+              </ion-select-option>
+            </ion-select>
+          </ion-col>
+          <ion-col size="8">
+            <ion-item no-padding>
+              <ion-input type="tel" formControlName="celular"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
         <ion-col>
           <ion-item>
             <ion-label position="stacked">Apodo*</ion-label>
@@ -35,17 +45,14 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Confirmar Contraseña
-              <span *ngIf="registroForm.value.password !=registroForm.value.password1"><b> deben coincidir </b></span>
+              <span *ngIf="registroForm.value.password && registroForm.value.password !=registroForm.value.password1"><b>No coinciden</b></span>
             </ion-label>
             <ion-input formControlName="password1" type="password"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
 
-      <ion-row pading>
-
-      </ion-row>
-      <ion-row pading>
+      <ion-row>
         <ion-col padding size="6">
           <ion-button color="secondary" size="small" expand="block" (click)="back()" shape="round">
             <b>

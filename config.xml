@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="bemte.ecuador" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>BemteAlumnos</name>
-    <description>Bembe be my teacher</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <name>Bemte</name>
+    <description>Bembe</description>
+    <author email="manunoly@gmail.com" href="http://ionicframework.com/">Manuel Almaguer</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

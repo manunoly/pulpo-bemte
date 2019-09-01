@@ -1,0 +1,266 @@
+<app-header-bemte></app-header-bemte>
+
+<ion-content text-center>
+
+  <div *ngIf="(tareaO | async) as tarea; else loadD">
+    <div *ngIf="tarea.estado == 'Sin_Horas'">
+      <app-header-user></app-header-user>
+
+      <div padding>
+        <ion-text color="danger">
+          <h3>No tienes horas suficientes</h3>
+        </ion-text>
+        <app-horas-seleccionar [tarea_id]="tarea.id" (accion)="accionHoras($event)"></app-horas-seleccionar>
+      </div>
+    </div>
+
+    <div *ngIf="tarea.estado == 'Solicitado'">
+      <app-header-user></app-header-user>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5 padding>
+                Estamos buscando un profesor...<br>
+                Se confirmará en un plazo máximo de 1 hora
+              </h5>
+            </ion-text>
+            <ion-progress-bar padding color="primary" type="indeterminate"></ion-progress-bar>
+          </ion-col>
+        </ion-row>
+        <br>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="secondary" [routerLink]="['/lista-tareas']">
+              TAREAS SOLICITADAS
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="tarea.estado == 'Sin_Pago'">
+      <app-header-user></app-header-user>
+
+      <div padding>
+        <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event)"></app-subir-transferencia>
+      </div>
+    </div>
+
+    <div padding *ngIf="tarea.estado == 'Sin_Profesor'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+      </ion-text>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <h1 padding><b>Rechazada</b></h1>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5>
+                <b>Lo sentimos</b>,<br>
+                no encontramos profesor,
+                por favor elige otro <b>horario</b> e
+                intentalo nuevamente.
+              </h5>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="primary" [routerLink]="['/inicio']">
+              Aceptar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div padding *ngIf="tarea.estado == 'Pago_Rechazado'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+      </ion-text>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <h1 padding><b>Rechazada</b></h1>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5>
+                <b>Lo sentimos</b>,<br>
+                su pago ha sido rechazado o no lo hemos podido verificar.
+              </h5>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="primary" [routerLink]="['/inicio']">
+              Aceptar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div padding *ngIf="tarea.estado == 'Cancelado'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+      </ion-text>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <h1 padding><b>Cancelada</b></h1>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5>
+                <b>Lo sentimos</b>,<br>
+                su tarea ha sido Cancelada.
+              </h5>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="primary" [routerLink]="['/inicio']">
+              Aceptar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+
+    <div padding *ngIf="tarea.estado == 'Confirmando_Pago'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+      </ion-text>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <h1 padding><b>Confirmando Pago</b></h1>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5>Nos encontramos
+                <b>confirmando su pago</b>,<br>
+                por favor espere.
+              </h5>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="secondary" [routerLink]="['/lista-tareas']">
+              TAREAS SOLICITADAS
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div padding
+      *ngIf="tarea.estado == 'Confirmado' || tarea.estado == 'Aceptado' || tarea.estado == 'Terminado' || tarea.estado == 'Calificado'  || tarea.estado == 'Pago_Aprobado'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+      </ion-text>
+
+      <ion-grid>
+        <ion-row class="lineBotton">
+          <ion-col size="8">
+            <ion-text color="secondary">
+              <h1 style="font-size: 2em"><b>Confirmada</b></h1>
+            </ion-text>
+          </ion-col>
+          <ion-col (click)="openChat(tarea)" size="4" class="ion-no-padding lineLateral ion-align-self-center">
+            <img style="height: 60px; width: 60px;" src="/assets/img/chat.png">
+          </ion-col>
+        </ion-row>
+        <ion-row class="lineBotton">
+          <ion-col offset="1" size="3" class="ion-no-padding">
+            <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+tarea.materia + '.png'">
+          </ion-col>
+          <ion-col class="ion-text-left">
+            <ion-text color="secondary">
+              <h5 no-padding no-margin>{{tarea.materia}}</h5>
+              <small text-wrap>{{tarea?.tema}}</small>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="tarea?.descripccion" class="lineBotton">
+          <ion-col>
+            <ion-text color="secondary">
+              <small>Descripción</small><br>
+              {{tarea?.descripccion}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="lineBotton">
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="secondary">
+              <p>{{tarea.hora1}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="primary" [routerLink]="['/lista-tareas']">
+              Aceptar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <ng-template #loadD>
+    <div text-center>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
+    </div>
+  </ng-template>
+
+</ion-content>

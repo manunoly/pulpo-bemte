@@ -15,7 +15,7 @@ import { ModalController } from "@ionic/angular";
 })
 export class RegistrarsePage implements OnInit {
   registroForm: FormGroup;
-
+  paisNumber;
 
   constructor(
     public alertController: AlertController,
@@ -27,7 +27,8 @@ export class RegistrarsePage implements OnInit {
     private modalController: ModalController
   ) {
     this.registroForm = this.fb.group({
-      celular: ["", Validators.required],
+      celular: ["", [Validators.required, Validators.minLength(7)]],
+      paisCelular: ["+593", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password1: ["", [Validators.required, Validators.minLength(8)]],
@@ -44,6 +45,8 @@ export class RegistrarsePage implements OnInit {
   }
 
   async ngOnInit() {
+    this.paisNumber = this.db.get('lista-paises');
+
     if (this.util.isMobile()) {
       const token = await this.fcm.getToken();
       if (token) this.registroForm.controls["token"].setValue(token);

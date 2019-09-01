@@ -31,13 +31,13 @@
         </ion-col>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked"> Nombres </ion-label>
+            <ion-label position="stacked">Nombre</ion-label>
             <ion-input formControlName="nombre" type="text"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked"> Apellidos </ion-label>
+            <ion-label position="stacked">Apellido</ion-label>
             <ion-input formControlName="apellido" type="text">
             </ion-input>
           </ion-item>
@@ -52,10 +52,16 @@
           </ion-item>
 
           <ion-item>
-            <ion-input formControlName="newPassword" placeholder="Contraseña nueva" type="password"></ion-input>
+            <ion-input [disabled]="!registroForm.value.oldPassword" formControlName="newPassword"
+              placeholder="Contraseña nueva" type="password"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="newPasswordConfirm" placeholder="Confirmar Contraseña Nueva" type="password">
+            <ion-label position="stacked"
+              *ngIf="registroForm.value.newPassword && registroForm.value.newPassword !=registroForm.value.newPasswordConfirm">
+              No coinciden</ion-label>
+            <ion-input [disabled]="!registroForm.value.oldPassword" formControlName="newPasswordConfirm"
+              placeholder="Confirmar Contraseña Nueva" type="password">
             </ion-input>
           </ion-item>
 

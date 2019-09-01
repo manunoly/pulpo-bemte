@@ -10,7 +10,7 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label position="stacked">
-                            <h2><b>Materia</b></h2>
+                            <b>Materia</b>
                         </ion-label>
                         <ion-select class="ion-text-center" formControlName="materia" [disabled]="!materias">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
@@ -20,27 +20,14 @@
                     </ion-item>
                     <ion-item>
                         <ion-label position="stacked">
-                            <h2><b>Tema</b></h2>
+                            <b>Tema</b>
                         </ion-label>
                         <ion-input formControlName="tema"></ion-input>
                     </ion-item>
 
-                    <!-- <ion-item>
-                        <ion-label>Horas</ion-label>
-                        <ion-select [disabled]="!horasCombo" formControlName="hora">
-                            <ion-select-option *ngFor="let hora of horasCombo | async" [value]="hora?.id">
-                                {{hora.hora}} Horas
-                            </ion-select-option>
-                        </ion-select>
-                    </ion-item> -->
-                    <!-- <ion-item>
-                        <ion-label>Ejercicios</ion-label>
-                        <ion-input type="text" formControlName="ejercicios" class="ion-text-end"></ion-input>
-                    </ion-item> -->
-
                     <ion-item lines="none">
                         <ion-label position="stacked">
-                            <h2><b>Cantidad de Alumnos</b></h2>
+                            <b>Cantidad de Alumnos</b>
                         </ion-label>
                         <ion-select class="ion-text-center" formControlName="personas">
                             <ion-select-option value="1">1</ion-select-option>
@@ -49,25 +36,20 @@
                             <ion-select-option value="4">4</ion-select-option>
                             <ion-select-option value="5">5</ion-select-option>
                         </ion-select>
-                        <!-- <ion-input type="number" min="1" max="5" formControlName="personas" class="ion-text-end"></ion-input> -->
                     </ion-item>
 
                     <ion-item lines="none">
                         <ion-label position="stacked">
-                            <h2><b>Fecha</b></h2>
+                            <b>Fecha</b>
                         </ion-label>
                         <ion-datetime class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)"
                             [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha" display-format="DD-MM-YYYY">
                         </ion-datetime>
                     </ion-item>
 
-                    <!-- <h2 *ngIf="claseForm.value.fecha && claseForm.value.fecha < hoy">
-                        Revise las fechas por favor
-                    </h2> -->
-
                     <ion-item lines="none">
                         <ion-label position="stacked">
-                            <h2><b>Hora</b></h2>
+                            <b>Hora</b>
                         </ion-label>
                         <ion-datetime class="ion-text-center" [disabled]="!claseForm.value.fecha"
                             formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm">
@@ -76,9 +58,8 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked">
-                            <h2><b>Duración</b></h2>
+                            <b>Duración</b>
                         </ion-label>
-                        <!-- <ion-input type="number" formControlName="duracion" class="ion-text-end"></ion-input> -->
                         <ion-select class="ion-text-center" formControlName="duracion">
                             <ion-select-option value="2">2 horas</ion-select-option>
                             <ion-select-option value="3">3 horas</ion-select-option>
@@ -91,6 +72,11 @@
                     </ion-item>
 
                     <ion-item>
+                        <ion-label position="stacked"><b>Descripcion</b></ion-label>
+                        <ion-textarea formControlName="descripcion"></ion-textarea>
+                    </ion-item>
+
+                    <ion-item>
                         <ion-label class="ion-text-wrap">Solicitar último profesor</ion-label>
                         <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
@@ -98,7 +84,7 @@
                     <ion-item lines="none" (click)="goToMap()">
                         <ion-icon no-padding no-margin color="primary" size="large" name="pin" slot="start"></ion-icon>
                         <ion-label no-padding no margin text-center class="ion-text-wrap" no-padding no margin>
-                            <h2 no-padding no margin><b>Ubicación</b></h2> {{claseForm?.value?.ubicacion}}
+                            <b>Ubicación</b> {{claseForm?.value?.ubicacion}}
                         </ion-label>
                         <ion-button slot="end" shape="round" size="small">Mapa</ion-button>
                     </ion-item>

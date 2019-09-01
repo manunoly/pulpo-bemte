@@ -15,8 +15,7 @@ import { of } from "rxjs";
   templateUrl: "./clases.page.html",
   styleUrls: ["./clases.page.scss"]
 })
-export class ClasesPage {
-  // export class ClasesPage implements OnInit {
+export class ClasesPage implements OnInit {
   claseForm: FormGroup;
   materias;
   user;
@@ -59,7 +58,7 @@ export class ClasesPage {
 
   }
 
-  async ionViewWillEnter() {
+  async ngOnInit() {
     this.util.showLoading();
 
     // this.auth.currentUser
@@ -100,6 +99,7 @@ export class ClasesPage {
       user_id: [this.user ? this.user.user_id : "", Validators.required],
       materia: ["", Validators.required],
       tema: ["", Validators.required],
+      descripcion: ["", [Validators.required, Validators.maxLength(250)]],
       personas: [
         "1",
         [Validators.required, Validators.min(1), Validators.max(5)]

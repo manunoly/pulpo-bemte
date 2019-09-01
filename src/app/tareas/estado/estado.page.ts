@@ -22,10 +22,6 @@ export class EstadoPage implements OnInit {
 
   constructor(private alertController: AlertController, public upload: UploadService, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
-  // ionViewWillEnter() {
-  //   this.actualizar();
-  // }
-
   async ngOnInit() {
     this.actualizar();
   }

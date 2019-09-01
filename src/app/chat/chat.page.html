@@ -6,9 +6,9 @@
       <ion-icon slot="icon-only" name="close"></ion-icon>
     </ion-button>
   </ion-fab>
-  <div *ngIf="clase">
+  <div *ngIf="datosMostrar">
     <ion-text color="primary">
-      <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
+      <h1 class="lineBotton"><b>ESTADO DE LA {{tipo}}</b></h1>
     </ion-text>
 
     <ion-grid>
@@ -24,12 +24,12 @@
       </ion-row>
       <ion-row class="lineBotton">
         <ion-col offset="1" size="3" class="ion-no-padding">
-          <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+clase.materia + '.png'">
+          <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+datosMostrar.materia + '.png'">
         </ion-col>
         <ion-col class="ion-text-left">
           <ion-text color="secondary">
-            <h5 no-padding no-margin>{{clase?.materia}}</h5>
-            <small text-wrap>{{clase?.tema}}</small>
+            <h5 no-padding no-margin>{{datosMostrar?.materia}}</h5>
+            <small text-wrap>{{datosMostrar?.tema}}</small>
           </ion-text>
         </ion-col>
       </ion-row>
