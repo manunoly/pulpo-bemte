@@ -40,7 +40,7 @@
       </ion-grid>
     </div>
 
-    <div *ngIf="clase.estado == 'Sin_Pago'">
+    <div *ngIf="clase.estado == 'Confirmado'">
       <app-header-user></app-header-user>
 
       <div padding>
@@ -68,7 +68,44 @@
                 <b>Lo sentimos</b>,<br>
                 no encontramos profesor,
                 por favor elige otro <b>horario</b> e
-                intentalo nuevamente.
+                inténtalo nuevamente.
+              </h5>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <br>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col offset="2" size="8">
+            <ion-button expand="block" shape="round" color="primary" [routerLink]="['/inicio']">
+              Aceptar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div padding *ngIf="clase.estado == 'Sin_Pago'">
+      <ion-text color="primary">
+        <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
+      </ion-text>
+
+      <ion-grid padding>
+        <ion-row>
+          <ion-col>
+            <ion-text color="danger">
+              <h1 padding><b>Rechazada</b></h1>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-text color="secondary">
+              <h5>
+                <b>Lo sentimos</b>,<br>
+                no has realizado el pago en el tiempo requerido,
+                por favor solicite la clase nuevamente.
               </h5>
             </ion-text>
           </ion-col>
@@ -196,7 +233,7 @@
     </div>
 
     <div padding
-      *ngIf="clase.estado == 'Confirmado' || clase.estado == 'Aceptado' || clase.estado == 'Terminado' || clase.estado == 'Calificado'  || clase.estado == 'Pago_Aprobado'">
+      *ngIf="clase.estado == 'Aceptado' || clase.estado == 'Terminado' || clase.estado == 'Calificado'  || clase.estado == 'Pago_Aprobado'">
       <ion-text color="primary">
         <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
       </ion-text>
@@ -261,7 +298,7 @@
         </ion-row>
 
         <ion-row *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
-          <ion-col class="ion-align-self-center" size="1">
+          <ion-col class="ion-align-self-center" size="2">
             <ion-icon size="large" name="pin" color="primary"></ion-icon>
           </ion-col>
           <ion-col no-padding no-margin>
@@ -274,8 +311,21 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <br>
+
       <ion-grid padding>
+        <ion-row *ngIf="clase.estado == 'Aceptado'">
+          <ion-col offset="2" size="8">
+            <a no-padding color="secondary" (click)="confirmarCancelar(clase)">
+              <ion-text color="secondary">
+                <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+              </ion-text>
+            </a>
+            <ion-text color="secondary">
+              <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
         <ion-row>
           <ion-col offset="2" size="8">
             <ion-button expand="block" shape="round" color="primary" [routerLink]="['/lista-clases']">

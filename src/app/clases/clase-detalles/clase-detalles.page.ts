@@ -1,9 +1,11 @@
+import { AuthService } from './../../servicios/auth.service';
 import { ChatPage } from './../../chat/chat.page';
 import { MapPage } from './../../map/map.page';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { DbService } from './../../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { UtilService } from 'src/app/servicios/util.service';
 
 @Component({
   selector: 'app-clase-detalles',
@@ -34,17 +36,23 @@ export class ClaseDetallesPage implements OnInit {
     "created_at": "2019-08-27 09:44:04",
     "id": 64
   };
-  
+
   constructor(private route: ActivatedRoute,
     private db: DbService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertController: AlertController,
+    private util: UtilService, private router: Router,
+    private auth: AuthService
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.claseId = this.route.snapshot.paramMap.get("id");
     this.cargarClase();
-    console.log(this.claseId);
-  } 
+  }
+
+  ngOnInit() {
+
+  }
 
   cargarClase() {
     this.claseO = this.db.get('devuelve-clase?clase_id=' + this.claseId);
@@ -71,5 +79,48 @@ export class ClaseDetallesPage implements OnInit {
       componentProps: { clase: claseD }
     });
     return await modal.present();
+  }
+
+  async confirmarCancelar(clase) {
+    if (!clase || clase == {})
+      return;
+    const alert = await this.alertController.create({
+      header: 'Cancelar!',
+      message: 'Al cancelar se le descuenta 1 hora, si es 3 horas o menos de la clase se descuentan todas las horas, Desea cancelar?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.terminar(clase);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  async terminar(clase) {
+    try {
+      this.util.showLoading();
+      const user = await this.auth.getUserData();
+      const resp = await this.db.post('clase-terminar', { clase_id: clase.id, user_id: user.user_id, cancelar: 1, profesor: 0 });
+      this.util.dismissLoading();
+      this.db.setComboToBuy('');
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        this.router.navigateByUrl('lista-clases');
+      }
+    } catch (error) {
+      this.util.dismissLoading();
+    }
   }
 }

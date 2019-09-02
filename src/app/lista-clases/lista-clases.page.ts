@@ -21,8 +21,11 @@ export class ListaClasesPage implements OnInit {
 
   constructor(public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.cargarClases();
+  }
+
+  ngOnInit() {
   }
 
   setTipoClase(tipo) {
@@ -42,6 +45,8 @@ export class ListaClasesPage implements OnInit {
   }
 
   setDetallesClaseId(id) {
+    if (id == this.detallesClaseId)
+      return this.detallesClaseId = '';
     this.detallesClaseId = id;
   }
 

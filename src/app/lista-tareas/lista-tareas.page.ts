@@ -21,6 +21,9 @@ export class ListaTareasPage implements OnInit {
   detallesTareaId;
 
   constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) {
+  }
+
+  ionViewWillEnter(){
     this.cargarTareas();
   }
 
@@ -45,6 +48,8 @@ export class ListaTareasPage implements OnInit {
   }
 
   setDetallesTareaId(id) {
+    if(id == this.detallesTareaId)
+      return this.detallesTareaId = '';
     this.detallesTareaId = id;
   }
 
