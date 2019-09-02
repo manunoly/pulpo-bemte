@@ -88,43 +88,69 @@ export class UtilService {
     return this.platform.is('cordova');
   }
 
+  getColorEstado(estado) {
+    switch (estado) {
+      case 'Por pagar':
+        return 'danger';
+
+      case 'Confirmado':
+        return 'primary';
+
+      case 'En proceso':
+        return 'secondary';
+
+      case 'Rechazado':
+        return 'medium';
+
+      default:
+        return 'primary';
+    }
+  }
+
+  /**
+   @param estado 4 estados:
+      -Por pagar
+      -Confirmado
+      -Rechazado
+      -En proceso
+   */
   estados(estado) {
     switch (estado) {
       case 'Sin_Horas':
-        return 'Por Pagar';
+        return 'Por pagar';
 
       case 'Solicitado':
-        return 'Solicitada';
+        return 'En proceso';
 
       case 'Confirmado':
-        return 'Confirmado';
+        return 'En proceso';
 
       case 'Aceptado':
         return 'Confirmado';
 
       case 'Terminado':
-        return 'Terminado';
+        return 'Confirmado';
 
       case 'Calificado':
-        return 'Terminado';
+        return 'Confirmado';
 
       case 'Cancelado':
-        return 'Terminado';
+        return 'Rechazado';
 
       case 'Sin_Profesor':
-        return 'Terminado';
+        return 'Rechazado';
 
       case 'Sin_Pago':
-        return 'Terminado';
+        return 'Rechazado';
 
       case 'Pago_Rechazado':
         return 'Rechazado';
 
       case 'Confirmando_Pago':
-        return 'Confirmado';
+        return 'En proceso';
 
       default:
-        return 'Clase Estado';
+        return 'En proceso';
     }
   }
 }

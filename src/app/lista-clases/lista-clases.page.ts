@@ -58,8 +58,4 @@ export class ListaClasesPage implements OnInit {
     });
     return await modal.present();
   }
-
-  getColor(estado) {
-    return 'secondary';
-  }
 }

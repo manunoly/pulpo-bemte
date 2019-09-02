@@ -22,7 +22,8 @@
     </ion-row>
   </ion-grid>
   <ion-grid *ngIf="clases | async as clasesD; else loadD">
-    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD" (click)="setDetallesClaseId(clase?.id)">
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD"
+      (click)="setDetallesClaseId(clase?.id)">
       <ion-col size="8">
         <ion-item lines="none">
           <ion-thumbnail slot="start">
@@ -40,8 +41,8 @@
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
         <ion-text color="secondary">
           <p no-padding no-margin><strong> Estado </strong></p>
-          <ion-button shape="round" [color]="getColor(util.estados(clase?.estado))" size="small">
-            <small no-padding no-margin>{{util.estados(clase?.estado)}}</small>
+          <ion-button shape="round" [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
+            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
           </ion-button>
         </ion-text>
       </ion-col>

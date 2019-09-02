@@ -57,8 +57,4 @@ export class ListaTareasPage implements OnInit {
     this.tipo = tipo;
     this.cargarTareas();
   }
-
-  getColor(estado) {
-    return 'secondary';
-  }
 }

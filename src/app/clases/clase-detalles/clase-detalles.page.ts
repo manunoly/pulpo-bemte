@@ -60,7 +60,11 @@ export class ClaseDetallesPage implements OnInit {
 
   accionHoras($event) {
     console.log('la accion de las horas es', $event);
-    this.cargarClase();
+    if ($event)
+      this.cargarClase();
+    else if ($event == false)
+      this.router.navigateByUrl('lista-clases');
+
   }
 
 

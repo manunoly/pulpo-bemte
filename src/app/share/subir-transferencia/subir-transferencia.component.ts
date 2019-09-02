@@ -70,7 +70,7 @@ export class SubirTransferenciaComponent implements OnInit {
       } else {
         setTimeout(() => {
           this.change.emit(false);
-        }, 3000);
+        }, 2000);
       }
 
       this.util.dismissLoading();

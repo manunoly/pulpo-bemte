@@ -42,8 +42,8 @@
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
         <ion-text color="secondary">
           <p no-padding no-margin><strong> Estado </strong></p>
-          <ion-button shape="round" [color]="getColor(util.estados(tarea?.estado))" size="small">
-            <small no-padding no-margin>{{util.estados(tarea?.estado)}}</small>
+          <ion-button shape="round" [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
+            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
           </ion-button>
         </ion-text>
       </ion-col>
