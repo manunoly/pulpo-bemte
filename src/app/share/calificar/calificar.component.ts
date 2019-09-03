@@ -12,18 +12,15 @@ import { DbService } from '../../servicios/db.service';
 export class CalificarComponent implements OnInit {
   msg;
   rating;
-  @Input() tarea?: string;
-  @Input() clase?: string;
-  @Input() idEstudiante?: string;
-  @Input() idProfesor?: string;
+  opinion = 'Sin Comentario'
+  @Input() calificarData?: any;
+  @Input() tipo?: string;
 
   constructor(private auth: AuthService, private db: DbService, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
-    console.log(this.idProfesor);
-    console.log('la clase ',this.clase);
-   }
-
+    console.log(this.calificarData);
+  }
 
   public rate(index: number) {
     this.rating = index;
@@ -56,22 +53,32 @@ export class CalificarComponent implements OnInit {
 
   async calificar(opinion) {
     const user = await this.auth.getUserData();
+    let data;
     if (user) {
       console.log(user);
+
       let url = 'calificar-profesor';
+      data['user_id_calif'] = user.user_id;
       if (user['tipo'] === 'Profesor') {
         url = 'calificar-alumno';
+        data['user_id_calif'] = user.user_id;
+      }
+
+      if (this.tipo == 'clase') {
+        data['clase_id'] = this.calificarData.id;
+        data['tarea_id'] = null;
+        data['user_id_calif'] = this.calificarData.user_id_pro;
+
+      } else if (this.tipo == 'clase') {
+        data['tarea_id'] = this.calificarData.id;
+        data['clase_id'] = null;
+        data['user_id_calif'] = this.calificarData.user_id;
       }
 
       /**FIXME: preguntar que es el user_id_calif vs user_id */
-      const data = {
-        user_id: user.user_id,
-        user_id_calif: this.idEstudiante ? this.idEstudiante : this.idProfesor,
-        calificacion: this.rating,
-        tarea_id: this.tarea,
-        clase_id: this.clase,
-        comment: opinion
-      }
+      data['user_id'] = user.user_id;
+      data['calificacion']= this.rating,
+      data['comment'] = this.opinion;
 
       try {
         this.util.showLoading();
@@ -84,6 +91,9 @@ export class CalificarComponent implements OnInit {
       } catch (error) {
         this.util.dismissLoading();
       }
+    } else {
+      this.util.showMessage('No hemos podido identifcar al usuario');
+      this.close();
     }
   }
 

@@ -2,8 +2,6 @@ import { Router } from '@angular/router';
 import { AuthService } from './../servicios/auth.service';
 import { DbService } from './../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-billetera-estudiante',

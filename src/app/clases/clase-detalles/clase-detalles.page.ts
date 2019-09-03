@@ -64,7 +64,6 @@ export class ClaseDetallesPage implements OnInit {
       this.cargarClase();
     else if ($event == false)
       this.router.navigateByUrl('lista-clases');
-
   }
 
 
