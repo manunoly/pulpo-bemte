@@ -20,14 +20,14 @@ export class HeaderUserComponent implements OnInit {
     this.userD = this.auth.user.pipe(
       switchMap(user => {
         if (user) {
-          // this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
-          //   if (calificar.clase_id != 0) {
-          //     this.calificar(calificar['clase']);
-          //   } else if (calificar.tarea_id != 0) {
-          //     console.log('tarea');
-          //   }
-          //   console.log(calificar);
-          // }).catch();
+          this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
+            if (calificar.clase_id != 0) {
+              this.calificar(calificar['clase']);
+            } else if (calificar.tarea_id != 0) {
+              console.log('tarea');
+            }
+            console.log(calificar);
+          }).catch();
           return this.db.get('alumno?user_id=' + user.user_id);
         }
         return of(null)
@@ -50,7 +50,7 @@ export class HeaderUserComponent implements OnInit {
   async calificar(data) {
     const modal = await this.modalController.create({
       component: CalificarComponent,
-      componentProps: { calificarData: data }
+      componentProps: { calificarData: data, tipo: 'clase' }
     });
     modal.onDidDismiss().then(data => console.log(data));
     return await modal.present();

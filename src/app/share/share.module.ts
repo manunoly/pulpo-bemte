@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { HorasSeleccionarComponent } from './horas-seleccionar/horas-seleccionar.component';
 import { CalificarComponent } from './calificar/calificar.component';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,7 @@ import { SubirTransferenciaComponent } from './subir-transferencia/subir-transfe
 
 
 @NgModule({
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, FormsModule],
   declarations: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent],
   exports: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent],
   entryComponents: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent]

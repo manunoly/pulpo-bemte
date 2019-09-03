@@ -68,6 +68,13 @@ ion-item {
   background: red !important;
 }
 
+.item-avatar  {     
+  width:180% !important;  
+  height : 180% !important;  
+  max-width: 100px !important;  //any size
+  max-height: 100px !important; //any size 
+  }
+  
 ion-fab-list {
   ion-label {
     position: relative;

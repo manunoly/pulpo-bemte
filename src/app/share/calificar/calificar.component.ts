@@ -12,14 +12,14 @@ import { DbService } from '../../servicios/db.service';
 export class CalificarComponent implements OnInit {
   msg;
   rating;
-  opinion = 'Sin Comentario'
+  opinion;
   @Input() calificarData?: any;
   @Input() tipo?: string;
 
   constructor(private auth: AuthService, private db: DbService, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
-    console.log(this.calificarData);
+    console.log('esto recibo', this.calificarData);
   }
 
   public rate(index: number) {
@@ -51,34 +51,39 @@ export class CalificarComponent implements OnInit {
     }
   }
 
-  async calificar(opinion) {
+  async calificar() {
     const user = await this.auth.getUserData();
-    let data;
+    let data = {};
     if (user) {
       console.log(user);
 
+      if (this.rating > 3 || this.opinion == undefined)
+        data['comment'] = 'Sin Comentario';
+      else {
+        data['comment'] = this.opinion;
+      }
+
       let url = 'calificar-profesor';
-      data['user_id_calif'] = user.user_id;
+
       if (user['tipo'] === 'Profesor') {
         url = 'calificar-alumno';
-        data['user_id_calif'] = user.user_id;
+        data['user_id_calif'] = this.calificarData.user_id;
+      } else {
+        data['user_id_calif'] = this.calificarData.user_id_pro;
       }
 
       if (this.tipo == 'clase') {
         data['clase_id'] = this.calificarData.id;
         data['tarea_id'] = null;
-        data['user_id_calif'] = this.calificarData.user_id_pro;
 
-      } else if (this.tipo == 'clase') {
+      } else if (this.tipo == 'tarea') {
         data['tarea_id'] = this.calificarData.id;
         data['clase_id'] = null;
-        data['user_id_calif'] = this.calificarData.user_id;
       }
 
       /**FIXME: preguntar que es el user_id_calif vs user_id */
       data['user_id'] = user.user_id;
-      data['calificacion']= this.rating,
-      data['comment'] = this.opinion;
+      data['calificacion'] = this.rating;
 
       try {
         this.util.showLoading();
