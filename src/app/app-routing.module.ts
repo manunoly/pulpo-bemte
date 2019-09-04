@@ -41,7 +41,8 @@ const routes: Routes = [
   { path: 'clase-detalles/:id', loadChildren: './clases/clase-detalles/clase-detalles.module#ClaseDetallesPageModule' },
   { path: 'tarea-detalles', loadChildren: './tarea-detalles/tarea-detalles.module#TareaDetallesPageModule' },
   { path: 'tarea-detalles/:id', loadChildren: './tarea-detalles/tarea-detalles.module#TareaDetallesPageModule' },
-  { path: 'notificaciones', loadChildren: './notificaciones/notificaciones.module#NotificacionesPageModule' }
+  { path: 'notificaciones', loadChildren: './notificaciones/notificaciones.module#NotificacionesPageModule' },
+  { path: 'clases-listado', loadChildren: './clases-listado/clases-listado.module#ClasesListadoPageModule' }
 ];
 
 @NgModule({

@@ -23,11 +23,19 @@ export class AppComponent {
   }];
 
   public profesorPages = [{
-    title: 'Iniciar Sesión',
-    url: '/login',
-    icon: 'person'
-  },
-  {
+      title: 'Mis Clases',
+      url: '/lista-clases',
+      icon: 'list'
+    },{
+      title: 'Solicitudes de Clases',
+      url: '/clases-listado',
+      icon: 'list'
+    },
+    {
+      title: 'Mis Tareas',
+      url: '/lista-tareas',
+      icon: 'list'
+    },  {
     title: 'Solicitudes de Tareas',
     url: '/tareas-listado',
     icon: 'list'
@@ -39,16 +47,7 @@ export class AppComponent {
   }];
 
   public estudiantePages = [
-    {
-      title: 'Mis Clases',
-      url: '/lista-clases',
-      icon: 'list'
-    },
-    {
-      title: 'Mis Tareas',
-      url: '/lista-tareas',
-      icon: 'list'
-    },
+    
     {
       title: 'Mi Billeta',
       url: '/billetera-estudiante',
@@ -88,7 +87,7 @@ export class AppComponent {
     this.auth.user.subscribe(user => {
       this.user = user;
       if (user)
-        this.appPages = this.estudiantePages;
+        this.appPages = this.profesorPages;
       else
         this.appPages = this.inicio;
     });
