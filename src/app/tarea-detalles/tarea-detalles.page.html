@@ -4,7 +4,6 @@
 
   <div *ngIf="(tareaO | async) as tarea; else loadD">
     <div *ngIf="tarea.estado == 'Sin_Horas'">
-      <app-header-user></app-header-user>
 
       <div padding>
         <ion-text color="danger">
@@ -15,7 +14,6 @@
     </div>
 
     <div *ngIf="tarea.estado == 'Solicitado'">
-      <app-header-user></app-header-user>
 
       <ion-grid padding>
         <ion-row>
@@ -41,7 +39,6 @@
     </div>
 
     <div *ngIf="tarea.estado == 'Confirmado'">
-      <app-header-user></app-header-user>
 
       <div padding>
         <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event)"></app-subir-transferencia>

@@ -4,7 +4,6 @@
 
   <div *ngIf="(claseO | async) as clase; else loadD">
     <div *ngIf="clase.estado == 'Sin_Horas'">
-      <app-header-user></app-header-user>
 
       <div padding>
         <ion-text color="danger">
@@ -15,7 +14,6 @@
     </div>
 
     <div *ngIf="clase.estado == 'Solicitado'">
-      <app-header-user></app-header-user>
 
       <ion-grid padding>
         <ion-row>
@@ -41,7 +39,6 @@
     </div>
 
     <div *ngIf="clase.estado == 'Confirmado'">
-      <app-header-user></app-header-user>
 
       <div padding>
         <app-subir-transferencia [clase_id]="clase.id" (accion)="accionHoras($event)"></app-subir-transferencia>
