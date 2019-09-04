@@ -1,25 +1,8 @@
 <app-header-bemte></app-header-bemte>
 <ion-content>
-  <br>
-  <app-header-user></app-header-user>
-
-  <!-- <div text-center>
-    <ion-button size="large" [routerLink]="['/tarea-detalles/1']">claseDetalles</ion-button>
-  </div> -->
-
-  <!-- <div padding> -->
-  <!-- <div text-center>
-          <ion-button size="large" [routerLink]="['/clase-detalles/1']">claseDetalles</ion-button>
-        </div> -->
-
-  <!-- <app-horas-seleccionar [clase_id]="'1'" (accion)="accionHoras($event)"></app-horas-seleccionar> -->
-  <!-- <app-subir-transferencia></app-subir-transferencia> -->
-  <!-- </div>
-  <ion-text color="secondary">
-    <h1 text-center *ngIf="auth.currentUser | async as user" padding>
-      <strong> Bienvenid@ {{ user?.nombres }} </strong><br>
-    </h1>
-  </ion-text> -->
+  <div *ngIf="reload" >
+    <app-header-user></app-header-user>
+  </div>
   <ion-text color="secondary">
     <h3 style="padding-top: 20%" text-center>Necesitas ayuda con:</h3>
   </ion-text>

@@ -12,6 +12,8 @@ import { MapPage } from "../map/map.page";
   styleUrls: ["./inicio.page.scss"]
 })
 export class InicioPage implements OnInit {
+  reload = true;
+
   constructor(
     public util: UtilService,
     private fcm: FcmService,
@@ -30,6 +32,14 @@ export class InicioPage implements OnInit {
         }
       } catch (error) { }
     }
+  }
+
+  ionViewWillEnter() {
+    this.reload = true;
+  }
+  
+  ionViewDidLeave() {
+    this.reload = false;
   }
 
   goTo(url) {

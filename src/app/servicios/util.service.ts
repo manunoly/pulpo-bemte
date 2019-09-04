@@ -123,7 +123,7 @@ export class UtilService {
         return 'En proceso';
 
       case 'Confirmado':
-        return 'En proceso';
+        return 'Por pagar';
 
       case 'Aceptado':
         return 'Confirmado';

@@ -30,6 +30,7 @@ export class ClasesPage implements OnInit {
   map;
   minHora = "0";
   horasDisponibles;
+  ultimoProfesor = false;
 
   constructor(
     private modalController: ModalController,
@@ -183,7 +184,7 @@ export class ClasesPage implements OnInit {
       hoy.getDate() == fecha.getDate()
     ) {
       console.log("la fecha es hoy");
-      this.loadMinHora(fecha.getHours() + 3);
+      this.loadMinHora(fecha.getHours() + 2);
       this.claseForm.controls["hora1"].setValue("");
     } else this.loadMinHora();
   }
@@ -213,5 +214,11 @@ export class ClasesPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async claseAnteriorProfesor(materia?) {
+    console.log(materia);
+    if (materia)
+      this.ultimoProfesor = await this.db.get('seleccionar-profesor?user_id=' + this.user.user_id + '&materia_id=' + materia)
   }
 }

@@ -25,6 +25,11 @@
                         <ion-input formControlName="tema"> </ion-input>
                     </ion-item>
 
+                    <ion-item>
+                        <ion-label position="stacked"><b>Descripcion</b></ion-label>
+                        <ion-textarea formControlName="descripcion"></ion-textarea>
+                    </ion-item>
+
                     <ion-item lines="none">
                         <ion-label position="stacked"> <b>Fecha entrega</b></ion-label>
                         <ion-datetime class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)"
@@ -39,11 +44,6 @@
                             <ion-select-option *ngFor="let hora of rangosHorarios" [value]="hora">{{hora.hora_inicio}} -
                                 {{hora.hora_fin}}</ion-select-option>
                         </ion-select>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked"><b>Descripcion</b></ion-label>
-                        <ion-textarea formControlName="descripcion"></ion-textarea>
                     </ion-item>
 
                     <ion-item lines="none">

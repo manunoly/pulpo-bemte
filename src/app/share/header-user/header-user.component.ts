@@ -2,7 +2,7 @@ import { CalificarComponent } from './../calificar/calificar.component';
 import { ModalController } from '@ionic/angular';
 import { DbService } from './../../servicios/db.service';
 import { AuthService } from './../../servicios/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 })
 export class HeaderUserComponent implements OnInit {
   userD;
+  @Input() query = true;
 
   constructor(public auth: AuthService, private db: DbService, private modalController: ModalController) { }
 
@@ -20,22 +21,19 @@ export class HeaderUserComponent implements OnInit {
     this.userD = this.auth.user.pipe(
       switchMap(user => {
         if (user) {
-          this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
-            if (calificar.clase_id != 0) {
-              this.calificar(calificar['clase']);
-            } else if (calificar.tarea_id != 0) {
-              console.log('tarea');
-            }
-            console.log(calificar);
-          }).catch();
+          if (this.query)
+            this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
+              if (calificar.clase_id != 0) {
+                this.calificar(calificar['clase']);
+              } else if (calificar.tarea_id != 0) {
+                console.log('tarea');
+              }
+              console.log(calificar);
+            }).catch();
           return this.db.get('alumno?user_id=' + user.user_id);
         }
         return of(null)
       }));
-  }
-
-  ionViewDidEnter() {
-    console.log('entro en header user ionViewDidEnter');
   }
 
   crearArreglo(cant = 5) {

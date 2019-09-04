@@ -15,14 +15,15 @@ export class NotificacionesPage implements OnInit {
 
   constructor(private db: DbService, public util: UtilService, public auth: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ionViewWillEnter() {
     this.notificaciones = this.auth.user.pipe(
       switchMap(user => {
         if (user)
           return this.db.get('notificaciones?user_id=' + user.user_id);
         return of(null)
-      }
-      ));
+      }));
   }
 
 }

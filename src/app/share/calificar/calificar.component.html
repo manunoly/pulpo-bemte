@@ -1,6 +1,6 @@
 <app-header-bemte></app-header-bemte>
 <ion-content>
-  <!-- <app-header-user></app-header-user> -->
+  <app-header-user [query]="false"></app-header-user>
 
   <ion-grid *ngIf="calificarData" padding>
     <ion-row class="ion-no-padding">
@@ -19,8 +19,6 @@
       <ion-col text-center size="8" offset="2">
         <ion-text color="secondary" style="padding-left: 5px;">
           <h5>Califica a tu profe</h5>
-          {{rating}}
-          {{opinion}}
         </ion-text>
         <ion-avatar style="display:block; margin:auto;">
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
@@ -30,11 +28,10 @@
           [ngStyle]="{'color':getColor(num)}" [name]="num <= rating? 'star' : 'star-outline'"></ion-icon>
       </ion-col>
       <ion-col size="4" offset="4">
-          <ion-button [disabled]="!rating" (click)="calificar()" shape="round" expand="block"
-              size="small">Enviar
-          </ion-button>
+        <ion-button [disabled]="!rating" (click)="calificar()" shape="round" expand="block" size="small">Enviar
+        </ion-button>
       </ion-col>
-      
+
     </ion-row>
 
     <ion-row *ngIf="rating <= 3">

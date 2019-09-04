@@ -12,17 +12,23 @@
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ion-select class="ion-text-center" formControlName="materia" [disabled]="!materias">
+                        <ion-select (ionChange)="claseAnteriorProfesor($event.detail.value)" class="ion-text-center" formControlName="materia" [disabled]="!materias">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
                         </ion-select>
                     </ion-item>
+
                     <ion-item>
                         <ion-label position="stacked">
                             <b>Tema</b>
                         </ion-label>
                         <ion-input formControlName="tema"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label position="stacked"><b>Descripcion</b></ion-label>
+                        <ion-textarea formControlName="descripcion"></ion-textarea>
                     </ion-item>
 
                     <ion-item lines="none">
@@ -71,12 +77,7 @@
                         </ion-select>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label position="stacked"><b>Descripcion</b></ion-label>
-                        <ion-textarea formControlName="descripcion"></ion-textarea>
-                    </ion-item>
-
-                    <ion-item>
+                    <ion-item *ngIf="ultimoProfesor" >
                         <ion-label class="ion-text-wrap">Solicitar último profesor</ion-label>
                         <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
