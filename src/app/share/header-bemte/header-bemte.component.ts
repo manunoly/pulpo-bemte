@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-bemte.component.scss'],
 })
 export class HeaderBemteComponent implements OnInit {
+  estado = 'Disponible';
 
   constructor(private router: Router) { }
 
@@ -14,5 +15,12 @@ export class HeaderBemteComponent implements OnInit {
 
   goTo(url) {
     this.router.navigateByUrl(url);
+  }
+
+  actualizarEstado($event) {
+    if ($event)
+      this.estado = 'Disponible';
+    else
+      this.estado = 'Ocupado';
   }
 }
