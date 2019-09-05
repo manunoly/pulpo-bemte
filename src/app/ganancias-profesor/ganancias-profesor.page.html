@@ -1,0 +1,74 @@
+<app-header-bemte-prof></app-header-bemte-prof>
+
+<ion-content>
+
+  <ion-grid *ngIf="ganancias | async as gananciasD; else loadD">
+
+    <ion-row *ngIf="auth.currentUser | async as user"
+      class="lineBotton ion-text-center ion-no-padding ion-padding-vertical ion-no-margin">
+      <ion-col size="4">
+        <ion-avatar style="display:block; margin:auto;">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-text color="primary">
+          <p class="ion-no-padding ion-no-margin"> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
+            <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star" color="warning"></ion-icon>
+          </p>
+        </ion-text>
+      </ion-col>
+      <ion-col offset="1" size="7" class="ion-no-padding">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-avatar class="ion-no-padding ion-no-margin" slot="start">
+            <img class="ion-no-padding ion-no-margin" src="/assets/img/ganancias_menu.png">
+          </ion-avatar>
+          <ion-label>
+            <h1>GANANCIAS</h1>
+          </ion-label>
+        </ion-item>
+        <ion-text class="ion-no-padding ion-no-margin" color="dark">
+          <h1 class="ion-no-padding ion-no-margin" style="font-size: 40px;">$ {{gananciasD.total}}</h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="lineBotton">
+      <ion-col size="6">
+        <ion-button shape="round" color="primary" [fill]="tipo=='CLASES'?'solid':'clear'" expand="block"
+          (click)="setTipo('CLASES')">CLASES</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button shape="round" color="primary" [fill]="tipo=='TAREAS'?'solid':'clear'" expand="block"
+          (click)="setTipo('TAREAS')">TAREAS</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let g of gananciasD.data">
+      <ion-col size="8">
+        <ion-item lines="none">
+          <ion-thumbnail slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap ion-padding-left">
+            <h2> {{g?.materia}} </h2>
+            <h5> {{g?.tema}}</h5>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+
+      <ion-col class="ion-align-self-center lineLateral" size="4">
+        <ion-text class="ion-text-center" color="dark">
+          <p no-padding no-margin style="font-size: 25px;">${{g.valor}} </p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+  <ng-template #loadD>
+    <div padding text-center>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
+    </div>
+  </ng-template>
+</ion-content>
