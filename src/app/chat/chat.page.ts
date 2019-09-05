@@ -3,8 +3,8 @@ import { UtilService } from './../servicios/util.service';
 import { ModalController } from '@ionic/angular';
 import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { switchMap, map } from 'rxjs/operators';
-import { of, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-chat',

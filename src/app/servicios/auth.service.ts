@@ -64,8 +64,10 @@ export class AuthService {
   }
 
   async getUserData() {
-    if (!this.userD)
+    if (this.userD == undefined || this.userD == null)
       this.userD = await this.util.getStorage('user');
+    if (typeof (this.userD) == 'string')
+      this.userD = JSON.parse(this.userD);
     return this.userD;
   }
 

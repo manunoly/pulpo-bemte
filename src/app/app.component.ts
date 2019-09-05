@@ -16,27 +16,37 @@ export class AppComponent {
 
   public appPages = [];
 
-  public inicio = [{
-    title: 'Iniciar Sesión',
-    url: '/login',
-    icon: 'person'
-  }];
-
-  public profesorPages = [{
-    title: 'Iniciar Sesión',
-    url: '/login',
-    icon: 'person'
-  },
-  {
-    title: 'Solicitudes de Tareas',
-    url: '/tareas-listado',
-    icon: 'list'
-  },
-  {
-    title: 'Mi perfil',
-    url: '/perfil',
-    icon: 'man'
-  }];
+  public profesorPages = [
+    {
+      title: 'Solicitudes de Tareas',
+      url: '/tareas-listado',
+      icon: 'list'
+    },
+    {
+      title: 'Mis Tareas',
+      url: '/lista-tareas',
+      icon: 'list'
+    },
+    {
+      title: 'Solicitudes de Clases',
+      url: '/clases-listado',
+      icon: 'list'
+    },
+    {
+      title: 'Mis Clases',
+      url: '/lista-clases',
+      icon: 'list'
+    },
+    {
+      title: 'Mi perfil',
+      url: '/perfil',
+      icon: 'man'
+    },
+    {
+      title: 'Ganancias',
+      url: '/ganancias-profesor',
+      icon: 'man'
+    }];
 
   public estudiantePages = [
     {
@@ -53,7 +63,7 @@ export class AppComponent {
       title: 'Mi Billeta',
       url: '/billetera-estudiante',
       icon: 'logo-usd'
-    },{
+    }, {
       title: 'Clase gratis',
       url: '/clase-gratis',
       icon: 'school'
@@ -63,7 +73,7 @@ export class AppComponent {
       url: '/ayuda',
       icon: 'help'
     }
-    
+
   ];
 
   constructor(
@@ -87,10 +97,10 @@ export class AppComponent {
   async checkRoll() {
     this.auth.user.subscribe(user => {
       this.user = user;
-      if (user)
-        this.appPages = this.estudiantePages;
+      if (user && user.tipo == 'Profesor')
+        this.appPages = this.profesorPages;
       else
-        this.appPages = this.inicio;
+        this.appPages = this.estudiantePages;
     });
   }
 
