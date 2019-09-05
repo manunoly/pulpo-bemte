@@ -1,0 +1,127 @@
+<app-header-bemte></app-header-bemte>
+
+<ion-content>
+
+  <ion-grid *ngIf="clases | async as clasesD; else loadD">
+    <ion-row class="lineBotton">
+      <ion-col>
+        <ion-text text-center color="primary">
+          <h1 no-padding no-margin><b> Clases</b></h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD"
+      (click)="setDetallesClaseId(clase?.id)">
+      <ion-col size="8">
+        <ion-item lines="none">
+          <ion-thumbnail slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap ion-padding-left">
+            <h2> {{clase?.materia}} </h2>
+            <h5> {{clase?.tema}}</h5>
+          </ion-label>
+          <!-- <ion-button *ngIf="clase?.user_id_pro && clase?.estado == 'Terminado'" (click)="calificar(clase)" slot="end">
+            Calificar</ion-button> -->
+        </ion-item>
+      </ion-col>
+
+      <ion-col class="ion-align-self-center lineLateral" text-center size="4">
+        <ion-text color="secondary">
+          <p no-padding no-margin><strong> Estado </strong></p>
+          <ion-button shape="round" [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
+            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
+          </ion-button>
+        </ion-text>
+      </ion-col>
+
+      <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">
+
+        <ion-row *ngIf="clase?.descripccion" class="lineBotton">
+          <ion-col>
+            <ion-text color="secondary">
+              <small>Descripción</small><br>
+              {{clase?.descripccion}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="lineBotton">
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.hora1}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="3">
+            <small>Duración</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.duracion}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="4">
+            <small>Duración</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.fecha}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="2">
+            <small>Alumnos</small><br>
+            <ion-text color="secondary">
+              <p>{{clase.personas}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="clase?.coordenadas">
+          <ion-col class="ion-align-self-center" size="1">
+            <ion-icon size="large" name="pin" color="primary"></ion-icon>
+          </ion-col>
+          <ion-col text-center no-padding no-margin>
+            <ion-text color="secondary">
+              <h5> {{clase?.ubicacion}} </h5>
+            </ion-text>
+          </ion-col>
+          <ion-col class="ion-align-self-center" size="3">
+            <ion-button size="small" shape="round">Mapa</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-row>
+
+    <div text-center *ngIf="clasesD.length == 0">
+      <h3>No hay datos para mostrar</h3>
+    </div>
+  </ion-grid>
+
+  <ion-content>
+
+    <ion-item lines="none">
+      <ion-button slot="end" (click)="cargarClases()">Recargar Clases</ion-button>
+    </ion-item>
+
+    <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
+      <div text-center *ngIf="clasesD.length === 0">
+        <h3>No hay datos para mostrar</h3>
+      </div>
+      <ion-item *ngFor="let clases of clasesD">
+        <ion-label class="ion-text-wrap ion-padding-left">
+          <h1>Materia: {{clases?.materia}} ({{clases?.tema}})</h1>
+          <h3>Fecha: {{clases?.combo}}</h3>
+          <h3>Hora: {{clases?.hora1}} o {{clases?.hora2}}</h3>
+          <h3>Combo: {{clases?.combo}}</h3>
+          <h5>Alumnos: {{clases?.personas}}</h5>
+          <h5>Ubicacion: {{clases?.ubicacion}}</h5>
+        </ion-label>
+        <ion-button slot="end" (click)="aplicar(clases)">Aplicar</ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #loadD>
+      <div padding text-center>
+        <ion-spinner></ion-spinner>
+        <h3>Espere por favor</h3>
+      </div>
+    </ng-template>
+  </ion-content>

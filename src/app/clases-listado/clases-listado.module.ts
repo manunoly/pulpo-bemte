@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TareasListadoPage } from './tareas-listado.page';
+import { ClasesListadoPage } from './clases-listado.page';
 import { SharedModule } from '../share/share.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: TareasListadoPage
+    component: ClasesListadoPage
   }
 ];
 
@@ -19,10 +19,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [TareasListadoPage]
+  declarations: [ClasesListadoPage]
 })
-export class TareasListadoPageModule {}
+export class ClasesListadoPageModule {}

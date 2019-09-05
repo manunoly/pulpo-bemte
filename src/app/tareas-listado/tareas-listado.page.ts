@@ -17,11 +17,16 @@ export class TareasListadoPage implements OnInit {
   constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   async ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.cargarTareas();
+  }
+
+  cargarTareas() {
     this.auth.currentUser.subscribe(user => {
-      console.log(user);
       if (user) {
-        this.tareas = this.db.get('tareas-disponibles?user_id=14');
-        // this.tareas = this.db.get('tareas-disponibles?user_id=' + user.user_id);
+        this.tareas = this.db.get('tareas-disponibles?user_id=' + user.user_id);
         this.user = user;
       }
     });
