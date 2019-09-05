@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <div class="ion-text-start" slot="start">
+      <ion-toggle [(ngModel)]="estadoBoolean" (ionChange)="actualizarEstado($event.detail.checked)" color="secondary">
+      </ion-toggle>
+      <p class="ion-no-padding ion-no-margin" style="padding-top: -15px;">
+        <strong>{{estado}}</strong>
+      </p>
+    </div>
+    <ion-fab-button class="center" size="large">
+      <img (click)="goTo('inicio')" class="imagenCentro" src="/assets/img/logo_header.png">
+    </ion-fab-button>
+
+    <ion-fab-button size="small" slot="end" (click)="goTo('notificaciones')">
+      <ion-badge> * </ion-badge>
+      <ion-icon name="notifications"></ion-icon>
+    </ion-fab-button>
+  </ion-toolbar>
+
+</ion-header>
