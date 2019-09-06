@@ -7,8 +7,6 @@ import { AuthService } from "./../servicios/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { switchMap, first } from "rxjs/operators";
-import { of } from "rxjs";
 
 @Component({
   selector: "app-clases",
@@ -16,7 +14,7 @@ import { of } from "rxjs";
   styleUrls: ["./clases.page.scss"]
 })
 export class ClasesPage implements OnInit {
-  claseForm: FormGroup;
+  claseForm: FormGroup; 
   materias;
   user;
   sedes;

@@ -102,6 +102,9 @@ export class UtilService {
       case 'Rechazado':
         return 'medium';
 
+      case 'Cancelado':
+        return 'Cancelada';
+
       default:
         return 'primary';
     }
@@ -135,7 +138,7 @@ export class UtilService {
         return 'Confirmado';
 
       case 'Cancelado':
-        return 'Rechazado';
+        return 'Cancelado';
 
       case 'Sin_Profesor':
         return 'Rechazado';

@@ -27,7 +27,7 @@ export class RegistrarsePage implements OnInit {
     private modalController: ModalController
   ) {
     this.registroForm = this.fb.group({
-      celular: ["", [Validators.required, Validators.minLength(7)]],
+      celular: ["", [Validators.required, Validators.minLength(9)]],
       paisCelular: ["+593", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],

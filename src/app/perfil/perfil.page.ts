@@ -66,7 +66,7 @@ export class PerfilPage implements OnInit {
       'user_id': [''],
       'avatar': [user.avatar],
       'calificacion': [user.calificacion],
-      'celular': [user.celular, Validators.required],
+      'celular': [Validators.required, Validators.minLength(9)],
       'email': [user.correo, [Validators.required, Validators.email]],
       'hojaVida': [''],
       'titulo': [''],

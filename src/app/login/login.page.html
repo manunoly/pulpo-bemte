@@ -40,9 +40,18 @@
       </ion-row>
       <ion-row>
         <ion-col size="6" offset="3">
-          <ion-button color="secondary" size="small" expand="block" (click)="registrar()" shape="round">
+          <ion-button color="secondary" size="small" expand="block"  [routerLink]="['/registrarse']" shape="round">
             <b>
               Registrarse
+            </b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+            <ion-row>
+        <ion-col size="6" offset="3">
+          <ion-button color="secondary" size="small" expand="block" [routerLink]="['/registrarse-profesor']" shape="round">
+            <b>
+              Registrarse Prof
             </b>
           </ion-button>
         </ion-col>
