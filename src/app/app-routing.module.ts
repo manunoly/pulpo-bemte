@@ -44,7 +44,8 @@ const routes: Routes = [
   { path: 'notificaciones', loadChildren: './notificaciones/notificaciones.module#NotificacionesPageModule' },
   { path: 'clases-listado', loadChildren: './clases-listado/clases-listado.module#ClasesListadoPageModule' },
   { path: 'ganancias-profesor', loadChildren: './ganancias-profesor/ganancias-profesor.module#GananciasProfesorPageModule' },
-  { path: 'registrarse-profesor', loadChildren: './registrarse-profesor/registrarse-profesor.module#RegistrarseProfesorPageModule' }
+  { path: 'registrarse-profesor', loadChildren: './registrarse-profesor/registrarse-profesor.module#RegistrarseProfesorPageModule' },
+  { path: 'clase-aplicada-profesor', loadChildren: './clase-aplicada-profesor/clase-aplicada-profesor.module#ClaseAplicadaProfesorPageModule' }
 ];
 
 @NgModule({

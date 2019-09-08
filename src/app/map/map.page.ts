@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { UtilService } from './../servicios/util.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -88,7 +87,7 @@ export class MapPage implements OnInit {
       this.modalController.dismiss({ coordenadas: ubicacionClase, ubicacion: lugar });
       return
     }
-    this.modalController.dismiss()
+    this.modalController.dismiss();
   }
 
   async geocodeTransform(location) {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ToastController, Platform, LoadingController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { Location } from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class UtilService {
     public popoverController: PopoverController,
     private platform: Platform,
     private storage: Storage,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private _navigation: Location
   ) { }
 
   async showMessage(msg = '', showCloseButton = true, positionMsg = 'top', time = 5000, buttonText = 'Cerrar') {
@@ -155,5 +157,9 @@ export class UtilService {
       default:
         return 'En proceso';
     }
+  }
+
+  atras() {
+    this._navigation.back();
   }
 }

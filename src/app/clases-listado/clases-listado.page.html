@@ -11,10 +11,9 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD"
-      (click)="setDetallesClaseId(clase?.id)">
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD">
       <ion-col size="8">
-        <ion-item lines="none">
+        <ion-item (click)="setDetallesClaseId(clase?.id)" lines="none">
           <ion-thumbnail slot="start">
             <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
           </ion-thumbnail>
@@ -36,13 +35,14 @@
         </ion-text>
       </ion-col>
 
-      <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">
+      <ion-grid style="width: 100%" text-center no-padding *ngIf="clase?.id==detallesClaseId">
 
-        <ion-row *ngIf="clase?.descripccion" class="lineBotton">
+        <ion-row *ngIf="clase?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="secondary">
-              <small>Descripción</small><br>
-              {{clase?.descripccion}}
+              <h5>Descripción <br>
+                <small>{{clase?.descripcion}}</small>
+              </h5>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -87,6 +87,24 @@
             <ion-button size="small" shape="round">Mapa</ion-button>
           </ion-col>
         </ion-row>
+
+        <!-- <ion-row>
+          <ion-col offset="3" size="6">
+            <ion-button [routerLink]="['/clase-detalles/'+clase.id]" expand="block" shape="round" color="primary">
+              Detalles
+            </ion-button>
+          </ion-col>
+        </ion-row> -->
+
+        <!--  codigo para aplicar a una clase.-->
+        <ion-row>
+          <ion-col offset="3" size="6">
+            <ion-button (click)="aplicar(clase)" expand="block" shape="round" color="secondary">
+              Aplicar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
       </ion-grid>
     </ion-row>
 
@@ -95,33 +113,10 @@
     </div>
   </ion-grid>
 
-  <ion-content>
-
-    <ion-item lines="none">
-      <ion-button slot="end" (click)="cargarClases()">Recargar Clases</ion-button>
-    </ion-item>
-
-    <ion-list *ngIf="clases | async as clasesD; else loadD" style="background: transparent">
-      <div text-center *ngIf="clasesD.length === 0">
-        <h3>No hay datos para mostrar</h3>
-      </div>
-      <ion-item *ngFor="let clases of clasesD">
-        <ion-label class="ion-text-wrap ion-padding-left">
-          <h1>Materia: {{clases?.materia}} ({{clases?.tema}})</h1>
-          <h3>Fecha: {{clases?.combo}}</h3>
-          <h3>Hora: {{clases?.hora1}} o {{clases?.hora2}}</h3>
-          <h3>Combo: {{clases?.combo}}</h3>
-          <h5>Alumnos: {{clases?.personas}}</h5>
-          <h5>Ubicacion: {{clases?.ubicacion}}</h5>
-        </ion-label>
-        <ion-button slot="end" (click)="aplicar(clases)">Aplicar</ion-button>
-      </ion-item>
-    </ion-list>
-
-    <ng-template #loadD>
-      <div padding text-center>
-        <ion-spinner></ion-spinner>
-        <h3>Espere por favor</h3>
-      </div>
-    </ng-template>
-  </ion-content>
+  <ng-template #loadD>
+    <div padding text-center>
+      <ion-spinner></ion-spinner>
+      <h3>Espere por favor</h3>
+    </div>
+  </ng-template>
+</ion-content>

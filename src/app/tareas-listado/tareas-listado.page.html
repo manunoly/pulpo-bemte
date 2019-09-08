@@ -3,6 +3,7 @@
 <ion-content>
 
   <ion-grid *ngIf="tareas | async as tareasD; else loadD">
+
     <ion-row class="lineBotton">
       <ion-col>
         <ion-text text-center color="primary">
@@ -11,27 +12,70 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="lineBotton" *ngFor="let tarea of tareasD">
-      <ion-col size="8">
-        <h1>Materia: {{tarea?.materia}} ({{tarea?.tema}})</h1>
-        <h3>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h3>
-        <h5>{{tarea?.descripcion}}</h5>
-        <h5>{{tarea?.formato_entrega}}</h5>
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD">
+      <ion-col (click)="setDetallesTareaId(tarea?.id)" size="8">
+        <ion-item lines="none">
+          <ion-thumbnail slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-thumbnail>
+          <ion-label class="ion-text-wrap ion-padding-left">
+            <h2> {{tarea?.materia}} </h2>
+            <h5> {{tarea?.tema}}</h5>
+          </ion-label>
+          <!-- <ion-button *ngIf="tarea?.user_id_pro && tarea?.estado == 'Terminado'" (click)="calificar(tarea)" slot="end">
+                Calificar</ion-button> -->
+        </ion-item>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="aplicar(tarea)">Aplicar</ion-button>
+
+      <ion-col class="ion-align-self-center lineLateral" text-center size="4">
+        <ion-text color="secondary">
+          <p no-padding no-margin><strong> Estado </strong></p>
+          <ion-button shape="round" [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
+            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
+          </ion-button>
+        </ion-text>
       </ion-col>
+
+      <ion-grid text-center no-padding *ngIf="tarea?.id==detallesTareaId">
+
+        <ion-row *ngIf="tarea?.descripccion" class="lineBotton">
+          <ion-col>
+            <ion-text color="secondary">
+              <small>Descripción</small><br>
+              {{tarea?.descripccion}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <h5>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
+            <h5>Formato: {{tarea?.formato_entrega}}</h5>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col offset="3" size="6">
+            <ion-button (click)="aplicar(tarea)" expand="block" shape="round" color="secondary">
+              Aplicar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
     </ion-row>
 
     <div padding text-center *ngIf="tareasD.length === 0">
       <h3>No hay datos para mostrar</h3>
     </div>
+
   </ion-grid>
- 
+
   <ng-template #loadD>
     <div padding text-center>
       <ion-spinner></ion-spinner>
       <h3>Espere por favor</h3>
     </div>
   </ng-template>
+
 </ion-content>

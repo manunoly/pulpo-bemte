@@ -18,7 +18,7 @@ export class HeaderBemteProfComponent implements OnInit {
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
-    console.log('user en el header del prof', this.user);
+    console.log('en el header del prof', this.user);
     if (this.user != undefined) {
 
       this.estadoBoolean = await this.db.get('disponible-profesor?user_id=' + this.user.user_id)

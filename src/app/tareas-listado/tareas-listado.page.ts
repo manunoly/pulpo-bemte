@@ -1,9 +1,10 @@
+import { ClaseAplicadaProfesorPage } from './../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tareas-listado',
@@ -13,8 +14,9 @@ import { AlertController } from '@ionic/angular';
 export class TareasListadoPage implements OnInit {
   tareas;
   user;
+  detallesTareaId;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) { }
 
   async ngOnInit() {
   }
@@ -30,6 +32,13 @@ export class TareasListadoPage implements OnInit {
         this.user = user;
       }
     });
+  }
+
+
+  setDetallesTareaId(id) {
+    if(id == this.detallesTareaId)
+      return this.detallesTareaId = '';
+    this.detallesTareaId = id;
   }
 
   async aplicar(tarea) {
@@ -64,17 +73,27 @@ export class TareasListadoPage implements OnInit {
 
             this.util.showLoading();
             try {
+              const user = await this.auth.getUserData();
               const postData = {
-                user_id: 14,
+                user_id: user.user_id,
                 tarea_id: tarea.id,
                 ...data
               }
               console.log(postData);
               const resp = await this.db.post('aplicar-tarea', postData);
               this.util.dismissLoading();
-              if (resp && resp.success)
+              if (resp && resp.success){
                 this.util.showMessage(resp.success);
-
+                this.util.showMessage(resp.success);
+                const modal = await this.modalController.create({
+                  component: ClaseAplicadaProfesorPage,
+                  componentProps: { data: tarea, tipo: 'Tareas' }
+                });
+                modal.onDidDismiss().then(data => {
+                  this.cargarTareas();
+                });
+                return await modal.present();
+              }
             } catch (error) {
               console.log(error);
               this.util.dismissLoading();

@@ -1,3 +1,4 @@
+import { ClaseAplicadaProfesorPageModule } from './../clase-aplicada-profesor/clase-aplicada-profesor.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ClaseAplicadaProfesorPageModule,
     SharedModule,
     RouterModule.forChild(routes)
   ],

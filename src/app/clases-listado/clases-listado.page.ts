@@ -1,7 +1,8 @@
+import { ClaseAplicadaProfesorPage } from './../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { Router } from '@angular/router';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -17,7 +18,7 @@ export class ClasesListadoPage implements OnInit {
   user;
   detallesClaseId;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
   }
@@ -47,13 +48,7 @@ export class ClasesListadoPage implements OnInit {
           name: 'hora1',
           type: 'radio',
           label: clases.hora1,
-          value: 'value1'
-        },
-        {
-          name: 'hora2',
-          type: 'radio',
-          label: clases.hora2,
-          value: clases.hora2
+          value: clases.hora1
         }
       ],
       buttons: [
@@ -66,14 +61,10 @@ export class ClasesListadoPage implements OnInit {
           text: 'Aplicar',
           handler: async (data) => {
             console.log(data);
-            if (!data || !data.hora1 || !data.hora2)
-              return this.util.showMessage('Por favor revisar los datos ingresados');
+            if (data == undefined)
+              return this.util.showMessage('Por favor confirme la hora');
             this.util.showLoading();
-            let hora;
-            if (data.hora1)
-              hora = data.hora1;
-            if (data.hora2)
-              hora = data.hora2;
+            let hora = data;
             try {
               const postData = {
                 user_id: this.user.user_id,
@@ -83,8 +74,17 @@ export class ClasesListadoPage implements OnInit {
               console.log(postData);
               const resp = await this.db.post('aplicar-clase', postData);
               this.util.dismissLoading();
-              if (resp && resp.success)
+              if (resp && resp.success) {
                 this.util.showMessage(resp.success);
+                const modal = await this.modalController.create({
+                  component: ClaseAplicadaProfesorPage,
+                  componentProps: { data: clases, tipo: 'Clases' }
+                });
+                modal.onDidDismiss().then(data => {
+                  this.cargarClases();
+                });
+                return await modal.present();
+              }
 
             } catch (error) {
               console.log(error);

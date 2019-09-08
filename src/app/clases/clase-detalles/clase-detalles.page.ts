@@ -1,3 +1,4 @@
+import { ClaseAplicadaProfesorPage } from './../../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { AuthService } from './../../servicios/auth.service';
 import { ChatPage } from './../../chat/chat.page';
 import { MapPage } from './../../map/map.page';
@@ -15,6 +16,7 @@ import { UtilService } from 'src/app/servicios/util.service';
 export class ClaseDetallesPage implements OnInit {
   claseId;
   claseO;
+  aplicadaProf;
   claseObjet = {
     "user_id": 24,
     "materia": "Economia",
@@ -41,8 +43,8 @@ export class ClaseDetallesPage implements OnInit {
     private db: DbService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private util: UtilService, private router: Router,
-    private auth: AuthService
+    public util: UtilService, private router: Router,
+    public auth: AuthService
   ) { }
 
   ionViewWillEnter() {
@@ -50,9 +52,7 @@ export class ClaseDetallesPage implements OnInit {
     this.cargarClase();
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   cargarClase() {
     this.claseO = this.db.get('devuelve-clase?clase_id=' + this.claseId);
@@ -125,5 +125,66 @@ export class ClaseDetallesPage implements OnInit {
     } catch (error) {
       this.util.dismissLoading();
     }
+  }
+
+  async aplicar(clases) {
+    const alert = await this.alertController.create({
+      header: 'Aplicar',
+      message: ``,
+      inputs: [
+        {
+          name: 'hora1',
+          type: 'radio',
+          label: clases.hora1,
+          value: clases.hora1
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'Aplicar',
+          handler: async (data) => {
+            console.log(data);
+            if (data == undefined)
+              return this.util.showMessage('Por favor confirme la hora');
+            this.util.showLoading();
+            let hora = data;
+            try {
+              const user = await this.auth.getUserData();
+              const postData = {
+                user_id: user.user_id,
+                clase_id: clases.id,
+                hora: hora
+              }
+              console.log(postData);
+              const resp = await this.db.post('aplicar-clase', postData);
+              this.util.dismissLoading();
+              if (resp && resp.success) {
+                this.util.showMessage(resp.success);
+                const modal = await this.modalController.create({
+                  component: ClaseAplicadaProfesorPage,
+                  componentProps: { clase: clases }
+                });
+                modal.onDidDismiss().then(data => {
+                  this.router.navigateByUrl('')
+                });
+                return await modal.present();
+              }
+
+            } catch (error) {
+              console.log(error);
+              this.util.dismissLoading();
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }
