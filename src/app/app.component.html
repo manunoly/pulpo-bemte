@@ -1,4 +1,13 @@
 <ion-app>
+
+  <div class="centrarContenido" *ngIf="showSplash">
+    <div>
+      <img  class="text animated flip" style="display:block; margin:auto; max-width: 200px; max-height: 200px;"
+        src="/assets/icon/favicon.png">
+      <h1 class="text animated flip ion-no-padding ion-no-margin" style="font-size: 55px"> BEMTE </h1>
+    </div>
+  </div>
+
   <ion-fab *ngIf="auth.currentUser | async" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>

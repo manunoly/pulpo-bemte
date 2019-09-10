@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class AppComponent {
   user;
-
   public appPages = [];
-
   public profesorPages = [
     {
       title: 'Solicitudes de Tareas',
@@ -36,11 +35,6 @@ export class AppComponent {
       title: 'Mis Clases',
       url: '/lista-clases',
       icon: 'list'
-    },
-    {
-      title: 'Mi perfil',
-      url: '/perfil',
-      icon: 'man'
     },
     {
       title: 'Ganancias',
@@ -75,6 +69,8 @@ export class AppComponent {
     }
 
   ];
+  showSplash = false;
+  text;
 
   constructor(
     private platform: Platform,
@@ -82,6 +78,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     public auth: AuthService,
     public menuCtrl: MenuController,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -90,7 +87,15 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.checkRoll();
+      
+      this.showSplash = true;
+      this.text = true;
+
+      setTimeout(() => {
+        this.checkRoll();
+        this.showSplash = false;
+
+      }, 5200);
     });
   }
 
@@ -102,6 +107,11 @@ export class AppComponent {
       else
         this.appPages = this.estudiantePages;
     });
+  }
+
+  goTo(url) {
+    console.log(url);
+    this.router.navigateByUrl(url);
   }
 
   exit() {

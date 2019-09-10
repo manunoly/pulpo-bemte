@@ -6,7 +6,7 @@
 
     <ion-row *ngIf="auth.currentUser | async as user"
       class="lineBotton ion-text-center ion-no-padding ion-padding-vertical ion-no-margin">
-      <ion-col size="4">
+      <ion-col size="4" [routerLink]="['/perfil']">
         <ion-avatar style="display:block; margin:auto;">
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-avatar>
