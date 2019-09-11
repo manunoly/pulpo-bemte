@@ -11,7 +11,7 @@ import { DbService } from 'src/app/servicios/db.service';
 })
 export class HeaderBemteProfComponent implements OnInit {
   estado = 'Disponible';
-  estadoBoolean = true;
+  estadoBoolean;
   user;
 
   constructor(private router: Router, private db: DbService, private auth: AuthService, private util: UtilService) { }
@@ -28,6 +28,7 @@ export class HeaderBemteProfComponent implements OnInit {
         this.estado = 'Ocupado';
     }
   }
+
 
   goTo(url) {
     this.router.navigateByUrl(url);

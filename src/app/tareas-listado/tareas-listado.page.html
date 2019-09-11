@@ -1,4 +1,4 @@
-<app-header-bemte></app-header-bemte>
+<app-header-bemte-prof></app-header-bemte-prof>
 
 <ion-content>
 
@@ -16,7 +16,7 @@
       <ion-col (click)="setDetallesTareaId(tarea?.id)" size="8">
         <ion-item lines="none">
           <ion-thumbnail slot="start">
-            
+            <img [src]="'/assets/img/materias/'+tarea?.materia + '.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{tarea?.materia}} </h2>

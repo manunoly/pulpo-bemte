@@ -1,4 +1,4 @@
-<app-header-bemte></app-header-bemte>
+<app-header-bemte-prof></app-header-bemte-prof>
 
 <ion-content text-center>
 
@@ -11,8 +11,8 @@
       <ion-grid>
         <ion-row class="lineBotton">
           <ion-col size="8">
-            <ion-text color="secondary">
-              <h1 style="font-size: 2em"><b>Confirmada</b></h1>
+            <ion-text [color]="util.getColorEstado(tarea?.estado)">
+              <h1 style="font-size: 2em"><b>{{util.estados(tarea?.estado)}}</b></h1>
             </ion-text>
           </ion-col>
           <ion-col (click)="openChat(tarea)" size="4" class="ion-no-padding lineLateral ion-align-self-center">

@@ -1,4 +1,4 @@
-<app-header-bemte></app-header-bemte>
+<app-header-bemte-prof></app-header-bemte-prof>
 
 <ion-content text-center>
 
@@ -83,7 +83,7 @@
         </ion-row>
 
         <!--  codigo para aplicar a una clase.-->
-        <ion-row *ngIf="clase.estado == 'Solicitado'">
+        <!-- <ion-row *ngIf="clase.estado == 'Solicitado'">
           <ion-col size="4" offset="1">
             <ion-button (click)="util.atras()" shape="round" expand="block" size="small" color="primary">Atras
             </ion-button>
@@ -93,7 +93,7 @@
               Aplicar
             </ion-button>
           </ion-col>
-        </ion-row> 
+        </ion-row>  -->
 
       </ion-grid>
 
@@ -386,7 +386,7 @@
           <ion-row *ngIf="clase?.descripcion" class="lineBotton">
             <ion-col>
               <ion-text color="secondary">
-                <h3>Descripcion</h3><br>
+                <h3>Descripción</h3><br>
                 {{clase?.descripcion}}
               </ion-text>
             </ion-col>

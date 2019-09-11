@@ -1,20 +1,22 @@
-<app-header-bemte></app-header-bemte>
+<app-header-bemte-prof></app-header-bemte-prof>
 <!-- <app-header-bemte-prof></app-header-bemte-prof> -->
 <ion-content>
-  <div *ngIf="reload">
+  <!-- <div *ngIf="reload">
     <app-header-user></app-header-user>
-  </div>
+  </div> -->
 
-  <ion-text *ngIf="(auth.currentUser | async) as user" color="secondary">
+  <ion-text style="padding-top: 30%" *ngIf="(auth.currentUser | async) as user" color="primary">
     <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>
   </ion-text>
 
-  <ion-text color="secondary">
-    <h3 text-center>Necesitas ayuda con:</h3>
+  <ion-text color="primary">
+    <!-- <h3 text-center>Necesitas ayuda con:</h3> -->
+    <h3 text-center>Buscas trabajar en:</h3>
   </ion-text>
 
+  <!-- navegacion para estudiantes -->
   <ion-grid>
-    <ion-row class="ion-padding">
+  <!--   <ion-row class="ion-padding">
       <ion-col size="8" offset="2">
         <ion-button expand="block" shape="round" (click)="goTo('clases')" lines="none">
           <b>CLASES</b>
@@ -28,7 +30,8 @@
           <b>TAREAS</b>
         </ion-button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
+
     <!-- <ion-row>
       <ion-col size="8" offset="2">
         <ion-item (click)="map()" class="oscuroB roundItem" lines="none">
@@ -37,5 +40,22 @@
         </ion-item>
       </ion-col>
     </ion-row> -->
+
+    <!-- para profesor -->
+    <ion-row class="ion-padding">
+        <ion-col size="8" offset="2">
+          <ion-button expand="block" shape="round" (click)="goTo('clases-listado')" lines="none">
+            <b>Clases Solicitadas</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="ion-padding">
+        <ion-col size="8" offset="2">
+          <ion-button expand="block" shape="round" (click)="goTo('tareas-listado')" lines="none">
+            <b>Tareas Solicitadas</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>
