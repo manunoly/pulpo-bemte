@@ -1,11 +1,20 @@
 <ion-app>
 
   <div class="centrarContenido" *ngIf="showSplash">
-    <div>
+    <!-- <div>
       <img  class="text animated flip" style="display:block; margin:auto; max-width: 200px; max-height: 200px;"
         src="/assets/icon/favicon.png">
       <h1 class="text animated flip ion-no-padding ion-no-margin" style="font-size: 55px"> BEMTE </h1>
-    </div>
+    </div> -->
+    <h1 style="text-align: center !important" class="animacionN">
+      <img class="text animated pulse" style="display:block; margin:auto; max-width: 200px; max-height: 200px;"
+        src="/assets/icon/favicon.png"> <br>
+      <span>B</span>
+      <span>E</span>
+      <span>M</span>
+      <span>T</span>
+      <span>E</span>
+    </h1>
   </div>
 
   <ion-fab *ngIf="auth.currentUser | async" vertical="bottom" horizontal="end" slot="fixed">

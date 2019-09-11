@@ -294,3 +294,43 @@ ion-fab {
   margin: 20px;
   animation-name: hinge;
 }
+
+
+.animacionN span{
+  display: inline-block;
+  font-size: 75px;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  opacity: 0;
+  animation-name: bounceIn;
+  animation-duration: 450ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.animacionN img{animation-delay: 1s;}
+.animacionN span:nth-child(2){animation-delay: 2.75s;}
+.animacionN span:nth-child(3){animation-delay: 3s;}
+.animacionN span:nth-child(4){animation-delay: 3.15s;}
+.animacionN span:nth-child(5){animation-delay: 3.30s;}
+.animacionN span:nth-child(6){animation-delay: 3.40s;}
+.animacionN span:nth-child(7){animation-delay: 3.47s;}
+
+@keyframes bounceIn{
+  0%{
+    opacity: 0;
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}

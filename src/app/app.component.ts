@@ -69,8 +69,7 @@ export class AppComponent {
     }
 
   ];
-  showSplash = false;
-  text;
+  showSplash = true;
 
   constructor(
     private platform: Platform,
@@ -87,15 +86,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      
-      this.showSplash = true;
-      this.text = true;
 
       setTimeout(() => {
-        this.checkRoll();
         this.showSplash = false;
-
-      }, 5200);
+      }, 4200);
+      this.checkRoll();
     });
   }
 
