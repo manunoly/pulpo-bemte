@@ -1,7 +1,7 @@
-<ion-content  class="ion-text-center ion-padding">
+<ion-content class="ion-text-center ion-padding">
 
   <ion-grid style="padding-top: 25%" padding>
-    <form  [formGroup]="authForm" (ngSubmit)="login()">
+    <form [formGroup]="authForm" (ngSubmit)="login()">
       <ion-row padding>
         <ion-col>
           <ion-item>
@@ -28,8 +28,8 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      <ion-row >
-        <ion-col  size="6" offset="3">
+      <ion-row>
+        <ion-col size="6" offset="3">
           <ion-button [disabled]="!authForm.valid" type="submit" size="small" expand="block" shape="round"
             color="primary">
             <b>
@@ -40,22 +40,23 @@
       </ion-row>
       <ion-row>
         <ion-col size="6" offset="3">
-          <ion-button color="secondary" size="small" expand="block"  [routerLink]="['/registrarse']" shape="round">
+          <ion-button color="secondary" size="small" expand="block" [routerLink]="['/registrarse']" shape="round">
             <b>
               Registrarse
             </b>
           </ion-button>
         </ion-col>
       </ion-row>
-            <ion-row>
+      <!-- <ion-row>
         <ion-col size="6" offset="3">
-          <ion-button color="secondary" size="small" expand="block" [routerLink]="['/registrarse-profesor']" shape="round">
+          <ion-button color="secondary" size="small" expand="block" [routerLink]="['/registrarse-profesor']"
+            shape="round">
             <b>
               Registrarse Prof
             </b>
           </ion-button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </form>
   </ion-grid>
 </ion-content>

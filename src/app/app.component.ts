@@ -89,7 +89,7 @@ export class AppComponent {
 
       setTimeout(() => {
         this.showSplash = false;
-      }, 4200);
+      }, 4000);
       this.checkRoll();
     });
   }

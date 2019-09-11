@@ -26,7 +26,7 @@
         <ion-fab-button class="ion-fab-button-class" color="primary" [routerLink]="[p.url]">
           <ion-icon [name]="p.icon"></ion-icon>
         </ion-fab-button>
-        <ion-label>{{p.title}}</ion-label>
+        <ion-label (click)="goTo(p.url)">{{p.title}}</ion-label>
       </ng-container>
     </ion-fab-list>
   </ion-fab>

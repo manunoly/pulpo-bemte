@@ -19,8 +19,8 @@ export class TareaDetallesPage implements OnInit {
     private db: DbService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private util: UtilService, private router: Router,
-    private auth: AuthService
+    public util: UtilService, private router: Router,
+    public auth: AuthService
   ) { }
 
   ionViewWillEnter() {
@@ -48,7 +48,7 @@ export class TareaDetallesPage implements OnInit {
     return await modal.present();
   }
 
-  async confirmarCancelar(tarea) {
+  async confirmarCancelar(tarea, profesorD = 0) {
     const alert = await this.alertController.create({
       header: 'Cancelar!',
       message: 'Está seguro que desea cancelar? Puede implicar una penalización!',
@@ -63,7 +63,7 @@ export class TareaDetallesPage implements OnInit {
         }, {
           text: 'Si',
           handler: () => {
-            this.terminar(tarea);
+            this.terminar(tarea, profesorD);
           }
         }
       ]
@@ -72,16 +72,16 @@ export class TareaDetallesPage implements OnInit {
     await alert.present();
   }
 
-  async terminar(tarea) {
+  async terminar(tarea, profesorD = 0) {
     try {
       this.util.showLoading();
       const user = await this.auth.getUserData();
-      const resp = await this.db.post('tarea-terminar', { tarea_id: tarea.id, user_id: user.user_id, cancelar: 1, profesor: 0 });
+      const resp = await this.db.post('tarea-terminar', { clase_id: 0, tarea_id: tarea.id, user_id: user.user_id, cancelar: 1, profesor: profesorD });
       this.util.dismissLoading();
       this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.router.navigateByUrl('inicio');
+        this.util.atras();
       }
     } catch (error) {
       this.util.dismissLoading();

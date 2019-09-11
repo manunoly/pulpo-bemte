@@ -5,12 +5,6 @@
   <ion-grid *ngIf="auth.currentUser | async as user">
     <ion-row class="ion-text-center ion-no-padding ion-no-margin">
       <ion-col>
-        <!-- <ion-avatar style="display:block; margin:auto;">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-        <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-          <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star"></ion-icon>
-        </p> -->
         <app-header-user></app-header-user>
       </ion-col>
     </ion-row>

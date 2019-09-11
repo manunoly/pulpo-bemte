@@ -84,7 +84,7 @@ export class ClaseDetallesPage implements OnInit {
     return await modal.present();
   }
 
-  async confirmarCancelar(clase) {
+  async confirmarCancelar(clase, profesorD = 0) {
     if (!clase || clase == {})
       return;
     const alert = await this.alertController.create({
@@ -101,7 +101,7 @@ export class ClaseDetallesPage implements OnInit {
         }, {
           text: 'Si',
           handler: () => {
-            this.terminar(clase);
+            this.terminar(clase, profesorD);
           }
         }
       ]
@@ -111,11 +111,11 @@ export class ClaseDetallesPage implements OnInit {
   }
 
 
-  async terminar(clase) {
+  async terminar(clase, profesorD = 0) {
     try {
       this.util.showLoading();
       const user = await this.auth.getUserData();
-      const resp = await this.db.post('clase-terminar', { clase_id: clase.id, user_id: user.user_id, cancelar: 1, profesor: 0 });
+      const resp = await this.db.post('clase-terminar', { clase_id: clase.id, user_id: user.user_id, cancelar: 1, profesor: profesorD });
       this.util.dismissLoading();
       this.db.setComboToBuy('');
       if (resp && resp.success) {

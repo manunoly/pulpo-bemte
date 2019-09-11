@@ -100,7 +100,7 @@
       <ion-grid padding>
         <ion-row *ngIf="clase.estado == 'Aceptado'">
           <ion-col offset="2" size="8">
-            <a no-padding color="secondary" (click)="confirmarCancelar(clase)">
+            <a no-padding color="secondary" (click)="confirmarCancelar(clase, 1)">
               <ion-text color="secondary">
                 <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
               </ion-text>

@@ -7,7 +7,7 @@
       <ion-col class="lineBotton" offset="2" size="8">
         <ion-item lines="none" class="ion-no-padding">
           <ion-thumbnail slot="start">
-            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              <img [src]="'/assets/img/materias/'+calificarData?.materia + '.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{calificarData?.materia}} </h2>
