@@ -16,21 +16,21 @@ export class AppComponent {
   user;
   public appPages = [];
   public profesorPages = [
-    {
-      title: 'Solicitudes de Tareas',
-      url: '/tareas-listado',
-      icon: 'list'
-    },
+    // {
+    //   title: 'Solicitudes de Tareas',
+    //   url: '/tareas-listado',
+    //   icon: 'list'
+    // },
     {
       title: 'Mis Tareas',
       url: '/lista-tareas',
       icon: 'list'
     },
-    {
-      title: 'Solicitudes de Clases',
-      url: '/clases-listado',
-      icon: 'list'
-    },
+    // {
+    //   title: 'Solicitudes de Clases',
+    //   url: '/clases-listado',
+    //   icon: 'list'
+    // },
     {
       title: 'Mis Clases',
       url: '/lista-clases',
@@ -54,7 +54,7 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Mi Billeta',
+      title: 'Mi Billetera',
       url: '/billetera-estudiante',
       icon: 'logo-usd'
     }, {
