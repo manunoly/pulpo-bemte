@@ -1,8 +1,12 @@
-<app-header-bemte-prof></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
 
 <ion-content text-center>
 
-  <div *ngIf="(auth.currentUser | async).tipo == 'Profesor';else estudianteDiv">
+  <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
     <ion-grid *ngIf="(claseO | async) as clase; else loadD">
 
       <ion-text color="primary">
@@ -12,8 +16,8 @@
       <ion-grid>
         <ion-row class="lineBotton">
           <ion-col size="8">
-            <ion-text color="secondary">
-              <h1 style="font-size: 2em"><b>Confirmada</b></h1>
+            <ion-text [color]="util.getColorEstado(clase?.estado)">
+              <h1 style="font-size: 2em"><b>{{util.estados(clase?.estado)}}</b></h1>
             </ion-text>
           </ion-col>
           <ion-col (click)="openChat(clase)" size="4" class="ion-no-padding lineLateral ion-align-self-center">
@@ -22,7 +26,7 @@
         </ion-row>
         <ion-row class="lineBotton">
           <ion-col offset="1" size="3" class="ion-no-padding">
-            <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+clase.materia + '.png'">
+            <img style="height: 60px; width: 60px;" [src]="'/assets/img/materias/'+clase.materia + '.png'">
           </ion-col>
           <ion-col class="ion-text-left">
             <ion-text color="secondary">
@@ -373,7 +377,7 @@
           </ion-row>
           <ion-row class="lineBotton">
             <ion-col offset="1" size="3" class="ion-no-padding">
-              <img style="height: 60px; width: 60px;" [src]="'/assets/img/'+clase.materia + '.png'">
+              <img style="height: 60px; width: 60px;" [src]="'/assets/img/materias/'+clase.materia + '.png'">
             </ion-col>
             <ion-col class="ion-text-left">
               <ion-text color="secondary">

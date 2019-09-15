@@ -1,26 +1,26 @@
-<ion-grid class="lineBotton" no-padding no-margin *ngIf="auth.currentUser | async as user">
-  <ion-row *ngIf="(userD | async) as userDatos"  class="ion-text-center ion-no-padding ion-no-margin">
+<ion-grid class="lineBotton" no-padding no-margin *ngIf="auth.currentUser | async as user; else loadD">
+  <ion-row *ngIf="(userD | async) as userDatos; else loadD" class="ion-text-center ion-no-padding ion-no-margin">
     <ion-col size="4">
       <ion-avatar style="display:block; margin:auto;">
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
       <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-        <ion-icon *ngFor="let item of crearArreglo(userDatos?.ranking)"  color="warning" name="star"></ion-icon>
+        <ion-icon *ngFor="let item of crearArreglo(userDatos?.ranking)" color="warning" name="star"></ion-icon>
       </p>
     </ion-col>
     <ion-col size="8">
       <ion-row class="ion-no-padding ion-no-margin">
-        <ion-col size="4" class="ion-no-padding">
+        <ion-col click="goTo('/billetera-estudiante')" size="4" class="ion-no-padding">
           <img style="height: 40px; width: 40px;" src="/assets/img/horas_disponibles.png">
           <br>
           <span style="font-size: 14px">Horas Disponibles</span>
         </ion-col>
-        <ion-col size="4" class="ion-no-padding">
+        <ion-col click="goTo('/lista-clases')" size="4" class="ion-no-padding">
           <img style="height: 40px; width: 40px;" src="/assets/img/clases.png">
           <br>
           <span>Clases</span>
         </ion-col>
-        <ion-col size="4" class="ion-no-padding">
+        <ion-col click="goTo('/lista-tareas')" size="4" class="ion-no-padding">
           <img style="height: 40px; width: 40px;" src="/assets/img/tareas.png">
           <br>
           <span>Tareas</span>
@@ -38,3 +38,10 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+
+<ng-template #loadD>
+  <div text-center>
+    <ion-spinner></ion-spinner>
+    <h3>Espere por favor</h3>
+  </div>
+</ng-template>

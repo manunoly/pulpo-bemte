@@ -1,7 +1,7 @@
 import { UtilService } from './util.service';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
-import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
 
@@ -12,12 +12,21 @@ export class DbService {
   token;
   combo;
   headers;
+  public estadoProfesor;
 
   constructor(
     private http: HttpClient,
     public util: UtilService
   ) {
     this.getHeader();
+  }
+
+  getEstadoProfesor() {
+    return this.estadoProfesor;
+  }
+
+  setEstadoProfesor(estado) {
+    this.estadoProfesor = estado;
   }
 
   async getToken() {

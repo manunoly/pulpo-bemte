@@ -1,4 +1,8 @@
-<app-header-bemte-prof></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
 
 <ion-content>
 
@@ -27,7 +31,7 @@
       <ion-col size="8">
         <ion-item lines="none">
           <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+clase?.materia + '.png'">
+            <img [src]="'/assets/img/materias/'+clase?.materia + '.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{clase?.materia}} </h2>

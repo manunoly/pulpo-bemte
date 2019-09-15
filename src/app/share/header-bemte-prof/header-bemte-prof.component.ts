@@ -18,10 +18,13 @@ export class HeaderBemteProfComponent implements OnInit {
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
-    console.log('en el header del prof', this.user);
+    // console.log('en el header del prof', this.user);
     if (this.user != undefined) {
-
-      this.estadoBoolean = await this.db.get('disponible-profesor?user_id=' + this.user.user_id)
+      if (this.db.getEstadoProfesor() == undefined) {
+        this.estadoBoolean = await this.db.get('disponible-profesor?user_id=' + this.user.user_id);
+        this.db.setEstadoProfesor(this.estadoBoolean);
+      } else
+        this.estadoBoolean = this.db.getEstadoProfesor();
       if (this.estadoBoolean)
         this.estado = 'Disponible';
       else
@@ -42,8 +45,9 @@ export class HeaderBemteProfComponent implements OnInit {
       disponible: this.estadoBoolean
     }
     const resp = await this.db.post('actualizar-disponible', dataPost);
-    if (resp && resp.success)
+    if (resp && resp.success) {
       this.util.showMessage(resp.success);
+    }
   }
 
   actualizarEstado($event) {
@@ -52,6 +56,7 @@ export class HeaderBemteProfComponent implements OnInit {
     else
       this.estado = 'Ocupado';
 
+    this.db.setEstadoProfesor(this.estadoBoolean);
     this.actualizarEstadoDB();
   }
 }

@@ -1,4 +1,8 @@
-<app-header-bemte-prof></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
 
 <ion-content text-center #content>
   <ion-fab vertical="top" horizontal="start" slot="fixed" (click)="close()">

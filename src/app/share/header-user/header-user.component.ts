@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CalificarComponent } from './../calificar/calificar.component';
 import { ModalController } from '@ionic/angular';
 import { DbService } from './../../servicios/db.service';
@@ -15,7 +16,9 @@ export class HeaderUserComponent implements OnInit {
   userD;
   @Input() query = true;
 
-  constructor(public auth: AuthService, private db: DbService, private modalController: ModalController) { }
+  constructor(public auth: AuthService,
+    private router: Router,
+    private db: DbService, private modalController: ModalController) { }
 
   ngOnInit() {
     this.userD = this.auth.user.pipe(
@@ -45,6 +48,7 @@ export class HeaderUserComponent implements OnInit {
     return estrellas;
   }
 
+
   async calificar(data) {
     const modal = await this.modalController.create({
       component: CalificarComponent,
@@ -52,5 +56,10 @@ export class HeaderUserComponent implements OnInit {
     });
     modal.onDidDismiss().then(data => console.log(data));
     return await modal.present();
+  }
+
+  goTo(url) {
+    console.log(url);
+    this.router.navigateByUrl(url);
   }
 }

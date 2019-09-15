@@ -10,12 +10,6 @@
         <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
           <ion-icon color="primary" *ngFor="let item of [1,2,3,4,5]" name="star" color="warning"></ion-icon>
         </p>
-
-        <a (click)="auth.purgeAuth()">
-          <ion-text color="secondary">
-            Cerrar Sesión
-          </ion-text>
-        </a>
       </ion-col>
     </ion-row>
 
@@ -87,7 +81,8 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked"> Tipo </ion-label>
+            <!-- FIXME: debe ser la universidad o colegio -->
+            <ion-label position="stacked"> Colegio o Universidad </ion-label>
             <ion-input formControlName="tipo" readonly type="text">
             </ion-input>
           </ion-item>
@@ -100,4 +95,13 @@
       </ion-row>
     </form>
   </ion-grid>
+
+
+  <div text-center>
+    <a (click)="auth.purgeAuth()">
+      <ion-text color="azul">
+        Cerrar Sesión
+      </ion-text>
+    </a>
+  </div>
 </ion-content>

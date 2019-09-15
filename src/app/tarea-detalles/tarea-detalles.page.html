@@ -1,9 +1,14 @@
-<app-header-bemte-prof></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
+
 
 <ion-content text-center>
 
   <div *ngIf="(tareaO | async) as tarea; else loadD">
-    <div *ngIf="(auth.currentUser | async).tipo == 'Profesor';else estudianteDiv">
+    <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
       <ion-text color="primary">
         <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
       </ion-text>
