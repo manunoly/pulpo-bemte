@@ -1,3 +1,4 @@
+import { ClaseAplicadaProfesorPage } from './../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { AuthService } from './../servicios/auth.service';
 import { ChatPage } from './../chat/chat.page';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -86,6 +87,72 @@ export class TareaDetallesPage implements OnInit {
     } catch (error) {
       this.util.dismissLoading();
     }
+  }
+
+  async aplicar(tarea) {
+    const alert = await this.alertController.create({
+      header: 'Aplicar a la tarea',
+      message: 'Detalle los siguientes datos',
+      inputs: [
+        {
+          name: 'tiempo',
+          type: 'number',
+          placeholder: 'Tiempo en horas de la tarea',
+          min: 0
+        },
+        {
+          name: 'inversion',
+          type: 'number',
+          placeholder: 'Costo de la tarea',
+          min: 0
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'Aplicar',
+          handler: async (data) => {
+            if (!data || !data.tiempo || !data.inversion)
+              return this.util.showMessage('Por favor revisar los datos ingresados');
+
+            this.util.showLoading();
+            try {
+              const user = await this.auth.getUserData();
+              const postData = {
+                user_id: user.user_id,
+                tarea_id: tarea.id,
+                ...data
+              }
+              console.log(postData);
+              const resp = await this.db.post('aplicar-tarea', postData);
+              this.util.dismissLoading();
+              if (resp && resp.success){
+                this.util.showMessage(resp.success);
+                this.util.showMessage(resp.success);
+                const modal = await this.modalController.create({
+                  component: ClaseAplicadaProfesorPage,
+                  componentProps: { data: tarea, tipo: 'Tareas' } 
+                });
+                modal.onDidDismiss().then(data => {
+                  this.util.atras();
+                });
+                return await modal.present();
+              }
+            } catch (error) {
+              console.log(error);
+              this.util.dismissLoading();
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

@@ -36,11 +36,11 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="tarea?.descripccion" class="lineBotton">
+        <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="secondary">
               <small>Descripción</small><br>
-              {{tarea?.descripccion}}
+              {{tarea?.descripcion}}
             </ion-text>
           </ion-col>
         </ion-row>
@@ -51,6 +51,18 @@
             <h5>Formato: {{tarea?.formato_entrega}}</h5>
           </ion-col>
         </ion-row>
+
+        <ion-row *ngIf="tarea.estado == 'Solicitado'">
+          <ion-col size="4" offset="1">
+            <ion-button (click)="util.atras()" shape="round" expand="block" size="small" color="primary">Atras
+            </ion-button>
+          </ion-col>
+          <ion-col size="4" offset="1">
+            <ion-button color="secondary" (click)="aplicar(tarea)" shape="round" expand="block" size="small">
+              Aplicar
+            </ion-button>
+          </ion-col>
+        </ion-row> 
 
       </ion-grid>
 
@@ -68,7 +80,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <ion-row  *ngIf="tarea.estado != 'Solicitado'">
           <ion-col offset="2" size="8">
             <ion-button expand="block" shape="round" color="primary" (click)="util.atras()">
               Aceptar
@@ -339,11 +351,11 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="tarea?.descripccion" class="lineBotton">
+          <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
             <ion-col>
               <ion-text color="secondary">
                 <small>Descripción</small><br>
-                {{tarea?.descripccion}}
+                {{tarea?.descripcion}}
               </ion-text>
             </ion-col>
           </ion-row>

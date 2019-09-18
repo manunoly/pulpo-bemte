@@ -6,7 +6,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { DbService } from './../../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { UtilService } from 'src/app/servicios/util.service';
+import { UtilService } from '../../servicios/util.service';
 
 @Component({
   selector: 'app-clase-detalles',
@@ -43,7 +43,8 @@ export class ClaseDetallesPage implements OnInit {
     private db: DbService,
     private modalController: ModalController,
     private alertController: AlertController,
-    public util: UtilService, private router: Router,
+    public util: UtilService, 
+    private router: Router,
     public auth: AuthService
   ) { }
 
@@ -130,15 +131,15 @@ export class ClaseDetallesPage implements OnInit {
   async aplicar(clases) {
     const alert = await this.alertController.create({
       header: 'Aplicar',
-      message: ``,
-      inputs: [
-        {
-          name: 'hora1',
-          type: 'radio',
-          label: clases.hora1,
-          value: clases.hora1
-        }
-      ],
+      message: `Confirme desea aplicar a la clase`,
+      // inputs: [
+      //   {
+      //     name: 'hora1',
+      //     type: 'radio',
+      //     label: clases.hora1,
+      //     value: clases.hora1
+      //   }
+      // ],
       buttons: [
         {
           text: 'Cancelar',
@@ -149,10 +150,10 @@ export class ClaseDetallesPage implements OnInit {
           text: 'Aplicar',
           handler: async (data) => {
             console.log(data);
-            if (data == undefined)
-              return this.util.showMessage('Por favor confirme la hora');
+            if (clases.hora1 == undefined)
+              return this.util.showMessage('No hemos podido confirmar la hora');
             this.util.showLoading();
-            let hora = data;
+            let hora = clases.hora1;
             try {
               const user = await this.auth.getUserData();
               const postData = {
@@ -167,10 +168,10 @@ export class ClaseDetallesPage implements OnInit {
                 this.util.showMessage(resp.success);
                 const modal = await this.modalController.create({
                   component: ClaseAplicadaProfesorPage,
-                  componentProps: { clase: clases }
+                  componentProps: { data: clases, tipo: 'Clases' }
                 });
-                modal.onDidDismiss().then(data => {
-                  this.router.navigateByUrl('')
+                modal.onDidDismiss().then(_ => {
+                  this.util.atras();
                 });
                 return await modal.present();
               }

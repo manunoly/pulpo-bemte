@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ClaseAplicadaProfesorPage } from './clase-aplicada-profesor.page';
-import { SharedModule } from '../share/share.module';
+import { PerfilProfesorPage } from './perfil-profesor.page';
 
 const routes: Routes = [
   {
-    path: ':id/:dato',
-    component: ClaseAplicadaProfesorPage
+    path: '',
+    component: PerfilProfesorPage
   }
 ];
 
@@ -19,10 +18,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClaseAplicadaProfesorPage]
+  declarations: [PerfilProfesorPage]
 })
-export class ClaseAplicadaProfesorPageModule {}
+export class PerfilProfesorPageModule {}

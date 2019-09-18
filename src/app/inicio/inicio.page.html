@@ -1,16 +1,11 @@
-<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
-</app-header-bemte-prof>
-
-<ng-template #estudianteDiv>
-  <app-header-bemte></app-header-bemte>
-</ng-template>
+<app-header-bemte></app-header-bemte>
 
 <ion-content>
 
   <div *ngIf="(auth.currentUser | async) as user; else loadD">
 
     <!-- para profesor -->
-      <ion-text color="primary">
+    <!-- <ion-text color="primary">
         <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>
       </ion-text>
 
@@ -34,40 +29,39 @@
             </ion-button>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
 
     <!-- navegacion para estudiantes -->
-    <!--
-      <div *ngIf="reload">
-        <app-header-user></app-header-user>
-      </div>
 
-      <ion-text color="primary">
-        <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>
-      </ion-text>
+    <div *ngIf="reload">
+      <app-header-user></app-header-user>
+    </div>
 
-      <ion-text color="primary">
-        <h3 text-center>Necesitas ayuda con:</h3>
-      </ion-text>
+    <ion-text color="primary">
+      <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>
+    </ion-text>
 
-      <ion-grid>
-        <ion-row class="ion-padding">
-          <ion-col size="8" offset="2">
-            <ion-button expand="block" shape="round" (click)="goTo('clases')" lines="none">
-              <b>CLASES</b>
-            </ion-button>
-          </ion-col>
-        </ion-row>
+    <ion-text color="primary">
+      <h3 class="ion-padding ion-text-center">Necesitas ayuda con:</h3>
+    </ion-text>
 
-        <ion-row class="ion-padding">
-          <ion-col size="8" offset="2">
-            <ion-button expand="block" shape="round" (click)="goTo('tareas')" lines="none">
-              <b>TAREAS</b>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-     -->
+    <ion-grid>
+      <ion-row class="ion-padding">
+        <ion-col size="8" offset="2">
+          <ion-button expand="block" size="large" shape="round" (click)="goTo('clases')" lines="none">
+            <b>CLASES</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-padding">
+        <ion-col size="8" offset="2">
+          <ion-button expand="block" size="large" shape="round" (click)="goTo('tareas')" lines="none">
+            <b>TAREAS</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
   <ng-template #loadD>

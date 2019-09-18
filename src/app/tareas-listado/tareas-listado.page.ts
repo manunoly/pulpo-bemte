@@ -87,10 +87,10 @@ export class TareasListadoPage implements OnInit {
                 this.util.showMessage(resp.success);
                 const modal = await this.modalController.create({
                   component: ClaseAplicadaProfesorPage,
-                  componentProps: { data: tarea, tipo: 'Tareas' }
+                  componentProps: { data: tarea, tipo: 'Tareas' } 
                 });
-                modal.onDidDismiss().then(data => {
-                  this.cargarTareas();
+                modal.onDidDismiss().then(_ => {
+                  this.util.atras();
                 });
                 return await modal.present();
               }

@@ -25,6 +25,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  
   <ion-grid *ngIf="clases | async as clasesD; else loadD">
     <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD"
       (click)="setDetallesClaseId(clase?.id)">
@@ -53,11 +54,11 @@
 
       <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">
 
-        <ion-row *ngIf="clase?.descripccion" class="lineBotton">
+        <ion-row *ngIf="clase?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="secondary">
               <small>Descripción</small><br>
-              {{clase?.descripccion}}
+              {{clase?.descripcion}}
             </ion-text>
           </ion-col>
         </ion-row>

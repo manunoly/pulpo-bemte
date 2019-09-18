@@ -1,3 +1,4 @@
+import { HeaderUserProfComponent } from './header-user-prof/header-user-prof.component';
 import { HeaderBemteProfComponent } from './header-bemte-prof/header-bemte-prof.component';
 import { FormsModule } from '@angular/forms';
 import { HorasSeleccionarComponent } from './horas-seleccionar/horas-seleccionar.component';
@@ -12,9 +13,9 @@ import { SubirTransferenciaComponent } from './subir-transferencia/subir-transfe
 
 @NgModule({
   imports: [CommonModule, IonicModule, FormsModule],
-  declarations: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent],
-  exports: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent],
-  entryComponents: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent]
+  declarations: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent],
+  exports: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent],
+  entryComponents: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent]
 
 })
 export class SharedModule { } 

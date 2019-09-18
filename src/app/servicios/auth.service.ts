@@ -33,19 +33,22 @@ export class AuthService {
   async login(data) {
     const user = await this.db.post('login', data);
     if (user) {
-      this.setAuth(JSON.stringify(user.profile));
-      return true;
+      await this.setAuth(JSON.stringify(user.profile));
+      return user.profile;
     }
+    return false;
   }
 
   async loadFromLocal() {
     try {
-      let user = await this.util.getStorage('user');
-      if (user) {
-        this.currentUserSubject.next(JSON.parse(user));
+      let user = JSON.parse(await this.util.getStorage('user'));
+      if (user && user != undefined) {
+        this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
-
-        this.router.navigateByUrl('inicio');
+        if (user.tipo == 'Profesor')
+          this.router.navigateByUrl('inicio-profesor');
+        else
+          this.router.navigateByUrl('inicio');
       }
     } catch (error) {
       console.log('auth load from local storage user', error);
