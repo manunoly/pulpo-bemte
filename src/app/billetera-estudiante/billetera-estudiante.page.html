@@ -19,7 +19,7 @@
               <h1>Billetera</h1>
             </ion-label>
           </ion-chip>
-          <ion-text color="secondary">
+          <ion-text color="tertiary">
             <h3 no-padding>Horas Disponibles <br>
               <span style="font-size: 40px"> {{horasCombos}} </span>
             </h3>
@@ -39,7 +39,7 @@
 
     <ng-template #pagarHoras>
       <div text-center *ngIf="horasComprar">
-        <ion-text color="secondary">
+        <ion-text color="tertiary">
           <h3>Elegiste el combo de {{horasComprar.hora}} horas
             <a (click)=pagadasHoras(false)>Cambiar</a>
           </h3>

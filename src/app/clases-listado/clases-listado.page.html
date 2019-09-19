@@ -27,7 +27,7 @@
       </ion-col>
 
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
-        <ion-text color="secondary">
+        <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
           <ion-button shape="round" [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
             <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
@@ -39,7 +39,7 @@
 
         <ion-row *ngIf="clase?.descripcion" class="lineBotton">
           <ion-col>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <h5>Descripción <br>
                 <small>{{clase?.descripcion}}</small>
               </h5>
@@ -50,25 +50,25 @@
         <ion-row class="lineBotton">
           <ion-col no-padding no-margin size="3">
             <small>Hora</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.hora1}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="3">
             <small>Duración</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.duracion}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="4">
             <small>Fecha</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.fecha}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="2">
             <small>Alumnos</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.personas}}</p>
             </ion-text>
           </ion-col>
@@ -79,7 +79,7 @@
             <ion-icon size="large" name="pin" color="primary"></ion-icon>
           </ion-col>
           <ion-col text-center no-padding no-margin>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <h5> {{clase?.ubicacion}} </h5>
             </ion-text>
           </ion-col>
@@ -99,7 +99,7 @@
         <!--  codigo para aplicar a una clase.-->
         <ion-row>
           <ion-col offset="3" size="6">
-            <ion-button (click)="aplicar(clase)" expand="block" shape="round" color="secondary">
+            <ion-button (click)="aplicar(clase)" expand="block" shape="round" color="succes">
               Aplicar
             </ion-button>
           </ion-col>

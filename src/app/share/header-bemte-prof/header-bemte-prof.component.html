@@ -2,7 +2,7 @@
 
   <ion-toolbar color="primary">
     <div *ngIf="estadoBoolean != undefined" class="ion-text-start" slot="start">
-      <ion-toggle [(ngModel)]="estadoBoolean" (ionChange)="actualizarEstado($event.detail.checked)" color="secondary">
+      <ion-toggle [(ngModel)]="estadoBoolean" (ionChange)="actualizarEstado($event.detail.checked)" color="success">
       </ion-toggle>
       <p class="ion-no-padding ion-no-margin" style="padding-top: -15px;">
         <small class="ion-no-padding ion-no-margin"><strong>{{estado}}</strong></small>

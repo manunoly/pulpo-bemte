@@ -8,52 +8,65 @@
         <form [formGroup]="claseForm">
             <ion-row>
                 <ion-col>
-                    <ion-item lines="none">
+                    <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ion-select (ionChange)="claseAnteriorProfesor($event.detail.value)" class="ion-text-center" formControlName="materia" [disabled]="!materias">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar"
+                            (ionChange)="claseAnteriorProfesor($event.detail.value)" class="ion-text-center"
+                            formControlName="materia" [disabled]="!materias">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
                         </ion-select>
                     </ion-item>
 
-                    <ion-item>
+                    <ion-item no-padding no-margin>
                         <ion-label position="stacked">
                             <b>Tema</b>
                         </ion-label>
                         <ion-input formControlName="tema"></ion-input>
                     </ion-item>
 
-                    <ion-item>
+                    <ion-item no-padding no-margin>
                         <ion-label position="stacked"><b>Descripcion</b></ion-label>
                         <ion-textarea formControlName="descripcion"></ion-textarea>
                     </ion-item>
+                </ion-col>
+            </ion-row>
 
-                    <ion-item lines="none">
+            <ion-row>
+                <ion-col>
+                    <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Cantidad de Alumnos</b>
                         </ion-label>
-                        <ion-select class="ion-text-center" formControlName="personas">
-                            <ion-select-option value="1">1</ion-select-option>
-                            <ion-select-option value="2">2</ion-select-option>
-                            <ion-select-option value="3">3</ion-select-option>
-                            <ion-select-option value="4">4</ion-select-option>
-                            <ion-select-option value="5">5</ion-select-option>
-                        </ion-select>
+                            <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                                formControlName="personas">
+                                <ion-select-option value="1">1</ion-select-option>
+                                <ion-select-option value="2">2</ion-select-option>
+                                <ion-select-option value="3">3</ion-select-option>
+                                <ion-select-option value="4">4</ion-select-option>
+                                <ion-select-option value="5">5</ion-select-option>
+                            </ion-select>
                     </ion-item>
+                </ion-col>
+            </ion-row>
 
-                    <ion-item lines="none">
+            <ion-row>
+                <ion-col>
+                    <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Fecha</b>
                         </ion-label>
-                        <ion-datetime class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)"
-                            [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha" display-format="DD-MM-YYYY">
+                        <!-- <ion-icon size="large" color="tertiary" slot="end" name="calendar"></ion-icon> -->
+                        <ion-datetime [pickerOptions]="customPickerOptions" doneText="Seleccionar" cancelText="Cancelar"
+                            class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima"
+                            [max]="fechaMaxima" formControlName="fecha" display-format="DD-MM-YYYY">
                         </ion-datetime>
                     </ion-item>
 
-                    <ion-item lines="none">
+                    <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Hora</b>
                         </ion-label>
@@ -62,11 +75,12 @@
                         </ion-datetime>
                     </ion-item>
 
-                    <ion-item lines="none">
+                    <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Duración</b>
                         </ion-label>
-                        <ion-select class="ion-text-center" formControlName="duracion">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                            formControlName="duracion">
                             <ion-select-option value="2">2 horas</ion-select-option>
                             <ion-select-option value="3">3 horas</ion-select-option>
                             <ion-select-option value="4">4 horas</ion-select-option>
@@ -77,12 +91,12 @@
                         </ion-select>
                     </ion-item>
 
-                    <ion-item *ngIf="ultimoProfesor" >
+                    <ion-item no-padding no-margin *ngIf="ultimoProfesor">
                         <ion-label class="ion-text-wrap">Solicitar último profesor</ion-label>
                         <ion-toggle formControlName="seleccion_profesor"></ion-toggle>
                     </ion-item>
 
-                    <ion-item lines="none" (click)="goToMap()">
+                    <ion-item no-padding no-margin lines="none" (click)="goToMap()">
                         <ion-icon no-padding no-margin color="primary" size="large" name="pin" slot="start"></ion-icon>
                         <ion-label no-padding no margin text-center class="ion-text-wrap" no-padding no margin>
                             <b>Ubicación</b> {{claseForm?.value?.ubicacion}}
@@ -91,9 +105,10 @@
                     </ion-item>
                 </ion-col>
             </ion-row>
+
             <ion-row>
                 <ion-col size="4" offset="1">
-                    <ion-button (click)="atras()" shape="round" expand="block" size="small" color="secondary">Atras
+                    <ion-button (click)="atras()" shape="round" expand="block" size="small" color="tertiary">Atras
                     </ion-button>
                 </ion-col>
                 <ion-col size="4" offset="1">

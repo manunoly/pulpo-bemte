@@ -1,7 +1,10 @@
 <app-header-bemte-prof></app-header-bemte-prof>
 
 <ion-content>
-  <app-header-user-prof></app-header-user-prof>
+
+  <div *ngIf="reload">
+    <app-header-user-prof></app-header-user-prof>
+  </div>
 
   <ion-grid>
     <ion-row class="lineBotton">
@@ -18,42 +21,32 @@
 
   <div *ngIf="tipo=='clases'">
     <ion-grid *ngIf="(clases | async) as clasesD; else loadD">
-      <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD">
+      <ion-row class="lineBotton ion-no-padding ion-text-center" *ngFor="let clase of clasesD"
+        [routerLink]="['/clase-detalles/'+clase.id]">
         <ion-col size="8">
-          <ion-item class="ion-text-wrap ion-no-padding ion-no-margin" (click)="setDetallesClaseId(clase?.id)"
-            lines="none">
+          <ion-item class="ion-text-wrap" lines="none">
             <ion-thumbnail slot="start">
               <img [src]="'/assets/img/materias/'+clase?.materia + '.png'">
             </ion-thumbnail>
-            <ion-label class="ion-text-wrap ion-no-padding ion-no-margin">
+            <ion-label class="ion-text-wrap ion-no-padding">
               <h2> {{clase?.materia}} </h2>
               <h5> {{clase?.tema}}</h5>
             </ion-label>
           </ion-item>
         </ion-col>
 
-        <!-- <ion-col class="ion-align-self-center lineLateral" text-center size="4">
-          <ion-text color="secondary">
-            <p no-padding no-margin><strong> Estado </strong></p>
-          </ion-text>
-          <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round"
-            [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
-            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
-          </ion-button>
-        </ion-col> -->
-
-        <ion-col [routerLink]="['/clase-detalles/'+clase.id]" class="ion-align-self-center lineLateral" size="4">
+        <ion-col class="ion-align-self-center lineLateral" size="4">
           <ion-text class="ion-text-center" color="dark">
-            <p style="font-size: 25px;">${{clase?.valor}} </p>
+            <p no-padding no-margin style="font-size: 25px;">${{clase.valor}} </p>
           </ion-text>
         </ion-col>
 
-        <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding
+        <!-- <ion-grid class="ion-no-padding ion-text-center" no-padding
           *ngIf="clase?.id==detallesClaseId">
 
           <ion-row *ngIf="clase?.descripcion" class="lineBotton">
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <small>Descripción</small><br>
                 {{clase?.descripcion}}
               </ion-text>
@@ -63,25 +56,25 @@
           <ion-row class="lineBotton">
             <ion-col no-padding no-margin size="3">
               <small>Hora</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.hora1}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="3">
               <small>Duración</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.duracion}}</p>
               </ion-text>
             </ion-col>
-            <ion-col no-padding no-margin size="4">
+            <ion-col no-padding no-margin size="3">
               <small>Fecha</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.fecha}}</p>
               </ion-text>
             </ion-col>
-            <ion-col no-padding no-margin size="4">
+            <ion-col no-padding no-margin size="3">
               <small>Alumnos</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.personas}}</p>
               </ion-text>
             </ion-col>
@@ -92,7 +85,7 @@
               <ion-icon size="large" name="pin" color="primary"></ion-icon>
             </ion-col>
             <ion-col text-center no-padding no-margin>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5> {{clase?.ubicacion}} </h5>
               </ion-text>
             </ion-col>
@@ -100,7 +93,7 @@
               <ion-button size="small" shape="round">Mapa</ion-button>
             </ion-col>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
       </ion-row>
 
       <div text-center *ngIf="clasesD.length === 0">
@@ -112,8 +105,9 @@
   <div *ngIf="tipo == 'tareas'">
     <ion-grid *ngIf="tareas | async as tareasD; else loadD">
 
-      <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD">
-        <ion-col (click)="setDetallesTareaId(tarea?.id)" size="8">
+      <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD"
+        [routerLink]="['/tarea-detalles/'+tarea.id]">
+        <ion-col size="8">
           <ion-item lines="none">
             <ion-thumbnail slot="start">
               <img [src]="'/assets/img/materias/'+tarea?.materia + '.png'">
@@ -126,12 +120,8 @@
         </ion-col>
 
         <ion-col class="ion-align-self-center lineLateral" text-center size="4">
-          <ion-text color="secondary">
-            <p no-padding no-margin><strong> Estado </strong></p>
-          </ion-text>
-          <ion-button [routerLink]="['/tarea-detalles/'+tarea.id]" shape="round"
-            [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
-            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
+          <ion-button shape="round" [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
+            <small class="ion-no-padding ion-no-margin"><b>Detalles</b></small>
           </ion-button>
         </ion-col>
 
@@ -140,7 +130,7 @@
 
           <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <small>Descripción</small><br>
                 {{tarea?.descripcion}}
               </ion-text>
@@ -151,14 +141,6 @@
             <ion-col>
               <h5>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
               <h5>Formato: {{tarea?.formato_entrega}}</h5>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col offset="3" size="6">
-              <ion-button (click)="aplicar(tarea)" expand="block" shape="round" color="secondary">
-                Aplicar
-              </ion-button>
             </ion-col>
           </ion-row>
 

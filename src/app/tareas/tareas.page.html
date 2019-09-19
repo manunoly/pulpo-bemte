@@ -11,7 +11,8 @@
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ion-select class="ion-text-center" [disabled]="!materias" formControlName="materia">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                            [disabled]="!materias" formControlName="materia">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
@@ -40,7 +41,8 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Hora entrega</b></ion-label>
-                        <ion-select class="ion-text-center" formControlName="hora_rango">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                            formControlName="hora_rango">
                             <ion-select-option *ngFor="let hora of rangosHorarios" [value]="hora">{{hora.hora_inicio}} -
                                 {{hora.hora_fin}}</ion-select-option>
                         </ion-select>
@@ -48,7 +50,8 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Formato</b></ion-label>
-                        <ion-select class="ion-text-center" formControlName="formato_entrega">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                            formControlName="formato_entrega">
                             <ion-select-option value="word">Word</ion-select-option>
                             <ion-select-option value="pdf">PDF</ion-select-option>
                         </ion-select>

@@ -6,7 +6,7 @@
 
 <ion-content text-center>
 
-  <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+  <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDivData">
     <ion-grid *ngIf="(claseO | async) as clase; else loadD">
 
       <ion-text color="primary">
@@ -14,6 +14,7 @@
       </ion-text>
 
       <ion-grid>
+
         <ion-row class="lineBotton">
           <ion-col size="8">
             <ion-text [color]="util.getColorEstado(clase?.estado)">
@@ -24,12 +25,13 @@
             <img style="height: 60px; width: 60px;" src="/assets/img/chat.png">
           </ion-col>
         </ion-row>
+
         <ion-row class="lineBotton">
           <ion-col offset="1" size="3" class="ion-no-padding">
             <img style="height: 60px; width: 60px;" [src]="'/assets/img/materias/'+clase.materia + '.png'">
           </ion-col>
           <ion-col class="ion-text-left">
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <h5 no-padding no-margin>{{clase.materia}}</h5>
               <small text-wrap>{{clase?.tema}}</small>
             </ion-text>
@@ -38,7 +40,7 @@
 
         <ion-row *ngIf="clase?.descripcion" class="lineBotton">
           <ion-col>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <h3>Descripcion</h3><br>
               {{clase?.descripcion}}
             </ion-text>
@@ -48,25 +50,25 @@
         <ion-row class="lineBotton">
           <ion-col no-padding no-margin size="3">
             <small>Hora</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.hora1}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="3">
             <small>Duración</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.duracion}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="4">
             <small>Fecha</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.fecha}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="2">
             <small>Alumnos</small><br>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <p>{{clase.personas}}</p>
             </ion-text>
           </ion-col>
@@ -77,7 +79,7 @@
             <ion-icon size="large" name="pin" color="primary"></ion-icon>
           </ion-col>
           <ion-col no-padding no-margin>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <h5> {{clase?.ubicacion}} </h5>
             </ion-text>
           </ion-col>
@@ -104,12 +106,12 @@
       <ion-grid padding>
         <ion-row *ngIf="clase.estado == 'Aceptado'">
           <ion-col offset="2" size="8">
-            <a no-padding color="secondary" (click)="confirmarCancelar(clase, 1)">
-              <ion-text color="secondary">
+            <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
+              <ion-text color="tertiary">
                 <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
               </ion-text>
             </a>
-            <ion-text color="secondary">
+            <ion-text color="dark">
               <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
             </ion-text>
           </ion-col>
@@ -127,7 +129,7 @@
     </ion-grid>
   </div>
 
-  <ng-template #estudianteDiv>
+  <ng-template #estudianteDivData>
     <div *ngIf="(claseO | async) as clase; else loadD">
       <div *ngIf="clase.estado == 'Sin_Horas'">
         <app-header-user></app-header-user>
@@ -146,7 +148,7 @@
         <ion-grid padding>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5 padding>
                   Estamos buscando un profesor...<br>
                   Se confirmará en un plazo máximo de 1 hora
@@ -189,7 +191,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5>
                   <b>Lo sentimos</b>,<br>
                   no encontramos profesor,
@@ -227,7 +229,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5>
                   <b>Lo sentimos</b>,<br>
                   no has realizado el pago en el tiempo requerido,
@@ -264,7 +266,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5>
                   <b>Lo sentimos</b>,<br>
                   su pago ha sido rechazado o no lo hemos podido verificar.
@@ -300,7 +302,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5>
                   <b>Lo sentimos</b>,<br>
                   su clase ha sido Cancelada.
@@ -337,7 +339,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5>Nos encontramos
                   <b>confirmando su pago</b>,<br>
                   por favor espere.
@@ -367,7 +369,7 @@
         <ion-grid>
           <ion-row class="lineBotton">
             <ion-col size="8">
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h1 style="font-size: 2em"><b>Confirmada</b></h1>
               </ion-text>
             </ion-col>
@@ -380,7 +382,7 @@
               <img style="height: 60px; width: 60px;" [src]="'/assets/img/materias/'+clase.materia + '.png'">
             </ion-col>
             <ion-col class="ion-text-left">
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5 no-padding no-margin>{{clase.materia}}</h5>
                 <small text-wrap>{{clase?.tema}}</small>
               </ion-text>
@@ -389,7 +391,7 @@
 
           <ion-row *ngIf="clase?.descripcion" class="lineBotton">
             <ion-col>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h3>Descripción</h3><br>
                 {{clase?.descripcion}}
               </ion-text>
@@ -399,25 +401,25 @@
           <ion-row class="lineBotton">
             <ion-col no-padding no-margin size="3">
               <small>Hora</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.hora1}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="3">
               <small>Duración</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.duracion}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="4">
               <small>Fecha</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.fecha}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="2">
               <small>Alumnos</small><br>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <p>{{clase.personas}}</p>
               </ion-text>
             </ion-col>
@@ -428,7 +430,7 @@
               <ion-icon size="large" name="pin" color="primary"></ion-icon>
             </ion-col>
             <ion-col no-padding no-margin>
-              <ion-text color="secondary">
+              <ion-text color="tertiary">
                 <h5> {{clase?.ubicacion}} </h5>
               </ion-text>
             </ion-col>
@@ -441,12 +443,12 @@
         <ion-grid padding>
           <ion-row *ngIf="clase.estado == 'Aceptado'">
             <ion-col offset="2" size="8">
-              <a no-padding color="secondary" (click)="confirmarCancelar(clase)">
-                <ion-text color="secondary">
+              <a no-padding color="tertiary" (click)="confirmarCancelar(clase)">
+                <ion-text color="tertiary">
                   <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
                 </ion-text>
               </a>
-              <ion-text color="secondary">
+              <ion-text color="dark">
                 <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
               </ion-text>
             </ion-col>

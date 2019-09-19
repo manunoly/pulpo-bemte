@@ -24,7 +24,7 @@ export class RegistrarPage implements OnInit {
     private fcm: FcmService
   ) {
     this.registroForm = this.fb.group({
-      celular: ["", [Validators.required, Validators.minLength(9)]],
+      celular: ["", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.min(6)]],
       nombre: ["", Validators.required],

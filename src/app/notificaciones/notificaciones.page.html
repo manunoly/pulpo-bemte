@@ -10,7 +10,7 @@
 
     <ion-row *ngFor="let item of notD" class="lineBotton">
       <ion-col offset="1" size="10">
-        <ion-text color="secondary">
+        <ion-text color="tertiary">
           <h3 no-padding>{{item.notificacion.split('|')[0]}}</h3>
           <p>{{item.notificacion.split('|')[1]}}</p>
         </ion-text>
@@ -19,7 +19,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-text *ngIf="notD.length == 0" color="secondary">
+        <ion-text *ngIf="notD.length == 0" color="tertiary">
           <h5 text-center>Sin Notificaciones</h5>
         </ion-text>
       </ion-col>

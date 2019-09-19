@@ -16,6 +16,7 @@ export class InicioProfesorPage implements OnInit {
   detallesClaseId;
   clases;
   tareas;
+  reload;
 
   constructor(public auth: AuthService, private db: DbService, public util: UtilService) { }
 
@@ -24,8 +25,13 @@ export class InicioProfesorPage implements OnInit {
   ionViewWillEnter() {
     this.cargarClases();
     this.cargarTareas();
+    this.reload = true;
   }
-
+  
+  ionViewDidLeave() {
+    this.reload = false;
+  }
+  
   setDetallesTareaId(id) {
     if (id == this.detallesTareaId)
       return this.detallesTareaId = '';

@@ -1,16 +1,18 @@
 ion-select {
   border-radius: 20px;
-  border: 1px var(--ion-color-primary) solid;
+  border: 1px var(--ion-color-success) solid;
 }
 
 ion-datetime {
   border-radius: 20px;
-  border: 1px var(--ion-color-primary) solid;
+  border: 1px var(--ion-color-success) solid;
 }
+
 ion-grid {
-  --ion-text-color: var(--ion-color-secondary) !important;
+  --ion-text-color: var(--ion-color-tertiary) !important;
 }
 
 ion-label {
-  --color: var(--ion-color-secondary) !important;
+  --color: var(--ion-color-tertiary) !important;
+  font-size: 35px;
 }

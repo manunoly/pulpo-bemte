@@ -28,7 +28,7 @@
       </ion-col>
 
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
-        <ion-text color="secondary">
+        <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
           <ion-button shape="round" [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
             <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
@@ -40,7 +40,7 @@
 
         <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
           <ion-col>
-            <ion-text color="secondary">
+            <ion-text color="tertiary">
               <small>Descripción</small><br>
               {{tarea?.descripcion}}
             </ion-text>
@@ -56,7 +56,7 @@
 
         <ion-row>
           <ion-col offset="3" size="6">
-            <ion-button (click)="aplicar(tarea)" expand="block" shape="round" color="secondary">
+            <ion-button (click)="aplicar(tarea)" expand="block" shape="round" color="success">
               Aplicar
             </ion-button>
           </ion-col>

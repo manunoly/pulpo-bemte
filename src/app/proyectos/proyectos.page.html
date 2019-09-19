@@ -17,7 +17,7 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label>Materia</ion-label>
-                        <ion-select formControlName="materia">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar"  formControlName="materia">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
@@ -71,7 +71,7 @@
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label>Formato</ion-label>
-                        <ion-select formControlName="formato_entrega">
+                        <ion-select okText="Seleccionar" cancelText="Cancelar"  formControlName="formato_entrega">
                             <ion-select-option value="word">Word</ion-select-option>
                             <ion-select-option value="pdf">PDF</ion-select-option>
                         </ion-select>

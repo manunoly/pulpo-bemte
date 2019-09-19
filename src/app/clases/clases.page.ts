@@ -29,6 +29,7 @@ export class ClasesPage implements OnInit {
   minHora = "0";
   horasDisponibles;
   ultimoProfesor = false;
+  customPickerOptions;
 
   constructor(
     private modalController: ModalController,
@@ -39,6 +40,15 @@ export class ClasesPage implements OnInit {
     private fb: FormBuilder,
     public util: UtilService
   ) {
+    this.customPickerOptions = {columns: [{
+      name: 'framework',
+      options: [
+        { text: 'Angular', value: 'A' },
+        { text: 'Vue', value: 'B' },
+        { text: 'React', value: 'C' }
+      ]
+    }]}
+
     this.loadMinHora();
     let x = 12; //or whatever offset
     let currentDate = new Date();

@@ -65,7 +65,7 @@ export class RegistrarseProfesorPage implements OnInit {
       pais: new FormControl("", Validators.required),
       ciudad: new FormControl("", Validators.required),
       tipo: new FormControl("Profesor", Validators.required),
-      celular: new FormControl("", [Validators.required, Validators.minLength(9)]),
+      celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
       clases: new FormControl(""),
       tareas: new FormControl(""),
       hojaVida: new FormControl(""),
