@@ -16,6 +16,7 @@ import { ModalController } from "@ionic/angular";
 export class RegistrarsePage implements OnInit {
   registroForm: FormGroup;
   paisNumber;
+  ciudades;
 
   constructor(
     public alertController: AlertController,
@@ -34,10 +35,11 @@ export class RegistrarsePage implements OnInit {
       password1: ["", [Validators.required, Validators.minLength(8)]],
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
-      apodo: ["", Validators.required],
+      apodo: ["", [Validators.required, Validators.minLength(9)]],
       cedula: [""],
       token: [""],
       sistema: [""],
+      pais: ["", Validators.required],
       ciudad: ["Quito", Validators.required],
       tipo: ["Alumno", Validators.required],
       ubicacion: ["ubicacion", Validators.required]
@@ -114,6 +116,11 @@ export class RegistrarsePage implements OnInit {
 
   back() {
     this.router.navigateByUrl('login');
+  }
+
+
+  cargarCiudades(pais) {
+    this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
   }
 
 }

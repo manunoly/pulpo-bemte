@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { UtilService } from './../servicios/util.service';
 
 @Component({
@@ -11,12 +10,23 @@ export class ClaseAplicadaProfesorPage implements OnInit {
   data;
   tipo;
 
-  constructor(public util: UtilService, public modalController: ModalController) { }
+  constructor(public util: UtilService) {
+  }
 
   ngOnInit() {
   }
 
-  cerrar() {
-    this.modalController.dismiss();
+  ionViewDidEnter() {
+    const datosTmp = this.util.getTemporalData();
+    console.log('clase o tarea aplicada', datosTmp);
+    if (datosTmp == undefined)
+      this.util.atras();
+    else {
+      this.data = datosTmp.data;
+      this.tipo = datosTmp.tipo;
+    }
   }
+
+  cerrar() { }
+
 }

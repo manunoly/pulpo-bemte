@@ -2,6 +2,8 @@
 
 <ion-content>
 
+  <app-header-user-prof></app-header-user-prof>
+
   <ion-grid text-center *ngIf="data">
     <ion-row class="lineBotton">
       <ion-col>
@@ -39,7 +41,7 @@
     <br>
     <ion-row>
       <ion-col offset="2" size="8">
-        <ion-button expand="block" shape="round" color="secondary" (click)="cerrar()">
+        <ion-button expand="block" shape="round" color="secondary" [routerLink]="['/inicio-profesor']">
           {{tipo}} pendientes
         </ion-button>
       </ion-col>

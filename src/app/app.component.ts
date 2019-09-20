@@ -17,12 +17,13 @@ export class AppComponent {
   public appPages = [];
   public profesorPages = [
     {
-      title: 'Inicio',
-      url: '/inicio-profesor',
-      icon: 'list'
-    },{
-      title: 'Solicitudes de Tareas',
-      url: '/tareas-listado',
+      title: 'Perfil',
+      url: '/perfil',
+      icon: 'man'
+    },
+    {
+      title: 'Mis Clases',
+      url: '/lista-clases',
       icon: 'list'
     },
     {
@@ -31,17 +32,7 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Solicitudes de Clases',
-      url: '/clases-listado',
-      icon: 'list'
-    },
-    {
-      title: 'Mis Clases',
-      url: '/lista-clases',
-      icon: 'list'
-    },
-    {
-      title: 'Ganancias',
+      title: 'Billetera',
       url: '/ganancias-profesor',
       icon: 'man'
     }];
@@ -58,7 +49,7 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: 'Mi Billetera',
+      title: 'Billetera',
       url: '/billetera-estudiante',
       icon: 'logo-usd'
     }, {

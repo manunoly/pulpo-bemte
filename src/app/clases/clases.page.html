@@ -60,7 +60,7 @@
                             <b>Fecha</b>
                         </ion-label>
                         <!-- <ion-icon size="large" color="tertiary" slot="end" name="calendar"></ion-icon> -->
-                        <ion-datetime [pickerOptions]="customPickerOptions" doneText="Seleccionar" cancelText="Cancelar"
+                        <ion-datetime [pickerOptions]="customPickerOptions" doneText="Hecho" cancelText="Cancelar"
                             class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima"
                             [max]="fechaMaxima" formControlName="fecha" display-format="DD-MM-YYYY">
                         </ion-datetime>
@@ -70,7 +70,7 @@
                         <ion-label position="stacked">
                             <b>Hora</b>
                         </ion-label>
-                        <ion-datetime class="ion-text-center" [disabled]="!claseForm.value.fecha"
+                        <ion-datetime doneText="Hecho" cancelText="Cancelar" class="ion-text-center" [disabled]="!claseForm.value.fecha"
                             formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm">
                         </ion-datetime>
                     </ion-item>

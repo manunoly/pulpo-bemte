@@ -16,7 +16,7 @@
       <ion-grid>
         <ion-row class="lineBotton">
           <ion-col size="8">
-            <ion-text [color]="util.getColorEstado(tarea?.estado)">
+            <ion-text [color]="util.getColorEstado(util.estados(tarea?.estado))">
               <h1 style="font-size: 2em"><b>{{util.estados(tarea?.estado)}}</b></h1>
             </ion-text>
           </ion-col>

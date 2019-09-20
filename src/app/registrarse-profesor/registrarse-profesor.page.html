@@ -30,7 +30,7 @@
           <ion-col size="6">
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Fecha de Nacimiento</ion-label>
-              <ion-datetime placeholder="DD/MM/AA" formControlName="fechaNacimiento" display-format="DD/MM/YYYY">
+              <ion-datetime doneText="Hecho" cancelText="Cancelar" placeholder="DD/MM/AA" formControlName="fechaNacimiento" display-format="DD/MM/YYYY">
               </ion-datetime>
             </ion-item>
           </ion-col>
@@ -67,7 +67,7 @@
             <ion-item class="ion-no-padding">
               <ion-label class="ion-text-wrap ion-no-padding ion-no-margin" position="stacked">Ciudad de Residencia
               </ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" formControlName="ciudad">
+              <ion-select  [disabled]="!ciudades" okText="Seleccionar" cancelText="Cancelar" formControlName="ciudad">
                 <ion-select-option *ngFor="let c of ciudades | async" [value]="c?.ciudad">
                   {{c?.ciudad}}
                 </ion-select-option>

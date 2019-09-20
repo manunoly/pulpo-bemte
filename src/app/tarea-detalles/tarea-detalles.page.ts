@@ -1,9 +1,8 @@
-import { ClaseAplicadaProfesorPage } from './../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { AuthService } from './../servicios/auth.service';
 import { ChatPage } from './../chat/chat.page';
 import { ModalController, AlertController } from '@ionic/angular';
 import { DbService } from './../servicios/db.service';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '../servicios/util.service';
 
@@ -20,7 +19,8 @@ export class TareaDetallesPage implements OnInit {
     private db: DbService,
     private modalController: ModalController,
     private alertController: AlertController,
-    public util: UtilService, private router: Router,
+    public util: UtilService,
+    private router: Router,
     public auth: AuthService
   ) { }
 
@@ -130,17 +130,19 @@ export class TareaDetallesPage implements OnInit {
               console.log(postData);
               const resp = await this.db.post('aplicar-tarea', postData);
               this.util.dismissLoading();
-              if (resp && resp.success){
+              if (resp && resp.success) {
                 this.util.showMessage(resp.success);
-                this.util.showMessage(resp.success);
-                const modal = await this.modalController.create({
-                  component: ClaseAplicadaProfesorPage,
-                  componentProps: { data: tarea, tipo: 'Tareas' } 
-                });
-                modal.onDidDismiss().then(data => {
-                  this.util.atras();
-                });
-                return await modal.present();
+
+                this.util.setTemporalData({ data: tarea, tipo: 'Tareas' });
+                this.router.navigateByUrl('clase-aplicada-profesor');
+                // const modal = await this.modalController.create({
+                //   component: ClaseAplicadaProfesorPage,
+                //   componentProps: { data: tarea, tipo: 'Tareas' } 
+                // });
+                // modal.onDidDismiss().then(data => {
+                //   this.util.atras();
+                // });
+                // return await modal.present();
               }
             } catch (error) {
               console.log(error);
@@ -154,5 +156,4 @@ export class TareaDetallesPage implements OnInit {
 
     await alert.present();
   }
-
 }

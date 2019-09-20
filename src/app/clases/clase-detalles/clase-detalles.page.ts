@@ -1,4 +1,3 @@
-import { ClaseAplicadaProfesorPage } from './../../clase-aplicada-profesor/clase-aplicada-profesor.page';
 import { AuthService } from './../../servicios/auth.service';
 import { ChatPage } from './../../chat/chat.page';
 import { MapPage } from './../../map/map.page';
@@ -166,14 +165,17 @@ export class ClaseDetallesPage implements OnInit {
               this.util.dismissLoading();
               if (resp && resp.success) {
                 this.util.showMessage(resp.success);
-                const modal = await this.modalController.create({
-                  component: ClaseAplicadaProfesorPage,
-                  componentProps: { data: clases, tipo: 'Clases' }
-                });
-                modal.onDidDismiss().then(_ => {
-                  this.util.atras();
-                });
-                return await modal.present();
+                this.util.setTemporalData({ data: clases, tipo: 'Clases' });
+                this.router.navigateByUrl('clase-aplicada-profesor');
+
+                // const modal = await this.modalController.create({
+                //   component: ClaseAplicadaProfesorPage,
+                //   componentProps: { data: clases, tipo: 'Clases' }
+                // });
+                // modal.onDidDismiss().then(_ => {
+                //   this.util.atras();
+                // });
+                // return await modal.present();
               }
 
             } catch (error) {

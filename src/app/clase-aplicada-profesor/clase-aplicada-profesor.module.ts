@@ -10,7 +10,7 @@ import { SharedModule } from '../share/share.module';
 
 const routes: Routes = [
   {
-    path: ':id/:dato',
+    path: '',
     component: ClaseAplicadaProfesorPage
   }
 ];

@@ -9,6 +9,7 @@ import { Location } from "@angular/common";
 })
 export class UtilService {
   loading;
+  temporalData;
 
   constructor(
     public toastController: ToastController,
@@ -161,5 +162,13 @@ export class UtilService {
 
   atras() {
     this._navigation.back();
+  }
+
+  getTemporalData() {
+    return this.temporalData;
+  }
+
+  setTemporalData(data) {
+    this.temporalData = data;
   }
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from '../servicios/util.service';
+import { UploadService } from '../servicios/upload.service';
 
 @Component({
   selector: 'app-perfil',
@@ -23,16 +24,21 @@ export class PerfilPage implements OnInit {
   registroForm: FormGroup;
   editar;
   user;
+  paisNumber;
+  ciudades;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private db: DbService,
     public auth: AuthService,
-    public util: UtilService
+    public util: UtilService,
+    public upload: UploadService
   ) {
+    this.paisNumber = this.db.get('lista-paises');
     this.auth.getUserData().then(user => {
       this.user = user;
+      console.log('usuario a editar', this.user);
       this.buildForm(this.user);
     }).catch(error => {
       this.util.showMessage('Error cargando datos del usuario');
@@ -43,6 +49,18 @@ export class PerfilPage implements OnInit {
 
   async ngOnInit() {
 
+  }
+
+
+  async subirFotoPerfil() {
+    try {
+      this.upload.imagesSubject.subscribe(img => this.registroForm.controls['avatar'].setValue(img));
+      await this.upload.selectImage();
+      setTimeout(() => {
+        this.util.showMessage('en construccion subir foto de perfil');
+      }, 3000);
+    } catch (error) {
+    }
   }
 
   async editarPerfil() {
@@ -65,25 +83,32 @@ export class PerfilPage implements OnInit {
     this.registroForm = this.fb.group({
       'user_id': [''],
       'avatar': [user.avatar],
-      'calificacion': [user.calificacion],
-      'celular': [user.celular,[Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
+      'paisCelular': [user.codigo, Validators.required],
+      'celular': [user.celular, [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       'email': [user.correo, [Validators.required, Validators.email]],
-      'hojaVida': [''],
-      'titulo': [''],
-      'oldPassword': ['',Validators.minLength(6)],
-      'newPassword': ['',Validators.minLength(8)],
-      'newPasswordConfirm': ['',Validators.minLength(8)],
+      'oldPassword': ['', Validators.minLength(6)],
+      'newPassword': ['', Validators.minLength(8)],
+      'newPasswordConfirm': ['', Validators.minLength(8)],
       'nombre': [user.nombres, Validators.required],
       'apellido': [user.apellidos, Validators.required],
       'apodo': [user.apodo, Validators.required],
-      'cedula': [user.cedula],
+      // 'pais': [user.pais, user.calificacion],
+      'pais': ['Ecuador', user.calificacion],
       'ciudad': [user.ciudad, Validators.required],
       'tipo': [user.tipo, Validators.required],
-      'ubicacion': [user.ubicacion, Validators.required]
+      'ubicacion': [user.ubicacion?user.ubicacion:' ', Validators.required]
     });
-    this.user = await this.auth.getUserData();
+
     if (this.user)
       this.registroForm.controls['user_id'].setValue(this.user.user_id);
+    this.cargarCiudades('Ecuador');
 
   }
+
+  cargarCiudades(pais?) {
+    if (!pais)
+      pais = this.registroForm.value.pais;
+    this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
+  }
+
 }

@@ -1,4 +1,3 @@
-import { ClaseAplicadaProfesorPageModule } from './../../clase-aplicada-profesor/clase-aplicada-profesor.module';
 import { ChatPageModule } from './../../chat/chat.module';
 import { MapPageModule } from './../../map/map.module';
 import { NgModule } from '@angular/core';
@@ -24,7 +23,6 @@ const routes: Routes = [
     FormsModule,
     SharedModule,
     MapPageModule,
-    ClaseAplicadaProfesorPageModule,
     ChatPageModule,
     IonicModule,
     RouterModule.forChild(routes)
