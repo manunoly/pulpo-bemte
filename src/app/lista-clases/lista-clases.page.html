@@ -1,4 +1,5 @@
-<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+</app-header-bemte-prof>
 
 <ng-template #estudianteDiv>
   <app-header-bemte></app-header-bemte>
@@ -25,10 +26,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <ion-grid *ngIf="clases | async as clasesD; else loadD">
-    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD"
-      >
+    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let clase of clasesD">
       <ion-col size="8">
         <ion-item (click)="setDetallesClaseId(clase?.id)" lines="none">
           <ion-thumbnail slot="start">
@@ -46,7 +46,8 @@
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
         <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
-          <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round" [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
+          <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round"
+            [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
             <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
           </ion-button>
         </ion-text>
@@ -100,7 +101,7 @@
             </ion-text>
           </ion-col>
           <ion-col class="ion-align-self-center" size="3">
-            <ion-button size="small" shape="round">Mapa</ion-button>
+            <ion-button color="success" size="small" shape="round">Mapa</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
