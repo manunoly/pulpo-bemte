@@ -63,7 +63,7 @@
           <ion-col no-padding no-margin size="7">
             <p no-padding>Fecha</p>
             <ion-text color="tertiary">
-              <p no-margin no-padding style="font-size: 30px">{{clase.fecha}}</p>
+              <p no-margin no-padding style="font-size: 30px">{{clase.fecha | date: 'dd/MM/yyyy'}}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="5">
@@ -120,8 +120,16 @@
             <ion-col>
               <ion-text color="tertiary">
                 <h5>
-                  <b>Lo sentimos</b>,<br>
-                  la clase ha sido Cancelada.
+                  <span *ngIf="clase.user_canc == clase.user_id_pro; else cancelEst">
+                    <b>Has cancelado tu clase</b>,<br>
+                    recuerda que tienes una multa de 2 horas.
+                  </span>
+                  <ng-template #cancelEst>
+                    <span>
+                      <b>Lamentamos informarte que el estudiante ha cancelado la clase</b>,
+                      permanece atento a mas solicitudes.
+                    </span>
+                  </ng-template>
                 </h5>
               </ion-text>
             </ion-col>
@@ -188,7 +196,8 @@
         <ion-grid>
           <ion-row class="lineBotton">
             <ion-col size="8">
-              <ion-text [color]="util.getColorEstado(util.estados(clase.estado))">
+              <ion-text
+                [color]="util.estados(clase.estado) == 'Confirmado' ? 'tertiary' : util.getColorEstado(util.estados(clase.estado))">
                 <h1 style="font-size: 2em"><b>{{util.estados(clase.estado)}}</b></h1>
               </ion-text>
             </ion-col>
@@ -233,7 +242,7 @@
             <ion-col no-padding no-margin size="4">
               <small>Fecha</small><br>
               <ion-text color="tertiary">
-                <p>{{clase.fecha}}</p>
+                <p>{{clase.fecha | date: 'dd/MM/yyyy'}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="2">
@@ -288,6 +297,7 @@
 
   <ng-template #estudianteDivData>
     <div *ngIf="(claseO | async) as clase; else loadD">
+
       <div *ngIf="clase.estado == 'Sin_Horas'">
         <app-header-user></app-header-user>
 
@@ -461,8 +471,16 @@
             <ion-col>
               <ion-text color="tertiary">
                 <h5>
-                  <b>Lo sentimos</b>,<br>
-                  su clase ha sido Cancelada.
+                  <span *ngIf="clase.user_canc == clase.user_id; else cancelProf">
+                    <b>Has cancelado tu clase</b>,<br>
+                    recuerda que tienes una multa de 1 hora.
+                  </span>
+                  <ng-template #cancelProf>
+                    <span>
+                      <b>Lamentamos informarte que el profesor ha cancelado la clase</b>,
+                      por favor vuelve a solicitar.
+                    </span>
+                  </ng-template>
                 </h5>
               </ion-text>
             </ion-col>
@@ -557,7 +575,7 @@
                 <p> {{clase?.descripcion}} </p>
               </ion-text>
             </ion-col>
-          </ion-row>>
+          </ion-row>
 
           <ion-row class="lineBotton">
             <ion-col no-padding no-margin size="3">
@@ -575,7 +593,7 @@
             <ion-col no-padding no-margin size="4">
               <small>Fecha</small><br>
               <ion-text color="tertiary">
-                <p>{{clase.fecha}}</p>
+                <p>{{clase.fecha | date: 'dd/MM/yyyy' }}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="2">
@@ -624,6 +642,7 @@
           </ion-row>
         </ion-grid>
       </div>
+
     </div>
   </ng-template>
 

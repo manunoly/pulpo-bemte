@@ -49,7 +49,7 @@
 
         <ion-row>
           <ion-col>
-            <h5>Entregar: {{tarea?.fecha_entrega}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
+            <h5>Entregar: {{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
             <h5>Formato: {{tarea?.formato_entrega}}</h5>
           </ion-col>
         </ion-row>

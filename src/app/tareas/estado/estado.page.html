@@ -54,7 +54,7 @@
         <ion-row>
           <ion-col text-center>
             <h5> <strong>Su pago fue exitoso</strong></h5>
-            <p>Su tarea será entregada el {{tareaD?.fecha_entrega}}
+            <p>Su tarea será entregada el {{tareaD?.fecha_entrega | date: 'dd/MM/yyyy'}}
               en el siguiente horario {{tareaD?.hora_inicio}} - {{tareaD?.hora_fin}} </p>
           </ion-col>
         </ion-row>

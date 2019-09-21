@@ -42,7 +42,7 @@ export class ClaseDetallesPage implements OnInit {
     private db: DbService,
     private modalController: ModalController,
     private alertController: AlertController,
-    public util: UtilService, 
+    public util: UtilService,
     private router: Router,
     public auth: AuthService
   ) { }
@@ -77,6 +77,22 @@ export class ClaseDetallesPage implements OnInit {
   }
 
   async openChat(claseD) {
+
+    const claseHora = new Date(Date.parse(claseD.fecha + 'T' + claseD.hora1));
+
+    let anterior = new Date(claseHora);
+    anterior.setHours(claseHora.getHours() - 1);
+
+    const posterior = new Date(claseHora);
+    posterior.setHours(claseHora.getHours() + claseD.duracion + 1);
+
+    const now = Date.now();
+
+    console.log(anterior.getTime(),Date.now(),posterior.getTime());
+
+    if (anterior.getTime() > now || now > posterior.getTime())
+      return this.util.showMessage('El chat estará activo una hora y despues');
+
     const modal = await this.modalController.create({
       component: ChatPage,
       componentProps: { clase: claseD }
@@ -120,7 +136,7 @@ export class ClaseDetallesPage implements OnInit {
       this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.router.navigateByUrl('lista-clases');
+        this.cargarClase();
       }
     } catch (error) {
       this.util.dismissLoading();
