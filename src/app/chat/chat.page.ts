@@ -46,7 +46,7 @@ export class ChatPage implements OnInit {
   }
 
   recargarChatAutomatico() {
-    this.$counter = interval(9000).pipe(
+    this.$counter = interval(10000).pipe(
       switchMap(() => this.cargarChat())
     ).subscribe();
   }

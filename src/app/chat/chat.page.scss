@@ -1,6 +1,6 @@
 // .roundI {
 //   border: 1px var(--ion-color-primary) solid;
-//   border-radius: 10px !important;
+//   border-radius: 20px !important;
 // }
 
 .borderC {
@@ -13,11 +13,13 @@
 }
 
 .borderUser {
-  --border-radius: 10px 10px 0px 10px;
-  --border-color: var(--ion-color-secondary);
+  --border-radius: 20px 20px 0px 20px !important;
+  border-radius: 20px 20px 0px 20px !important;
+  border: 1px var(--ion-color-primary) solid;
 }
 
 .borderOtherUser {
-  --border-radius: 10px 10px 10px 0px;
-  --border-color: var(--ion-color-secondary);
+  --border-radius: 20px 20px 20px 0px !important;
+  border-radius: 20px 20px 20px 0px !important;
+  border: 1px var(--ion-color-secondary) solid;
 }
