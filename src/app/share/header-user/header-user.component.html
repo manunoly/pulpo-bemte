@@ -1,12 +1,19 @@
 <ion-grid class="lineBotton" no-padding no-margin *ngIf="auth.currentUser | async as user; else loadD">
   <ion-row *ngIf="(userD | async) as userDatos; else loadD" class="ion-text-center ion-no-padding ion-no-margin">
     <ion-col size="4">
-      <ion-avatar style="display:block; margin:auto;">
+      <ion-avatar style="display:block; margin:auto; width: 80px; height: 80px;">
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
-      <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-        {{userDatos?.ranking}} <ion-icon color="warning"  name="star"></ion-icon>
+      <p no-padding no-margin> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
       </p>
+      <ion-row no-padding no-margin>
+        <ion-col offset="5" size="1" no-padding no-margin>
+          {{ userDatos?.ranking }}
+        </ion-col>
+        <ion-col size="1" no-padding no-margin>
+          <ion-icon color="warning" name="star"></ion-icon>
+        </ion-col>
+      </ion-row>
     </ion-col>
     <ion-col size="8">
       <ion-row class="ion-no-padding ion-no-margin">

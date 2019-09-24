@@ -16,9 +16,16 @@
           <ion-avatar style="display:block; margin:auto; height: 100px; width: 100px;">
             <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
           </ion-avatar>
-          <p> {{ user?.nombres }} {{ user?.apellidos }} <br>
-            5 <ion-icon color="primary" name="star" color="warning"></ion-icon>
+          <p no-padding no-margin padding-top> {{ user?.nombres }} {{ user?.apellidos }} <br>
           </p>
+          <ion-row no-padding no-margin>
+            <ion-col offset="5" size="1" no-padding no-margin>
+              5
+            </ion-col>
+            <ion-col size="1" no-padding no-margin>
+              <ion-icon color="warning" name="star"></ion-icon>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
 

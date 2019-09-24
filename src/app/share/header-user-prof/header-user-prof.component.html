@@ -5,9 +5,16 @@
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
       <p no-padding no-margin>
-        <small text-capitalize>{{ user?.nombres }} {{ user?.apellidos }}</small><br>
-          {{ userDatos?.ranking }} <ion-icon color="warning" name="star"></ion-icon>
+        <small>{{ user?.nombres }} {{ user?.apellidos }}</small><br>
       </p>
+      <ion-row no-padding no-margin>
+        <ion-col offset="5" size="1" no-padding no-margin>
+          {{ userDatos?.ranking }}
+        </ion-col>
+        <ion-col size="1" no-padding no-margin>
+          <ion-icon color="warning" name="star"></ion-icon>
+        </ion-col>
+      </ion-row>
     </ion-col>
     <ion-col size="8">
       <ion-row class="ion-no-padding ion-no-margin">
