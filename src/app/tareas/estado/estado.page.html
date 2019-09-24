@@ -58,6 +58,7 @@
               en el siguiente horario {{tareaD?.hora_inicio}} - {{tareaD?.hora_fin}} </p>
           </ion-col>
         </ion-row>
+
         <ion-row>
           <ion-col>
             <div text-center>
@@ -94,6 +95,7 @@
                 </ion-row>
               </ion-label>
             </ion-item>
+
             <ion-item>
               <ion-label>
                 <ion-row>
@@ -109,6 +111,7 @@
             <ion-col size="4" offset="1">
               <ion-button shape="round" expand="block" size="small" (click)="comboPago = false">ATRAS</ion-button>
             </ion-col>
+
             <ion-col size="4" offset="1">
               <ion-button *ngIf="horasComboD >= tareaD?.tiempo_estimado" shape="round" expand="block" size="small"
                 (click)="pagarTareaConCombo(tareaD)">
@@ -121,6 +124,7 @@
             </ion-col>
           </ion-row>
         </ion-col>
+        
         <ion-col *ngIf="transferencia">
           <ion-row>
             <ion-col text-center>

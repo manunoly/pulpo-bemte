@@ -91,7 +91,7 @@ export class ClaseDetallesPage implements OnInit {
     console.log(anterior.getTime(),Date.now(),posterior.getTime());
 
     if (anterior.getTime() > now || now > posterior.getTime())
-      return this.util.showMessage('El chat estará activo una hora y despues');
+      return this.util.showMessage('El chat estará activo una hora antes de la clase y una hora luego de terminada');
 
     const modal = await this.modalController.create({
       component: ChatPage,

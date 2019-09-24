@@ -42,6 +42,24 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async openChat(tareaD) {
+
+    const tareaHora = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_inicio));
+
+    let anterior = new Date(tareaHora);
+    anterior.setHours(tareaHora.getHours() - 1);
+
+    const tareaHoraFin = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_fin));
+
+    const posterior = new Date(tareaHoraFin);
+    posterior.setHours(tareaHoraFin.getHours() + 1);
+
+    const now = Date.now();
+
+    console.log(anterior.getTime(),Date.now(),posterior.getTime());
+
+    if (anterior.getTime() > now || now > posterior.getTime())
+      return this.util.showMessage('El chat estará activo una hora antes de la tarea y una hora luego de terminada');
+
     const modal = await this.modalController.create({
       component: ChatPage,
       componentProps: { tarea: tareaD }

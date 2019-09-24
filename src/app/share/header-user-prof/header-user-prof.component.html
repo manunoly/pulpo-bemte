@@ -4,8 +4,9 @@
       <ion-avatar style="padding: 0px; display:block; margin:auto; width: 80px; height: 80px;">
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
-      <p no-padding no-margin> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-        <ion-icon *ngFor="let item of crearArreglo(userDatos?.ranking)" color="warning" name="star"></ion-icon>
+      <p no-padding no-margin>
+        <small text-capitalize>{{ user?.nombres }} {{ user?.apellidos }}</small><br>
+          {{ userDatos?.ranking }} <ion-icon color="warning" name="star"></ion-icon>
       </p>
     </ion-col>
     <ion-col size="8">

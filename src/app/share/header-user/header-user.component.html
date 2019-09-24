@@ -5,7 +5,7 @@
         <img src="/assets/img/cuenta.png">
       </ion-avatar>
       <p> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
-        <ion-icon *ngFor="let item of crearArreglo(userDatos?.ranking)" color="warning" name="star"></ion-icon>
+        {{userDatos?.ranking}} <ion-icon color="warning"  name="star"></ion-icon>
       </p>
     </ion-col>
     <ion-col size="8">
