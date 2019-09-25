@@ -26,6 +26,8 @@ export class PerfilPage implements OnInit {
   user;
   paisNumber;
   ciudades;
+  img;
+  imgPerfil;
 
   constructor(
     private router: Router,
@@ -54,11 +56,14 @@ export class PerfilPage implements OnInit {
 
   async subirFotoPerfil() {
     try {
-      this.upload.imagesSubject.subscribe(img => this.registroForm.controls['avatar'].setValue(img));
-      await this.upload.selectImage();
-      setTimeout(() => {
-        this.util.showMessage('en construccion subir foto de perfil');
-      }, 3000);
+      this.upload.selectImage();
+      this.img = this.upload.imagesSubject.subscribe(img => {
+        console.log(img);
+        if (img != undefined && img.length > 0) {
+          this.imgPerfil = img[0];
+          this.registroForm.controls['avatar'].setValue(img[0].name);
+        }
+      });
     } catch (error) {
     }
   }
@@ -66,11 +71,18 @@ export class PerfilPage implements OnInit {
   async editarPerfil() {
     try {
       this.util.showLoading();
+      if (this.imgPerfil) {
+        this.upload.startUpload(this.imgPerfil);
+      }
       const resp = await this.db.post('actualizar-cuenta', this.registroForm.value);
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.auth.setAuth(resp.profile);
-        this.editar = false;
+        if (this.imgPerfil) {
+          this.img.unsubscribe();
+          this.upload.deleteImage(this.imgPerfil);
+          this.imgPerfil = '';
+        }
       }
       this.util.dismissLoading();
     } catch (error) {
@@ -96,7 +108,7 @@ export class PerfilPage implements OnInit {
       'pais': ['Ecuador', user.calificacion],
       'ciudad': [user.ciudad, Validators.required],
       'tipo': [user.tipo, Validators.required],
-      'ubicacion': [user.ubicacion?user.ubicacion:' ', Validators.required]
+      'ubicacion': [user.ubicacion ? user.ubicacion : ' ', Validators.required]
     });
 
     if (this.user)

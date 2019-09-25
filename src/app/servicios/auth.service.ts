@@ -58,8 +58,8 @@ export class AuthService {
 
   setAuth(user) {
     console.log('este usuario voy a escribir 0', user);
-    if (user && user['avatar'] && user['avatar'] != '')
-      user['avatar'] = environment.photo_url + user['avatar'];
+    if (user && user['avatar'] && user['avatar'] != '' && user['avatar'] != 'users/default.png')
+      user['avatar'] = environment.photo_url + user.user_id + '/' + user['avatar'];
     else
       user['avatar'] = '/assets/icon/favicon.png';
 

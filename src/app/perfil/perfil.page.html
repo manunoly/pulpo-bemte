@@ -14,7 +14,7 @@
       <ion-row class="ion-text-center ion-no-padding ion-no-margin">
         <ion-col (click)="subirFotoPerfil()" size="6" offset="3">
           <ion-avatar style="display:block; margin:auto; height: 100px; width: 100px;">
-            <img [src]="user.avatar">
+            <img [src]="imgPerfil ? imgPerfil.path: user.avatar">
           </ion-avatar>
           <p no-padding no-margin padding-top> {{ user?.nombres }} {{ user?.apellidos }} <br>
           </p>
