@@ -19,6 +19,8 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+import { IonicSelectableModule } from 'ionic-selectable';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,7 +29,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     HttpClientModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    IonicSelectableModule
   ],
   providers: [
     StatusBar,

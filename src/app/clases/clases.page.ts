@@ -14,7 +14,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./clases.page.scss"]
 })
 export class ClasesPage implements OnInit {
-  claseForm: FormGroup; 
+  claseForm: FormGroup;
   materias;
   user;
   sedes;
@@ -40,14 +40,16 @@ export class ClasesPage implements OnInit {
     private fb: FormBuilder,
     public util: UtilService
   ) {
-    this.customPickerOptions = {columns: [{
-      name: 'framework',
-      options: [
-        { text: 'Angular', value: 'A' },
-        { text: 'Vue', value: 'B' },
-        { text: 'React', value: 'C' }
-      ]
-    }]}
+    this.customPickerOptions = {
+      columns: [{
+        name: 'framework',
+        options: [
+          { text: 'Angular', value: 'A' },
+          { text: 'Vue', value: 'B' },
+          { text: 'React', value: 'C' }
+        ]
+      }]
+    }
 
     this.loadMinHora();
     let x = 12; //or whatever offset
@@ -68,6 +70,7 @@ export class ClasesPage implements OnInit {
   }
 
   async ngOnInit() {
+
     this.util.showLoading();
 
     // this.auth.currentUser
@@ -94,7 +97,7 @@ export class ClasesPage implements OnInit {
 
     if (this.user) {
       try {
-        this.materias = this.db.get("lista-materias");
+        this.materias = await this.db.get("lista-materias");
         // this.horasDisponibles = await this.db.get('horas-totales?user_id=' + this.user.user_id);
         this.claseForm.controls["user_id"].setValue(this.user.user_id);
       } catch (error) {
@@ -146,12 +149,14 @@ export class ClasesPage implements OnInit {
     let dataPost = this.claseForm.value;
     dataPost["fecha"] = this.claseForm.value.fecha.slice(0, 10);
     dataPost["hora1"] = this.claseForm.value.hora1.slice(11, 16);
+    dataPost["materia"] = this.claseForm.value.materia.nombre;
     this.util.showLoading();
     try {
       const resp = await this.db.post("solicitar-clase", dataPost);
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
+        this.buildForm();
         if (resp.clase && resp.clase.estado) {
           this.router.navigateByUrl('clase-detalles/' + resp.clase.id);
           // this.router.navigate(['clase-detalles'], {queryParams: {idUser: event.value}});
@@ -225,6 +230,7 @@ export class ClasesPage implements OnInit {
   }
 
   async claseAnteriorProfesor(materia?) {
+    // this.claseForm.controls["materia"].setValue(materia);
     console.log(materia);
     if (materia)
       this.ultimoProfesor = await this.db.get('seleccionar-profesor?user_id=' + this.user.user_id + '&materia_id=' + materia)

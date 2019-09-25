@@ -12,13 +12,17 @@
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ion-select okText="Seleccionar" cancelText="Cancelar"
+                        <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound"
+                            [items]="materias" formControlName="materia" itemValueField="nombre" itemTextField="nombre"
+                            [canSearch]="true" (onChange)="claseAnteriorProfesor($event.value.nombre)">
+                        </ionic-selectable>
+                        <!-- <ion-select okText="Seleccionar" cancelText="Cancelar"
                             (ionChange)="claseAnteriorProfesor($event.detail.value)" class="ion-text-center"
                             formControlName="materia" [disabled]="!materias">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
-                        </ion-select>
+                        </ion-select> -->
                     </ion-item>
 
                     <ion-item no-padding no-margin>
@@ -41,14 +45,14 @@
                         <ion-label position="stacked">
                             <b>Cantidad de Alumnos</b>
                         </ion-label>
-                            <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
-                                formControlName="personas">
-                                <ion-select-option value="1">1</ion-select-option>
-                                <ion-select-option value="2">2</ion-select-option>
-                                <ion-select-option value="3">3</ion-select-option>
-                                <ion-select-option value="4">4</ion-select-option>
-                                <ion-select-option value="5">5</ion-select-option>
-                            </ion-select>
+                        <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
+                            class="ion-text-center borderRound" formControlName="personas">
+                            <ion-select-option value="1">1</ion-select-option>
+                            <ion-select-option value="2">2</ion-select-option>
+                            <ion-select-option value="3">3</ion-select-option>
+                            <ion-select-option value="4">4</ion-select-option>
+                            <ion-select-option value="5">5</ion-select-option>
+                        </ion-select>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -70,8 +74,9 @@
                         <ion-label position="stacked">
                             <b>Hora</b>
                         </ion-label>
-                        <ion-datetime doneText="Hecho" cancelText="Cancelar" class="ion-text-center" [disabled]="!claseForm.value.fecha"
-                            formControlName="hora1" [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm">
+                        <ion-datetime doneText="Hecho" cancelText="Cancelar" class="ion-text-center"
+                            [disabled]="!claseForm.value.fecha" formControlName="hora1" [hourValues]="minHora"
+                            minuteValues="0,30" display-format="HH:mm">
                         </ion-datetime>
                     </ion-item>
 

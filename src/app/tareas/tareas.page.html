@@ -11,12 +11,16 @@
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                        <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound"
+                        [items]="materias" formControlName="materia" itemValueField="nombre" itemTextField="nombre"
+                        [canSearch]="true">
+                    </ionic-selectable>
+                        <!-- <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
                             [disabled]="!materias" formControlName="materia">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
                                 {{materia?.nombre}}
                             </ion-select-option>
-                        </ion-select>
+                        </ion-select> -->
                     </ion-item>
 
                     <ion-item>

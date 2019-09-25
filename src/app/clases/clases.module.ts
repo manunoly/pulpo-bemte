@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ClasesPage } from './clases.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     FormsModule,
     MapPageModule,
     ReactiveFormsModule,
+    IonicSelectableModule,
     SharedModule,
     IonicModule,
     RouterModule.forChild(routes)

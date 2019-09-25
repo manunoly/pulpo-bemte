@@ -37,13 +37,13 @@ export class TareasPage implements OnInit {
 
     this.buildForm();
   }
-  
+
   async ngOnInit() {
     this.util.showLoading();
     this.user = await this.auth.getUserData();
     if (this.user) {
       this.tareaForm.controls['user_id'].setValue(this.user.user_id);
-      this.materias = this.db.get('lista-materias');
+      this.materias = await this.db.get('lista-materias');
     } else {
       this.router.navigateByUrl('inicio');
     }
@@ -51,6 +51,10 @@ export class TareasPage implements OnInit {
     setTimeout(() => {
       this.util.dismissLoading();
     }, 1000);
+  }
+
+  setMateria(materia) {
+    this.tareaForm.controls["materia"].setValue(materia);
   }
 
   async confirmarTarea() {
@@ -64,6 +68,7 @@ export class TareasPage implements OnInit {
       dataPost['hora_inicio'] = hora.hora_inicio;
       dataPost['hora_fin'] = hora.hora_fin;
       dataPost['fecha_entrega'] = this.tareaForm.value.fecha_entrega.slice(0, 10);
+      dataPost['materia'] = this.tareaForm.value.materia.nombre;
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-tarea', dataPost);
@@ -71,6 +76,7 @@ export class TareasPage implements OnInit {
       if (resp && resp.success) {
         await this.transferir();
         this.util.showMessage(resp.success);
+        this.buildForm();
         this.router.navigateByUrl('tarea-detalles/' + resp.tarea.id);
 
       }
