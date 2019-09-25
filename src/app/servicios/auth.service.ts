@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment.prod';
 import { UtilService } from './util.service';
 import { DbService } from './db.service';
 import { Injectable } from '@angular/core';
@@ -33,7 +34,7 @@ export class AuthService {
   async login(data) {
     const user = await this.db.post('login', data);
     if (user) {
-      await this.setAuth(JSON.stringify(user.profile));
+      await this.setAuth(user.profile);
       return user.profile;
     }
     return false;
@@ -56,6 +57,15 @@ export class AuthService {
   }
 
   setAuth(user) {
+    console.log('este usuario voy a escribir 0', user);
+    if (user && user['avatar'] && user['avatar'] != '')
+      user['avatar'] = environment.photo_url + user['avatar'];
+    else
+      user['avatar'] = '/assets/icon/favicon.png';
+
+    console.log('este usuario voy a escribir', user);
+    user = JSON.stringify(user);
+
     this.util.setStorage('token', user.token);
     this.util.setStorage('user', user);
     this.currentUserSubject.next(JSON.parse(user));

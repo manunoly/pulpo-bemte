@@ -2,7 +2,7 @@
   <ion-row *ngIf="(userD | async) as userDatos; else loadD" class="ion-text-center ion-no-padding ion-no-margin">
     <ion-col size="4" (click)="goTo('/perfil')">
       <ion-avatar style="padding: 0px; display:block; margin:auto; width: 80px; height: 80px;">
-        <img src="/assets/img/cuenta.png">
+        <img [src]="user.avatar">
       </ion-avatar>
       <p no-padding no-margin>
         <small>{{ user?.nombres }} {{ user?.apellidos }}</small><br>
