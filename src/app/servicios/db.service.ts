@@ -12,6 +12,8 @@ export class DbService {
   token;
   combo;
   headers;
+  estadoNotificacion;
+  
   public estadoProfesor;
 
   constructor(
@@ -27,6 +29,14 @@ export class DbService {
 
   setEstadoProfesor(estado) {
     this.estadoProfesor = estado;
+  }
+
+  getEstadoNotificacion() {
+    return this.estadoNotificacion;
+  }
+
+  setEstadoNotificacion(estado) {
+    this.estadoNotificacion = estado;
   }
 
   async getToken() {

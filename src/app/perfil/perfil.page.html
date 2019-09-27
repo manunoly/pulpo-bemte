@@ -144,19 +144,26 @@
       </ion-row>
 
       <ion-row>
-        <ion-col size="6" offset="3">
-          <ion-button size="block" type="submit" [disabled]="!registroForm.valid"> Actualizar </ion-button>
+        <ion-col size="5" offset="1">
+          <ion-button shape="round" expand="block" size="small" color="tertiary" (click)="util.atras()">Atras
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="5">
+          <ion-button shape="round" expand="block" size="small" color="primary" [disabled]="!registroForm.valid">
+            Actualizar </ion-button>
         </ion-col>
       </ion-row>
+
     </form>
   </ion-grid>
 
 
   <div text-center>
-    <a (click)="auth.purgeAuth()">
-      <ion-text color="tertiary">
-        Cerrar Sesión
-      </ion-text>
-    </a>
+      <a (click)="auth.purgeAuth()">
+        <ion-text color="tertiary">
+          <span style="border-bottom: 1px solid"> Cerrar Sesión </span>
+        </ion-text>
+      </a>
   </div>
 </ion-content>

@@ -266,12 +266,27 @@
               <ion-button color="success" size="small" shape="round">Mapa</ion-button>
             </ion-col>
           </ion-row>
+
+          <ion-row *ngIf="clase.alumno">
+            <ion-col offset="2" size="6" no-padding no-margin text-center>
+              <h5 no-padding> <small> Alumno/a </small><br>
+                <ion-text color="tertiary">
+                  {{clase?.alumno}}
+                </ion-text>
+              </h5>
+            </ion-col>
+            <ion-col size="2">
+              <ion-avatar>
+                <img [src]="clase.alumnoAvatar ? urlPhoto + clase.alumnoAvatar : '/assets/icon/favicon.png'">
+              </ion-avatar>
+            </ion-col>
+          </ion-row>
         </ion-grid>
 
-        <ion-grid padding>
+        <ion-grid>
           <ion-row *ngIf="clase.estado == 'Aceptado'">
             <ion-col offset="2" size="8">
-              <a no-padding color="tertiary" (click)="confirmarCancelar(clase)">
+              <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
                 <ion-text color="tertiary">
                   <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
                 </ion-text>
@@ -604,7 +619,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
+          <ion-row class="lineBotton" *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
             <ion-col class="ion-align-self-center" size="2">
               <ion-icon size="large" name="pin" color="primary"></ion-icon>
             </ion-col>
@@ -617,9 +632,24 @@
               <ion-button size="small" shape="round">Mapa</ion-button>
             </ion-col>
           </ion-row>
+
+          <ion-row class="lineBotton" *ngIf="clase.profesor">
+            <ion-col offset="2" size="6" no-padding no-margin text-center>
+              <h5 no-padding> <small> Profesor </small><br>
+                <ion-text color="tertiary">
+                  {{clase?.profesor}}
+                </ion-text>
+              </h5>
+            </ion-col>
+            <ion-col size="2">
+              <ion-avatar>
+                <img [src]="clase.profAvatar ? urlPhoto + clase.profAvatar : '/assets/icon/favicon.png'">
+              </ion-avatar>
+            </ion-col>
+          </ion-row>
         </ion-grid>
 
-        <ion-grid padding>
+        <ion-grid>
           <ion-row *ngIf="clase.estado == 'Aceptado'">
             <ion-col offset="2" size="8">
               <a no-padding color="tertiary" (click)="confirmarCancelar(clase)">

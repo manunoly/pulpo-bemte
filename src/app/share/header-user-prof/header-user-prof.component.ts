@@ -13,7 +13,7 @@ import { of } from 'rxjs';
   styleUrls: ['./header-user-prof.component.scss'],
 })
 export class HeaderUserProfComponent implements OnInit {
-  userD = of({"clases":0,"tareas":0,"horas":0,"ranking":5});
+  userD //= of({"clases":0,"tareas":0,"horas":0,"ranking":5});
   @Input() query = false;
 
   constructor(public auth: AuthService,
@@ -22,22 +22,22 @@ export class HeaderUserProfComponent implements OnInit {
     private modalController: ModalController) { }
 
   ngOnInit() {
-    // this.userD = this.auth.user.pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       if (this.query)
-    //         this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
-    //           if (calificar.clase_id != 0) {
-    //             this.calificar(calificar['clase']);
-    //           } else if (calificar.tarea_id != 0) {
-    //             console.log('tarea');
-    //           }
-    //           console.log(calificar);
-    //         }).catch();
-    //       return this.db.get('profesor?user_id=' + user.user_id);
-    //     }
-    //     return of(null)
-    //   }));
+    this.userD = this.auth.user.pipe(
+      switchMap(user => {
+        if (user) {
+          if (this.query)
+            this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
+              if (calificar.clase_id != 0) {
+                this.calificar(calificar['clase']);
+              } else if (calificar.tarea_id != 0) {
+                console.log('tarea');
+              }
+              console.log(calificar);
+            }).catch();
+          return this.db.get('profesor?user_id=' + user.user_id);
+        }
+        return of(null)
+      }));
   }
 
   crearArreglo(cant = 5) {

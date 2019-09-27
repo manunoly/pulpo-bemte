@@ -13,13 +13,19 @@ export class HeaderBemteProfComponent implements OnInit {
   estado = 'Disponible';
   estadoBoolean;
   user;
+  public notificion;
 
   constructor(private router: Router, private db: DbService, private auth: AuthService, private util: UtilService) { }
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
     // console.log('en el header del prof', this.user);
+
     if (this.user != undefined) {
+      this.db.get('nueva-notificacion?user_id=' + this.user.user_id)
+        .then(not => {
+          this.db.setEstadoNotificacion(not); this.notificion = this.db.getEstadoNotificacion();
+        }).catch();
       if (this.db.getEstadoProfesor() == undefined) {
         this.estadoBoolean = await this.db.get('disponible-profesor?user_id=' + this.user.user_id);
         this.db.setEstadoProfesor(this.estadoBoolean);

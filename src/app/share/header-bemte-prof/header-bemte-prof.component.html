@@ -13,8 +13,9 @@
     </ion-fab-button>
 
     <ion-fab-button size="small" slot="end" (click)="goTo('notificaciones')">
-      <ion-badge> * </ion-badge>
-      <ion-icon name="notifications"></ion-icon>
+      <!-- <ion-badge *ngIf="notificion"> * </ion-badge> -->
+      <ion-icon [color]="notificion? 'danger':'light'" [ngClass]="notificion? 'animated wobble': ''"
+        name="notifications"></ion-icon>
     </ion-fab-button>
   </ion-toolbar>
 

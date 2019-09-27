@@ -53,6 +53,13 @@ export class PerfilPage implements OnInit {
 
   }
 
+  ionViewDidLeave() {
+    if (this.imgPerfil) {
+      this.img.unsubscribe();
+      this.upload.deleteImage(this.imgPerfil);
+      this.imgPerfil = '';
+    }
+  }
 
   async subirFotoPerfil() {
     try {

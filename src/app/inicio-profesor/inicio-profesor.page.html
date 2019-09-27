@@ -1,10 +1,8 @@
-<app-header-bemte-prof></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="reload"></app-header-bemte-prof>
 
 <ion-content>
 
-  <div *ngIf="reload">
-    <app-header-user-prof></app-header-user-prof>
-  </div>
+  <app-header-user-prof *ngIf="reload"></app-header-user-prof>
 
   <ion-grid>
     <ion-row class="lineBotton">
@@ -139,7 +137,8 @@
 
           <ion-row>
             <ion-col>
-              <h5>Entregar: {{tarea?.fecha_entrega  | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
+              <h5>Entregar: {{tarea?.fecha_entrega  | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~
+                {{tarea?.hora_fin}})</h5>
               <h5>Formato: {{tarea?.formato_entrega}}</h5>
             </ion-col>
           </ion-row>

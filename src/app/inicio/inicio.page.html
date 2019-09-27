@@ -1,41 +1,9 @@
-<app-header-bemte></app-header-bemte>
+<app-header-bemte *ngIf="reload"></app-header-bemte>
 
 <ion-content>
 
   <div *ngIf="(auth.currentUser | async) as user; else loadD">
-
-    <!-- para profesor -->
-    <!-- <ion-text color="primary">
-        <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>
-      </ion-text>
-
-      <ion-text color="primary">
-        <h3 text-center>Buscas trabajar en:</h3>
-      </ion-text>
-
-      <ion-grid>
-        <ion-row class="ion-padding">
-          <ion-col size="8" offset="2">
-            <ion-button expand="block" shape="round" (click)="goTo('clases-listado')" lines="none">
-              <b>Clases Solicitadas</b>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-padding">
-          <ion-col size="8" offset="2">
-            <ion-button expand="block" shape="round" (click)="goTo('tareas-listado')" lines="none">
-              <b>Tareas Solicitadas</b>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
-
-    <!-- navegacion para estudiantes -->
-
-    <div *ngIf="reload">
-      <app-header-user></app-header-user>
-    </div>
+    <app-header-user *ngIf="reload"></app-header-user>
 
     <ion-text color="tertiary">
       <h2 class="ion-padding ion-text-center"><strong> Bienvenid@ {{ user?.nombres }} </strong></h2>

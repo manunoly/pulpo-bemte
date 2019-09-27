@@ -6,6 +6,7 @@ import { DbService } from './../../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { UtilService } from '../../servicios/util.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-clase-detalles',
@@ -13,6 +14,7 @@ import { UtilService } from '../../servicios/util.service';
   styleUrls: ['./clase-detalles.page.scss'],
 })
 export class ClaseDetallesPage implements OnInit {
+  urlPhoto;
   claseId;
   claseO;
   aplicadaProf;
@@ -45,7 +47,9 @@ export class ClaseDetallesPage implements OnInit {
     public util: UtilService,
     private router: Router,
     public auth: AuthService
-  ) { }
+  ) {
+    this.urlPhoto = environment.photo_url;
+  }
 
   ionViewWillEnter() {
     this.claseId = this.route.snapshot.paramMap.get("id");
@@ -88,7 +92,7 @@ export class ClaseDetallesPage implements OnInit {
 
     const now = Date.now();
 
-    console.log(anterior.getTime(),Date.now(),posterior.getTime());
+    console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
     if (anterior.getTime() > now || now > posterior.getTime())
       return this.util.showMessage('El chat estará activo una hora antes de la clase y una hora luego de terminada');
