@@ -28,7 +28,7 @@ export class LoginPage implements OnInit {
     this.authForm = this.fb.group({
       // 'email': ['', [Validators.required, Validators.email]],
       'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
-      'password': ['123456', Validators.required]
+      'password': ['12345678', Validators.required]
       // 'password': ['', [Validators.required, Validators.minLength(6)]]
     });
   }
@@ -62,38 +62,6 @@ export class LoginPage implements OnInit {
   }
 
   async olvideContrasena() {
-    const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-
-    const alert = await this.alertController.create({
-      header: 'Confirmar Correo!',
-      inputs: [
-        {
-          name: 'email',
-          type: 'email',
-          placeholder: 'correo electronico registrado'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Enviar',
-          handler: async (data) => {
-            if (emailRegex.test(data.email)) {
-              this.auth.olvidarContrasena(data.email);
-            } else
-              this.util.showMessage('Por favor revise el email introducido!');
-            console.log(data);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
+    this.router.navigateByUrl('olvidar-pass');
   }
 }

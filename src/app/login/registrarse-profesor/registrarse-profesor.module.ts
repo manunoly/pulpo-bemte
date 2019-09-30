@@ -1,4 +1,3 @@
-import { RegistrarseConfirmPageModule } from './../registrarse-confirm/registrarse-confirm.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RegistrarsePage } from './registrarse.page';
-import { TerminosPageModule } from '../terminos/terminos.module';
+import { RegistrarseProfesorPage } from './registrarse-profesor.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: RegistrarsePage
+    component: RegistrarseProfesorPage
   }
 ];
 
@@ -21,11 +19,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RegistrarseConfirmPageModule,
-    TerminosPageModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegistrarsePage]
+  declarations: [RegistrarseProfesorPage]
 })
-export class RegistrarsePageModule {}
+export class RegistrarseProfesorPageModule {}

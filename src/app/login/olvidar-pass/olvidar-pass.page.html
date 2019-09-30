@@ -1,9 +1,15 @@
-
 <ion-content padding>
-  <ion-grid style="height: 100%">
-      <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
-          <ion-spinner name="ios"></ion-spinner>
-          Cargando centros...
-        </ion-row>
-      </ion-grid>
+  <ion-grid style="height: 80%">
+    <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+      <h5 class="ion-text-justify ion-padding-horizontal">Escribe aquí el correo electrónico con el que te registraste y te enviaremos una
+        nueva clave</h5>
+
+      <ion-item text-center>
+        <ion-input style="border-bottom: 0px;" type="email" #email></ion-input>
+      </ion-item>
+
+      <ion-button padding color="success" [disabled]="!email.value" (click)="olvideContrasena(email.value)">Aceptar
+      </ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,3 +1,4 @@
+import { AuthService } from './../../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FcmService } from "./../../servicios/fcm.service";
 import { UtilService } from "./../../servicios/util.service";
@@ -7,6 +8,7 @@ import { AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { RegistrarseConfirmPage } from '../registrarse-confirm/registrarse-confirm.page';
 import { ModalController } from "@ionic/angular";
+import { TerminosPage } from '../terminos/terminos.page';
 
 @Component({
   selector: 'app-registrarse',
@@ -25,7 +27,8 @@ export class RegistrarsePage implements OnInit {
     private db: DbService,
     public util: UtilService,
     private fcm: FcmService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private auth: AuthService
   ) {
     this.registroForm = this.fb.group({
       celular: ["", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
@@ -61,6 +64,23 @@ export class RegistrarsePage implements OnInit {
       return this.util.showMessage('Contraseñas iguales');
     const modal = await this.modalController.create({
       component: RegistrarseConfirmPage
+    });
+
+    modal.onDidDismiss().then(data => {
+      if (data.data == 'terminos') {
+        this.confirmarTerminos();
+      } else if (data.data) {
+        this.registrarCuenta();
+      }
+    });
+    return await modal.present();
+  }
+
+
+  async confirmarTerminos() {
+
+    const modal = await this.modalController.create({
+      component: TerminosPage
     });
 
     modal.onDidDismiss().then(data => {
@@ -106,7 +126,12 @@ export class RegistrarsePage implements OnInit {
       this.util.dismissLoading();
       if (registrar && registrar.success) {
         this.util.showMessage(registrar.success);
-        this.router.navigateByUrl("login");
+        if (registrar.profile != undefined) {
+          this.auth.setAuth(registrar.profile);
+          this.router.navigateByUrl('inicio');
+        }
+        else
+          this.router.navigateByUrl("login");
       }
     } catch (error) {
       console.log(error);
