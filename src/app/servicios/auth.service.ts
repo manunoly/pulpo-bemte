@@ -92,15 +92,7 @@ export class AuthService {
     this.router.navigateByUrl('login');
   }
 
-  async olvidarContrasena(email) {
-    try {
-      this.util.showLoading();
-      const resp = await this.db.post('resetPass', { email: email });
-      if (resp && resp.success)
-        this.util.showMessage(resp.success);
-      this.util.dismissLoading();
-    } catch (error) {
-      this.util.dismissLoading();
-    }
+  olvidarContrasena(email) {
+    return this.db.post('resetPass', { email: email });
   }
 }

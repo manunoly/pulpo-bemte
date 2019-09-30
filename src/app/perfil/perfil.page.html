@@ -150,7 +150,8 @@
         </ion-col>
 
         <ion-col size="5">
-          <ion-button shape="round" expand="block" size="small" color="primary" [disabled]="!registroForm.valid">
+          <ion-button type="submit" shape="round" expand="block" size="small" color="primary"
+            [disabled]="!registroForm.valid">
             Actualizar </ion-button>
         </ion-col>
       </ion-row>
@@ -160,10 +161,10 @@
 
 
   <div text-center>
-      <a (click)="auth.purgeAuth()">
-        <ion-text color="tertiary">
-          <span style="border-bottom: 1px solid"> Cerrar Sesión </span>
-        </ion-text>
-      </a>
+    <a (click)="auth.purgeAuth()">
+      <ion-text color="tertiary">
+        <span style="border-bottom: 1px solid"> Cerrar Sesión </span>
+      </ion-text>
+    </a>
   </div>
 </ion-content>
