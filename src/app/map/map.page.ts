@@ -40,7 +40,8 @@ export class MapPage implements OnInit {
     // const mapEle: HTMLElement = this.mapElement.nativeElement;
     this.mapRef = new google.maps.Map(mapEle, {
       center: myLatLng,
-      zoom: 15
+      zoom: 15,
+      disableDefaultUI: true
     });
 
     google.maps.event

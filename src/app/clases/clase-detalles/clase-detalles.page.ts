@@ -210,4 +210,15 @@ export class ClaseDetallesPage implements OnInit {
 
     await alert.present();
   }
+
+  detallesImg(tipo, avatar, calificacion, nombre) {
+    let data = {
+      tipo: tipo,
+      avatar: avatar ? this.urlPhoto + avatar : '/assets/icon/favicon.png',
+      ranking: calificacion ? calificacion : 5,
+      nombre: nombre
+    }
+    this.util.setTemporalData(data);
+    this.router.navigateByUrl('/alumno-profesor-detalle');
+  }
 }

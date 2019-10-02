@@ -253,7 +253,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
+          <ion-row class="lineBotton" *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
             <ion-col class="ion-align-self-center" size="2">
               <ion-icon size="large" name="pin" color="primary"></ion-icon>
             </ion-col>
@@ -267,7 +267,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="clase.alumno">
+          <ion-row class="lineBotton" *ngIf="clase.alumno">
             <ion-col offset="2" size="6" no-padding no-margin text-center>
               <h5 no-padding> <small> Alumno/a </small><br>
                 <ion-text color="tertiary">
@@ -275,7 +275,7 @@
                 </ion-text>
               </h5>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="2" (click)="detallesImg('Alumno', clase.alumnoAvatar, clase.alumnoCalif, clase.alumno)">
               <ion-avatar>
                 <img [src]="clase.alumnoAvatar ? urlPhoto + clase.alumnoAvatar : '/assets/icon/favicon.png'">
               </ion-avatar>
@@ -641,7 +641,7 @@
                 </ion-text>
               </h5>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="2" (click)="detallesImg('Profesor', clase.profAvatar, clase.profCalif, clase.profesor)">
               <ion-avatar>
                 <img [src]="clase.profAvatar ? urlPhoto + clase.profAvatar : '/assets/icon/favicon.png'">
               </ion-avatar>

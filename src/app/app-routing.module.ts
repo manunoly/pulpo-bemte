@@ -49,7 +49,8 @@ const routes: Routes = [
   { path: 'perfil-profesor', loadChildren: './perfil-profesor/perfil-profesor.module#PerfilProfesorPageModule' },
   { path: 'inicio-profesor', loadChildren: './inicio-profesor/inicio-profesor.module#InicioProfesorPageModule' },
   { path: 'olvidar-pass', loadChildren: './login/olvidar-pass/olvidar-pass.module#OlvidarPassPageModule' },
-  { path: 'terminos', loadChildren: './login/terminos/terminos.module#TerminosPageModule' }
+  { path: 'terminos', loadChildren: './login/terminos/terminos.module#TerminosPageModule' },
+  { path: 'alumno-profesor-detalle', loadChildren: './alumno-profesor-detalle/alumno-profesor-detalle.module#AlumnoProfesorDetallePageModule' }
 ];
 
 @NgModule({

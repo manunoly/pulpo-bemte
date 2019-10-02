@@ -1,0 +1,47 @@
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+</app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row class="lineBotton">
+      <ion-col size="2">
+        <ion-button (click)="util.atras()" fill="clear" size="large">
+          <ion-icon style slot="icon-only" name="ios-arrow-back"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col text-center size="10">
+        <ion-text color="tertiary" style="font-size: 55px;">
+          {{data?.tipo}}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <img [src]="data.avatar" style="display:block; margin:auto; max-width: 350px; max-height: 350px;">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col text-center>
+        <ion-text color="tertiary">
+          <h3> {{data?.nombre}} <br>
+          <ion-icon name="star" color="warning"></ion-icon> {{data?.ranking}}
+          </h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <div text-center style="position: absolute; bottom: 15px; width: 100%">
+    <ion-button padding color="success" (click)="util.atras()">Aceptar
+    </ion-button>
+  </div>
+
+</ion-content>
