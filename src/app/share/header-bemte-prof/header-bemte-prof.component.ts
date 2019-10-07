@@ -1,7 +1,8 @@
+import { ModalController } from '@ionic/angular';
 import { UtilService } from './../../servicios/util.service';
 import { AuthService } from './../../servicios/auth.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DbService } from 'src/app/servicios/db.service';
 
 @Component({
@@ -14,8 +15,9 @@ export class HeaderBemteProfComponent implements OnInit {
   estadoBoolean;
   user;
   public notificion;
+  @Input() popup = false;
 
-  constructor(private router: Router, private db: DbService, private auth: AuthService, private util: UtilService) { }
+  constructor(private router: Router, private db: DbService, private auth: AuthService, private util: UtilService, private modalController: ModalController) { }
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
@@ -40,6 +42,8 @@ export class HeaderBemteProfComponent implements OnInit {
 
 
   goTo(url) {
+    if (this.popup)
+      this.modalController.dismiss();
     this.router.navigateByUrl(url);
   }
 
