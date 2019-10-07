@@ -4,17 +4,14 @@
       <ion-avatar style="padding: 0px; display:block; margin:auto; width: 80px; height: 80px;">
         <img [src]="user.avatar">
       </ion-avatar>
-      <p no-padding no-margin>
-        <small>{{ user?.nombres }} {{ user?.apellidos }}</small><br>
-      </p>
-      <ion-row no-padding no-margin>
-        <ion-col offset="5" size="1" no-padding no-margin>
-          {{ userDatos?.ranking }}
-        </ion-col>
-        <ion-col size="1" no-padding no-margin>
-          <ion-icon color="warning" name="star"></ion-icon>
-        </ion-col>
-      </ion-row>
+      <div class="ion-text-capitalize ion-text-center" style="height: 10px">
+        <small>{{ user?.nombres }}
+          {{ user?.apellidos }}<br></small>
+        <span style="font-size: 15px;">{{ (userDatos?.ranking * 1).toFixed(1) }}</span>
+        <ion-icon class="ion-no-padding ion-no-margin" color="warning" name="star">
+        </ion-icon>
+      </div>
+
     </ion-col>
     <ion-col size="8">
       <ion-row class="ion-no-padding ion-no-margin">

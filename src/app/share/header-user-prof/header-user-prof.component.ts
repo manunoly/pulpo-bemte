@@ -14,7 +14,7 @@ import { of } from 'rxjs';
 })
 export class HeaderUserProfComponent implements OnInit {
   userD //= of({"clases":0,"tareas":0,"horas":0,"ranking":5});
-  @Input() query = false;
+  @Input() query = true;
 
   constructor(public auth: AuthService,
     private router: Router,
@@ -26,7 +26,7 @@ export class HeaderUserProfComponent implements OnInit {
       switchMap(user => {
         if (user) {
           if (this.query)
-            this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
+            this.db.get('calificaciones-profesor?user_id=' + user.user_id).then(calificar => {
               if (calificar.clase_id != 0) {
                 this.calificar(calificar['clase']);
               } else if (calificar.tarea_id != 0) {
