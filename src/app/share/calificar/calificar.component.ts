@@ -3,6 +3,7 @@ import { UtilService } from '../../servicios/util.service';
 import { AuthService } from '../../servicios/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DbService } from '../../servicios/db.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-calificar',
@@ -15,10 +16,13 @@ export class CalificarComponent implements OnInit {
   opinion;
   @Input() calificarData?: any;
   @Input() tipo?: string;
+  otroD;
+  urlPhoto;
 
-  constructor(private auth: AuthService, private db: DbService, public util: UtilService, public modalController: ModalController) { }
+  constructor(public auth: AuthService, private db: DbService, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
+    this.urlPhoto = environment.photo_url;
     console.log('esto recibo', this.calificarData);
   }
 
@@ -60,7 +64,10 @@ export class CalificarComponent implements OnInit {
       if (this.rating > 3 || this.opinion == undefined)
         data['comment'] = 'Sin Comentario';
       else {
-        data['comment'] = this.opinion;
+        if (this.opinion == 'Otros')
+          data['comment'] = this.otroD;
+        else
+          data['comment'] = this.opinion;
       }
 
       let url = 'calificar-profesor';
