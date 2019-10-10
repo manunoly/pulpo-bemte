@@ -1,4 +1,4 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { UtilService } from './../../servicios/util.service';
 import { AuthService } from './../../servicios/auth.service';
 import { Router } from '@angular/router';
@@ -17,7 +17,9 @@ export class HeaderBemteProfComponent implements OnInit {
   public notificion;
   @Input() popup = false;
 
-  constructor(private router: Router, private db: DbService, private auth: AuthService, private util: UtilService, private modalController: ModalController) { }
+  constructor(private router: Router,
+    private alertController: AlertController,
+    private db: DbService, private auth: AuthService, private util: UtilService, private modalController: ModalController) { }
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
@@ -60,13 +62,56 @@ export class HeaderBemteProfComponent implements OnInit {
     }
   }
 
-  actualizarEstado($event) {
-    if ($event)
+  async actualizarEstado($event) {
+    if ($event) {
+      if (this.db.getEstadoProfesor() != $event) {
+        this.db.setEstadoProfesor(this.estadoBoolean);
+        this.actualizarEstadoDB();
+      }
       this.estado = 'Disponible';
-    else
-      this.estado = 'Ocupado';
+    }
+    else {
+      const alert = await this.alertController.create({
+        header: 'No tendrás ganancias!',
+        subHeader: '¿Estas seguro?',
+        inputs: [
+          {
+            name: 'Si',
+            type: 'radio',
+            label: 'Si',
+            value: true
+          },
+          {
+            name: 'No',
+            type: 'radio',
+            label: 'No',
+            value: false
+          }],
+        cssClass: 'alertRojo',
+        buttons: [{
+          text: 'Aceptar',
+          handler: (data) => {
+            console.log(data);
+            if (data) {
+              this.db.setEstadoProfesor(this.estadoBoolean);
+              this.actualizarEstadoDB();
+            } else {
+              this.estado = 'Disponible';
+              this.estadoBoolean = true;
+            }
+          }
+        }
+        ]
+      });
 
-    this.db.setEstadoProfesor(this.estadoBoolean);
-    this.actualizarEstadoDB();
+      await alert.present();
+      const dismiss = await alert.onDidDismiss();
+      if (dismiss.data == undefined && dismiss.role == "backdrop") {
+        this.estado = 'Disponible';
+        this.estadoBoolean = true;
+      }
+    }
+
+
   }
 }
