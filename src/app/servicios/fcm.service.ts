@@ -3,7 +3,6 @@ import { UtilService } from './util.service';
 import { DbService } from './db.service';
 import { Injectable } from '@angular/core';
 import { FCM } from '@ionic-native/fcm/ngx';
-import { getToken } from '@angular/router/src/utils/preactivation';
 
 @Injectable({
   providedIn: 'root'
@@ -24,17 +23,23 @@ export class FcmService {
 
   async manejarNotificacion() {
     this.fcm.onNotification().subscribe(data => {
+      console.log(data);
       if (data.wasTapped) {
         console.log("Received in background");
       } else {
-        console.log(data);
-        alert(data.body);
+        let style;
+        if (data.body && data.body.toLowerCase().includes('cancelad'))
+          style = 'fondoRojo alertRojo';
+        else
+          style = 'alertDefault';
+
+        this.util.presentAlert(data.body, data.title ? data.title : 'Información', undefined, undefined, style);
       };
     });
   }
 
-  async actualizarToken(token?){
-    if(!token){
+  async actualizarToken(token?) {
+    if (!token) {
       token = await this.getToken();
     }
     const so = this.util.getSo();
