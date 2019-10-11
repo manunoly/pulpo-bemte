@@ -1,3 +1,5 @@
+import { TerminosPage } from './../terminos/terminos.page';
+import { RegistrarseConfirmPage } from './../registrarse-confirm/registrarse-confirm.page';
 import { FcmService } from '../../servicios/fcm.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
@@ -34,7 +36,7 @@ export class RegistrarseProfesorPage implements OnInit {
 
   async ngOnInit() {
     this.paisNumber = this.db.get('lista-paises');
-    this.materias = this.db.get("lista-materias");
+    this.materias = await this.db.get("lista-materias");
 
     if (this.util.isMobile()) {
       const token = await this.fcm.getToken();
@@ -43,29 +45,47 @@ export class RegistrarseProfesorPage implements OnInit {
     }
   }
 
+  async verificarMateria(materia, posicion?) {
+    console.log('la materia', materia);
+    let i;
+    [1, 2, 3, 4, 5].forEach(element => {
+      if (element != posicion) {
+        i = 'materia' + element;
+        if (this.registroForm.value[i] != undefined && materia['nombre'] == this.registroForm.value[i]['nombre']) {
+          console.log('la posicion', i, this.registroForm.value[i]);
+          this.util.showMessage('No debe repetir la materia');
+          this.registroForm.value['materia' + posicion] = '';
+          this.registroForm.controls['materia' + posicion].setValue('')
+        }
+      }
+    });
+  }
+
   buildForm() {
     this.registroForm = new FormGroup({
+      nombre: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+      apellido: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+      fecha_nacimiento: new FormControl("", Validators.required),
+      pais: new FormControl("", Validators.required),
+      ciudad: new FormControl("", Validators.required),
+      genero: new FormControl("", Validators.required),
+      ubicacion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+
+      apodo: new FormControl("", [Validators.required, Validators.min(6)]),
+      email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(110)]),
+      paisNumero: new FormControl("", Validators.required),
+      celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
+      password: new FormControl("", [Validators.required, Validators.min(8)]),
+      passwordC: new FormControl("", [Validators.required, Validators.min(8)]),
+
       materia1: new FormControl("", Validators.required),
       materia2: new FormControl(""),
       materia3: new FormControl(""),
       materia4: new FormControl(""),
       materia5: new FormControl(""),
-      nombre: new FormControl("", Validators.required),
-      apellido: new FormControl("", Validators.required),
 
-      fechaNacimiento: new FormControl("", Validators.required),
-      genero: new FormControl("", Validators.required),
-
-
-      apodo: new FormControl("", Validators.required),
-      password: new FormControl("", Validators.required),
-      passwordC: new FormControl("", Validators.required),
-      email: new FormControl("", Validators.required),
-      ubicacion: new FormControl("", Validators.required),
-      pais: new FormControl("", Validators.required),
-      ciudad: new FormControl("", Validators.required),
       tipo: new FormControl("Profesor", Validators.required),
-      celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
+      descripcion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
       clases: new FormControl(""),
       tareas: new FormControl(""),
       hojaVida: new FormControl(""),
@@ -74,8 +94,78 @@ export class RegistrarseProfesorPage implements OnInit {
       sistema: new FormControl("")
     });
   }
-  confirmarCuenta() {
+
+  async validarCorreo() {
+    const resp = await this.db.get('correo-disponible?email=' + this.registroForm.value.email);
+    if (!resp)
+      this.util.showMessage('El correo ya se encuentra registrado');
+  }
+
+  async validarUsuario() {
+    const resp = await this.db.get('apodo-disponible?email=' + this.registroForm.value.email);
+    if (!resp)
+      this.util.showMessage('El usuario ya se encuentra registrado');
+  }
+
+  async confirmarRegistro() {
+    const modal = await this.modalController.create({
+      component: RegistrarseConfirmPage
+    });
+
+    modal.onDidDismiss().then(data => {
+      if (data.data == 'terminos') {
+        this.confirmarTerminos();
+      } else if (data.data) {
+        this.registrarCuenta();
+      }
+    });
+    return await modal.present();
+  }
+
+
+  async confirmarTerminos() {
+
+    const modal = await this.modalController.create({
+      component: TerminosPage
+    });
+
+    modal.onDidDismiss().then(data => {
+      if (data.data) {
+        this.registrarCuenta();
+      }
+    });
+    return await modal.present();
+  }
+
+  async registrarCuenta() {
+    /**TODO: las materias, el telefono */
+    let postData = this.registroForm.value;
     console.log(this.registroForm.value);
+
+    postData['celular'] = '' + postData['paisNumero'] + postData['celular'];
+    postData['fecha_nacimiento'] = '' + postData['fecha_nacimiento'].slice(0, 10);
+
+    [1, 2, 3, 4, 5].forEach(element => {
+      if (this.registroForm.value['materia' + element] != undefined) {
+        postData['materia' + element] = this.registroForm.value['materia' + element]['nombre'];
+      }
+    });
+
+    try {
+      this.util.showLoading();
+      const resp = await this.db.post('registro', postData);
+      this.util.dismissLoading();
+
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        this.buildForm();
+        this.router.navigateByUrl('login');
+      }
+    } catch (error) {
+      console.log(error);
+      this.util.dismissLoading();
+    }
+
   }
 
   setClasesTareas(tarea, clase) {
@@ -93,11 +183,11 @@ export class RegistrarseProfesorPage implements OnInit {
         }
   }
 
-  info() {
-    alert('info');
-  }
-
   cargarCiudades(pais) {
+    this.util.showLoading();
     this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
+    setTimeout(() => {
+      this.util.dismissLoading();
+    }, 1000);
   }
 }

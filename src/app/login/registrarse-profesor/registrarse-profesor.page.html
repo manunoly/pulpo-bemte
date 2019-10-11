@@ -2,9 +2,9 @@
 
 
   <ion-grid padding color="light">
-    <form [formGroup]="registroForm" (ngSubmit)="confirmarCuenta()">
+    <form [formGroup]="registroForm" (ngSubmit)="confirmarRegistro()">
 
-      <div *ngIf="paso == 1">
+      <div *ngIf="paso">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>REGISTRO</h1>
@@ -30,7 +30,8 @@
           <ion-col size="6">
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Fecha de Nacimiento</ion-label>
-              <ion-datetime doneText="Hecho" cancelText="Cancelar" placeholder="DD/MM/AA" formControlName="fechaNacimiento" display-format="DD/MM/YYYY">
+              <ion-datetime doneText="Hecho" cancelText="Cancelar" placeholder="DD/MM/AA"
+                formControlName="fecha_nacimiento" display-format="DD/MM/YYYY">
               </ion-datetime>
             </ion-item>
           </ion-col>
@@ -67,7 +68,7 @@
             <ion-item class="ion-no-padding">
               <ion-label class="ion-text-wrap ion-no-padding ion-no-margin" position="stacked">Ciudad de Residencia
               </ion-label>
-              <ion-select  [disabled]="!ciudades" okText="Seleccionar" cancelText="Cancelar" formControlName="ciudad">
+              <ion-select [disabled]="!ciudades" okText="Seleccionar" cancelText="Cancelar" formControlName="ciudad">
                 <ion-select-option *ngFor="let c of ciudades | async" [value]="c?.ciudad">
                   {{c?.ciudad}}
                 </ion-select-option>
@@ -86,16 +87,6 @@
         </ion-row>
 
         <ion-row>
-          <ion-col size="12">
-            <ion-item class="ion-no-padding ion-text-wrap">
-              <ion-label position="stacked">Sobrenombre</ion-label>
-              <ion-input placeholder="Protege tu identidad" formControlName="ubicacion">
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
           <ion-col padding size="6">
             <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
               <b>
@@ -104,7 +95,7 @@
             </ion-button>
           </ion-col>
           <ion-col padding size="6">
-            <ion-button [disabled]="" (click)="paso = 2" size="small" expand="block" shape="round" color="tertiary">
+            <ion-button [disabled]="" (click)="paso = 2" size="small" expand="block" shape="round" color="success">
               <b>
                 Siguiente
               </b>
@@ -113,7 +104,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso == 2">
+      <div *ngIf="paso">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>DATOS DE ACCESO</h1>
@@ -122,8 +113,19 @@
         <ion-row>
           <ion-col size="12">
             <ion-item class="ion-no-padding ion-text-wrap">
+              <ion-label position="stacked">Usuario</ion-label>
+              <ion-input (focusout)="validarUsuario()" placeholder="Create un apodo de minimo 6 caracteres"
+                formControlName="apodo">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Correo electrónico</ion-label>
-              <ion-input formControlName="email"></ion-input>
+              <ion-input (focusout)="validarCorreo()" formControlName="email"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -134,33 +136,40 @@
               <ion-label position="stacked">
                 Celular
               </ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center" formControlName="celular">
+              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+                formControlName="paisNumero">
                 <ion-select-option *ngFor="let p of paisNumber | async" [value]="p?.codigo">
                   {{p?.codigo}}
                 </ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
+
           <ion-col size="8">
-            <ion-item class="ion-no-padding ion-text-wrap">
+            <ion-item class="ion-text-wrap">
+              <ion-label hidden position="stacked">
+                Celular
+              </ion-label>
               <ion-input type="tel" formControlName="celular"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col size="6">
+          <ion-col>
             <ion-item class="ion-no-padding ion-text-wrap">
-              <ion-label class="ion-no-padding ion-no-margin" position="stacked">Contraseña <span
-                  *ngIf="registroForm.value.password && registroForm.value.password != registroForm.value.passwordC"><br>
+              <ion-label position="stacked">Contraseña <span
+                  *ngIf="registroForm.value.password && registroForm.value.password != registroForm.value.passwordC">
                   No coinciden </span></ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
           </ion-col>
+        </ion-row>
 
-          <ion-col size="6">
+        <ion-row>
+          <ion-col>
             <ion-item class="ion-no-padding ion-text-wrap">
-              <ion-label class="ion-text-wrap ion-no-padding ion-no-margin" position="stacked">Confirmar contraseña
+              <ion-label position="stacked">Confirmar contraseña
               </ion-label>
               <ion-input type="password" formControlName="passwordC"></ion-input>
             </ion-item>
@@ -187,7 +196,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso == 3">
+      <div *ngIf="paso">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>MATERIAS QUE DESEAS IMPARTIR</h1>
@@ -202,13 +211,11 @@
         <ion-row>
           <ion-col>
             <ion-item lines="none">
-              <ion-label position="stacked"></ion-label>
-              <ion-select placeholder="Seleccionar al menos 1" class="ion-text-center materiasEstilo "
-                formControlName="materia1" [disabled]="!materias">
-                <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
-                  {{materia?.nombre}}
-                </ion-select-option>
-              </ion-select>
+              <ionic-selectable placeholder="Seleccionar al menos 1" closeButtonText="Cerrar"
+                class="ion-text-center borderRound" [items]="materias" formControlName="materia1"
+                itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                (onChange)="verificarMateria($event.value,1)">
+              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -216,14 +223,10 @@
         <ion-row>
           <ion-col>
             <ion-item lines="none">
-              <ion-label position="stacked"></ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center materiasEstilo "
-                formControlName="materia2" [disabled]="!materias">
-                <ion-select-option value=""></ion-select-option>
-                <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
-                  {{materia?.nombre}}
-                </ion-select-option>
-              </ion-select>
+              <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound" [items]="materias"
+                formControlName="materia2" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                (onChange)="verificarMateria($event.value,2)">
+              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -231,14 +234,10 @@
         <ion-row>
           <ion-col>
             <ion-item lines="none">
-              <ion-label position="stacked"></ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center materiasEstilo "
-                formControlName="materia3" [disabled]="!materias">
-                <ion-select-option value=""></ion-select-option>
-                <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
-                  {{materia?.nombre}}
-                </ion-select-option>
-              </ion-select>
+              <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound" [items]="materias"
+                formControlName="materia3" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                (onChange)="verificarMateria($event.value,3)">
+              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -246,14 +245,10 @@
         <ion-row>
           <ion-col>
             <ion-item lines="none">
-              <ion-label position="stacked"></ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center materiasEstilo "
-                formControlName="materia4" [disabled]="!materias">
-                <ion-select-option value=""></ion-select-option>
-                <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
-                  {{materia?.nombre}}
-                </ion-select-option>
-              </ion-select>
+              <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound" [items]="materias"
+                formControlName="materia4" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                (onChange)="verificarMateria($event.value,4)">
+              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -261,14 +256,10 @@
         <ion-row>
           <ion-col>
             <ion-item lines="none">
-              <ion-label position="stacked"></ion-label>
-              <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center materiasEstilo "
-                formControlName="materia5" [disabled]="!materias">
-                <ion-select-option value=""></ion-select-option>
-                <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
-                  {{materia?.nombre}}
-                </ion-select-option>
-              </ion-select>
+              <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound" [items]="materias"
+                formControlName="materia5" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                (onChange)="verificarMateria($event.value,5)">
+              </ionic-selectable>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -292,7 +283,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso == 4">
+      <div *ngIf="paso">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>¿CÓMO TE GUSTARÍA TRABAJAR?</h1>
@@ -358,7 +349,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso == 5">
+      <div *ngIf="paso">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>DOCUMENTOS REQUERIDOS</h1>
@@ -369,7 +360,7 @@
             <ion-item class="ion-no-padding" lines="none">
               <ion-label>
                 <ion-button fill="outline" size="block" shape="round">
-                  Horario de clases
+                  Foto de identificación
                 </ion-button>
               </ion-label>
               <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
@@ -383,7 +374,7 @@
             <ion-item class="ion-no-padding" lines="none">
               <ion-label>
                 <ion-button fill="outline" size="block" shape="round">
-                  Horario de clases
+                  Tómate una foto
                 </ion-button>
               </ion-label>
               <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
@@ -394,12 +385,10 @@
         <ion-row>
           <ion-col>
             <ion-item class="ion-no-padding" lines="none">
-              <ion-label>
-                <ion-button fill="outline" size="block" shape="round">
-                  Horario de clases
-                </ion-button>
+              <ion-label position="stacked">
+                <h3>Descripción profesional</h3>
               </ion-label>
-              <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
+              <ion-textarea formControlName="descripcion" rows="3" class="borderRound"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -408,27 +397,35 @@
           <ion-col>
             <ion-item class="ion-no-padding" lines="none">
               <ion-label>
-                <ion-button fill="outline" size="block" shape="round">
-                  Horario de clases
-                </ion-button>
+                <ion-text color="tertiary">
+                  <h3> <b>Envía los siguientes datos al correo: </b></h3>
+                  <h5>bemtemarketing@gmail.com</h5>
+                  <ul>
+                    <li class="ion-no-padding">
+                      Horario de clases <br>
+                      <div class="ion-text-center"><small>Si eres estudiante</small> </div>
+                    </li>
+                    <li class="ion-no-padding">
+                      Título Profesional<br>
+                      <div class="ion-text-center"><small>Si eres graduado/a</small> </div>
+                    </li>
+                    <li class="ion-no-padding">
+                      Hoja de vida
+                    </li>
+                  </ul>
+                </ion-text>
+
+                <ion-text color="danger">
+                  <p>
+                    Los datos deben enviarse en 1 solo correo y el asunto de la siguiente manera:
+                  </p>
+                </ion-text>
+                <p>Ej: <u>nombres.apellidos.aspiranteaprofesor</u></p>
               </ion-label>
-              <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
             </ion-item>
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <ion-label>
-                <ion-button fill="outline" size="block" shape="round">
-                  Horario de clases
-                </ion-button>
-              </ion-label>
-              <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
-            </ion-item>
-          </ion-col>
-        </ion-row>
         <ion-row>
           <ion-col padding size="6">
             <ion-button color="tertiary" (click)="paso = 4" size="small" expand="block" shape="round">
@@ -438,7 +435,8 @@
             </ion-button>
           </ion-col>
           <ion-col padding size="6">
-            <ion-button type="submit" size="small" expand="block" shape="round" color="success">
+            <ion-button [disabled]="!registroForm.valid" type="submit" size="small" expand="block" shape="round"
+              color="success">
               <!-- <ion-button [disabled]="!registroForm.valid" size="small" expand="block" shape="round" color="success"> -->
               <b>
                 Siguiente
@@ -449,5 +447,4 @@
       </div>
     </form>
   </ion-grid>
-
 </ion-content>
