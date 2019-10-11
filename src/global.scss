@@ -108,6 +108,88 @@ ion-fab {
   white-space: pre-line !important;
 }
 
+.alertRojo {
+  color: white !important;
+  --background: var(--ion-color-danger) !important;
+  h2 {
+    color: white !important;
+  }
+  div {
+    color: white !important;
+  }
+  div div:last-child {
+    button {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      color: white !important;
+      background-color: var(--ion-color-tertiary) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+    }
+  }
+}
+
+.fondoVerde{
+  --background: var(--ion-color-success) !important;
+}
+
+.fondoRojo{
+  --background: var(--ion-color-danger) !important;
+}
+
+.fondoAzul{
+  --background: var(--ion-color-tertiary) !important;
+}
+
+.alertRojo {
+  color: white !important;
+  h2 {
+    color: white !important;
+  }
+  div {
+    color: white !important;
+  }
+  div div:last-child {
+    button {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      color: white !important;
+      background-color: var(--ion-color-tertiary) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+    }
+  }
+}
+
+.alertDefault {
+  color: white !important;
+  --background: var(--ion-color-primary) !important;
+  h2 {
+    color: white !important;
+  }
+  div {
+    color: white !important;
+  }
+  div div:last-child {
+    button:first-child {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      color: white !important;
+      background-color: var(--ion-color-primary) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+    }
+    button:last-child {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      color: white !important;
+      background-color: var(--ion-color-secondary) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+    }
+  }
+}
+
 .centrarContenido {
   background-color: var(--ion-color-primary);
   position: absolute;
@@ -151,13 +233,11 @@ ion-fab {
   }
 }
 
-
-
 .text {
   text-align: center;
   margin-top: 56px;
   color: #fff;
-  font-size: 1.0em;
+  font-size: 1em;
   font-family: sans-serif;
   text-transform: uppercase;
 }
@@ -169,26 +249,49 @@ ion-fab {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(-30px);}
-  60% {transform: translateY(-15px);}
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
 }
 .bounce {
   animation-name: bounce;
 }
 
 @keyframes flash {
-  0%, 50%, 100% {opacity: 1;}
-  25%, 75% {opacity: 0;}
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
 }
 .flash {
   animation-name: flash;
 }
 
 @keyframes pulse {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.1);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .pulse {
   animation-name: pulse;
@@ -196,35 +299,70 @@ ion-fab {
 }
 
 @keyframes rubberBand {
-  0% {transform: scale(1);}
-  30% {transform: scaleX(1.25) scaleY(0.75);}
-  40% {transform: scaleX(0.75) scaleY(1.25);}
-  60% {transform: scaleX(1.15) scaleY(0.85);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scaleX(1.25) scaleY(0.75);
+  }
+  40% {
+    transform: scaleX(0.75) scaleY(1.25);
+  }
+  60% {
+    transform: scaleX(1.15) scaleY(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .rubberBand {
   animation-name: rubberBand;
 }
 
 .escribir {
-  animation-name: typing 2.5s steps(60, end), blink-caret 0.75s step-end infinite;;
+  animation-name: typing 2.5s steps(60, end),
+    blink-caret 0.75s step-end infinite;
 }
 
 @keyframes shake {
-  0%, 100% {transform: translateX(0);}
-  10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
-  20%, 40%, 60%, 80% {transform: translateX(10px);}
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
 }
 .shake {
   animation-name: shake;
 }
 
 @keyframes swing {
-  20% {transform: rotate(15deg);}
-  40% {transform: rotate(-10deg);}
-  60% {transform: rotate(5deg);}
-  80% {transform: rotate(-5deg);}
-  100% {transform: rotate(0deg);}
+  20% {
+    transform: rotate(15deg);
+  }
+  40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 .swing {
   transform-origin: top center;
@@ -232,24 +370,53 @@ ion-fab {
 }
 
 @keyframes wobble {
-  0% {transform: translateX(0%);}
-  15% {transform: translateX(-25%) rotate(-5deg);}
-  30% {transform: translateX(20%) rotate(3deg);}
-  45% {transform: translateX(-15%) rotate(-3deg);}
-  60% {transform: translateX(10%) rotate(2deg);}
-  75% {transform: translateX(-5%) rotate(-1deg);}
-  100% {transform: translateX(0%);}
+  0% {
+    transform: translateX(0%);
+  }
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 .wobble {
   animation-name: wobble;
 }
 
 @keyframes flip {
-  0% {transform: perspective(400px) translateZ(0) rotateY(0) scale(1);animation-timing-function: ease-out;}
-  40% {transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);animation-timing-function: ease-out;}
-  50% {transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);animation-timing-function: ease-in;}
-  80% {transform: perspective(400px) translateZ(0) rotateY(360deg) scale(.95);animation-timing-function: ease-in;}
-  100% {transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);animation-timing-function: ease-in;}
+  0% {
+    transform: perspective(400px) translateZ(0) rotateY(0) scale(1);
+    animation-timing-function: ease-out;
+  }
+  40% {
+    transform: perspective(400px) translateZ(150px) rotateY(170deg) scale(1);
+    animation-timing-function: ease-out;
+  }
+  50% {
+    transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1);
+    animation-timing-function: ease-in;
+  }
+  80% {
+    transform: perspective(400px) translateZ(0) rotateY(360deg) scale(0.95);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: perspective(400px) translateZ(0) rotateY(360deg) scale(1);
+    animation-timing-function: ease-in;
+  }
 }
 .animated.flip {
   backface-visibility: visible;
@@ -257,10 +424,22 @@ ion-fab {
 }
 
 @keyframes lightSpeedIn {
-  0% {transform: translateX(100%) skewX(-30deg);opacity: 0;}
-  60% {transform: translateX(-20%) skewX(30deg);opacity: 1;}
-  80% {transform: translateX(0%) skewX(-15deg);opacity: 1;}
-  100% {transform: translateX(0%) skewX(0deg);opacity: 1;}
+  0% {
+    transform: translateX(100%) skewX(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-20%) skewX(30deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(0%) skewX(-15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0%) skewX(0deg);
+    opacity: 1;
+  }
 }
 .lightSpeedIn {
   animation-name: lightSpeedIn;
@@ -268,35 +447,67 @@ ion-fab {
 }
 
 @keyframes rollIn {
-  0% {opacity: 0;transform: translateX(-100%) rotate(-120deg);}
-  100% {opacity: 1;transform: translateX(0px) rotate(0deg);}
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) rotate(-120deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px) rotate(0deg);
+  }
 }
 .rollIn {
   animation-name: rollIn;
 }
 
 @keyframes rotateIn {
-  0% {transform-origin: center center;transform: rotate(-200deg);opacity: 0;}
-  100% {transform-origin: center center;transform: rotate(0);opacity: 1;}
+  0% {
+    transform-origin: center center;
+    transform: rotate(-200deg);
+    opacity: 0;
+  }
+  100% {
+    transform-origin: center center;
+    transform: rotate(0);
+    opacity: 1;
+  }
 }
 .rotateIn {
   animation-name: rotateIn;
 }
 
 @keyframes hinge {
-  0% {transform: rotate(0);transform-origin: top left;animation-timing-function: ease-in-out;}
-  20%, 60% {transform: rotate(80deg);transform-origin: top left;animation-timing-function: ease-in-out;}
-  40% {transform: rotate(60deg);transform-origin: top left;animation-timing-function: ease-in-out;}
-  80% {transform: rotate(60deg) translateY(0);transform-origin: top left;animation-timing-function: ease-in-out;}
-  100% {transform: translateY(700px);}
+  0% {
+    transform: rotate(0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  20%,
+  60% {
+    transform: rotate(80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  40% {
+    transform: rotate(60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  80% {
+    transform: rotate(60deg) translateY(0);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+  100% {
+    transform: translateY(700px);
+  }
 }
 .hinge {
   margin: 20px;
   animation-name: hinge;
 }
 
-
-.animacionN span{
+.animacionN span {
   display: inline-block;
   font-size: 75px;
   text-align: center;
@@ -308,30 +519,46 @@ ion-fab {
   animation-timing-function: linear;
   animation-fill-mode: forwards;
 }
-.animacionN img{animation-delay: 1s;}
-.animacionN span:nth-child(2){animation-delay: 2.75s;}
-.animacionN span:nth-child(3){animation-delay: 3s;}
-.animacionN span:nth-child(4){animation-delay: 3.15s;}
-.animacionN span:nth-child(5){animation-delay: 3.30s;}
-.animacionN span:nth-child(6){animation-delay: 3.40s;}
-.animacionN span:nth-child(7){animation-delay: 3.47s;}
-.animacionN span:nth-child(8){animation-delay: 3.59s;}
+.animacionN img {
+  animation-delay: 1s;
+}
+.animacionN span:nth-child(2) {
+  animation-delay: 2.75s;
+}
+.animacionN span:nth-child(3) {
+  animation-delay: 3s;
+}
+.animacionN span:nth-child(4) {
+  animation-delay: 3.15s;
+}
+.animacionN span:nth-child(5) {
+  animation-delay: 3.3s;
+}
+.animacionN span:nth-child(6) {
+  animation-delay: 3.4s;
+}
+.animacionN span:nth-child(7) {
+  animation-delay: 3.47s;
+}
+.animacionN span:nth-child(8) {
+  animation-delay: 3.59s;
+}
 
-@keyframes bounceIn{
-  0%{
+@keyframes bounceIn {
+  0% {
     opacity: 0;
-    transform: scale(0.3) translate3d(0,0,0);
+    transform: scale(0.3) translate3d(0, 0, 0);
   }
-  50%{
+  50% {
     opacity: 0.9;
     transform: scale(1.1);
   }
-  80%{
+  80% {
     opacity: 1;
     transform: scale(0.89);
   }
-  100%{
+  100% {
     opacity: 1;
-    transform: scale(1) translate3d(0,0,0);
+    transform: scale(1) translate3d(0, 0, 0);
   }
 }
