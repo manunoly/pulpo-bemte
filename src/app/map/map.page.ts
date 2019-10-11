@@ -1,3 +1,4 @@
+import { AuthService } from './../servicios/auth.service';
 import { ModalController } from '@ionic/angular';
 import { UtilService } from './../servicios/util.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -17,7 +18,7 @@ export class MapPage implements OnInit {
   ubicacion;
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
+  constructor(public auth: AuthService, private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {
     console.log('la ubicacion recibida', this.ubicacion);

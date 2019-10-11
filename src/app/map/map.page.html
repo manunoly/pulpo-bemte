@@ -1,3 +1,10 @@
+<app-header-bemte-prof [popup]="true" *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+</app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte [popup]="true"></app-header-bemte>
+</ng-template>
+
 <ion-content>
   <ion-fab padding color="dark" slot="fixed" (click)="close()">
     <ion-button shape="round">
