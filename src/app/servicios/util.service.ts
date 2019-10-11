@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController, Platform, LoadingController } from '@ionic/angular';
+import { ToastController, Platform, LoadingController, AlertController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Location } from "@angular/common";
@@ -17,7 +17,8 @@ export class UtilService {
     private platform: Platform,
     private storage: Storage,
     public loadingController: LoadingController,
-    private _navigation: Location
+    private _navigation: Location,
+    public alertController: AlertController
   ) { }
 
   async showMessage(msg = '', showCloseButton = true, positionMsg = 'top', time = 5000, buttonText = 'Cerrar') {
@@ -162,6 +163,26 @@ export class UtilService {
 
   atras() {
     this._navigation.back();
+  }
+
+  async presentAlert(messageD, headerD, buttonsD = ['Aceptar'], subHeaderD?, cssClassD = 'notificacionStyle', show = true) {
+    let configuracion = { message: messageD, buttons: buttonsD };
+
+    if (headerD)
+      configuracion['header'] = headerD;
+
+    if (subHeaderD)
+      configuracion['subHeader'] = subHeaderD;
+
+    if (cssClassD)
+      configuracion['cssClass'] = cssClassD;
+
+    const alert = await this.alertController.create(configuracion);
+
+    if (show)
+      await alert.present();
+    else
+      return alert;
   }
 
   getTemporalData() {
