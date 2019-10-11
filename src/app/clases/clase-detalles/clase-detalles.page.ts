@@ -107,23 +107,36 @@ export class ClaseDetallesPage implements OnInit {
   async confirmarCancelar(clase, profesorD = 0) {
     if (!clase || clase == {})
       return;
+    let msg;
+    if (profesorD)
+      msg = `Se te descontarán 2 horas.`;
+    else
+      msg = `Se te descontará 1 hora.`;
+
     const alert = await this.alertController.create({
-      header: 'Cancelar!',
-      message: 'Al cancelar se le descuenta 1 hora, si es 3 horas o menos de la clase se descuentan todas las horas, Desea cancelar?',
-      buttons: [
+      header: '¿Estás seguro que deseas cancelar?',
+      subHeader: msg,
+      cssClass: 'fondoVerde alertRojo',
+      inputs: [
         {
-          text: 'No',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Si',
-          handler: () => {
+          name: 'Si',
+          type: 'radio',
+          label: 'Si',
+          value: true
+        },
+        {
+          name: 'No',
+          type: 'radio',
+          label: 'No',
+          value: false
+        }],
+      buttons: [{
+        text: 'Aceptar',
+        handler: (data) => {
+          if (data)
             this.terminar(clase, profesorD);
-          }
         }
+      }
       ]
     });
 
@@ -151,6 +164,7 @@ export class ClaseDetallesPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Aplicar',
       message: `Confirme desea aplicar a la clase`,
+      cssClass: 'alertDefault',
       // inputs: [
       //   {
       //     name: 'hora1',
