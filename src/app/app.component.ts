@@ -17,9 +17,9 @@ export class AppComponent {
   public appPages = [];
   public profesorPages = [
     {
-      title: 'Perfil',
-      url: '/perfil',
-      icon: 'man'
+      title: 'Información',
+      url: '/informacion',
+      icon: 'help'
     },
     {
       title: 'Mis Clases',
@@ -39,6 +39,11 @@ export class AppComponent {
 
   public estudiantePages = [
     {
+      title: 'Información',
+      url: '/informacion',
+      icon: 'help'
+    },
+    {
       title: 'Mis Clases',
       url: '/lista-clases',
       icon: 'list'
@@ -52,14 +57,10 @@ export class AppComponent {
       title: 'Billetera',
       url: '/billetera-estudiante',
       icon: 'logo-usd'
-    }, {
-      title: 'Clase gratis',
-      url: '/clase-gratis',
-      icon: 'school'
     },
     {
-      title: 'Ayuda',
-      url: '/ayuda',
+      title: 'Información',
+      url: '/informacion',
       icon: 'help'
     }
 
