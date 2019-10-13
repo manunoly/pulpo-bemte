@@ -225,12 +225,15 @@ export class ClaseDetallesPage implements OnInit {
     await alert.present();
   }
 
-  detallesImg(tipo, avatar, calificacion, nombre) {
+  detallesImg(tipo, avatar, calificacion, nombre, profClases?, profTareas?, profDescripccion?) {
     let data = {
       tipo: tipo,
       avatar: avatar ? this.urlPhoto + avatar : '/assets/icon/favicon.png',
       ranking: calificacion ? calificacion : 5,
-      nombre: nombre
+      nombre: nombre,
+      profClases: profClases,
+      profTareas: profTareas,
+      profDescripccion: profDescripccion
     }
     this.util.setTemporalData(data);
     this.router.navigateByUrl('/alumno-profesor-detalle');

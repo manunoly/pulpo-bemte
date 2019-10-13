@@ -3,12 +3,17 @@
 
 <ng-template #estudianteDiv>
   <app-header-bemte></app-header-bemte>
+
+  <div text-center style="position: absolute; bottom: 15px; width: 100%">
+    <ion-button padding color="success" (click)="util.atras()">Aceptar
+    </ion-button>
+  </div>
 </ng-template>
 
 <ion-content>
 
   <ion-grid>
-    <ion-row class="lineBotton">
+    <ion-row>
       <ion-col size="2">
         <ion-button (click)="util.atras()" fill="clear" size="large">
           <ion-icon style slot="icon-only" name="ios-arrow-back"></ion-icon>
@@ -21,9 +26,9 @@
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col>
-        <img [src]="data.avatar" style="display:block; margin:auto; max-width: 350px; max-height: 350px;">
+    <ion-row (click)="profesor = !profesor">
+      <ion-col text-center>
+        <img [src]="data.avatar" [ngClass]="data.tipo == 'Profesor' && !profesor ? 'normalAvatar':'grandeAvatar'">
       </ion-col>
     </ion-row>
 
@@ -31,17 +36,43 @@
       <ion-col text-center>
         <ion-text color="tertiary">
           <h3> {{data?.nombre}} <br>
-          <ion-icon name="star" color="warning"></ion-icon> {{data?.ranking}}
+            <ion-icon name="star" color="warning"></ion-icon> {{data?.ranking}}
           </h3>
         </ion-text>
       </ion-col>
     </ion-row>
 
+    <div *ngIf="data.tipo == 'Profesor' && !profesor">
+      <ion-row text-center>
+        <ion-col offset="3" size="3">
+          <img style="height: 60px; width: 60px;" src="/assets/img/clases.png">
+          <ion-text color="tertiary">
+              <h1>
+                {{data?.profClases}}
+              </h1>
+            </ion-text>
+        </ion-col>
+        <ion-col size="3">
+          <img style="height: 60px; width: 60px;" src="/assets/img/tareas.png">
+          <ion-text color="tertiary">
+              <h1>
+                {{data?.profTareas}}
+              </h1>
+            </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-text color="tertiary">
+            <h3>Descripción</h3>
+          </ion-text>
+          <ion-text color="dark">
+            <p>{{data?.profDescripcion}}</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </div>
+
   </ion-grid>
-
-  <div text-center style="position: absolute; bottom: 15px; width: 100%">
-    <ion-button padding color="success" (click)="util.atras()">Aceptar
-    </ion-button>
-  </div>
-
 </ion-content>

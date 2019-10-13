@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AlumnoProfesorDetallePage implements OnInit {
   data;
+  profesor = false;
 
   constructor(public util: UtilService, public auth: AuthService) { }
 

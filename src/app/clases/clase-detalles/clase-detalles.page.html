@@ -641,7 +641,8 @@
                 </ion-text>
               </h5>
             </ion-col>
-            <ion-col size="2" (click)="detallesImg('Profesor', clase.profAvatar, clase.profCalif, clase.profesor)">
+            <ion-col size="2"
+              (click)="detallesImg('Profesor', clase?.profAvatar, clase?.profCalif, clase?.profesor, clase?.profClases,clase?.profTareas, clase?.profDescripcion)">
               <ion-avatar>
                 <img [src]="clase.profAvatar ? urlPhoto + clase.profAvatar : '/assets/icon/favicon.png'">
               </ion-avatar>
