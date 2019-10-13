@@ -4,7 +4,6 @@ import { ModalController } from "@ionic/angular";
 import { AuthService } from "./../servicios/auth.service";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { MapPage } from "../map/map.page";
 
 @Component({
   selector: "app-inicio",
@@ -18,8 +17,7 @@ export class InicioPage implements OnInit {
     public util: UtilService,
     private fcm: FcmService,
     private router: Router,
-    public auth: AuthService,
-    private modalController: ModalController
+    public auth: AuthService
   ) { }
 
   async ngOnInit() {
@@ -37,25 +35,12 @@ export class InicioPage implements OnInit {
   ionViewWillEnter() {
     this.reload = true;
   }
-  
+
   ionViewDidLeave() {
     this.reload = false;
   }
 
   goTo(url) {
     this.router.navigateByUrl(url);
-  }
-
-  async map() {
-    const modal = await this.modalController.create({
-      component: MapPage
-      // componentProps: { ubicacion: { lat: -0.1740159, lng: -78.463816299 } }
-    });
-    modal.onDidDismiss().then(data => console.log(data));
-    return await modal.present();
-  }
-
-  accionHoras($event) {
-    console.log($event);
   }
 }
