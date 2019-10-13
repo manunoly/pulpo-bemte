@@ -31,7 +31,6 @@ export class HeaderUserComponent implements OnInit {
               } else if (calificar.tarea_id != 0) {
                 console.log('tarea');
               }
-              console.log(calificar);
             }).catch();
           return this.db.get('alumno?user_id=' + user.user_id);
         }
