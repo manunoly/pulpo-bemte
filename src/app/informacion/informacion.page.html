@@ -1,0 +1,33 @@
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+</app-header-bemte-prof>
+
+<ng-template #estudianteDiv>
+  <app-header-bemte></app-header-bemte>
+</ng-template>
+
+<ion-content padding>
+  <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+
+      <div>
+        <ion-row class="ion-padding">
+          <ion-col size="10" offset="1">
+            <ion-button expand="block" size="large" shape="round" (click)="confirmarTerminos()" lines="none">
+              <b>REGLAMENTO</b>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-padding">
+          <ion-col size="12">
+            <ion-button expand="block" size="large" shape="round" (click)="openVideo()" lines="none">
+              <b>VIDEO EXPLICATIVO</b>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
