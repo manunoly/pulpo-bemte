@@ -4,7 +4,6 @@ import { FcmService } from '../../servicios/fcm.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { ModalController } from "@ionic/angular";
-import { Location } from "@angular/common";
 import { UtilService } from "../../servicios/util.service";
 import { DbService } from "../../servicios/db.service";
 import { AuthService } from "../../servicios/auth.service";
@@ -25,7 +24,6 @@ export class RegistrarseProfesorPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    private navigation: Location,
     public auth: AuthService,
     private db: DbService,
     private router: Router,
@@ -181,6 +179,10 @@ export class RegistrarseProfesorPage implements OnInit {
           this.registroForm.controls['clases'].setValue(1);
           this.registroForm.controls['tareas'].setValue(0);
         }
+  }
+
+  info(){
+
   }
 
   cargarCiudades(pais) {

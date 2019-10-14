@@ -1,10 +1,10 @@
 <ion-content padding>
-
+  
 
   <ion-grid padding color="light">
     <form [formGroup]="registroForm" (ngSubmit)="confirmarRegistro()">
 
-      <div *ngIf="paso">
+      <div *ngIf="paso == 1">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>REGISTRO</h1>
@@ -104,7 +104,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso">
+      <div *ngIf="paso == 2">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>DATOS DE ACCESO</h1>
@@ -187,7 +187,7 @@
           <ion-col padding size="6">
             <ion-button
               [disabled]="!registroForm.value.password || registroForm.value.password != registroForm.value.passwordC"
-              (click)="paso = 3" size="small" expand="block" shape="round" color="tertiary">
+              (click)="paso = 3" size="small" expand="block" shape="round" color="success">
               <b>
                 Siguiente
               </b>
@@ -196,7 +196,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso">
+      <div *ngIf="paso == 3">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>MATERIAS QUE DESEAS IMPARTIR</h1>
@@ -283,7 +283,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso">
+      <div *ngIf="paso == 4">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>¿CÓMO TE GUSTARÍA TRABAJAR?</h1>
@@ -349,7 +349,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso">
+      <div *ngIf="paso == 5">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1>DOCUMENTOS REQUERIDOS</h1>
