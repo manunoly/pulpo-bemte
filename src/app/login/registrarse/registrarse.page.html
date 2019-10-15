@@ -39,7 +39,8 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="stacked">Usuario*</ion-label>
-            <ion-input formControlName="apodo" placeholder="Create un apodo de minimo 6 caracteres" type="email">
+            <ion-input (focusout)="validarUsuario()" formControlName="apodo"
+              placeholder="Create un apodo de mínimo 8 caracteres">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -47,23 +48,29 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="stacked">Correo electrónico*</ion-label>
-            <ion-input formControlName="email" type="email"></ion-input>
+            <ion-input (focusout)="validarCorreo()" formControlName="email" type="email"></ion-input>
           </ion-item>
         </ion-col>
 
         <ion-col size="12">
           <ion-item>
             <ion-label position="stacked">Contraseña*</ion-label>
-            <ion-input formControlName="password" type="password"></ion-input>
+            <ion-input placeholder="Mínimo 8 caracteres" formControlName="password" [type]="eye"></ion-input>
+            <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
+              <ion-icon name="eye" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-item>
 
           <ion-item>
             <ion-label position="stacked">Confirmar Contraseña
               <span
-                *ngIf="registroForm.value.password && registroForm.value.password !=registroForm.value.password1"><b>No
-                  coinciden</b></span>
+                *ngIf="registroForm.value.password && registroForm.value.password !=registroForm.value.password1"><b>
+                  <br> No coinciden</b></span>
             </ion-label>
-            <ion-input formControlName="password1" type="password"></ion-input>
+            <ion-input formControlName="password1" [type]="eye"></ion-input>
+            <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
+              <ion-icon name="eye" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -115,7 +122,7 @@
 
         <ion-col padding size="6">
           <ion-button color="success" [disabled]="!registroForm.valid" type="submit" size="small" expand="block"
-            shape="round" color="primary">
+            shape="round" color="success">
             <b>
               Registrar
             </b>

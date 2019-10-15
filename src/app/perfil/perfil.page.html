@@ -6,12 +6,16 @@
 </ng-template>
 
 <ion-content padding>
-
-  <ion-grid padding *ngIf="user">
-
+  <ion-grid *ngIf="user">
     <form [formGroup]="registroForm" (ngSubmit)="editarPerfil()">
 
       <ion-row class="ion-text-center ion-no-padding ion-no-margin">
+        <ion-col offset="7" size="5">
+          <ion-button type="submit" shape="round" expand="block" size="small" color="primary"
+            [disabled]="!registroForm.valid">
+            Actualizar </ion-button>
+        </ion-col>
+
         <ion-col (click)="subirFotoPerfil()" size="6" offset="3">
           <ion-avatar style="display:block; margin:auto; height: 100px; width: 100px;">
             <img [src]="imgPerfil ? imgPerfil.path: user.avatar">
@@ -33,7 +37,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="stacked"> Usuario </ion-label>
-            <ion-input formControlName="apodo" type="text"></ion-input>
+            <ion-input (focusout)="validarUsuario()" formControlName="apodo" type="text"></ion-input>
             <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
           </ion-item>
         </ion-col>
@@ -41,13 +45,13 @@
         <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">Nombre</ion-label>
-            <ion-input formControlName="nombre" type="text"></ion-input>
+            <ion-input readonly formControlName="nombre" type="text"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">Apellido</ion-label>
-            <ion-input formControlName="apellido" type="text">
+            <ion-input readonly formControlName="apellido" type="text">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -55,14 +59,17 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked"> Cambiar Contraseña </ion-label>
-            <ion-input formControlName="oldPassword" placeholder="Contraseña Actual" type="password">
+            <ion-input formControlName="oldPassword" placeholder="Contraseña Actual">
             </ion-input>
             <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
           </ion-item>
 
           <ion-item>
             <ion-input [disabled]="!registroForm.value.oldPassword" formControlName="newPassword"
-              placeholder="Contraseña nueva" type="password"></ion-input>
+              placeholder="Contraseña nueva" [type]="eye"></ion-input>
+            <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
+              <ion-icon name="eye" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-item>
 
           <ion-item>
@@ -70,8 +77,11 @@
               *ngIf="registroForm.value.newPassword && registroForm.value.newPassword !=registroForm.value.newPasswordConfirm">
               No coinciden</ion-label>
             <ion-input [disabled]="!registroForm.value.oldPassword" formControlName="newPasswordConfirm"
-              placeholder="Confirmar Contraseña Nueva" type="password">
+              placeholder="Confirmar Contraseña Nueva" [type]="eye">
             </ion-input>
+            <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
+              <ion-icon name="eye" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -109,7 +119,8 @@
           <ion-label position="stacked">
             Celular*
           </ion-label>
-          <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center" formControlName="paisCelular">
+          <ion-select disabled okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+            formControlName="paisCelular">
             <ion-select-option *ngFor="let paisN of paisNumber | async" [value]="paisN?.codigo">
               {{paisN?.codigo}}
             </ion-select-option>
@@ -118,41 +129,26 @@
 
         <ion-col size="8">
           <ion-item no-padding>
-            <ion-input type="tel" formControlName="celular"></ion-input>
-            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
+            <ion-input readonly type="tel" formControlName="celular"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-item>
+          <ion-item class="ion-no-padding">
             <ion-label position="stacked"> Correo </ion-label>
             <ion-input formControlName="email" readonly type="email">
             </ion-input>
-            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
           </ion-item>
 
-          <ion-item>
+          <ion-item class="ion-no-padding">
             <!-- FIXME: debe ser la universidad o colegio -->
             <ion-label position="stacked"> <span *ngIf="user.tipo == 'Alumno'"> Colegio o Universidad </span> <span
                 *ngIf="user.tipo == 'Profesor'"> Dirección de Domicilio </span></ion-label>
-            <ion-input formControlName="ubicacion" type="text">
-            </ion-input>
+            <ion-input formControlName="ubicacion" type="text"></ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="primary" name="create"></ion-icon>
           </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col size="5" offset="1">
-          <ion-button shape="round" expand="block" size="small" color="tertiary" (click)="util.atras()">Atras
-          </ion-button>
-        </ion-col>
-
-        <ion-col size="5">
-          <ion-button type="submit" shape="round" expand="block" size="small" color="primary"
-            [disabled]="!registroForm.valid">
-            Actualizar </ion-button>
         </ion-col>
       </ion-row>
 
@@ -160,7 +156,7 @@
   </ion-grid>
 
 
-  <div text-center>
+  <div class="ion-padding" text-center>
     <a (click)="auth.purgeAuth()">
       <ion-text color="tertiary">
         <span style="border-bottom: 1px solid"> Cerrar Sesión </span>

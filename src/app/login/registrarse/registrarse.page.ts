@@ -19,6 +19,7 @@ export class RegistrarsePage implements OnInit {
   registroForm: FormGroup;
   paisNumber;
   ciudades;
+  eye = 'password';
 
   constructor(
     public alertController: AlertController,
@@ -38,14 +39,14 @@ export class RegistrarsePage implements OnInit {
       password1: ["", [Validators.required, Validators.minLength(8)]],
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
-      apodo: ["", [Validators.required, Validators.minLength(9)]],
+      apodo: ["", [Validators.required, Validators.minLength(8)]],
       cedula: [""],
       token: [""],
       sistema: [""],
       pais: ["", Validators.required],
       ciudad: ["Quito", Validators.required],
       tipo: ["Alumno", Validators.required],
-      ubicacion: ["ubicacion", Validators.required]
+      ubicacion: ["", Validators.required]
     });
   }
 
@@ -57,6 +58,19 @@ export class RegistrarsePage implements OnInit {
       if (token) this.registroForm.controls["token"].setValue(token);
       this.registroForm.controls["sistema"].setValue(this.util.getSo());
     }
+  }
+
+
+  async validarCorreo() {
+    const resp = await this.db.get('correo-disponible?email=' + this.registroForm.value.email);
+    if (!resp)
+      this.util.showMessage('El correo ya se encuentra registrado');
+  }
+
+  async validarUsuario() {
+    const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo);
+    if (!resp)
+      this.util.showMessage('El usuario ya se encuentra registrado');
   }
 
   async confirmarCuenta() {
@@ -145,7 +159,13 @@ export class RegistrarsePage implements OnInit {
 
 
   cargarCiudades(pais) {
+    this.util.showLoading();
+
     this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
+
+    setTimeout(() => {
+      this.util.dismissLoading();
+    }, 1000);
   }
 
 }

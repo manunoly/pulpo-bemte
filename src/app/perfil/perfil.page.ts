@@ -28,6 +28,7 @@ export class PerfilPage implements OnInit {
   ciudades;
   img;
   imgPerfil;
+  eye = 'password';
 
   constructor(
     private router: Router,
@@ -51,6 +52,14 @@ export class PerfilPage implements OnInit {
 
   async ngOnInit() {
 
+  }
+
+  async validarUsuario() {
+    const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo);
+    if (!resp) {
+      this.util.showMessage('El usuario ya se encuentra registrado');
+      return true;
+    }
   }
 
   ionViewDidLeave() {
@@ -105,7 +114,7 @@ export class PerfilPage implements OnInit {
       'paisCelular': [user.codigo, Validators.required],
       'celular': [user.celular, [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       'email': [user.correo, [Validators.required, Validators.email]],
-      'oldPassword': ['', Validators.minLength(6)],
+      'oldPassword': ['', Validators.minLength(8)],
       'newPassword': ['', Validators.minLength(8)],
       'newPasswordConfirm': ['', Validators.minLength(8)],
       'nombre': [user.nombres, Validators.required],

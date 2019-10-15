@@ -1,5 +1,5 @@
 <ion-content padding>
-  
+
 
   <ion-grid padding color="light">
     <form [formGroup]="registroForm" (ngSubmit)="confirmarRegistro()">
@@ -114,7 +114,7 @@
           <ion-col size="12">
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Usuario</ion-label>
-              <ion-input (focusout)="validarUsuario()" placeholder="Create un apodo de minimo 6 caracteres"
+              <ion-input (focusout)="validarUsuario()" placeholder="Create un apodo de minimo 8 caracteres"
                 formControlName="apodo">
               </ion-input>
             </ion-item>
@@ -160,8 +160,12 @@
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Contraseña <span
                   *ngIf="registroForm.value.password && registroForm.value.password != registroForm.value.passwordC">
-                  No coinciden </span></ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+                 <br> No coinciden </span></ion-label>
+              <ion-input [type]="eye" formControlName="password"></ion-input>
+              <ion-button slot="end" class="ion-float-right" fill="clear"
+                (click)="eye = eye =='text'?'password': 'text'">
+                <ion-icon name="eye" slot="icon-only"></ion-icon>
+              </ion-button>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -171,7 +175,11 @@
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Confirmar contraseña
               </ion-label>
-              <ion-input type="password" formControlName="passwordC"></ion-input>
+              <ion-input [type]="eye" formControlName="passwordC"></ion-input>
+              <ion-button slot="end" class="ion-float-right" fill="clear"
+                (click)="eye = eye =='text'?'password': 'text'">
+                <ion-icon name="eye" slot="icon-only"></ion-icon>
+              </ion-button>
             </ion-item>
           </ion-col>
         </ion-row>

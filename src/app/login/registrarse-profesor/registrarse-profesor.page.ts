@@ -21,6 +21,7 @@ export class RegistrarseProfesorPage implements OnInit {
   paises;
   ciudades;
   materias;
+  eye = 'password';
 
   constructor(
     private modalController: ModalController,
@@ -69,7 +70,7 @@ export class RegistrarseProfesorPage implements OnInit {
       genero: new FormControl("", Validators.required),
       ubicacion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
 
-      apodo: new FormControl("", [Validators.required, Validators.min(6)]),
+      apodo: new FormControl("", [Validators.required, Validators.min(8)]),
       email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(110)]),
       paisNumero: new FormControl("", Validators.required),
       celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
@@ -100,7 +101,7 @@ export class RegistrarseProfesorPage implements OnInit {
   }
 
   async validarUsuario() {
-    const resp = await this.db.get('apodo-disponible?email=' + this.registroForm.value.email);
+    const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo);
     if (!resp)
       this.util.showMessage('El usuario ya se encuentra registrado');
   }
