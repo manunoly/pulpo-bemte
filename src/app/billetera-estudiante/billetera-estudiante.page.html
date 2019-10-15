@@ -3,24 +3,22 @@
 <ion-content>
 
   <ion-grid *ngIf="auth.currentUser | async as user">
-    <ion-row class="ion-text-center ion-no-padding ion-no-margin">
-      <ion-col>
-        <app-header-user></app-header-user>
-      </ion-col>
-    </ion-row>
+
     <div *ngIf="!horasComprar; else pagarHoras">
       <ion-row class="lineBotton" no-padding padding-horizontal>
         <ion-col size="8" offset="2" text-center>
-          <ion-chip style="background-color: transparent">
+          <ion-item lines="none">
             <ion-avatar>
               <img [src]="user.avatar">
             </ion-avatar>
-            <ion-label color="primary">
-              <h1>Billetera</h1>
+
+            <ion-label class="ion-padding" color="primary">
+              <h1 style="font-size: 30px;">Billetera</h1>
             </ion-label>
-          </ion-chip>
+          </ion-item>
+
           <ion-text color="tertiary">
-            <h3 no-padding>Horas Disponibles <br>
+            <h3 class="ion-no-padding ion-text-uppercase">Horas Disponibles <br>
               <span style="font-size: 40px"> {{horasCombos}} </span>
             </h3>
           </ion-text>
