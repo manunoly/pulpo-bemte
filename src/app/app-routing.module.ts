@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'list', loadChildren: './list/list.module#ListPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'registrar', loadChildren: './login/registrar/registrar.module#RegistrarPageModule' },
   { path: 'perfil', loadChildren: './perfil/perfil.module#PerfilPageModule' },
   { path: 'materias', loadChildren: './materias/materias.module#MateriasPageModule' },
   { path: 'tareas', loadChildren: './tareas/tareas.module#TareasPageModule' },
