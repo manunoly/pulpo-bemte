@@ -24,7 +24,7 @@ export class InicioProfesorPage implements OnInit {
     private db: DbService,
     public util: UtilService,
     private fcm: FcmService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     if (this.util.isMobile()) {
@@ -34,7 +34,7 @@ export class InicioProfesorPage implements OnInit {
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
         }
-      } catch (error) {}
+      } catch (error) { }
     }
   }
 
@@ -86,5 +86,15 @@ export class InicioProfesorPage implements OnInit {
         return of(null);
       })
     );
+  }
+
+  async actualizar(event) {
+    this.reload = false;
+    this.setTipo(this.tipo);
+    setTimeout(() => {
+      this.reload = true;
+      event.target.complete();
+    }, 1000);
+
   }
 }

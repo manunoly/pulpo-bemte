@@ -51,6 +51,15 @@ export class ClaseDetallesPage implements OnInit {
     this.urlPhoto = environment.photo_url;
   }
 
+  async actualizar(event) {
+    this.cargarClase();
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
+
+  }
+
   ionViewWillEnter() {
     this.claseId = this.route.snapshot.paramMap.get("id");
     this.cargarClase();

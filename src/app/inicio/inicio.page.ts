@@ -43,4 +43,14 @@ export class InicioPage implements OnInit {
   goTo(url) {
     this.router.navigateByUrl(url);
   }
+
+  async actualizar(event) {
+    this.reload = false;
+    setTimeout(() => {
+      this.reload = true;
+      event.target.complete();
+    }, 600);
+
+  }
+
 }

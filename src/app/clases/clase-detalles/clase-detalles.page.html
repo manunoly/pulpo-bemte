@@ -7,6 +7,12 @@
 
 <ion-content text-center>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDivData">
     <ion-grid *ngIf="(claseO | async) as clase; else loadD">
 

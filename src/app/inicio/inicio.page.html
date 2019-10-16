@@ -2,6 +2,12 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="(auth.currentUser | async) as user; else loadD">
     <app-header-user *ngIf="reload"></app-header-user>
 

@@ -4,6 +4,15 @@
 
   <app-header-user-prof *ngIf="reload"></app-header-user-prof>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles"
+      refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-grid>
     <ion-row class="lineBotton">
       <ion-col size="6">
