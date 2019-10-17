@@ -55,7 +55,7 @@ export class PerfilPage implements OnInit {
   }
 
   async validarUsuario() {
-    const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo);
+    const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo + '&user_id=' + this.user.user_id);
     if (!resp) {
       this.util.showMessage('El usuario ya se encuentra registrado');
       return true;
