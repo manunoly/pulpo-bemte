@@ -15,12 +15,20 @@ export class DbService {
   estadoNotificacion;
   
   public estadoProfesor;
-
+  public photo_url;
+  
   constructor(
     private http: HttpClient,
     public util: UtilService
   ) {
     this.getHeader();
+  }
+
+
+  get photoUrl(){
+    if(!this.photo_url)
+      this.photo_url = environment.photo_url;
+    return this.photo_url;
   }
 
   getEstadoProfesor() {

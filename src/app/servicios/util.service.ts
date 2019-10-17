@@ -3,6 +3,7 @@ import { ToastController, Platform, LoadingController, AlertController } from '@
 import { PopoverController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Location } from "@angular/common";
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { Location } from "@angular/common";
 export class UtilService {
   loading;
   temporalData;
+  photo_url;
 
   constructor(
     public toastController: ToastController,
@@ -32,6 +34,13 @@ export class UtilService {
     });
     toast.present();
   }
+
+  get photoUrl(){
+    if(!this.photo_url)
+      this.photo_url = environment.photo_url;
+    return this.photo_url;
+  }
+
 
   getSo() {
     if (this.platform.is('ios')) {
