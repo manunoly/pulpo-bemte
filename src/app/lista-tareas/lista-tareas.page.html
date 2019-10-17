@@ -32,7 +32,7 @@
       <ion-col size="8">
         <ion-item (click)="setDetallesTareaId(tarea?.id)" lines="none">
           <ion-thumbnail slot="start">
-            <img [src]="'/assets/img/materias/'+tarea?.materia + '.png'">
+            <img [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{tarea?.materia}} </h2>

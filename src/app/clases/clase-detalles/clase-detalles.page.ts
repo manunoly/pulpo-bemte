@@ -97,14 +97,14 @@ export class ClaseDetallesPage implements OnInit {
     anterior.setHours(claseHora.getHours() - 1);
 
     const posterior = new Date(claseHora);
-    posterior.setHours(claseHora.getHours() + claseD.duracion + 1);
+    // posterior.setHours(claseHora.getHours() + claseD.duracion + 1);
 
     const now = Date.now();
 
     console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
     if (anterior.getTime() > now || now > posterior.getTime())
-      return this.util.showMessage('El chat estará activo una hora antes de la clase y una hora luego de terminada');
+      return this.util.showMessage('El chat estará activo una hora antes de la clase.');
 
     const modal = await this.modalController.create({
       component: ChatPage,

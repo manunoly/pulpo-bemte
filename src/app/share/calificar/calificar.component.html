@@ -14,7 +14,7 @@
         <ion-col offset="2" size="8">
           <ion-item lines="none" class="ion-no-padding">
             <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+calificarData?.materia + '.png'">
+              <img [src]="calificarData.icono ? util.photoUrl + calificarData.icono : '/assets/icon/favicon.png'">
             </ion-thumbnail>
             <ion-label class="ion-text-wrap ion-padding-left">
               <h2> {{calificarData?.materia}} </h2>
@@ -117,7 +117,7 @@
         <ion-col offset="2" size="8">
           <ion-item lines="none" class="ion-no-padding">
             <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+calificarData?.materia + '.png'">
+              <img [src]="calificarData.icono ? util.photoUrl + calificarData.icono : '/assets/icon/favicon.png'">
             </ion-thumbnail>
             <ion-label class="ion-text-wrap ion-padding-left">
               <h2> {{calificarData?.materia}} </h2>

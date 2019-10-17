@@ -17,7 +17,7 @@
       <ion-col offset="1" size="8">
         <ion-item lines="none">
           <ion-thumbnail slot="start">
-            <img [src]="'/assets/img/materias/'+data?.materia + '.png'">
+            <img [src]="data.icono ? util.photoUrl + data.icono : '/assets/icon/favicon.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{data?.materia}} </h2>

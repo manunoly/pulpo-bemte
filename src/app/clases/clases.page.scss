@@ -1,4 +1,4 @@
-.borderRound{
+.borderRound {
   border-radius: 20px;
   border: 1px var(--ion-color-success) solid;
 }
@@ -15,4 +15,9 @@ ion-grid {
 ion-label {
   --color: var(--ion-color-tertiary) !important;
   font-size: 35px;
+}
+
+.centrarReducir {
+  width: 70% !important;
+  margin: 0 auto !important;
 }

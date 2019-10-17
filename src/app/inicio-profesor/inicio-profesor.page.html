@@ -33,7 +33,7 @@
         <ion-col size="8">
           <ion-item class="ion-text-wrap" lines="none">
             <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+clase?.materia + '.png'">
+              <img [src]="clase.icono ? util.photoUrl + clase.icono : '/assets/icon/favicon.png'">
             </ion-thumbnail>
             <ion-label class="ion-text-wrap ion-no-padding">
               <h2> {{clase?.materia}} </h2>
@@ -117,7 +117,7 @@
         <ion-col size="8">
           <ion-item lines="none">
             <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+tarea?.materia + '.png'">
+              <img [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
             </ion-thumbnail>
             <ion-label class="ion-text-wrap ion-padding-left">
               <h2> {{tarea?.materia}} </h2>

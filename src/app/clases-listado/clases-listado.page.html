@@ -15,7 +15,7 @@
       <ion-col size="8">
         <ion-item (click)="setDetallesClaseId(clase?.id)" lines="none">
           <ion-thumbnail slot="start">
-              <img [src]="'/assets/img/materias/'+clase?.materia + '.png'">
+              <img [src]="clase.icono ? util.photoUrl + clase.icono : '/assets/icon/favicon.png'">
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-padding-left">
             <h2> {{clase?.materia}} </h2>
