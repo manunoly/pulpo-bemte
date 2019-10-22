@@ -1,3 +1,9 @@
 ion-progress-bar {
   border-radius: 10px;
 }
+
+.borderC {
+  --border-radius: 20px 20px 20px 20px;
+  --border-color: var(--ion-color-primary);
+  --border-width: 1px;
+}

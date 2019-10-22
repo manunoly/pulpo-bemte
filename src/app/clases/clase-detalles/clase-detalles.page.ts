@@ -18,6 +18,7 @@ export class ClaseDetallesPage implements OnInit {
   claseId;
   claseO;
   aplicadaProf;
+  verDetalles = false;
   claseObjet = {
     "user_id": 24,
     "materia": "Economia",
