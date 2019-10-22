@@ -6,11 +6,24 @@
 </ng-template>
 
 <ion-content>
-  <ion-fab padding color="dark" slot="fixed" (click)="close()">
+
+  <ion-item class="ion-no-padding" *ngIf="!ubicacion">
+    <ion-button class="ion-no-padding" slot="start" fill="clear" size="large" (click)="close()">
+      <ion-icon slot="icon-only" name="ios-arrow-back"></ion-icon>
+    </ion-button>
+
+    <ion-searchbar shape="round" mode="ios" color="light" type="text" #searchD name="searchD"
+      [(ngModel)]="searchDestinationText" autocomplete no-padding no-margin animated debounce="400"
+      placeholder="Lugar de la clase">
+    </ion-searchbar>
+  </ion-item>
+
+  <ion-fab *ngIf="ubicacion" vertical="bottom" color="dark" slot="fixed" (click)="close()">
     <ion-button shape="round">
       <ion-icon name="close" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-fab>
+
   <ion-fab *ngIf="!ubicacion" vertical="bottom" slot="fixed" color="dark" (click)="close()">
     <ion-button>
       Establecer ubicación de la clase

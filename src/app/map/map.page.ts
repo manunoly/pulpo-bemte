@@ -16,7 +16,11 @@ export class MapPage implements OnInit {
   mapRef = null;
   markerUbicacion;
   ubicacion;
+  searchDestinationText;
+
   @ViewChild('map') mapElement: ElementRef;
+  @ViewChild("searchD", { read: ElementRef }) searchD: ElementRef;
+
 
   constructor(public auth: AuthService, private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
 
@@ -50,6 +54,8 @@ export class MapPage implements OnInit {
         console.log('esta listo el mapa');
         this.addMaker(myLatLng.lat, myLatLng.lng);
         setTimeout(async () => {
+          if(!this.ubicacion)
+            this.initAutocomplete();
           await this.util.dismissLoading();
         }, 100);
       });
@@ -102,7 +108,7 @@ export class MapPage implements OnInit {
       geocoder.geocode(to, (results, status) => {
         if (status === "OK") {
           let locate;
-          console.log('esta el texto ',results);
+          console.log('esta el texto ', results);
           locate = results[0].formatted_address;
           return resolve(locate);
         } else {
@@ -112,5 +118,25 @@ export class MapPage implements OnInit {
       });
     });
     return await geocoderQuery;
+  }
+
+  initAutocomplete() {
+    let inputElement = this.searchD.nativeElement.getElementsByTagName('input')[0];
+    console.log(inputElement);
+    let autocomplete = new google.maps.places.Autocomplete(inputElement
+      , { componentRestrictions: { country: 'ec' } }
+    );
+    
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      let place = autocomplete.getPlace();
+      console.log(place);
+      if (place.geometry.location) {
+        console.log(place);
+        this.searchDestinationText = place.name;
+        const center = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };
+        this.markerUbicacion.setPosition(center);
+        this.mapRef.panTo(center);
+      }
+    });
   }
 }

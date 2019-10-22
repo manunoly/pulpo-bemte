@@ -1,4 +1,14 @@
-#map{
-    width: 100%;
-    height: 100%;
-  }
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+ion-item {
+  --background: transparent !important;
+  --color: transparent !important;
+  --border-color:transparent!important;
+}
+
+// ion-item{
+//   --ion-background-color:red;
+// }
