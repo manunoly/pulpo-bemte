@@ -59,9 +59,9 @@ export class AppComponent {
       icon: 'logo-usd'
     },
     {
-      title: 'Información',
-      url: '/informacion',
-      icon: 'help'
+      title: 'Clase Gratis',
+      url: '/clase-gratis',
+      icon: 'logo-usd'
     }
 
   ];

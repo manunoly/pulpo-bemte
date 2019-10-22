@@ -12,9 +12,10 @@
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound"
-                            [items]="materias" formControlName="materia" itemValueField="nombre" itemTextField="nombre"
-                            [canSearch]="true" (onChange)="claseAnteriorProfesor($event.value.nombre)">
+                        <ionic-selectable style="width: 80%; margin: 0 auto;" closeButtonText="Cerrar"
+                            class="ion-text-center borderRound" [items]="materias" formControlName="materia"
+                            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+                            (onChange)="claseAnteriorProfesor($event.value.nombre)">
                         </ionic-selectable>
                         <!-- <ion-select okText="Seleccionar" cancelText="Cancelar"
                             (ionChange)="claseAnteriorProfesor($event.detail.value)" class="ion-text-center"
@@ -34,7 +35,8 @@
 
                     <ion-item no-padding no-margin>
                         <ion-label position="stacked"><b>Descripcion</b></ion-label>
-                        <ion-textarea  placeholder="Ejemplo: Necesito estudiar para mi examen" formControlName="descripcion"></ion-textarea>
+                        <ion-textarea placeholder="Ejemplo: Necesito estudiar para mi examen"
+                            formControlName="descripcion"></ion-textarea>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -45,7 +47,7 @@
                         <ion-label position="stacked">
                             <b>Cantidad de Alumnos</b>
                         </ion-label>
-                        <ion-select style="width: 80%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
+                        <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
                             class="ion-text-center borderRound" formControlName="personas">
                             <ion-select-option value="1">1</ion-select-option>
                             <ion-select-option value="2">2</ion-select-option>
@@ -63,20 +65,22 @@
                         <ion-label position="stacked">
                             <b>Fecha</b>
                         </ion-label>
-                        <ion-datetime style="width: 80%; margin: 0 auto;" [pickerOptions]="customPickerOptions" doneText="Hecho" cancelText="Cancelar"
+                        <ion-datetime style="width: 80%; margin: 0 auto;position: relative;"
+                            [pickerOptions]="customPickerOptions" doneText="Hecho" cancelText="Cancelar"
                             class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima"
                             [max]="fechaMaxima" formControlName="fecha" display-format="DD.MM.YYYY">
                         </ion-datetime>
-                        <!-- <ion-icon color="tertiary" slot="end" style="padding-left: -15px;" name="calendar"></ion-icon> -->
+                        <ion-icon color="tertiary" slot="end" style="position: absolute; top: 25px; right: 20%;"
+                            name="calendar"></ion-icon>
                     </ion-item>
 
                     <ion-item no-padding no-margin lines="none">
                         <ion-label position="stacked">
                             <b>Hora</b>
                         </ion-label>
-                        <ion-datetime style="width: 80%; margin: 0 auto;" doneText="Hecho" cancelText="Cancelar" class="ion-text-center"
-                            [disabled]="!claseForm.value.fecha" formControlName="hora1" [hourValues]="minHora"
-                            minuteValues="0,30" display-format="HH:mm">
+                        <ion-datetime style="width: 80%; margin: 0 auto;" doneText="Hecho" cancelText="Cancelar"
+                            class="ion-text-center" [disabled]="!claseForm.value.fecha" formControlName="hora1"
+                            [hourValues]="minHora" minuteValues="0,30" display-format="HH:mm">
                         </ion-datetime>
                     </ion-item>
 
@@ -84,8 +88,8 @@
                         <ion-label position="stacked">
                             <b>Duración</b>
                         </ion-label>
-                        <ion-select style="width: 80%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar" class="ion-text-center borderRound"
-                            formControlName="duracion">
+                        <ion-select style="width: 80%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
+                            class="ion-text-center borderRound" formControlName="duracion">
                             <ion-select-option value="2">2 horas</ion-select-option>
                             <ion-select-option value="3">3 horas</ion-select-option>
                             <ion-select-option value="4">4 horas</ion-select-option>

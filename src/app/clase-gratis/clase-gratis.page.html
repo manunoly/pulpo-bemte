@@ -1,20 +1,35 @@
 <app-header-bemte></app-header-bemte>
 
-<ion-content>
-  <h3 text-center *ngIf="auth.currentUser | async as user" padding style="padding-top: 20%">
-    {{ user?.nombres }} {{ user?.apellidos }}, <br />
-    Prueba una clase gratis
-  </h3>
-  <div style="padding-top: 10%"></div>
-  <ion-grid *ngIf="clases | async as clasesD; else loadD">
-    <ion-row *ngFor="let clase of clasesD">
-      <ion-col *ngIf="clase | json as data" size="8" offset="2">
-        <ion-item (click)="goto(clase.url)">
-          <ion-label text-center>
-            <h1>{{ clase?.nombre }}</h1>
-            <h3>{{ clase.descripcion }}</h3>
-          </ion-label>
-        </ion-item>
+<ion-content padding>
+
+  <ion-grid padding>
+    <ion-row>
+      <ion-col text-center>
+        <ion-text color="tertiary">
+          <h1><b> Si un profe te dio su número personal </b></h1>
+          <h3>¡Te regalamos 2 horas!</h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-text color="tertiary">
+          <h3>Escribenos un mail con los siguientes datos:</h3>
+        </ion-text>
+
+        <ion-text color="dark">
+          <p class="ion-no-padding">Tus Nombres y Apellidos</p>
+          <p class="ion-no-padding">Tu número de celular</p>
+          <p class="ion-no-padding">Nombre del profesor</p>
+          <p class="ion-no-padding">Celular del profesor</p>
+          <p class="ion-no-padding">Día y hora que te dió el contacto</p>
+        </ion-text>
+
+        <ion-text color="tertiary">
+          <h3>Al mail:</h3>
+          <a href="bemteclasegratis@gmail.com" target="_blank">bemteclasegratis@gmail.com</a>
+        </ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
