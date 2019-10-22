@@ -68,7 +68,7 @@
             <ion-input [disabled]="!registroForm.value.oldPassword" formControlName="newPassword"
               placeholder="Contraseña nueva" [type]="eye"></ion-input>
             <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
-              <ion-icon name="eye" slot="icon-only"  color="medium"></ion-icon>
+              <ion-icon name="eye" slot="icon-only" color="medium"></ion-icon>
             </ion-button>
           </ion-item>
 
@@ -80,7 +80,7 @@
               placeholder="Confirmar Contraseña Nueva" [type]="eye">
             </ion-input>
             <ion-button slot="end" class="ion-float-right" fill="clear" (click)="eye = eye =='text'?'password': 'text'">
-              <ion-icon name="eye" slot="icon-only"  color="medium"></ion-icon>
+              <ion-icon name="eye" slot="icon-only" color="medium"></ion-icon>
             </ion-button>
           </ion-item>
         </ion-col>
@@ -129,7 +129,8 @@
 
         <ion-col size="8">
           <ion-item no-padding>
-            <ion-input readonly type="tel" formControlName="celular"></ion-input>
+            <ion-input type="tel" formControlName="celular"></ion-input>
+            <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -140,6 +141,7 @@
             <ion-label position="stacked"> Correo </ion-label>
             <ion-input formControlName="email" readonly type="email">
             </ion-input>
+            <!-- <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon> -->
           </ion-item>
 
           <ion-item class="ion-no-padding">
