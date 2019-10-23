@@ -84,7 +84,7 @@ ion-fab-list {
     background-color: var(--ion-color-primary);
     line-height: 20px;
     padding: 2px 4px;
-    width: 90px;
+    width: 100px;
     border-radius: 4px;
     z-index: 0;
     font-weight: bold;
@@ -211,6 +211,15 @@ ion-fab {
   color: white;
   animation: typing 2.5s steps(60, end), blink-caret 0.75s step-end infinite;
 }
+
+// ion-fab-list{
+//   :first-child{
+//     position: absolute;
+//     top: 6px;
+//     left: 45px;
+//   }
+// }
+
 
 /* The typing effect */
 @keyframes typing {

@@ -4,7 +4,6 @@ import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { async } from 'q';
 
 @Component({
   selector: 'app-login',
@@ -27,9 +26,9 @@ export class LoginPage implements OnInit {
   ) {
     this.authForm = this.fb.group({
       'email': ['', [Validators.required, Validators.email]],
+      'password': ['', [Validators.required, Validators.minLength(6)]]
       // 'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
       // 'password': ['12345678', Validators.required]
-      'password': ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 

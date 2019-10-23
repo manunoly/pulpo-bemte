@@ -47,11 +47,17 @@ export class AuthService {
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
         if (user.tipo == 'Profesor')
-          this.router.navigateByUrl('inicio-profesor');
+          this.router.navigate(['/inicio-profesor'], { replaceUrl: true })
+        // this.router.navigateByUrl('inicio-profesor');
         else
-          this.router.navigateByUrl('inicio');
+          this.router.navigate(['/inicio'], { replaceUrl: true });
+        // this.router.navigateByUrl('inicio');
+
+      }else{
+        this.router.navigate(['/login'], { replaceUrl: true });
       }
     } catch (error) {
+      this.router.navigate(['/login'], { replaceUrl: true });
       console.log('auth load from local storage user', error);
     }
   }
@@ -63,7 +69,7 @@ export class AuthService {
     else
       user['avatar'] = '/assets/icon/favicon.png';
 
-    console.log('este usuario voy a escribir', user);
+    console.log('este usuario ya escribi en auth', user);
     user = JSON.stringify(user);
 
     this.util.setStorage('token', user.token);
