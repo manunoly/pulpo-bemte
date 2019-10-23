@@ -1,22 +1,5 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+ion-content {
+  --background: url(/assets/img/background_on.png) no-repeat 52% center/cover;
+  background-color: var(--ion-color-primary) !important;
+  --ion-background-color: var(--ion-color-primary) !important;
 }
-
-img{
-  height: 400px;
-  width: 100%;
-}
-
-ion-fab-button{
-  background-color: transparent !important;
-}
-
-.bottomWhite {
-  border-bottom: 25px solid var(--ion-color-light);
-}
-
-ion-list{
-  --background: transparent;
-}
-

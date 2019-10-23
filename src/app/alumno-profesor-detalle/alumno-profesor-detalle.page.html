@@ -26,9 +26,9 @@
       </ion-col>
     </ion-row>
 
-    <ion-row (click)="profesor = !profesor">
-      <ion-col text-center>
-        <img [src]="data.avatar" [ngClass]="data.tipo == 'Profesor' && !profesor ? 'normalAvatar':'grandeAvatar'">
+    <ion-row class="ion-no-padding ion-no-margin">
+      <ion-col class="ion-no-padding ion-no-margin" text-center>
+        <img [src]="data.avatar" class='grandeAvatar'>
       </ion-col>
     </ion-row>
 
@@ -42,37 +42,16 @@
       </ion-col>
     </ion-row>
 
-    <div *ngIf="data.tipo == 'Profesor' && !profesor">
-      <ion-row text-center>
-        <ion-col offset="3" size="3">
-          <img style="height: 60px; width: 60px;" src="/assets/img/clases.png">
-          <ion-text color="tertiary">
-            <h1 no-padding no-margin>
-              {{data?.profClases}}
-            </h1>
-          </ion-text>
-        </ion-col>
-        <ion-col size="3">
-          <img style="height: 60px; width: 60px;" src="/assets/img/tareas.png">
-          <ion-text color="tertiary">
-            <h1 no-padding no-margin>
-              {{data?.profTareas}}
-            </h1>
-          </ion-text>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-text color="tertiary">
-            <h3>Descripción</h3>
-          </ion-text>
-          <ion-text color="dark">
-            <p>{{data?.profDescripcion}}</p>
-          </ion-text>
-        </ion-col>
-      </ion-row>
-    </div>
+    <ion-row *ngIf="data.tipo == 'Profesor'">
+      <ion-col>
+        <ion-text color="tertiary">
+          <h3>Descripción</h3>
+        </ion-text>
+        <ion-text color="dark">
+          <p>{{data?.profDescripcion}}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
 
   </ion-grid>
 </ion-content>

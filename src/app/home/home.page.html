@@ -1,67 +1,9 @@
 <ion-content>
-  <ion-fab style="padding-top: 20px;">
-    <ion-buttons>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-  </ion-fab>
 
-  <div style="padding-top: 80px;">
+  <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
+    <ion-button style="min-width: 50% !important;" color="tertiary" size="large" expand="block" [routerLink]="['/login']" shape="round">
+      Inicio
+    </ion-button>
+  </ion-row>
 
-  </div>
-  <ion-grid>
-    <ion-row>
-      <ion-col class="ion-padding-end">
-        <ion-list style="background: #243356" lines="none">
-          <ion-row>
-            <ion-col class="ion-padding-start">
-              Bienvenido Señor Profesor
-            </ion-col>
-            <ion-col class="ion-padding-start">
-              <small> Horas disponibles: 34 </small>
-            </ion-col>
-          </ion-row>
-          <ion-item>
-            <ion-label>
-              4.8 <ion-icon name="star" color="warning"></ion-icon>
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('perfil')">
-            <ion-label>
-              Mi Cuenta
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('register-profesor')">
-            <ion-label>
-              Genera ganancia con tu mente
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('combos')">
-            <ion-label>
-              Comprar combos
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('clases')">
-            <ion-label>
-              Mis clases
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('clases')">
-            <ion-label>
-              Mis tareas
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('')">
-            <ion-label>
-              Perfil de Profesores
-            </ion-label>
-          </ion-item>
-          <ion-item (click)="ir('ayuda')">
-            <ion-label>
-              Ayuda
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </ion-content>
