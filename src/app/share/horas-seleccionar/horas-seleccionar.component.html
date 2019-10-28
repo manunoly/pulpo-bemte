@@ -28,8 +28,8 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="lineBotton" *ngFor="let hora of horasD" [ngClass]="horaSeleccionada && horaSeleccionada.id==hora.id?'seleccion':''"
-    (click)="seleccionaHora(hora)">
+  <ion-row class="lineBotton" *ngFor="let hora of horasD"
+    [ngClass]="horaSeleccionada && horaSeleccionada.id==hora.id?'seleccion':''" (click)="seleccionaHora(hora)">
     <ion-col size="4">
       <ion-button fill="clear" color="tertiary">
         <h5>{{hora.hora}}</h5>
@@ -49,20 +49,21 @@
 </ion-grid>
 
 <ng-template #loadD>
-    <div text-center>
-      <ion-spinner></ion-spinner>
-      <h3>Espere por favor</h3>
-    </div>
-  </ng-template>
+  <div text-center>
+    <ion-spinner></ion-spinner>
+    <h3>Espere por favor</h3>
+  </div>
+</ng-template>
 
-  <ion-row>
-    <!-- <ion-col size="4" offset="1">
+<ion-row>
+  <!-- <ion-col size="4" offset="1">
       <ion-button (click)="confirmarCombo(false)" shape="round" expand="block" size="small" color="tertiary">Atras
       </ion-button>
     </ion-col> -->
-    <ion-col size="4" offset="4">
-      <ion-button [disabled]="!horaSeleccionada" (click)="confirmarCombo(true)" shape="round"  color="success" expand="block" size="small">
-        Comprar
-      </ion-button>
-    </ion-col>
-  </ion-row>
+  <ion-col size="6" offset="3">
+    <ion-button [disabled]="!horaSeleccionada" (click)="confirmarCombo(true)" shape="round" color="success"
+      expand="block" size="large">
+      Comprar
+    </ion-button>
+  </ion-col>
+</ion-row>
