@@ -7,6 +7,12 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-grid>
     <ion-row class="lineBotton">
       <ion-col>
@@ -34,23 +40,27 @@
           <ion-thumbnail slot="start">
             <img [src]="clase.icono ? util.photoUrl + clase.icono : '/assets/icon/favicon.png'">
           </ion-thumbnail>
-          <ion-label class="ion-text-wrap ion-padding-left">
+          <ion-label class="ion-text-wrap ion-margin-left ion-no-padding ion-no-margin">
             <h2> {{clase?.materia}} </h2>
             <h5> {{clase?.tema}}</h5>
           </ion-label>
-          <!-- <ion-button *ngIf="clase?.user_id_pro && clase?.estado == 'Terminado'" (click)="calificar(clase)" slot="end">
-            Calificar</ion-button> -->
         </ion-item>
       </ion-col>
 
       <ion-col class="ion-align-self-center lineLateral" text-center size="4">
         <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
-          <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round"
-            [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
-            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
-          </ion-button>
         </ion-text>
+        <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round"
+          [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
+          <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
+        </ion-button>
+        <div class="ion-no-padding ion-no-margin"
+          *ngIf="clase?.estado == 'Sin_Horas' && (auth.currentUser | async)?.tipo == 'Alumno'">
+          <ion-button (click)="confirmaEliminarClase(clase)" color="danger" size="small" shape="round">
+            <b>Eliminar</b>
+          </ion-button>
+        </div>
       </ion-col>
 
       <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">

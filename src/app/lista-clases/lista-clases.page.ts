@@ -58,4 +58,63 @@ export class ListaClasesPage implements OnInit {
     });
     return await modal.present();
   }
+
+  async confirmaEliminarClase(clase){
+    console.log('eliminar clase', clase);
+    
+      if (!clase || clase == {})
+        return;
+
+        const alert = await this.alertController.create({
+        header: '¿Estás seguro que deseas eliminar?',
+        cssClass: 'fondoRojo alertRojo',
+        inputs: [
+          {
+            name: 'Si',
+            type: 'radio',
+            label: 'Si',
+            value: true
+          },
+          {
+            name: 'No',
+            type: 'radio',
+            label: 'No',
+            value: false
+          }],
+        buttons: [{
+          text: 'Aceptar',
+          handler: (data) => {
+            if (data)
+              this.eliminarClase(clase);
+          }
+        }
+        ]
+      });
+  
+      await alert.present();
+  }
+
+  async eliminarClase(clase){
+    try {
+      this.util.showLoading();
+      const user = await this.auth.getUserData();
+      const resp = await this.db.post('clase-tarea-eliminar', { clase_id: clase.id, user_id: user.user_id, tarea_id: 0 });
+      this.util.dismissLoading();
+      
+      if (resp && resp.success) {
+        this.util.showMessage(resp.success);
+        this.cargarClases();
+      }
+    } catch (error) {
+      this.util.dismissLoading();
+    }
+  }
+
+  async actualizar(event) {
+    this.cargarClases();
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
+  }
 }
