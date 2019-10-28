@@ -116,7 +116,7 @@ export class UtilService {
         return 'medium';
 
       case 'Cancelado':
-        return 'danger';
+        return 'medium';
 
       default:
         return 'primary';

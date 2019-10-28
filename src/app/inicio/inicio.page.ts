@@ -1,6 +1,5 @@
 import { UtilService } from "src/app/servicios/util.service";
 import { FcmService } from "./../servicios/fcm.service";
-import { ModalController } from "@ionic/angular";
 import { AuthService } from "./../servicios/auth.service";
 import { Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
