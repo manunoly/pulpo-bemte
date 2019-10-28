@@ -11,17 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class BilleteraEstudiantePage implements OnInit {
   horasCombos;
   horasComprar;
+  confirmandoPago = false;
 
   constructor(private router: Router, public auth: AuthService, private db: DbService) { }
 
   async ngOnInit() {
     const user = await this.auth.getUserData();
     this.horasCombos = await this.db.get('horas-totales?user_id=' + user['user_id']);
-  }
-
-  recargarCombos() {
-    this.db.setComboToBuy('');
-    this.router.navigateByUrl('combos');
   }
 
   setHoras($event) {
@@ -31,8 +27,12 @@ export class BilleteraEstudiantePage implements OnInit {
 
   pagadasHoras(estado) {
     if (estado)
-      this.router.navigateByUrl('inicio');
-    else
+      this.confirmandoPago = true;
+    else {
       this.horasComprar = '';
+      this.confirmandoPago = false;
+    }
+
   }
+
 }

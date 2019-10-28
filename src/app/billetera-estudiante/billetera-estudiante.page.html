@@ -4,48 +4,73 @@
 
   <ion-grid *ngIf="auth.currentUser | async as user">
 
-    <div *ngIf="!horasComprar; else pagarHoras">
-      <ion-row class="lineBotton" no-padding padding-horizontal>
-        <ion-col size="8" offset="2" text-center>
-          <ion-item lines="none">
-            <ion-avatar>
-              <img [src]="user.avatar">
-            </ion-avatar>
+    <div *ngIf="!confirmandoPago">
+      <div *ngIf="!horasComprar; else pagarHoras">
+        <ion-row class="lineBotton" no-padding padding-horizontal>
+          <ion-col size="8" offset="2" text-center>
+            <ion-item lines="none">
+              <ion-avatar>
+                <img [src]="user.avatar">
+              </ion-avatar>
 
-            <ion-label class="ion-padding" color="primary">
-              <h1 style="font-size: 30px;">Billetera</h1>
-            </ion-label>
-          </ion-item>
+              <ion-label class="ion-padding" color="primary">
+                <h1 style="font-size: 30px;">Billetera</h1>
+              </ion-label>
+            </ion-item>
 
+            <ion-text color="tertiary">
+              <h3 class="ion-no-padding ion-text-uppercase">Horas Disponibles <br>
+                <span style="font-size: 40px"> {{horasCombos}} </span>
+              </h3>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row no-padding padding-horizontal>
+          <ion-col text-center>
+            <ion-text color="primary">
+              <h3> Comprar horas </h3>
+            </ion-text>
+            <app-horas-seleccionar (accion)="setHoras($event)"></app-horas-seleccionar>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <ng-template #pagarHoras>
+        <div text-center *ngIf="horasComprar">
           <ion-text color="tertiary">
-            <h3 class="ion-no-padding ion-text-uppercase">Horas Disponibles <br>
-              <span style="font-size: 40px"> {{horasCombos}} </span>
+            <h3>Elegiste el combo de {{horasComprar.hora}} horas
+              <a (click)=pagadasHoras(false)>Cambiar</a>
             </h3>
+          </ion-text>
+          <app-subir-transferencia (accion)="pagadasHoras($event)" [combo]="horasComprar"></app-subir-transferencia>
+        </div>
+      </ng-template>
+    </div>
+
+    <div *ngIf="confirmandoPago" padding>
+      <ion-row>
+        <ion-col>
+          <ion-text color="danger">
+            <h1 padding><b>Confirmando Pago</b></h1>
           </ion-text>
         </ion-col>
       </ion-row>
-
-      <ion-row no-padding padding-horizontal>
-        <ion-col text-center>
-          <ion-text color="primary">
-            <h3> Comprar horas </h3>
+      <ion-row>
+        <ion-col>
+          <ion-text color="tertiary">
+            <h5>Gracias por realizar su pago. <br>
+              En breves momentos se acreditará su combo.
+            </h5>
           </ion-text>
-          <app-horas-seleccionar (accion)="setHoras($event)"></app-horas-seleccionar>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-progress-bar padding color="primary" type="indeterminate"></ion-progress-bar>
         </ion-col>
       </ion-row>
     </div>
-
-    <ng-template #pagarHoras>
-      <div text-center *ngIf="horasComprar">
-        <ion-text color="tertiary">
-          <h3>Elegiste el combo de {{horasComprar.hora}} horas
-            <a (click)=pagadasHoras(false)>Cambiar</a>
-          </h3>
-        </ion-text>
-        <app-subir-transferencia (accion)="pagadasHoras($event)" [combo]="horasComprar"></app-subir-transferencia>
-      </div>
-    </ng-template>
-
   </ion-grid>
 
   <ng-template #loadD>
