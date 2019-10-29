@@ -151,10 +151,76 @@
             <ion-input formControlName="ubicacion" type="text"></ion-input>
             <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
           </ion-item>
+
+          <div *ngIf="user.tipo == 'Profesor'">
+            <ion-item class="ion-no-padding">
+              <ion-label position="stacked"> Descripción profesional </ion-label>
+              <ion-textarea formControlName="descripcion" type="email">
+              </ion-textarea>
+              <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
+            </ion-item>
+
+            <ion-item class="ion-no-padding">
+              <ion-label position="stacked"> ¿Como te gustaria trabajar? </ion-label>
+              <ion-select formControlName="claseTarea" (ionChange)="setClasesTareas($event.detail.value)"
+                okText="Seleccionar" cancelText="Cancelar" class="ion-padding">
+                <ion-select-option *ngFor="let c of claseTareaSelect" [value]="c.id">
+                  {{c?.value}}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
+            </ion-item>
+          </div>
         </ion-col>
       </ion-row>
-
     </form>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center" [items]="materias" [(ngModel)]="materia1"
+            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+            (onChange)="verificarMateria($event.value,1)">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center" [items]="materias" [(ngModel)]="materia2"
+            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+            (onChange)="verificarMateria($event.value,2)">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center" [items]="materias" [(ngModel)]="materia3"
+            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+            (onChange)="verificarMateria($event.value,3)">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center" [items]="materias" [(ngModel)]="materia4"
+            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+            (onChange)="verificarMateria($event.value,4)">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center" [items]="materias" [(ngModel)]="materia5"
+            itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+            (onChange)="verificarMateria($event.value,5)">
+          </ionic-selectable>
+        </ion-item>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
 

@@ -29,6 +29,13 @@ export class PerfilPage implements OnInit {
   img;
   imgPerfil;
   eye = 'password';
+  claseTareaSelect = [{ id: 1, value: 'Clases' }, { id: 2, value: 'Tareas' }, { id: 3, value: 'Clases y tareas' },]
+  materias;
+  materia1;
+  materia2;
+  materia3;
+  materia4;
+  materia5;
 
   constructor(
     private router: Router,
@@ -86,10 +93,41 @@ export class PerfilPage implements OnInit {
 
   async editarPerfil() {
     try {
+
+      if (this.user.tipo == 'Profesor') {
+        if (this.materia1)
+          this.registroForm.controls['materia1'].setValue(this.materia1.nombre);
+        else {
+          this.util.showMessage('Complete la primera materia');
+          return this.registroForm.controls['materia1'].setValue('');
+        }
+
+        if (this.materia2)
+          this.registroForm.controls['materia2'].setValue(this.materia2.nombre);
+        else
+          this.registroForm.controls['materia2'].setValue('');
+
+        if (this.materia3)
+          this.registroForm.controls['materia3'].setValue(this.materia3.nombre);
+        else
+          this.registroForm.controls['materia3'].setValue('');
+
+        if (this.materia4)
+          this.registroForm.controls['materia4'].setValue(this.materia4.nombre);
+        else
+          this.registroForm.controls['materia4'].setValue('');
+
+        if (this.materia5)
+          this.registroForm.controls['materia5'].setValue(this.materia5.nombre);
+        else
+          this.registroForm.controls['materia5'].setValue('');
+      }
+
       this.util.showLoading();
       if (this.imgPerfil) {
         this.upload.startUpload(this.imgPerfil);
       }
+
       const resp = await this.db.post('actualizar-cuenta', this.registroForm.value);
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
@@ -107,7 +145,6 @@ export class PerfilPage implements OnInit {
   }
 
   async buildForm(user) {
-    this.editar = true;
     this.registroForm = this.fb.group({
       'user_id': [''],
       'avatar': [user.avatar],
@@ -124,11 +161,46 @@ export class PerfilPage implements OnInit {
       'pais': ['Ecuador', user.calificacion],
       'ciudad': [user.ciudad, Validators.required],
       'tipo': [user.tipo, Validators.required],
-      'ubicacion': [user.ubicacion ? user.ubicacion : ' ', Validators.required]
+      'ubicacion': [user.ubicacion ? user.ubicacion : ' ', Validators.required],
+      'descripcion': [user.descripcion ? user.descripcion : ' '],
+      'clases': [user.clases ? user.clases : ' '],
+      'tareas': [user.tareas ? user.tareas : ' '],
+      'claseTarea': [],
+      'materia1': [user.materia1 ? user.materia1 : ''],
+      'materia2': [user.materia2 ? user.materia2 : ''],
+      'materia3': [user.materia3 ? user.materia3 : ''],
+      'materia4': [user.materia4 ? user.materia4 : ''],
+      'materia5': [user.materia5 ? user.materia5 : ''],
     });
 
-    if (this.user)
+    if (this.user) {
       this.registroForm.controls['user_id'].setValue(this.user.user_id);
+      if (this.user.tipo == 'Profesor') {
+        if (this.user.clases && this.user.tareas) {
+          this.registroForm.controls['claseTarea'].setValue(3);
+        } else if (this.user.tareas) {
+          this.registroForm.controls['claseTarea'].setValue(2);
+        } else if (this.user.clases)
+          this.registroForm.controls['claseTarea'].setValue(1);
+
+        this.materias = await this.db.get("lista-materias");
+
+        if (this.user.materia1)
+          this.materia1 = this.materias.filter(x => x.materia == this.user.materia1)[0];
+
+        if (this.user.materia2)
+          this.materia2 = this.materias.filter(x => x.materia == this.user.materia2)[0];
+
+        if (this.user.materia3)
+          this.materia3 = this.materias.filter(x => x.materia == this.user.materia3)[0];
+
+        if (this.user.materia4)
+          this.materia4 = this.materias.filter(x => x.materia == this.user.materia4)[0];
+
+        if (this.user.materia5)
+          this.materia5 = this.materias.filter(x => x.materia == this.user.materia5)[0];
+      }
+    }
     this.cargarCiudades('Ecuador');
 
   }
@@ -139,4 +211,73 @@ export class PerfilPage implements OnInit {
     this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
   }
 
+  setClasesTareas(status) {
+    if (status == 3) {
+      this.registroForm.controls['clases'].setValue(1);
+      this.registroForm.controls['tareas'].setValue(1);
+    } else
+      if (status == 2) {
+        this.registroForm.controls['clases'].setValue(0);
+        this.registroForm.controls['tareas'].setValue(1);
+      } else
+        if (status == 1) {
+          this.registroForm.controls['clases'].setValue(1);
+          this.registroForm.controls['tareas'].setValue(0);
+        }
+  }
+
+
+  async verificarMateria(materia, no) {
+    if (materia === this.materia1 && no != 1) {
+      return this.resetMateria(no);
+    }
+
+    if (materia === this.materia2 && no != 2) {
+      return this.resetMateria(no);
+    }
+
+    if (materia === this.materia3 && no != 3) {
+      return this.resetMateria(no);
+    }
+
+    if (materia === this.materia4 && no != 4) {
+      return this.resetMateria(no);
+    }
+
+    if (materia === this.materia5 && no != 5) {
+      return this.resetMateria(no);
+    }
+  }
+
+  async resetMateria(no) {
+    setTimeout(() => {
+      switch (no) {
+        case 1: {
+          this.materia1 = undefined;
+          break;
+        }
+
+        case 2: {
+          this.materia2 = undefined;
+          break;
+        }
+
+        case 3: {
+          this.materia3 = undefined;
+          break;
+        }
+
+        case 4: {
+          this.materia4 = undefined;
+          break;
+        }
+
+        case 5: {
+          this.materia5 = undefined;
+          break;
+        }
+      }
+      this.util.showMessage('Por favor revise las materias seleccionadas');
+    }, 100);
+  }
 }
