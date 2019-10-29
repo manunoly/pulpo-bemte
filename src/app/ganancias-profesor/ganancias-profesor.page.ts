@@ -15,6 +15,7 @@ import { UtilService } from '../servicios/util.service';
 export class GananciasProfesorPage implements OnInit {
   ganancias;
   tipo = 'CLASES';
+  dataDetalles;
 
   constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
@@ -35,10 +36,16 @@ export class GananciasProfesorPage implements OnInit {
       ));
   }
 
+  setDetalles(id?) {
+    if (id == this.dataDetalles)
+      return this.dataDetalles = '';
+    this.dataDetalles = id;
+  }
 
   setTipo(tipo) {
     this.tipo = tipo;
     this.cargarGanancias();
+    this.setDetalles(this.dataDetalles);
   }
 
 }

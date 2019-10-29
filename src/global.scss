@@ -108,37 +108,28 @@ ion-fab {
   white-space: pre-line !important;
 }
 
-.alertRojo {
-  color: white !important;
-  --background: var(--ion-color-danger) !important;
-  h2 {
-    color: white !important;
-  }
-  div {
-    color: white !important;
-  }
-  div div:last-child {
-    button {
-      padding-left: 25px !important;
-      padding-right: 25px !important;
-      color: white !important;
-      background-color: var(--ion-color-tertiary) !important;
-      margin: 0 auto !important;
-      border-radius: 22px !important;
-    }
-  }
-}
-
-.fondoVerde{
+.fondoVerde {
   --background: var(--ion-color-success) !important;
 }
 
-.fondoRojo{
+//TODO:pintar los radio buton de las confirmaciones de blanco.
+
+.fondoRojo {
   --background: var(--ion-color-danger) !important;
 }
 
-.fondoAzul{
+.fondoAzul {
   --background: var(--ion-color-tertiary) !important;
+}
+
+.radioColorWhite {
+  alert-radio-icon{
+    color: red;
+    --color-checked: red !important;
+  }
+  .item-radio-checked{
+    background-color: red;
+}
 }
 
 .alertRojo {
@@ -163,6 +154,7 @@ ion-fab {
 
 .alertDefault {
   color: white !important;
+  --color-checked: white !important;
   --background: var(--ion-color-primary) !important;
   h2 {
     color: white !important;
@@ -219,7 +211,6 @@ ion-fab {
 //     left: 45px;
 //   }
 // }
-
 
 /* The typing effect */
 @keyframes typing {

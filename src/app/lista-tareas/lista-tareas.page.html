@@ -55,21 +55,48 @@
 
       <ion-grid text-center [routerLink]="['/tarea-detalles/'+tarea.id]" no-padding *ngIf="tarea?.id==detallesTareaId">
 
-        <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
+        <ion-row text-left *ngIf="tarea?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="tertiary">
-              <small>Descripción</small><br>
+              <h5 class="ion-no-margin ion-no-padding ion-padding-left">Descripción</h5><br>
               {{tarea?.descripcion}}
             </ion-text>
           </ion-col>
         </ion-row>
 
         <ion-row>
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.hora_inicio}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="3">
+            <small>Duración</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.inversion?tarea.inversion:1}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="4">
+            <small>Fecha</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.fecha_entrega  | date: 'dd/MM/yyyy'}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="2">
+            <small>Alumnos</small><br>
+            <ion-text color="tertiary">
+              <p>{{1}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <!-- <ion-row>
           <ion-col>
             <h5>Entregar: {{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
             <h5>Formato: {{tarea?.formato_entrega}}</h5>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
       </ion-grid>
     </ion-row>
 

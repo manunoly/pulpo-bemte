@@ -55,25 +55,68 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let g of gananciasD.data">
-      <ion-col size="8">
-        <ion-item lines="none">
-          <ion-thumbnail slot="start">
-            <img [src]="g.icono ? util.photoUrl + g.icono : '/assets/icon/favicon.png'">
-          </ion-thumbnail>
-          <ion-label class="ion-text-wrap ion-padding-left">
-            <h2> {{g?.materia}} </h2>
-            <h5> {{g?.tema}}</h5>
-          </ion-label>
-        </ion-item>
-      </ion-col>
+    <div *ngFor="let g of gananciasD.data">
+      <ion-row class="ion-no-padding" class="lineBotton">
+        <ion-col size="8">
+          <ion-item lines="none" (click)="setDetalles(g.id)">
+            <ion-thumbnail slot="start">
+              <img [src]="g.icono ? util.photoUrl + g.icono : '/assets/icon/favicon.png'">
+            </ion-thumbnail>
+            <ion-label class="ion-text-wrap ion-padding-left">
+              <h2> {{g?.materia}} </h2>
+              <h5> {{g?.tema}}</h5>
+            </ion-label>
+          </ion-item>
+        </ion-col>
 
-      <ion-col class="ion-align-self-center lineLateral" size="4">
-        <ion-text class="ion-text-center" [color]="tipo=='MULTAS'?'danger':'dark'">
-          <p no-padding no-margin style="font-size: 25px;">${{g.valor}} </p>
-        </ion-text>
-      </ion-col>
-    </ion-row>
+        <ion-col class="ion-align-self-center lineLateral" size="4">
+          <ion-text class="ion-text-center" [color]="tipo=='MULTAS'?'danger':'dark'">
+            <p no-padding no-margin style="font-size: 25px;">${{g.valor}} </p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-grid text-center no-padding *ngIf="g?.id==dataDetalles">
+
+        <ion-row text-left *ngIf="g?.descripcion" class="lineBotton">
+          <ion-col>
+            <ion-text color="tertiary">
+              <h5 no-padding no-margin>Descripción</h5><br>
+              {{g?.descripcion}}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="lineBotton">
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="tertiary">
+              <p>{{g?.hora1.slice(0,5)}}</p>
+
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="3">
+            <small>Duración</small><br>
+            <ion-text color="tertiary">
+              <p>{{g.duracion ? g.duracion: g.horas}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="4">
+            <small>Fecha</small><br>
+            <ion-text color="tertiary">
+              <p>{{g.fecha ? g.fecha : g.fecha_entrega  | date: 'dd/MM/yyyy'}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="2">
+            <small>Alumnos</small><br>
+            <ion-text color="tertiary">
+              <p>{{g.personas ? g.personas : 1}}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
 
   </ion-grid>
 

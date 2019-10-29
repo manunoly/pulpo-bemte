@@ -1,4 +1,5 @@
-<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv"></app-header-bemte-prof>
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+</app-header-bemte-prof>
 
 <ng-template #estudianteDiv>
   <app-header-bemte></app-header-bemte>
@@ -26,7 +27,8 @@
         </ion-row>
         <ion-row class="lineBotton">
           <ion-col offset="1" size="3" class="ion-no-padding">
-            <img style="height: 60px; width: 60px;" [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
+            <img style="height: 60px; width: 60px;"
+              [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
           </ion-col>
           <ion-col class="ion-text-left">
             <ion-text color="tertiary">
@@ -36,19 +38,40 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
+
+        <ion-row text-left *ngIf="tarea?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="tertiary">
-              <small>Descripción</small><br>
+              <h5 class="ion-no-margin ion-no-padding ion-padding-left">Descripción</h5><br>
               {{tarea?.descripcion}}
             </ion-text>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col>
-            <h5>Entregar: {{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
-            <h5>Formato: {{tarea?.formato_entrega}}</h5>
+          <ion-col no-padding no-margin size="3">
+            <small>Hora</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.hora_inicio}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="3">
+            <small>Duración</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.inversion?tarea.inversion:1}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="4">
+            <small>Fecha</small><br>
+            <ion-text color="tertiary">
+              <p>{{tarea.fecha_entrega  | date: 'dd/MM/yyyy'}}</p>
+            </ion-text>
+          </ion-col>
+          <ion-col no-padding no-margin size="2">
+            <small>Alumnos</small><br>
+            <ion-text color="tertiary">
+              <p>{{1}}</p>
+            </ion-text>
           </ion-col>
         </ion-row>
 
@@ -62,7 +85,7 @@
               Aplicar
             </ion-button>
           </ion-col>
-        </ion-row> 
+        </ion-row>
 
       </ion-grid>
 
@@ -80,7 +103,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row  *ngIf="tarea.estado != 'Solicitado'">
+        <ion-row *ngIf="tarea.estado != 'Solicitado'">
           <ion-col offset="2" size="8">
             <ion-button expand="block" shape="round" color="primary" (click)="util.atras()">
               Aceptar
@@ -351,21 +374,49 @@
             </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
+
+          <ion-row text-left *ngIf="tarea?.descripcion" class="lineBotton">
             <ion-col>
               <ion-text color="tertiary">
-                <small>Descripción</small><br>
+                <h5 class="ion-no-margin ion-no-padding ion-padding-left">Descripción</h5><br>
                 {{tarea?.descripcion}}
               </ion-text>
             </ion-col>
           </ion-row>
 
           <ion-row>
+            <ion-col no-padding no-margin size="3">
+              <small>Hora</small><br>
+              <ion-text color="tertiary">
+                <p>{{tarea.hora_inicio}}</p>
+              </ion-text>
+            </ion-col>
+            <ion-col no-padding no-margin size="3">
+              <small>Duración</small><br>
+              <ion-text color="tertiary">
+                <p>{{tarea.inversion?tarea.inversion:1}}</p>
+              </ion-text>
+            </ion-col>
+            <ion-col no-padding no-margin size="4">
+              <small>Fecha</small><br>
+              <ion-text color="tertiary">
+                <p>{{tarea.fecha_entrega  | date: 'dd/MM/yyyy'}}</p>
+              </ion-text>
+            </ion-col>
+            <ion-col no-padding no-margin size="2">
+              <small>Alumnos</small><br>
+              <ion-text color="tertiary">
+                <p>{{1}}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-row>
             <ion-col>
               <h5>Entregar: {{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
               <h5>Formato: {{tarea?.formato_entrega}}</h5>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
 
         </ion-grid>
 
