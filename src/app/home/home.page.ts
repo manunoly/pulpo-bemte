@@ -14,12 +14,13 @@ export class HomePage implements OnInit {
   async ngOnInit() {
   }
 
-  goTo() {
-    const user = this.auth.getUserData();
+  async goTo() {
+    const user = await this.auth.getUserData();
+    console.log(user);
     if (user && user['tipo'] == 'Profesor')
-      this.router.navigateByUrl('inicio-profesor');
+      return this.router.navigateByUrl('inicio-profesor');
     else if (user && user['tipo'] == 'Alumno')
-      this.router.navigateByUrl('inicio');
+      return this.router.navigateByUrl('inicio');
     else
       this.router.navigateByUrl('login');
 
