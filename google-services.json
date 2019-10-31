@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:936528253935:android:203ba8701e6f1274",
         "android_client_info": {
-          "package_name": "bemte.ecuador"
+          "package_name": "bemte.ecuador.profesor"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "936528253935-e0q6s4kn8nn7iq422k0ieq7fe875h9hp.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "bemte.ecuador"
+                "bundle_id": "bemte.ecuador.profesor"
               }
             }
           ]
