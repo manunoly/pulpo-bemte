@@ -35,8 +35,8 @@ export class UtilService {
     toast.present();
   }
 
-  get photoUrl(){
-    if(!this.photo_url)
+  get photoUrl() {
+    if (!this.photo_url)
       this.photo_url = environment.photo_url;
     return this.photo_url;
   }
@@ -118,6 +118,9 @@ export class UtilService {
       case 'Cancelado':
         return 'medium';
 
+      case 'Recibido':
+        return 'medium';
+
       default:
         return 'primary';
     }
@@ -145,7 +148,7 @@ export class UtilService {
         return 'Confirmado';
 
       case 'Terminado':
-        return 'Confirmado';
+        return 'Recibido';
 
       case 'Calificado':
         return 'Confirmado';

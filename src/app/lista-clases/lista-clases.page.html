@@ -1,4 +1,4 @@
-<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor'; else estudianteDiv">
 </app-header-bemte-prof>
 
 <ng-template #estudianteDiv>
@@ -6,7 +6,6 @@
 </ng-template>
 
 <ion-content>
-
   <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
       refreshingSpinner="circles" refreshingText="Actualizando...">
@@ -23,11 +22,11 @@
     </ion-row>
     <ion-row class="lineBotton">
       <ion-col size="6">
-        <ion-button shape="round" color="primary" [fill]="tipo=='ACTUAL'?'solid':'clear'" expand="block"
+        <ion-button shape="round" color="primary" [fill]="tipo == 'ACTUAL' ? 'solid' : 'clear'" expand="block"
           (click)="setTipoClase('ACTUAL')">Solicitadas</ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button shape="round" color="primary" [fill]="tipo=='ANTERIOR'?'solid':'clear'" expand="block"
+        <ion-button shape="round" color="primary" [fill]="tipo == 'ANTERIOR' ? 'solid' : 'clear'" expand="block"
           (click)="setTipoClase('ANTERIOR')">Anteriores</ion-button>
       </ion-col>
     </ion-row>
@@ -38,11 +37,15 @@
       <ion-col size="8">
         <ion-item (click)="setDetallesClaseId(clase?.id)" lines="none">
           <ion-thumbnail slot="start">
-            <img [src]="clase.icono ? util.photoUrl + clase.icono : '/assets/icon/favicon.png'">
+            <img [src]="
+                clase.icono
+                  ? util.photoUrl + clase.icono
+                  : '/assets/icon/favicon.png'
+              " />
           </ion-thumbnail>
           <ion-label class="ion-text-wrap ion-margin-left ion-no-padding ion-no-margin">
-            <h2> {{clase?.materia}} </h2>
-            <h5> {{clase?.tema}}</h5>
+            <h2>{{ clase?.materia }}</h2>
+            <h5>{{ clase?.tema }}</h5>
           </ion-label>
         </ion-item>
       </ion-col>
@@ -51,52 +54,55 @@
         <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
         </ion-text>
-        <ion-button [routerLink]="['/clase-detalles/'+clase.id]" shape="round"
-          [color]="util.getColorEstado(util.estados(clase?.estado))" size="small">
-          <small class="ion-no-padding ion-no-margin"><b>{{util.estados(clase?.estado)}}</b></small>
+        <ion-button [routerLink]="['/clase-detalles/' + clase.id]" shape="round"
+          [color]="util.getColorEstado(util.estados(clase?.estado))" size="small" expand="block">
+          <small class="ion-no-padding ion-no-margin"><b>{{ util.estados(clase?.estado) }}</b></small>
         </ion-button>
-        <div class="ion-no-padding ion-no-margin"
-          *ngIf="clase?.estado == 'Sin_Horas' && (auth.currentUser | async)?.tipo == 'Alumno'">
-          <ion-button (click)="confirmaEliminarClase(clase)" color="danger" size="small" shape="round">
-            <b>Eliminar</b>
+        <div class="ion-no-padding ion-no-margin" *ngIf="
+            clase?.estado == 'Sin_Horas' &&
+            (auth.currentUser | async)?.tipo == 'Alumno'
+          ">
+          <ion-button (click)="confirmaEliminarClase(clase)" color="danger" size="small" expand="block" shape="round">
+            <small class="ion-no-padding ion-no-margin"><b>Eliminar</b></small>
           </ion-button>
         </div>
       </ion-col>
 
-      <ion-grid text-center [routerLink]="['/clase-detalles/'+clase.id]" no-padding *ngIf="clase?.id==detallesClaseId">
-
+      <ion-grid text-center [routerLink]="['/clase-detalles/' + clase.id]" no-padding
+        *ngIf="clase?.id == detallesClaseId">
         <ion-row text-left *ngIf="clase?.descripcion" class="lineBotton">
           <ion-col>
             <ion-text color="tertiary">
-              <h5 no-padding no-margin>Descripción</h5><br>
-              {{clase?.descripcion}}
+              <h5 no-padding no-margin>Descripción</h5>
+              <br />
+              {{ clase?.descripcion }}
             </ion-text>
           </ion-col>
         </ion-row>
 
         <ion-row class="lineBotton">
           <ion-col no-padding no-margin size="3">
-            <small>Hora</small><br>
+            <small>Hora</small><br />
             <ion-text color="tertiary">
-              <p>{{clase.hora1}}</p>
+              <p>{{ clase.hora1 }}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="3">
-            <small>Duración</small><br>
+            <small>Duración</small><br />
             <ion-text color="tertiary">
-              <p>{{clase.duracion}}</p>
+              <p>{{ clase.duracion }}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="4">
-            <small>Fecha</small><br>
+            <small>Fecha</small><br />
             <ion-text color="tertiary">
-              <p>{{clase.fecha  | date: 'dd/MM/yyyy'}}</p>
+              <p>{{ clase.fecha | date: "dd/MM/yyyy" }}</p>
             </ion-text>
           </ion-col>
           <ion-col no-padding no-margin size="2">
-            <small>Alumnos</small><br>
+            <small>Alumnos</small><br />
             <ion-text color="tertiary">
-              <p>{{clase.personas}}</p>
+              <p>{{ clase.personas }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -107,7 +113,7 @@
           </ion-col>
           <ion-col text-center no-padding no-margin>
             <ion-text color="tertiary">
-              <h5> {{clase?.ubicacion}} </h5>
+              <h5>{{ clase?.ubicacion }}</h5>
             </ion-text>
           </ion-col>
           <ion-col class="ion-align-self-center" size="3">
