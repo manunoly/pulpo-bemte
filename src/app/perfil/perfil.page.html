@@ -59,7 +59,7 @@
         <ion-col>
           <ion-item>
             <ion-label position="stacked"> Cambiar Contraseña </ion-label>
-            <ion-input formControlName="oldPassword" placeholder="Contraseña Actual">
+            <ion-input [type]="eye" formControlName="oldPassword" placeholder="Contraseña Actual">
             </ion-input>
             <ion-icon slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
           </ion-item>
@@ -177,7 +177,7 @@
 
     <ion-row *ngIf="user.tipo == 'Profesor'">
       <ion-col size="6">
-        <ion-item lines="none">
+        <ion-item>
           <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
             [items]="materias" [(ngModel)]="materia1" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,1)">
@@ -186,7 +186,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-item lines="none">
+        <ion-item>
           <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
             [items]="materias" [(ngModel)]="materia2" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,2)">
@@ -195,7 +195,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-item lines="none">
+        <ion-item>
           <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
             [items]="materias" [(ngModel)]="materia3" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,3)">
@@ -204,7 +204,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-item lines="none">
+        <ion-item>
           <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
             [items]="materias" [(ngModel)]="materia4" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,4)">
@@ -213,7 +213,7 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-item lines="none">
+        <ion-item>
           <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
             [items]="materias" [(ngModel)]="materia5" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,5)">
