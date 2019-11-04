@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { UtilService } from './../servicios/util.service';
 import { AuthService } from './../servicios/auth.service';
 import { DbService } from './../servicios/db.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +13,7 @@ export class BilleteraEstudiantePage implements OnInit {
   horasComprar;
   confirmandoPago = false;
 
-  constructor(private router: Router, public auth: AuthService, private db: DbService) { }
+  constructor(public auth: AuthService, private db: DbService, public util: UtilService) { }
 
   async ngOnInit() {
     const user = await this.auth.getUserData();
@@ -32,7 +32,6 @@ export class BilleteraEstudiantePage implements OnInit {
       this.horasComprar = '';
       this.confirmandoPago = false;
     }
-
   }
 
 }
