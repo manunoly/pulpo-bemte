@@ -44,6 +44,16 @@ export class AppComponent {
       icon: 'help'
     },
     {
+      title: 'Clase Gratis',
+      url: '/clase-gratis',
+      icon: 'logo-usd'
+    },
+    {
+      title: 'Billetera',
+      url: '/billetera-estudiante',
+      icon: 'logo-usd'
+    },
+    {
       title: 'Mis Clases',
       url: '/lista-clases',
       icon: 'list'
@@ -52,16 +62,6 @@ export class AppComponent {
       title: 'Mis Tareas',
       url: '/lista-tareas',
       icon: 'list'
-    },
-    {
-      title: 'Billetera',
-      url: '/billetera-estudiante',
-      icon: 'logo-usd'
-    },
-    {
-      title: 'Clase Gratis',
-      url: '/clase-gratis',
-      icon: 'logo-usd'
     }
 
   ];
