@@ -176,10 +176,14 @@
     </form>
 
     <ion-row *ngIf="user.tipo == 'Profesor'">
+      <ion-col size="12">
+        <h5 class="ion-no-padding ion-no-margin ion-padding-top"> Materias </h5>
+      </ion-col>
+
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
-            [items]="materias" [(ngModel)]="materia1" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+            [(ngModel)]="materia1" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,1)">
           </ionic-selectable>
         </ion-item>
@@ -187,8 +191,8 @@
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
-            [items]="materias" [(ngModel)]="materia2" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+            [(ngModel)]="materia2" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,2)">
           </ionic-selectable>
         </ion-item>
@@ -196,8 +200,8 @@
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
-            [items]="materias" [(ngModel)]="materia3" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+            [(ngModel)]="materia3" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,3)">
           </ionic-selectable>
         </ion-item>
@@ -205,8 +209,8 @@
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
-            [items]="materias" [(ngModel)]="materia4" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+            [(ngModel)]="materia4" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,4)">
           </ionic-selectable>
         </ion-item>
@@ -214,8 +218,8 @@
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" class="ion-text-center"
-            [items]="materias" [(ngModel)]="materia5" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+          <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+            [(ngModel)]="materia5" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
             (onChange)="verificarMateria($event.value,5)">
           </ionic-selectable>
         </ion-item>

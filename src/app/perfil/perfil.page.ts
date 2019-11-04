@@ -186,19 +186,19 @@ export class PerfilPage implements OnInit {
         this.materias = await this.db.get("lista-materias");
 
         if (this.user.materia1)
-          this.materia1 = this.materias.filter(x => x.materia == this.user.materia1)[0];
+          this.materia1 = this.materias.filter(x => x.nombre == this.user.materia1)[0];
 
         if (this.user.materia2)
-          this.materia2 = this.materias.filter(x => x.materia == this.user.materia2)[0];
+          this.materia2 = this.materias.filter(x => x.nombre == this.user.materia2)[0];
 
         if (this.user.materia3)
-          this.materia3 = this.materias.filter(x => x.materia == this.user.materia3)[0];
+          this.materia3 = this.materias.filter(x => x.nombre == this.user.materia3)[0];
 
         if (this.user.materia4)
-          this.materia4 = this.materias.filter(x => x.materia == this.user.materia4)[0];
+          this.materia4 = this.materias.filter(x => x.nombre == this.user.materia4)[0];
 
         if (this.user.materia5)
-          this.materia5 = this.materias.filter(x => x.materia == this.user.materia5)[0];
+          this.materia5 = this.materias.filter(x => x.nombre == this.user.materia5)[0];
       }
     }
     this.cargarCiudades('Ecuador');
