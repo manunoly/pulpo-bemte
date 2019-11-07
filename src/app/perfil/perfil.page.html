@@ -105,7 +105,8 @@
             <ion-label class="ion-text-wrap ion-no-padding" position="stacked">
               <span style="font-size: 12px;">Ciudad de Residencia</span>
             </ion-label>
-            <ion-select   [disabled]="user.tipo == 'Profesor'"  [disabled]="!ciudades" okText="Seleccionar" cancelText="Cancelar" formControlName="ciudad">
+            <ion-select [disabled]="user.tipo == 'Profesor'" [disabled]="!ciudades" okText="Seleccionar"
+              cancelText="Cancelar" formControlName="ciudad">
               <ion-select-option *ngFor="let c of ciudades | async" [value]="c?.ciudad">
                 {{c?.ciudad}}
               </ion-select-option>
@@ -129,8 +130,9 @@
 
         <ion-col size="8">
           <ion-item no-padding>
-            <ion-input readonly="user.tipo == 'Profesor'"  type="tel" formControlName="celular"></ion-input>
-            <ion-icon *ngIf="user.tipo != 'Profesor'"  slot="end" class="ion-no-padding ion-no-margin" color="medium" name="create"></ion-icon>
+            <ion-input readonly="user.tipo == 'Profesor'" type="tel" formControlName="celular"></ion-input>
+            <ion-icon *ngIf="user.tipo != 'Profesor'" slot="end" class="ion-no-padding ion-no-margin" color="medium"
+              name="create"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -182,46 +184,72 @@
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable [disabled]="registroForm.value.materia1" class="ion-no-padding ion-no-margin"
-            closeButtonText="Cerrar" [items]="materias" [(ngModel)]="materia1" itemValueField="nombre"
-            itemTextField="nombre" [canSearch]="true" (onChange)="verificarMateria($event.value,1)">
-          </ionic-selectable>
+          <ion-input readonly *ngIf="registroForm.value.materia1;else materia1D" [value]="registroForm.value.materia1">
+          </ion-input>
+
+          <ng-template #materia1D>
+            <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+              [(ngModel)]="materia1" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+              (onChange)="verificarMateria($event.value,1)">
+            </ionic-selectable>
+          </ng-template>
         </ion-item>
       </ion-col>
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable [disabled]="registroForm.value.materia2" class="ion-no-padding ion-no-margin"
-            closeButtonText="Cerrar" [items]="materias" [(ngModel)]="materia2" itemValueField="nombre"
-            itemTextField="nombre" [canSearch]="true" (onChange)="verificarMateria($event.value,2)">
-          </ionic-selectable>
+          <ion-input readonly *ngIf="registroForm.value.materia2;else materia2D" [value]="registroForm.value.materia2">
+          </ion-input>
+
+          <ng-template #materia2D>
+            <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+              [(ngModel)]="materia2" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+              (onChange)="verificarMateria($event.value,2)">
+            </ionic-selectable>
+          </ng-template>
+
         </ion-item>
       </ion-col>
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable [disabled]="registroForm.value.materia3" class="ion-no-padding ion-no-margin"
-            closeButtonText="Cerrar" [items]="materias" [(ngModel)]="materia3" itemValueField="nombre"
-            itemTextField="nombre" [canSearch]="true" (onChange)="verificarMateria($event.value,3)">
-          </ionic-selectable>
+          <ion-input readonly *ngIf="registroForm.value.materia3;else materia3D" [value]="registroForm.value.materia3">
+          </ion-input>
+
+          <ng-template #materia3D>
+            <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+              [(ngModel)]="materia3" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+              (onChange)="verificarMateria($event.value,3)">
+            </ionic-selectable>
+          </ng-template>
         </ion-item>
       </ion-col>
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable [disabled]="registroForm.value.materia4" class="ion-no-padding ion-no-margin"
-            closeButtonText="Cerrar" [items]="materias" [(ngModel)]="materia4" itemValueField="nombre"
-            itemTextField="nombre" [canSearch]="true" (onChange)="verificarMateria($event.value,4)">
-          </ionic-selectable>
+          <ion-input readonly *ngIf="registroForm.value.materia4;else materia4D" [value]="registroForm.value.materia4">
+          </ion-input>
+
+          <ng-template #materia4D>
+            <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+              [(ngModel)]="materia4" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+              (onChange)="verificarMateria($event.value,4)">
+            </ionic-selectable>
+          </ng-template>
         </ion-item>
       </ion-col>
 
       <ion-col size="6">
         <ion-item>
-          <ionic-selectable [disabled]="registroForm.value.materia5" class="ion-no-padding ion-no-margin"
-            closeButtonText="Cerrar" [items]="materias" [(ngModel)]="materia5" itemValueField="nombre"
-            itemTextField="nombre" [canSearch]="true" (onChange)="verificarMateria($event.value,5)">
-          </ionic-selectable>
+          <ion-input readonly *ngIf="registroForm.value.materia5;else materia5D" [value]="registroForm.value.materia5">
+          </ion-input>
+
+          <ng-template #materia5D>
+            <ionic-selectable class="ion-no-padding ion-no-margin" closeButtonText="Cerrar" [items]="materias"
+              [(ngModel)]="materia5" itemValueField="nombre" itemTextField="nombre" [canSearch]="true"
+              (onChange)="verificarMateria($event.value,5)">
+            </ionic-selectable>
+          </ng-template>
         </ion-item>
       </ion-col>
     </ion-row>
