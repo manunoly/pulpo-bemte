@@ -84,7 +84,7 @@ export class RegistrarseProfesorPage implements OnInit {
       materia5: new FormControl(""),
 
       tipo: new FormControl("Profesor", Validators.required),
-      descripcion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+      descripcion: new FormControl(""),
       clases: new FormControl(""),
       tareas: new FormControl(""),
       hojaVida: new FormControl(""),
@@ -115,7 +115,7 @@ export class RegistrarseProfesorPage implements OnInit {
       if (data.data == 'terminos') {
         this.confirmarTerminos();
       } else if (data.data) {
-        this.registrarCuenta();
+        this.paso = 3;
       }
     });
     return await modal.present();
@@ -130,7 +130,7 @@ export class RegistrarseProfesorPage implements OnInit {
 
     modal.onDidDismiss().then(data => {
       if (data.data) {
-        this.registrarCuenta();
+        this.confirmarRegistro();
       }
     });
     return await modal.present();
@@ -182,8 +182,15 @@ export class RegistrarseProfesorPage implements OnInit {
         }
   }
 
-  info(){
-
+  info() {
+    let msg = `
+    <ul>
+    <li>Solo ayudar con tareas</li>
+    <li>Solo ayudar con clases</li>
+    <li>Ayudar con tareas y clases </li>
+    </ul>
+    `
+    this.util.presentAlert(msg, 'Puedes trabajar de 3 formas:', ['Aceptar'], '', 'fondoVerde alertDefault')
   }
 
   cargarCiudades(pais) {

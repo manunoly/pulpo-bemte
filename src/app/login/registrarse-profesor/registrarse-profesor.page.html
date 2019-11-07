@@ -2,7 +2,7 @@
 
 
   <ion-grid padding color="light">
-    <form [formGroup]="registroForm" (ngSubmit)="confirmarRegistro()">
+    <form [formGroup]="registroForm">
 
       <div *ngIf="paso == 1">
 
@@ -13,14 +13,14 @@
         <ion-row>
           <ion-col size="6">
             <ion-item class="ion-no-padding ion-text-wrap">
-              <ion-label position="stacked">Nombre</ion-label>
+              <ion-label position="stacked">Nombres</ion-label>
               <ion-input text-capitalize formControlName="nombre"></ion-input>
             </ion-item>
           </ion-col>
 
           <ion-col size="6">
             <ion-item class="ion-no-padding ion-text-wrap">
-              <ion-label position="stacked">Apellido</ion-label>
+              <ion-label position="stacked">Apellidos</ion-label>
               <ion-input text-capitalize formControlName="apellido"></ion-input>
             </ion-item>
           </ion-col>
@@ -52,7 +52,7 @@
         </ion-row>
 
         <ion-row>
-          <ion-col size="6">
+          <ion-col size="9">
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">País de Residencia</ion-label>
               <ion-select okText="Seleccionar" cancelText="Cancelar" formControlName="pais"
@@ -64,7 +64,7 @@
             </ion-item>
           </ion-col>
 
-          <ion-col size="6">
+          <ion-col size="9">
             <ion-item class="ion-no-padding">
               <ion-label class="ion-text-wrap ion-no-padding ion-no-margin" position="stacked">Ciudad de Residencia
               </ion-label>
@@ -95,7 +95,8 @@
             </ion-button>
           </ion-col>
           <ion-col padding size="6">
-            <ion-button [disabled]="" (click)="paso = 2" size="small" expand="block" shape="round" color="success">
+            <ion-button [disabled]="!registroForm.value.ciudad" (click)="paso = 2" size="small" expand="block"
+              shape="round" color="success">
               <b>
                 Siguiente
               </b>
@@ -160,8 +161,8 @@
             <ion-item class="ion-no-padding ion-text-wrap">
               <ion-label position="stacked">Contraseña <span
                   *ngIf="registroForm.value.password && registroForm.value.password != registroForm.value.passwordC">
-                 <br> No coinciden </span></ion-label>
-              <ion-input [type]="eye" formControlName="password"></ion-input>
+                  <br> No coinciden </span></ion-label>
+              <ion-input [type]="eye" placeholder="Mínimo 8 caracteres" formControlName="password"></ion-input>
               <ion-button slot="end" class="ion-float-right" fill="clear"
                 (click)="eye = eye =='text'?'password': 'text'">
                 <ion-icon name="eye" slot="icon-only"></ion-icon>
@@ -186,16 +187,17 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" (click)="paso = 1" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
               <b>
-                Atrás
+                Cancelar
               </b>
             </ion-button>
           </ion-col>
+
           <ion-col padding size="6">
             <ion-button
               [disabled]="!registroForm.value.password || registroForm.value.password != registroForm.value.passwordC"
-              (click)="paso = 3" size="small" expand="block" shape="round" color="success">
+              (click)="confirmarRegistro()" size="small" expand="block" shape="round" color="success">
               <b>
                 Siguiente
               </b>
@@ -274,12 +276,13 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" color="tertiary" (click)="paso = 2" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
               <b>
-                Atrás
+                Cancelar
               </b>
             </ion-button>
           </ion-col>
+
           <ion-col padding size="6">
             <ion-button [disabled]="!registroForm.value.materia1" (click)="paso = 4" size="small" expand="block"
               shape="round" color="success">
@@ -340,12 +343,13 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" (click)="paso = 3" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
               <b>
-                Atrás
+                Cancelar
               </b>
             </ion-button>
           </ion-col>
+
           <ion-col padding size="6">
             <ion-button [disabled]="!registroForm.value.clases && !registroForm.value.tareas" (click)="paso = 5"
               size="small" expand="block" shape="round" color="success">
@@ -363,7 +367,7 @@
           <h1>DOCUMENTOS REQUERIDOS</h1>
         </ion-text>
 
-        <ion-row>
+        <!-- <ion-row>
           <ion-col>
             <ion-item class="ion-no-padding" lines="none">
               <ion-label>
@@ -388,7 +392,7 @@
               <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
             </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> 
 
         <ion-row>
           <ion-col>
@@ -399,7 +403,7 @@
               <ion-textarea formControlName="descripcion" rows="3" class="borderRound"></ion-textarea>
             </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row>-->
 
         <ion-row>
           <ion-col>
@@ -407,18 +411,37 @@
               <ion-label>
                 <ion-text color="tertiary">
                   <h3> <b>Envía los siguientes datos al correo: </b></h3>
-                  <h5>bemtemarketing@gmail.com</h5>
+                  <h5>bemteprofesores@gmail.com</h5>
                   <ul>
-                    <li class="ion-no-padding">
+                    <li class="ion-no-padding ion-padding-bottom">
                       Horario de clases <br>
                       <div class="ion-text-center"><small>Si eres estudiante</small> </div>
                     </li>
-                    <li class="ion-no-padding">
+
+                    <li class="ion-no-padding ion-padding-bottom">
                       Título Profesional<br>
                       <div class="ion-text-center"><small>Si eres graduado/a</small> </div>
                     </li>
-                    <li class="ion-no-padding">
+
+                    <li class="ion-no-padding ion-padding-bottom">
                       Hoja de vida
+                    </li>
+
+                    <li class="ion-no-padding ion-padding-bottom">
+                      Foto de identificación
+                      <div class="ion-text-center"><small>Cédula, visa o pasaporte</small> </div>
+                    </li>
+
+                    <li class="ion-no-padding ion-padding-bottom">
+                      Tómate una foto
+                      <div class="ion-text-center"><small>Foto de perfil</small> </div>
+                    </li>
+
+                    <li class="ion-no-padding">
+                      Descripción profesional
+                      <div class="ion-text-wrap ion-text-justify"><small>Ejemplo: Soy Matemático puro, graduado en la
+                          Escuela
+                          Politécnica Nacional con 15 años de experiencia en docencia</small> </div>
                     </li>
                   </ul>
                 </ion-text>
@@ -436,15 +459,16 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" (click)="paso = 4" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
               <b>
-                Atrás
+                Cancelar
               </b>
             </ion-button>
           </ion-col>
+
           <ion-col padding size="6">
-            <ion-button [disabled]="!registroForm.valid" type="submit" size="small" expand="block" shape="round"
-              color="success">
+            <ion-button [disabled]="!registroForm.valid" size="small" expand="block" shape="round"
+              color="success" (click)="registrarCuenta()">
               <!-- <ion-button [disabled]="!registroForm.valid" size="small" expand="block" shape="round" color="success"> -->
               <b>
                 Siguiente
