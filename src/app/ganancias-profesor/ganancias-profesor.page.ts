@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
 import { AlertController } from '@ionic/angular';
@@ -6,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UtilService } from '../servicios/util.service';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-ganancias-profesor',
@@ -17,12 +17,14 @@ export class GananciasProfesorPage implements OnInit {
   tipo = 'CLASES';
   dataDetalles;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(private route: ActivatedRoute, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    if (this.route.snapshot.paramMap.get("tipo"))
+      this.tipo = this.route.snapshot.paramMap.get("tipo");
     this.cargarGanancias();
   }
 
