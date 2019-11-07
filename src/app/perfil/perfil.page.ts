@@ -79,6 +79,9 @@ export class PerfilPage implements OnInit {
 
   async subirFotoPerfil() {
     try {
+      if(this.user.tipo == 'Profesor')
+        return this.util.showMessage('Contacte al administrador para actualizar su foto de perfil');
+        
       this.upload.selectImage();
       this.img = this.upload.imagesSubject.subscribe(img => {
         console.log(img);

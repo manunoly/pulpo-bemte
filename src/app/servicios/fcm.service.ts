@@ -29,9 +29,9 @@ export class FcmService {
       } else {
         let style;
         if (data.body && data.body.toLowerCase().includes('cancelad'))
-          style = 'fondoRojo alertRojo';
+          style = 'fondoRojo alertDefault';
         else
-          style = 'alertDefault';
+          style = 'fondoVerde alertDefault';
 
         this.util.presentAlert(data.body, data.title ? data.title : 'Información', undefined, undefined, style);
       };
