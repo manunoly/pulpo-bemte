@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 
@@ -19,9 +19,12 @@ export class ListaClasesPage implements OnInit {
   tipo = 'ACTUAL';
   detallesClaseId;
 
-  constructor(public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
+  constructor(private route: ActivatedRoute, public modalController: ModalController, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   ionViewWillEnter() {
+    if (this.route.snapshot.paramMap.get("tipo"))
+      this.tipo = this.route.snapshot.paramMap.get("tipo");
+
     this.cargarClases();
   }
 
@@ -59,48 +62,48 @@ export class ListaClasesPage implements OnInit {
     return await modal.present();
   }
 
-  async confirmaEliminarClase(clase){
+  async confirmaEliminarClase(clase) {
     console.log('eliminar clase', clase);
-    
-      if (!clase || clase == {})
-        return;
 
-        const alert = await this.alertController.create({
-        header: '¿Estás seguro que deseas eliminar?',
-        cssClass: 'fondoRojo alertRojo',
-        inputs: [
-          {
-            name: 'Si',
-            type: 'radio',
-            label: 'Si',
-            value: true
-          },
-          {
-            name: 'No',
-            type: 'radio',
-            label: 'No',
-            value: false
-          }],
-        buttons: [{
-          text: 'Aceptar',
-          handler: (data) => {
-            if (data)
-              this.eliminarClase(clase);
-          }
+    if (!clase || clase == {})
+      return;
+
+    const alert = await this.alertController.create({
+      header: '¿Estás seguro que deseas eliminar?',
+      cssClass: 'fondoRojo alertRojo',
+      inputs: [
+        {
+          name: 'Si',
+          type: 'radio',
+          label: 'Si',
+          value: true
+        },
+        {
+          name: 'No',
+          type: 'radio',
+          label: 'No',
+          value: false
+        }],
+      buttons: [{
+        text: 'Aceptar',
+        handler: (data) => {
+          if (data)
+            this.eliminarClase(clase);
         }
-        ]
-      });
-  
-      await alert.present();
+      }
+      ]
+    });
+
+    await alert.present();
   }
 
-  async eliminarClase(clase){
+  async eliminarClase(clase) {
     try {
       this.util.showLoading();
       const user = await this.auth.getUserData();
       const resp = await this.db.post('clase-tarea-eliminar', { clase_id: clase.id, user_id: user.user_id, tarea_id: 0 });
       this.util.dismissLoading();
-      
+
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.cargarClases();

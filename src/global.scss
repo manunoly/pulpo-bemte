@@ -57,7 +57,7 @@
 
 ion-item {
   --border-color: var(--ion-color-primary);
-  --highlight-height: 2px;
+  --highlight-height: 1.5px;
 }
 
 .cart-badge {
@@ -123,13 +123,13 @@ ion-fab {
 }
 
 .radioColorWhite {
-  alert-radio-icon{
+  alert-radio-icon {
     color: red;
     --color-checked: red !important;
   }
-  .item-radio-checked{
+  .item-radio-checked {
     background-color: red;
-}
+  }
 }
 
 .alertRojo {
@@ -154,8 +154,6 @@ ion-fab {
 
 .alertDefault {
   color: white !important;
-  --color-checked: white !important;
-  --background: var(--ion-color-primary) !important;
   h2 {
     color: white !important;
   }
@@ -163,19 +161,11 @@ ion-fab {
     color: white !important;
   }
   div div:last-child {
-    button:first-child {
+    button {
       padding-left: 25px !important;
       padding-right: 25px !important;
       color: white !important;
-      background-color: var(--ion-color-primary) !important;
-      margin: 0 auto !important;
-      border-radius: 22px !important;
-    }
-    button:last-child {
-      padding-left: 25px !important;
-      padding-right: 25px !important;
-      color: white !important;
-      background-color: var(--ion-color-secondary) !important;
+      background-color: var(--ion-color-tertiary) !important;
       margin: 0 auto !important;
       border-radius: 22px !important;
     }

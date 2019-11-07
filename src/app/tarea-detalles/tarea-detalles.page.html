@@ -76,12 +76,12 @@
         </ion-row>
 
         <ion-row *ngIf="tarea.estado == 'Solicitado'">
-          <ion-col size="4" offset="1">
+          <!-- <ion-col size="4" offset="1">
             <ion-button (click)="util.atras()" shape="round" expand="block" size="small" color="tertiary">Atras
             </ion-button>
-          </ion-col>
-          <ion-col size="4" offset="1">
-            <ion-button color="success" (click)="aplicar(tarea)" shape="round" expand="block" size="small">
+          </ion-col> -->
+          <ion-col size="6" offset="3">
+            <ion-button color="success" (click)="aplicar(tarea)" shape="round" expand="block">
               Aplicar
             </ion-button>
           </ion-col>
@@ -145,7 +145,7 @@
           <ion-row>
             <ion-col offset="2" size="8">
               <ion-button expand="block" shape="round" color="tertiary" [routerLink]="['/lista-tareas']">
-                TAREAS SOLICITADAS
+                CONTINUAR
               </ion-button>
             </ion-col>
           </ion-row>
@@ -338,7 +338,7 @@
           <ion-row>
             <ion-col offset="2" size="8">
               <ion-button expand="block" shape="round" color="secondary" [routerLink]="['/lista-tareas']">
-                TAREAS SOLICITADAS
+                CONTINUAR
               </ion-button>
             </ion-col>
           </ion-row>
