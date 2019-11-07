@@ -95,14 +95,14 @@
           </ion-col>
         </ion-row>
 
-        <!--  codigo para aplicar a una tarea.-->
+        <!--  codigo para aplicar a una clase.-->
         <ion-row>
-          <ion-col size="4" offset="1">
+          <!-- <ion-col size="4" offset="1">
             <ion-button (click)="util.atras()" shape="round" expand="block" size="small" color="primary">Atras
             </ion-button>
-          </ion-col>
-          <ion-col size="4" offset="1">
-            <ion-button color="secondary" (click)="aplicar(clase)" shape="round" expand="block" size="small">
+          </ion-col> -->
+          <ion-col size="6" offset="3">
+            <ion-button color="secondary" (click)="aplicar(clase)" shape="round" expand="block">
               Aplicar
             </ion-button>
           </ion-col>
@@ -147,7 +147,7 @@
 
         <ion-row>
           <ion-col offset="2" size="8">
-            <ion-button expand="block" shape="round" color="success" (click)="util.atras()">
+            <ion-button expand="block" shape="round" color="success" (click)="goToCancelada(clase)">
               Continuar
             </ion-button>
           </ion-col>
@@ -703,8 +703,8 @@
 
           <ion-row>
             <ion-col offset="2" size="8">
-              <ion-button expand="block" shape="round" color="primary" (click)="util.atras()">
-                Continuar
+              <ion-button expand="block" shape="round" color="primary" routerLink="/inicio">
+                Aceptar
               </ion-button>
             </ion-col>
           </ion-row>

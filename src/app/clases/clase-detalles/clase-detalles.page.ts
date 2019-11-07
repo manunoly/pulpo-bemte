@@ -163,7 +163,10 @@ export class ClaseDetallesPage implements OnInit {
       this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.cargarClase();
+        if (user && user.tipo == 'Profesor')
+          this.router.navigateByUrl('ganancias-profesor/MULTAS');
+        else
+          this.router.navigateByUrl('lista-clases/ANTERIOR');
       }
     } catch (error) {
       this.util.dismissLoading();
@@ -174,7 +177,7 @@ export class ClaseDetallesPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Aplicar',
       message: `Confirme desea aplicar a la clase`,
-      cssClass: 'alertDefault',
+      cssClass: 'fondoVerde alertDefault',
       // inputs: [
       //   {
       //     name: 'hora1',
@@ -233,6 +236,12 @@ export class ClaseDetallesPage implements OnInit {
     });
 
     await alert.present();
+  }
+  goToCancelada(clase) {
+    if (clase.user_canc == clase.user_id_pro)
+      this.router.navigateByUrl('ganancias-profesor/MULTAS');
+    else
+      this.util.atras();
   }
 
   detallesImg(tipo, avatar, calificacion, nombre, profClases?, profTareas?, profDescripccion?) {

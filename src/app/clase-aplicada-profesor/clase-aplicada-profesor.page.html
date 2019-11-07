@@ -7,7 +7,7 @@
   <ion-grid text-center *ngIf="data">
     <ion-row class="lineBotton">
       <ion-col>
-        <ion-text  color="primary">
+        <ion-text color="primary">
           <h1 no-padding no-margin><b> {{tipo}}</b></h1>
         </ion-text>
       </ion-col>
@@ -41,8 +41,9 @@
     <br>
     <ion-row>
       <ion-col offset="2" size="8">
-        <ion-button expand="block" shape="round" color="secondary" [routerLink]="['/inicio-profesor']">
-          {{tipo}} pendientes
+        <ion-button expand="block" shape="round" color="secondary"
+          [routerLink]="[tipo=='Clases'?'/lista-clases':tipo=='Tareas'?'/lista-tareas':util.atras()]">
+          CONTINUAR
         </ion-button>
       </ion-col>
     </ion-row>
