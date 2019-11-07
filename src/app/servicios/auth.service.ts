@@ -28,6 +28,7 @@ export class AuthService {
     this.loadFromLocal();
     this.currentUserSubject.subscribe(user => {
       this.userD = user;
+      this.util.setEsProfesor(user && user.tipo == 'Profesor');
     })
   }
 
@@ -53,7 +54,7 @@ export class AuthService {
           this.router.navigate(['/inicio'], { replaceUrl: true });
         // this.router.navigateByUrl('inicio');
 
-      }else{
+      } else {
         this.router.navigate(['/login'], { replaceUrl: true });
       }
     } catch (error) {

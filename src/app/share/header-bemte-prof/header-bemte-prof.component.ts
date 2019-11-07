@@ -87,7 +87,7 @@ export class HeaderBemteProfComponent implements OnInit {
             label: 'No',
             value: false
           }],
-        cssClass: 'alertRojo',
+        cssClass: 'fondoRojo alertRojo',
         buttons: [{
           text: 'Aceptar',
           handler: (data) => {

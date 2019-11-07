@@ -12,6 +12,7 @@ export class UtilService {
   loading;
   temporalData;
   photo_url;
+  esProfesor;
 
   constructor(
     public toastController: ToastController,
@@ -22,6 +23,11 @@ export class UtilService {
     private _navigation: Location,
     public alertController: AlertController
   ) { }
+
+  async setEsProfesor(tipo: boolean) {
+    this.esProfesor = tipo;
+    console.log('esProfesor', this.esProfesor);
+  }
 
   async showMessage(msg = '', showCloseButton = true, positionMsg = 'top', time = 5000, buttonText = 'Cerrar') {
     const toast = await this.toastController.create({
@@ -107,7 +113,7 @@ export class UtilService {
         return 'danger';
 
       case 'Confirmado':
-        return 'primary';
+        return 'success';
 
       case 'En proceso':
         return 'secondary';
@@ -120,6 +126,9 @@ export class UtilService {
 
       case 'Recibido':
         return 'medium';
+
+      case 'Por confirmar':
+        return 'danger';
 
       default:
         return 'primary';
@@ -140,10 +149,10 @@ export class UtilService {
         return 'Por pagar';
 
       case 'Solicitado':
-        return 'En proceso';
+        return this.esProfesor ? 'Por confirmar' : 'En proceso';
 
       case 'Confirmado':
-        return 'Por pagar';
+        return this.esProfesor ? 'Por confirmar' : 'Por pagar';
 
       case 'Aceptado':
         return 'Confirmado';
@@ -167,10 +176,10 @@ export class UtilService {
         return 'Rechazado';
 
       case 'Confirmando_Pago':
-        return 'En proceso';
+        return this.esProfesor ? 'Por confirmar' : 'En proceso';
 
       default:
-        return 'En proceso';
+        return this.esProfesor ? 'Por confirmar' : 'En proceso';
     }
   }
 

@@ -56,7 +56,7 @@ export class EstadoPage implements OnInit {
         {
           text: 'No',
           role: 'cancel',
-          cssClass: 'secondary',
+          cssClass: 'fondoRojo alertRojo',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
