@@ -5,11 +5,8 @@
   <app-header-user-prof *ngIf="reload"></app-header-user-prof>
 
   <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Deslizar para Actualiar"
-      refreshingSpinner="circles"
-      refreshingText="Actualizando...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -28,7 +25,7 @@
 
   <div *ngIf="tipo=='clases'">
     <ion-grid *ngIf="(clases | async) as clasesD; else loadD">
-      <ion-row class="lineBotton ion-no-padding ion-text-center" *ngFor="let clase of clasesD"
+      <ion-row class="lineBotton ion-no-padding ion-text-center" *ngFor="let clase of clasesD; let first = first;"
         [routerLink]="['/clase-detalles/'+clase.id]">
         <ion-col size="8">
           <ion-item class="ion-text-wrap" lines="none">
@@ -43,6 +40,9 @@
         </ion-col>
 
         <ion-col class="ion-align-self-center lineLateral" size="4">
+          <ion-text *ngIf="first" class="ion-no-margin ion-no-padding ion-text-center" color="danger">
+            <small>Ganancia</small>
+          </ion-text>
           <ion-text class="ion-text-center" color="dark">
             <p no-padding no-margin style="font-size: 25px;">${{clase.valor}} </p>
           </ion-text>
