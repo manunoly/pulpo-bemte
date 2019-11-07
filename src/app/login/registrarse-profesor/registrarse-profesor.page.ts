@@ -141,7 +141,7 @@ export class RegistrarseProfesorPage implements OnInit {
     let postData = this.registroForm.value;
     console.log(this.registroForm.value);
 
-    postData['celular'] = '' + postData['paisNumero'] + postData['celular'];
+    // postData['celular'] = '' + postData['paisNumero'] + postData['celular'];
     postData['fecha_nacimiento'] = '' + postData['fecha_nacimiento'].slice(0, 10);
 
     [1, 2, 3, 4, 5].forEach(element => {
