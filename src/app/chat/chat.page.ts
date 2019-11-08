@@ -76,6 +76,7 @@ export class ChatPage implements OnInit {
   async scrollToBottomOnInit(chats) {
     if (this.cant != chats.length) {
       this.chatD = chats;
+      // this.chatD = chats.slice().reverse();
       this.cant = this.chatD.length;
       this.content.scrollToBottom(100);
     }

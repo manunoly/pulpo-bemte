@@ -17,7 +17,7 @@
     <ion-grid *ngIf="(claseO | async) as clase; else loadD">
 
       <!-- Seccion para aplicar a la clase -->
-      <div *ngIf="clase.estado == 'Solicitado'">
+      <div *ngIf="util.estados(clase.estado) == 'Por confirmar'">
 
         <app-header-user-prof></app-header-user-prof>
 
@@ -195,7 +195,7 @@
       </div>
 
       <div
-        *ngIf="clase.estado == 'Confirmando_Pago' || util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Por confirmar' || util.estados(clase.estado) == 'Recibido'">
+        *ngIf="util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Recibido'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
         </ion-text>
@@ -364,7 +364,7 @@
           <br>
           <ion-row padding>
             <ion-col offset="2" size="8">
-              <ion-button expand="block" shape="round" color="secondary" (click)="util.atras()">
+              <ion-button expand="block" shape="round" color="secondary" routerLink="/lista-clases">
                 Continuar
               </ion-button>
             </ion-col>
