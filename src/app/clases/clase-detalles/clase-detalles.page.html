@@ -195,7 +195,7 @@
       </div>
 
       <div
-        *ngIf="clase.estado == 'Confirmando_Pago' || util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Por pagar'">
+        *ngIf="clase.estado == 'Confirmando_Pago' || util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Por confirmar' || util.estados(clase.estado) == 'Recibido'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
         </ion-text>
@@ -204,7 +204,7 @@
           <ion-row class="lineBotton">
             <ion-col size="12">
               <ion-text
-                [color]="util.estados(clase.estado) == 'Confirmado' ? 'tertiary' : util.getColorEstado(util.estados(clase.estado))">
+                [color]="util.getColorEstado(util.estados(clase.estado))">
                 <h1 style="font-size: 2em"><b>{{util.estados(clase.estado)}}</b></h1>
               </ion-text>
             </ion-col>

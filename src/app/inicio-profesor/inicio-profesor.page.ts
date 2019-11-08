@@ -23,7 +23,8 @@ export class InicioProfesorPage implements OnInit {
     public auth: AuthService,
     private db: DbService,
     public util: UtilService,
-    private fcm: FcmService
+    private fcm: FcmService,
+    // private modalController: ModalController
   ) { }
 
   async ngOnInit() {
@@ -95,6 +96,6 @@ export class InicioProfesorPage implements OnInit {
       this.reload = true;
       event.target.complete();
     }, 1000);
-
+  
   }
 }

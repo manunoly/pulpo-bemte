@@ -1,3 +1,4 @@
+import { ProfeEstadoCuentaPageModule } from './../../profe-estado-cuenta/profe-estado-cuenta.module';
 import { RegistrarseConfirmPageModule } from './../registrarse-confirm/registrarse-confirm.module';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ const routes: Routes = [
     RegistrarseConfirmPageModule,
     TerminosPageModule,
     IonicSelectableModule,
+    ProfeEstadoCuentaPageModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

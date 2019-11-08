@@ -1,3 +1,4 @@
+import { ProfeEstadoCuentaPage } from './../../profe-estado-cuenta/profe-estado-cuenta.page';
 import { TerminosPage } from './../terminos/terminos.page';
 import { RegistrarseConfirmPage } from './../registrarse-confirm/registrarse-confirm.page';
 import { FcmService } from '../../servicios/fcm.service';
@@ -108,7 +109,8 @@ export class RegistrarseProfesorPage implements OnInit {
 
   async confirmarRegistro() {
     const modal = await this.modalController.create({
-      component: RegistrarseConfirmPage
+      component: RegistrarseConfirmPage,
+      cssClass: 'modalVerde my-custom-modal-css',
     });
 
     modal.onDidDismiss().then(data => {
@@ -126,6 +128,7 @@ export class RegistrarseProfesorPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: TerminosPage
+
     });
 
     modal.onDidDismiss().then(data => {
@@ -158,6 +161,9 @@ export class RegistrarseProfesorPage implements OnInit {
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.buildForm();
+        setTimeout(() => {
+          this.estadoCuentaModal();
+        }, 400);
         this.router.navigateByUrl('login');
       }
     } catch (error) {
@@ -199,5 +205,14 @@ export class RegistrarseProfesorPage implements OnInit {
     setTimeout(() => {
       this.util.dismissLoading();
     }, 1000);
+  }
+
+  async estadoCuentaModal() {
+    const myModal = await this.modalController.create({
+      component: ProfeEstadoCuentaPage,
+      cssClass: 'modalVerde my-custom-modal-css',
+      // componentProps: { estado: '', nombre: 'Pepe' }
+    });
+    return await myModal.present();
   }
 }
