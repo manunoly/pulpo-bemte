@@ -1,3 +1,4 @@
+import { ProfeEstadoCuentaPageModule } from './../profe-estado-cuenta/profe-estado-cuenta.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    ProfeEstadoCuentaPageModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

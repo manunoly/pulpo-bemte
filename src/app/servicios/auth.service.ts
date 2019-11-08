@@ -34,10 +34,20 @@ export class AuthService {
 
   async login(data) {
     const user = await this.db.post('login', data);
-    if (user) {
+    if (user && user.profile && user.profile.activo && !user.profile.rechazado) {
       await this.setAuth(user.profile);
       return user.profile;
     }
+    else if (user.profile.rechazado)
+      return 'rechazado';
+
+    else if (user.profile.tipo == 'Profesor' && !user.profile.activo && !user.profile.rechazado) {
+      return 'profeVerificando';
+    }
+
+    else if (!user.profile.activo) 
+      this.util.showMessage('Su usuario no se encuentra activo');
+  
     return false;
   }
 

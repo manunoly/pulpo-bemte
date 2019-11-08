@@ -110,7 +110,7 @@ export class RegistrarseProfesorPage implements OnInit {
   async confirmarRegistro() {
     const modal = await this.modalController.create({
       component: RegistrarseConfirmPage,
-      cssClass: 'modalVerde my-custom-modal-css',
+      cssClass: 'my-custom-modal-css',
     });
 
     modal.onDidDismiss().then(data => {
@@ -210,7 +210,7 @@ export class RegistrarseProfesorPage implements OnInit {
   async estadoCuentaModal() {
     const myModal = await this.modalController.create({
       component: ProfeEstadoCuentaPage,
-      cssClass: 'modalVerde my-custom-modal-css',
+      cssClass: 'modalAzul my-custom-modal-css',
       // componentProps: { estado: '', nombre: 'Pepe' }
     });
     return await myModal.present();
