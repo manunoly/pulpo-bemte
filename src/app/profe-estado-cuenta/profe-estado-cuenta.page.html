@@ -1,0 +1,42 @@
+<ion-content class="ion-text-center ion-padding">
+
+  <ion-avatar class="ion-padding" style="display:block; margin:auto; height: 100px; width: 100px;">
+    <img src="/assets/img/cuenta.png">
+  </ion-avatar>
+  <ion-grid>
+
+    <ion-row *ngIf="!estado">
+      <ion-col size="12">
+        <ion-text color="light">
+          <p>{{estado}}</p>
+          <h3>¡Tu perfil está siendo evaluado!</h3>
+          <h3>Nos comunicaremos contigo por medio de tu correo electrónico.</h3>
+          <h3>En un plazo máximo de 48 horas.</h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="estado == 'aceptado'">
+      <ion-col size="12">
+        <ion-text color="light">
+          <h3>¡Felicitaciones!</h3>
+          <h3>Tu perfil ha sido aprobado.</h3>
+          <br>
+          <h3>BIENVENIDO <br>
+            profe {{nombre}}</h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="estado =='rechazado'">
+      <ion-col size="12">
+        <ion-text color="light">
+          <h3>Lo sentimos tu perfil no ha sido aprobado.</h3>
+          <br>
+          <h3>Revisa tu correo electrónico.</h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
