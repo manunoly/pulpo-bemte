@@ -552,3 +552,25 @@ ion-fab {
     transform: scale(1) translate3d(0, 0, 0);
   }
 }
+
+.my-custom-modal-css .modal-wrapper {
+  height: 80%;
+  top: 10%;
+  width: 90%;
+  left: 5%;
+  position: absolute;
+  display: block;
+  border-radius: 22px !important;
+}
+
+.modalRojo {
+  ion-content {
+  --background: var(--ion-color-danger) !important;
+  }
+}
+
+.modalAzul {
+  ion-content {
+  --background: var(--ion-color-tertiary) !important;
+  }
+}
