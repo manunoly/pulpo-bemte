@@ -1,7 +1,7 @@
 import { AuthService } from './servicios/auth.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, IonFab } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   user;
+  @ViewChild(IonFab) fab;
+
   public appPages = [];
   public profesorPages = [
     {
@@ -103,6 +105,12 @@ export class AppComponent {
   goTo(url) {
     console.log(url);
     this.router.navigateByUrl(url);
+  }
+
+  closeMenu(){
+    console.log(this.fab);
+    if(this.fab.activated)
+      this.fab.close();
   }
 
   exit() {
