@@ -96,17 +96,36 @@
         </ion-row>
 
         <!--  codigo para aplicar a una clase.-->
-        <ion-row>
-          <!-- <ion-col size="4" offset="1">
-            <ion-button (click)="util.atras()" shape="round" expand="block" size="small" color="primary">Atras
-            </ion-button>
-          </ion-col> -->
+        <ion-row *ngIf="clase.estado == 'Solicitado'; else continuarP">
           <ion-col size="6" offset="3">
             <ion-button color="secondary" (click)="aplicar(clase)" shape="round" expand="block">
               Aplicar
             </ion-button>
           </ion-col>
         </ion-row>
+
+        <ng-template #continuarP>
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
+                <ion-text color="tertiary">
+                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+                </ion-text>
+              </a>
+              <ion-text color="dark">
+                <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <ion-button expand="block" shape="round" color="success" (click)="util.atras()">
+                Continuar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-template>
       </div>
 
       <!-- clase Cancelada -->
@@ -194,8 +213,7 @@
 
       </div>
 
-      <div
-        *ngIf="util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Recibido'">
+      <div *ngIf="util.estados(clase.estado) == 'Confirmado' || util.estados(clase.estado) == 'Recibido'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
         </ion-text>
@@ -203,8 +221,7 @@
         <ion-grid>
           <ion-row class="lineBotton">
             <ion-col size="12">
-              <ion-text
-                [color]="util.getColorEstado(util.estados(clase.estado))">
+              <ion-text [color]="util.getColorEstado(util.estados(clase.estado))">
                 <h1 style="font-size: 2em"><b>{{util.estados(clase.estado)}}</b></h1>
               </ion-text>
             </ion-col>

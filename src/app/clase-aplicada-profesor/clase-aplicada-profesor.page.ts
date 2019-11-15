@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from './../servicios/util.service';
 
@@ -10,7 +11,7 @@ export class ClaseAplicadaProfesorPage implements OnInit {
   data;
   tipo;
 
-  constructor(public util: UtilService) {
+  constructor(public util: UtilService, private router: Router) {
   }
 
   ngOnInit() {
@@ -29,4 +30,22 @@ export class ClaseAplicadaProfesorPage implements OnInit {
 
   cerrar() { }
 
+
+  async actualizar(event) {
+    setTimeout(() => {
+      event.target.complete();
+      if (this.tipo == "Clases")
+        this.router.navigateByUrl('clase-detalles/' + this.data['id']);
+      else
+        this.router.navigateByUrl('tarea-detalles/' + this.data['id']);
+
+    }, 1000);
+
+    setTimeout(() => {
+      if (this.tipo == "Clases")
+        this.router.navigateByUrl('lista-clases');
+      else
+        this.router.navigateByUrl('lista-tareas');
+    }, 400);
+  }
 }

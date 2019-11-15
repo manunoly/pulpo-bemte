@@ -2,6 +2,12 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <app-header-user-prof></app-header-user-prof>
 
   <ion-grid text-center *ngIf="data">
