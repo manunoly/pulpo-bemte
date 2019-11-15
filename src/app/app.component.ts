@@ -107,7 +107,7 @@ export class AppComponent {
   }
 
   closeMenu(){
-    if(this.fab.activated)
+    if(this.fab && this.fab.activated)
       this.fab.close();
   }
 
