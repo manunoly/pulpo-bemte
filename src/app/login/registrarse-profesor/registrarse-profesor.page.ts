@@ -117,7 +117,7 @@ export class RegistrarseProfesorPage implements OnInit {
       if (data.data == 'terminos') {
         this.confirmarTerminos();
       } else if (data.data) {
-        this.paso = 3;
+        this.registrarCuenta();
       }
     });
     return await modal.present();

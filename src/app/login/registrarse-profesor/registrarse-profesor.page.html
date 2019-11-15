@@ -88,7 +88,7 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" (click)="util.atras()" size="small" expand="block" shape="round">
               <b>
                 Cancelar
               </b>
@@ -187,9 +187,9 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" (click)="paso = 1" size="small" expand="block" shape="round">
               <b>
-                Cancelar
+                Atrás
               </b>
             </ion-button>
           </ion-col>
@@ -197,7 +197,7 @@
           <ion-col padding size="6">
             <ion-button
               [disabled]="!registroForm.value.password || registroForm.value.password != registroForm.value.passwordC"
-              (click)="confirmarRegistro()" size="small" expand="block" shape="round" color="success">
+              (click)="paso = 3" size="small" expand="block" shape="round" color="success">
               <b>
                 Siguiente
               </b>
@@ -276,9 +276,9 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" (click)="paso = 2" size="small" expand="block" shape="round">
               <b>
-                Cancelar
+                  Atrás
               </b>
             </ion-button>
           </ion-col>
@@ -343,9 +343,9 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" (click)="paso = 3" size="small" expand="block" shape="round">
               <b>
-                Cancelar
+                Atrás
               </b>
             </ion-button>
           </ion-col>
@@ -366,44 +366,6 @@
         <ion-text class="ion-text-center" color="tertiary">
           <h1>DOCUMENTOS REQUERIDOS</h1>
         </ion-text>
-
-        <!-- <ion-row>
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <ion-label>
-                <ion-button fill="outline" size="block" shape="round">
-                  Foto de identificación
-                </ion-button>
-              </ion-label>
-              <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-
-        <ion-row>
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <ion-label>
-                <ion-button fill="outline" size="block" shape="round">
-                  Tómate una foto
-                </ion-button>
-              </ion-label>
-              <ion-icon slot="end" color="tertiary" size="large" fill="outline" name="camera"></ion-icon>
-            </ion-item>
-          </ion-col>
-        </ion-row> 
-
-        <ion-row>
-          <ion-col>
-            <ion-item class="ion-no-padding" lines="none">
-              <ion-label position="stacked">
-                <h3>Descripción profesional</h3>
-              </ion-label>
-              <ion-textarea formControlName="descripcion" rows="3" class="borderRound"></ion-textarea>
-            </ion-item>
-          </ion-col>
-        </ion-row>-->
 
         <ion-row>
           <ion-col>
@@ -459,16 +421,16 @@
 
         <ion-row>
           <ion-col padding size="6">
-            <ion-button color="tertiary" [routerLink]="['/login']" size="small" expand="block" shape="round">
+            <ion-button color="tertiary" (click)="paso = 4" size="small" expand="block" shape="round">
               <b>
-                Cancelar
+                  Atrás
               </b>
             </ion-button>
           </ion-col>
 
           <ion-col padding size="6">
             <ion-button [disabled]="!registroForm.valid" size="small" expand="block" shape="round"
-              color="success" (click)="registrarCuenta()">
+              color="success" (click)="confirmarRegistro()">
               <!-- <ion-button [disabled]="!registroForm.valid" size="small" expand="block" shape="round" color="success"> -->
               <b>
                 Siguiente

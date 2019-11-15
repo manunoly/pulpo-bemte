@@ -132,12 +132,6 @@ export class DbService {
   }
 
   async post(path: string, body: Object = {}): Promise<any> {
-    // const resp = { 'id': '12', jwd: 'asdads', nombre: 'test', apellido: 'prueba', roll: 'profesor' };;
-    // return new Promise<any>((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve(resp);
-    //   }, 1500);
-    // });
     try {
       return await this.http.post(
         `${environment.api_url}${path}`,
