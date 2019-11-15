@@ -22,7 +22,7 @@
     <ion-fab-list side="top">
       <ng-container *ngFor="let p of appPages">
         <ion-fab-button class="ion-fab-button-class" color="primary" [routerLink]="[p.url]">
-          <ion-icon [name]="p.icon"></ion-icon>
+          <img [src]="'assets/img/menu/' + p.icon">
         </ion-fab-button>
         <ion-label (click)="goTo(p.url)">{{p.title}}</ion-label>
       </ng-container>

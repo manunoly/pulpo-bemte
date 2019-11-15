@@ -21,49 +21,49 @@ export class AppComponent {
     {
       title: 'Información',
       url: '/informacion',
-      icon: 'help'
+      icon: 'info_prof.png'
     },
     {
       title: 'Mis Clases',
       url: '/lista-clases',
-      icon: 'list'
+      icon: 'clases_prof.png'
     },
     {
       title: 'Mis Tareas',
       url: '/lista-tareas',
-      icon: 'list'
+      icon: 'tareas_prof.png'
     },
     {
       title: 'Billetera',
       url: '/ganancias-profesor',
-      icon: 'man'
+      icon: 'billetera_prof.png'
     }];
 
   public estudiantePages = [
     {
       title: 'Información',
       url: '/informacion',
-      icon: 'help'
+      icon: 'info_est.png'
     },
     {
       title: 'Clase Gratis',
       url: '/clase-gratis',
-      icon: 'logo-usd'
+      icon: 'clases-free_est.png'
     },
     {
       title: 'Billetera',
       url: '/billetera-estudiante',
-      icon: 'logo-usd'
+      icon: 'billetera_est.png'
     },
     {
       title: 'Mis Clases',
       url: '/lista-clases',
-      icon: 'list'
+      icon: 'clases_est.png'
     },
     {
       title: 'Mis Tareas',
       url: '/lista-tareas',
-      icon: 'list'
+      icon: 'tareas_est.png'
     }
 
   ];
@@ -103,12 +103,10 @@ export class AppComponent {
   }
 
   goTo(url) {
-    console.log(url);
     this.router.navigateByUrl(url);
   }
 
   closeMenu(){
-    console.log(this.fab);
     if(this.fab.activated)
       this.fab.close();
   }
