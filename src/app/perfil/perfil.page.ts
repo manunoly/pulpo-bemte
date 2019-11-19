@@ -28,6 +28,7 @@ export class PerfilPage implements OnInit {
   ciudades;
   img;
   imgPerfil;
+  ranking;
   eye = 'password';
   claseTareaSelect = [{ id: 1, value: 'Clases' }, { id: 2, value: 'Tareas' }, { id: 3, value: 'Clases y tareas' },]
   materias;
@@ -50,6 +51,15 @@ export class PerfilPage implements OnInit {
       this.user = user;
       console.log('usuario a editar', this.user);
       this.buildForm(this.user);
+      if (this.util.esProfesor)
+        this.db.get('profesor?user_id=' + user.user_id).then(resp => {
+          this.ranking = resp;
+        }).catch()
+      else
+        this.db.get('alumno?user_id=' + user.user_id).then(resp => {
+          this.ranking = resp;
+        }).catch()
+
     }).catch(error => {
       this.util.showMessage('Error cargando datos del usuario');
       console.log(error);
@@ -79,9 +89,9 @@ export class PerfilPage implements OnInit {
 
   async subirFotoPerfil() {
     try {
-      if(this.user.tipo == 'Profesor')
+      if (this.user.tipo == 'Profesor')
         return this.util.showMessage('Contacte al administrador para actualizar su foto de perfil');
-        
+
       this.upload.selectImage();
       this.img = this.upload.imagesSubject.subscribe(img => {
         console.log(img);

@@ -23,8 +23,8 @@
           <p no-padding no-margin padding-top> {{ user?.nombres }} {{ user?.apellidos }} <br>
           </p>
           <ion-row no-padding no-margin>
-            <ion-col offset="5" size="1" no-padding no-margin>
-              5
+            <ion-col offset="5" size="2" no-padding no-margin>
+              <span style="font-size: 15px;">{{ (ranking?.ranking * 1).toFixed(1) }}</span>
             </ion-col>
             <ion-col size="1" no-padding no-margin>
               <ion-icon color="warning" name="star"></ion-icon>
