@@ -114,14 +114,14 @@ export class ClasesPage implements OnInit {
       descripcion: ["", [Validators.required, Validators.maxLength(250)]],
       personas: [
         "1",
-        [Validators.required, Validators.min(1), Validators.max(5)]
+        [Validators.required]
       ],
       // 'ejercicios': [''],
       fecha: ["", Validators.required],
       hora1: ["", Validators.required],
       duracion: [
         "2",
-        [Validators.required, Validators.min(2), Validators.max(8)]
+        [Validators.required]
       ],
       hora: [""],
       selProfesor: ["false"],
