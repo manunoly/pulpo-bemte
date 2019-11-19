@@ -32,6 +32,7 @@ export class RegistrarseProfesorPage implements OnInit {
     private fb: FormBuilder,
     private fcm: FcmService,
     public util: UtilService
+
   ) { this.buildForm(); }
 
   async ngOnInit() {
@@ -63,20 +64,25 @@ export class RegistrarseProfesorPage implements OnInit {
 
   buildForm() {
     this.registroForm = new FormGroup({
-      nombre: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
-      apellido: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
-      fecha_nacimiento: new FormControl("", Validators.required),
-      pais: new FormControl("", Validators.required),
-      ciudad: new FormControl("", Validators.required),
-      genero: new FormControl("", Validators.required),
-      ubicacion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
 
-      apodo: new FormControl("", [Validators.required, Validators.min(8)]),
-      email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(110)]),
-      paisNumero: new FormControl("", Validators.required),
-      celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
-      password: new FormControl("", [Validators.required, Validators.min(8)]),
-      passwordC: new FormControl("", [Validators.required, Validators.min(8)]),
+      datosRegistro: new FormGroup({
+        nombre: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+        apellido: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+        fecha_nacimiento: new FormControl("", Validators.required),
+        pais: new FormControl("", Validators.required),
+        ciudad: new FormControl("", Validators.required),
+        genero: new FormControl("", Validators.required),
+        ubicacion: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),  
+      }),
+
+      datosAcceso: new FormGroup({
+        apodo: new FormControl("", [Validators.required, Validators.minLength(8)]),
+        email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(110)]),
+        paisNumero: new FormControl("", Validators.required),
+        celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
+        password: new FormControl("", [Validators.required, Validators.minLength(8)]),
+        passwordC: new FormControl("", [Validators.required, Validators.minLength(8)]),  
+      }),
 
       materia1: new FormControl("", Validators.required),
       materia2: new FormControl(""),
@@ -105,6 +111,10 @@ export class RegistrarseProfesorPage implements OnInit {
     const resp = await this.db.get('apodo-disponible?apodo=' + this.registroForm.value.apodo);
     if (!resp)
       this.util.showMessage('El usuario ya se encuentra registrado');
+  }
+
+  show(){
+   console.log(this.registroForm.value);
   }
 
   async confirmarRegistro() {
@@ -141,8 +151,7 @@ export class RegistrarseProfesorPage implements OnInit {
 
   async registrarCuenta() {
     /**TODO: las materias, el telefono */
-    let postData = this.registroForm.value;
-    console.log(this.registroForm.value);
+    let postData = {...this.registroForm.value,...this.registroForm.value.datosRegistro,...this.registroForm.value.datosAcceso};
 
     // postData['celular'] = '' + postData['paisNumero'] + postData['celular'];
     postData['fecha_nacimiento'] = '' + postData['fecha_nacimiento'].slice(0, 10);

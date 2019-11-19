@@ -4,8 +4,7 @@
   <ion-grid padding color="light">
     <form [formGroup]="registroForm">
 
-      <div *ngIf="paso == 1">
-
+      <div formGroupName="datosRegistro" *ngIf="paso == 1">
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>REGISTRO</h1>
         </ion-text>
@@ -95,7 +94,7 @@
             </ion-button>
           </ion-col>
           <ion-col padding size="6">
-            <ion-button [disabled]="!registroForm.value.ciudad" (click)="paso = 2" size="small" expand="block"
+            <ion-button [disabled]="registroForm.controls['datosRegistro'].invalid" (click)="paso=2" size="small" expand="block"
               shape="round" color="success">
               <b>
                 Siguiente
@@ -105,7 +104,7 @@
         </ion-row>
       </div>
 
-      <div *ngIf="paso == 2">
+      <div formGroupName="datosAcceso" *ngIf="paso == 2">
 
         <ion-text class="ion-text-center" color="tertiary">
           <h1 padding>DATOS DE ACCESO</h1>
@@ -196,7 +195,7 @@
 
           <ion-col padding size="6">
             <ion-button
-              [disabled]="!registroForm.value.password || registroForm.value.password != registroForm.value.passwordC"
+              [disabled]="registroForm.value.password != registroForm.value.passwordC || registroForm.controls['datosAcceso'].invalid"
               (click)="paso = 3" size="small" expand="block" shape="round" color="success">
               <b>
                 Siguiente
@@ -409,7 +408,7 @@
                 </ion-text>
 
                 <ion-text color="danger">
-                  <p>
+                  <p class="ion-text-wrap">
                     Los datos deben enviarse en 1 solo correo y el asunto de la siguiente manera:
                   </p>
                 </ion-text>
