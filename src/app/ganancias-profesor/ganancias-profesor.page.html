@@ -34,7 +34,7 @@
         </ion-item>
         <ion-text class="ion-no-padding ion-no-margin" [color]="tipo=='MULTAS'?'danger':'dark'">
           <h1 class="ion-no-padding ion-no-margin" style="font-size: 40px;">
-            <span *ngIf="tipo=='MULTAS'"><b>-</b></span> ${{gananciasD.total}}
+            <span *ngIf="tipo=='MULTAS'"><b>-</b></span> ${{(gananciasD?.total * 1).toFixed(2)}}
           </h1>
         </ion-text>
       </ion-col>
