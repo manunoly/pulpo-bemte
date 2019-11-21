@@ -11,22 +11,19 @@ import { switchMap, first } from 'rxjs/operators';
   styleUrls: ['./header-bemte.component.scss'],
 })
 export class HeaderBemteComponent implements OnInit {
-  notificion;
+  public notificion;
   @Input() popup = false;
 
   constructor(private router: Router, public db: DbService, private auth: AuthService, private modalController: ModalController) { }
 
   async ngOnInit() {
-    this.auth.user.pipe(first(),
-      switchMap(user => {
-        if (user) {
-          return this.db.get('nueva-notificacion?user_id=' + user.user_id)
+    const user = await this.auth.getUserData();
+
+           this.db.get('nueva-notificacion?user_id=' + user.user_id)
             .then(not => {
               this.db.setEstadoNotificacion(not); this.notificion = this.db.getEstadoNotificacion();
             }).catch();
-        }
-      }
-      ));
+
   }
 
   goTo(url) {
