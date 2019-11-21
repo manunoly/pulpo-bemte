@@ -7,6 +7,12 @@
 
 <ion-content>
 
+  <ion-refresher slot="fixed" (ionRefresh)="actualizar($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Deslizar para Actualiar"
+      refreshingSpinner="circles" refreshingText="Actualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-grid>
     <ion-row class="lineBotton">
       <ion-col>
@@ -47,7 +53,7 @@
         <ion-text color="tertiary">
           <p no-padding no-margin><strong> Estado </strong></p>
           <ion-button shape="round" [routerLink]="['/tarea-detalles/'+tarea.id]"
-            [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small">
+            [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small" expand="block">
             <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
           </ion-button>
         </ion-text>
@@ -56,37 +62,27 @@
       <ion-grid text-center [routerLink]="['/tarea-detalles/'+tarea.id]" no-padding *ngIf="tarea?.id==detallesTareaId">
 
         <ion-row text-left *ngIf="tarea?.descripcion" class="lineBotton">
-          <ion-col>
-            <ion-text color="tertiary">
-              <h5 class="ion-no-margin ion-no-padding ion-padding-left">Descripción</h5><br>
-              {{tarea?.descripcion}}
-            </ion-text>
+          <ion-col class="ion-no-padding ion-padding-start">
+            <h5>Descripción <br>
+              <ion-text color="tertiary">
+                <small>{{tarea?.descripcion}}</small>
+              </ion-text>
+            </h5>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col no-padding no-margin size="3">
-            <small>Hora</small><br>
+          <ion-col no-padding no-margin size="6">
+            <p>Hora de entrega</p>
             <ion-text color="tertiary">
-              <p>{{tarea.hora_inicio}}</p>
+              <p>{{tarea?.hora_inicio}} - {{tarea?.hora_fin}}</p>
             </ion-text>
           </ion-col>
-          <ion-col no-padding no-margin size="3">
-            <small>Duración</small><br>
+
+          <ion-col no-padding no-margin size="6">
+            <p>Fecha de entrega</p>
             <ion-text color="tertiary">
-              <p>{{tarea.inversion?tarea.inversion:1}}</p>
-            </ion-text>
-          </ion-col>
-          <ion-col no-padding no-margin size="4">
-            <small>Fecha</small><br>
-            <ion-text color="tertiary">
-              <p>{{tarea.fecha_entrega  | date: 'dd/MM/yyyy'}}</p>
-            </ion-text>
-          </ion-col>
-          <ion-col no-padding no-margin size="2">
-            <small>Alumnos</small><br>
-            <ion-text color="tertiary">
-              <p>{{1}}</p>
+              <p>{{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}}</p>
             </ion-text>
           </ion-col>
         </ion-row>

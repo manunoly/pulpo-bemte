@@ -57,4 +57,12 @@ export class ListaTareasPage implements OnInit {
     this.tipo = tipo;
     this.cargarTareas();
   }
+
+  async actualizar(event) {
+    this.cargarTareas();
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
+  }
 }
