@@ -118,15 +118,17 @@ export class ClaseDetallesPage implements OnInit {
     if (!clase || clase == {})
       return;
     let msg;
+    let estilo= 'fondoVerde alertRojo';
     if (profesorD)
       msg = `Se te descontarán 2 horas.`;
-    else
-      msg = `Se te descontará 1 hora.`;
-
+    else{
+      msg = `Se te descontará 1 hora chaval.`;
+      estilo = 'radioBlanco fondoVerde alertRojo'
+    }
     const alert = await this.alertController.create({
       header: '¿Estás seguro que deseas cancelar?',
       subHeader: msg,
-      cssClass: 'fondoVerde alertRojo',
+      cssClass: estilo,
       inputs: [
         {
           name: 'Si',
@@ -174,10 +176,31 @@ export class ClaseDetallesPage implements OnInit {
   }
 
   async aplicar(clases) {
+    let estilo = 'fondoVerde alertDefault';
+    let header = 'Aplicar';
+    let msg = `Confirme desea aplicar a la clase!`;
+
+    try {
+      this.util.showLoading();
+      const user = await this.auth.getUserData();
+
+      const resp = await this.db.get(`verifica-horario-coincide?tarea_id=0&user_id=${user.user_id}&clase_id=${clases.id}`);
+      this.util.dismissLoading();
+
+      if (!resp) {
+        estilo = 'fondoRojo alertDefault';
+        header = 'Alerta';
+        msg = 'Tiene una clase en ese horario, ¿Seguro desea aplicar?'
+      }
+
+    } catch (error) {
+      return this.util.dismissLoading();
+    }
+
     const alert = await this.alertController.create({
-      header: 'Aplicar',
-      message: `Confirme desea aplicar a la clase`,
-      cssClass: 'fondoVerde alertDefault',
+      header: header,
+      subHeader: msg,
+      cssClass: estilo,
       // inputs: [
       //   {
       //     name: 'hora1',
@@ -212,8 +235,10 @@ export class ClaseDetallesPage implements OnInit {
               this.util.dismissLoading();
               if (resp && resp.success) {
                 this.util.showMessage(resp.success);
-                this.util.setTemporalData({ data: clases, tipo: 'Clases' });
-                this.router.navigateByUrl('clase-aplicada-profesor');
+                this.cargarClase();
+
+                // this.util.setTemporalData({ data: clases, tipo: 'Clases' });
+                // this.router.navigateByUrl('clase-aplicada-profesor');
 
                 // const modal = await this.modalController.create({
                 //   component: ClaseAplicadaProfesorPage,

@@ -142,7 +142,6 @@ export class UtilService {
       -Rechazado
       -En proceso
    */
-  //TODO: arreglar estados segun roll
   estados(estado) {
     switch (estado) {
       case 'Sin_Horas':
