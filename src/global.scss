@@ -172,6 +172,26 @@ ion-fab {
   }
 }
 
+.alertDefaultBotonVerde {
+  color: white !important;
+  h2 {
+    color: white !important;
+  }
+  div {
+    color: white !important;
+  }
+  div div:last-child {
+    button {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      color: white !important;
+      background-color: var(--ion-color-success) !important;
+      margin: 0 auto !important;
+      border-radius: 22px !important;
+    }
+  }
+}
+
 .radioBlanco{
   .alert-radio-inner .sc-ion-alert-md{
     background-color: var(--ion-color-light);

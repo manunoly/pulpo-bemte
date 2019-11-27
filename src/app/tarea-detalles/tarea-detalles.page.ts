@@ -14,6 +14,7 @@ import { UtilService } from '../servicios/util.service';
 export class TareaDetallesPage implements OnInit {
   tareaId;
   tareaO;
+  verDetalles;
 
   constructor(private route: ActivatedRoute,
     private db: DbService,
@@ -46,19 +47,18 @@ export class TareaDetallesPage implements OnInit {
     const tareaHora = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_inicio));
 
     let anterior = new Date(tareaHora);
-    anterior.setHours(tareaHora.getHours() - 1);
 
     const tareaHoraFin = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_fin));
 
-    const posterior = new Date(tareaHoraFin);
-    // posterior.setHours(tareaHoraFin.getHours() + 1);
+    let posterior = new Date(tareaHoraFin);
+    posterior.setHours(posterior.getDate() + 1);
 
     const now = Date.now();
 
     console.log(anterior.getTime(),Date.now(),posterior.getTime());
 
     if (anterior.getTime() > now || now > posterior.getTime())
-      return this.util.showMessage('El chat estará activo una hora antes de la tarea');
+      return this.util.showMessage(`El chat se activará desde las ${tareaD.hora_inicio} hasta las ${tareaD.hora_fin}`);
 
     const modal = await this.modalController.create({
       component: ChatPage,
@@ -97,7 +97,6 @@ export class TareaDetallesPage implements OnInit {
       const user = await this.auth.getUserData();
       const resp = await this.db.post('tarea-terminar', { clase_id: 0, tarea_id: tarea.id, user_id: user.user_id, cancelar: 1, profesor: profesorD });
       this.util.dismissLoading();
-      this.db.setComboToBuy('');
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
         this.util.atras();
@@ -110,7 +109,8 @@ export class TareaDetallesPage implements OnInit {
   async aplicar(tarea) {
     const alert = await this.alertController.create({
       header: 'Aplicar a la tarea',
-      message: 'Detalle los siguientes datos',
+      subHeader: '¿Cuánto te demoras?',
+      cssClass: 'fondoAzul alertDefaultBotonVerde',
       inputs: [
         {
           name: 'tiempo',
@@ -173,5 +173,39 @@ export class TareaDetallesPage implements OnInit {
     });
 
     await alert.present();
+  }
+  
+  async descargarArchivo(tarea){
+    this.util.showMessage('Descargar Archivo');
+  }
+
+  goToCancelada(tarea) {
+    if (tarea.user_canc == tarea.user_id_pro)
+      this.router.navigateByUrl('ganancias-profesor/MULTAS');
+    else
+      this.util.atras();
+  }
+
+  detallesImg(tipo, avatar, calificacion, nombre, profClases?, profTareas?, profDescripccion?) {
+    let data = {
+      tipo: tipo,
+      avatar: avatar ? this.util.photoUrl + avatar : '/assets/icon/favicon.png',
+      ranking: calificacion ? calificacion : 5,
+      nombre: nombre,
+      profClases: profClases,
+      profTareas: profTareas,
+      profDescripccion: profDescripccion
+    }
+    this.util.setTemporalData(data);
+    this.router.navigateByUrl('/alumno-profesor-detalle');
+  }
+
+  async actualizar(event) {
+    this.cargarTarea();
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
+
   }
 }

@@ -41,6 +41,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936528253935:android:4988397e878f18773f5c1a",
+        "android_client_info": {
+          "package_name": "bemte.ecuador.profesor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "936528253935-47kbp3l66okesaf7tbgst91imbeu38v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMwoeOMHiXb8JK8gerwXww6y3E0bz8mgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "936528253935-47kbp3l66okesaf7tbgst91imbeu38v1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "936528253935-e0q6s4kn8nn7iq422k0ieq7fe875h9hp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "bemte.ecuador"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

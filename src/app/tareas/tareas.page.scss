@@ -12,10 +12,26 @@ ion-datetime {
   border-radius: 20px;
   border: 1px var(--ion-color-success) solid;
 }
+
 ion-grid {
   --ion-text-color: var(--ion-color-tertiary) !important;
 }
 
 ion-label {
   --color: var(--ion-color-tertiary) !important;
+  font-size: 35px;
+}
+
+.iconFloat {
+  color: black !important;
+  margin: 15px -13px -33px 0 !important;
+  background-color: transparent;
+  font-size: 27px;
+  padding: 0px 7px 12px 0px;
+}
+
+.btn {
+  display:block;
+  border-radius: 50%;
+  
 }

@@ -154,4 +154,8 @@ export class TareasPage implements OnInit {
   atras() {
     this.router.navigateByUrl('inicio');
   }
+
+  showMessage() {
+    this.util.presentAlert('Si tu formato de entrega es otros... escribe en que formato deseas la entrega aquí.', 'Información importante', ['Aceptar'], '', 'fondoVerde alertDefault');
+  }
 }

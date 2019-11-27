@@ -28,10 +28,10 @@ export class LoginPage implements OnInit {
 
   ) {
     this.authForm = this.fb.group({
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.minLength(6)]]
-      // 'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
-      // 'password': ['12345678', Validators.required]
+      // 'email': ['', [Validators.required, Validators.email]],
+      // 'password': ['', [Validators.required, Validators.minLength(6)]]
+      'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
+      'password': ['12345678', Validators.required]
     });
   }
 

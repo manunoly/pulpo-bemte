@@ -5,16 +5,16 @@
 
     <ion-grid padding>
         <form [formGroup]="tareaForm">
-            <ion-row>
+            <ion-row class="lineBotton">
                 <ion-col>
                     <ion-item lines="none">
                         <ion-label position="stacked">
                             <b>Materia</b>
                         </ion-label>
-                        <ionic-selectable closeButtonText="Cerrar" class="ion-text-center borderRound"
-                        [items]="materias" formControlName="materia" itemValueField="nombre" itemTextField="nombre"
-                        [canSearch]="true">
-                    </ionic-selectable>
+                        <ionic-selectable style="width: 80%; margin: 0 auto;" closeButtonText="Cerrar"
+                            class="ion-text-center borderRound" [items]="materias" formControlName="materia"
+                            itemValueField="nombre" itemTextField="nombre" [canSearch]="true">
+                        </ionic-selectable>
                         <!-- <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
                             [disabled]="!materias" formControlName="materia">
                             <ion-select-option *ngFor="let materia of materias | async" [value]="materia?.nombre">
@@ -25,21 +25,28 @@
 
                     <ion-item>
                         <ion-label position="stacked">
-                            <b>Tema</b>
+                            <ion-button color="tertiary" fill="clear" (click)="showMessage()" size="small"
+                                class="ion-no-padding ion-no-margin" style="text-transform:none">
+                                <b> Tema </b>
+                                <ion-icon slot="end" name="help" color="success"> </ion-icon>
+                            </ion-button>
                         </ion-label>
-                        <ion-input formControlName="tema"> </ion-input>
+
+
+                        <ion-input placeholder="Ejemplo:Cálculo integral" formControlName="tema"> </ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label position="stacked"><b>Descripcion</b></ion-label>
-                        <ion-textarea formControlName="descripcion"></ion-textarea>
+                        <ion-textarea placeholder="Cantidad de hojas, Parámetros" formControlName="descripcion">
+                        </ion-textarea>
                     </ion-item>
 
                     <ion-item lines="none">
                         <ion-label position="stacked"> <b>Fecha entrega</b></ion-label>
-                        <ion-datetime doneText="Hecho" cancelText="Cancelar" class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)"
-                            [min]="fechaMinima" [max]="fechaMaxima" formControlName="fecha_entrega"
-                            display-format="DD-MM-YYYY">
+                        <ion-datetime style="width: 80%; margin: 0 auto;" doneText="Hecho" cancelText="Cancelar"
+                            class="ion-text-center" (ionChange)="validarHora($event?.detail?.value)" [min]="fechaMinima"
+                            [max]="fechaMaxima" formControlName="fecha_entrega" display-format="DD-MM-YYYY">
                         </ion-datetime>
                     </ion-item>
 
@@ -54,18 +61,43 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Formato</b></ion-label>
-                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
-                            formControlName="formato_entrega">
+                        <ion-select style="width: 80%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
+                            class="ion-text-center" formControlName="formato_entrega">
+                            <ion-select-option value="foto">Foto</ion-select-option>
                             <ion-select-option value="word">Word</ion-select-option>
+                            <ion-select-option value="excel">Excel</ion-select-option>
                             <ion-select-option value="pdf">PDF</ion-select-option>
+                            <ion-select-option value="otros">Otros</ion-select-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <ion-row>
-                <ion-col *ngIf="!img || img.length === 0; else imgData" size="6" offset="3">
-                    <ion-button size="block" (click)="subir()">Adjuntar Imagen</ion-button>
-                    <!-- <ion-button size="block" (click)="transferir()">Transferir</ion-button> -->
+
+            <ion-row class="lineBotton">
+                <ion-col size="12">
+                    <ion-item lines="none" class="ion-no-padding ion-no-margin">
+                        <ion-label>
+                            <ion-text color="tertiary">
+                                <b>Adjuntar archivo</b>
+                            </ion-text>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+                
+                <ion-col *ngIf="!img || img.length === 0; else imgData" size="6">
+                    <ion-fab style="position: relative;" color="success" (click)="subir()">
+                        <ion-fab-button>
+                            <ion-icon name="camera"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                </ion-col>
+
+                <ion-col *ngIf="!img || img.length === 0; else imgData" size="6">
+                    <ion-fab style="position: relative;" color="success" (click)="subir()">
+                        <ion-fab-button>
+                            <ion-icon name="camera"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
                 </ion-col>
                 <ng-template #imgData>
                     <ion-col size="10" offset="1">
@@ -76,9 +108,7 @@
                             <ion-label position="stacked">
                                 <h5>{{ imgD.name }}</h5>
                             </ion-label>
-                            <!-- <ion-button slot="end" fill="clear" (click)="upload.startUpload(imgD)">
-                                <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
-                            </ion-button> -->
+
                             <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
                                 <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
                             </ion-button>
@@ -87,12 +117,10 @@
                 </ng-template>
             </ion-row>
             <ion-row>
-                <ion-col size="4" offset="1">
-                    <ion-button color="tertiary" shape="round" (click)="atras()" size="block">Atras</ion-button>
-                </ion-col>
-                <ion-col size="4" offset="1">
+
+                <ion-col size="6" offset="3">
                     <ion-button color="success" shape="round" [disabled]="!tareaForm.valid" (click)="confirmarTarea()"
-                        size="block">Confirmar
+                        size="block">Siguiente
                     </ion-button>
                 </ion-col>
             </ion-row>
