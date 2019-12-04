@@ -54,7 +54,7 @@
           <p no-padding no-margin><strong> Estado </strong></p>
           <ion-button shape="round" [routerLink]="['/tarea-detalles/'+tarea.id]"
             [color]="util.getColorEstado(util.estados(tarea?.estado))" size="small" expand="block">
-            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado)}}</b></small>
+            <small class="ion-no-padding ion-no-margin"><b>{{util.estados(tarea?.estado, true)}}</b></small>
           </ion-button>
         </ion-text>
       </ion-col>
@@ -71,15 +71,15 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col no-padding no-margin size="6">
+        <ion-row [ngClass]="tarea.name ? 'lineBotton': ''">
+          <ion-col class="ion-no-padding ion-no-margin" size="6">
             <p>Hora de entrega</p>
             <ion-text color="tertiary">
               <p>{{tarea?.hora_inicio}} - {{tarea?.hora_fin}}</p>
             </ion-text>
           </ion-col>
 
-          <ion-col no-padding no-margin size="6">
+          <ion-col class="ion-no-padding ion-no-margin" size="6">
             <p>Fecha de entrega</p>
             <ion-text color="tertiary">
               <p>{{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}}</p>
@@ -87,12 +87,16 @@
           </ion-col>
         </ion-row>
 
-        <!-- <ion-row>
-          <ion-col>
-            <h5>Entregar: {{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}} ( {{tarea?.hora_inicio}} ~ {{tarea?.hora_fin}})</h5>
-            <h5>Formato: {{tarea?.formato_entrega}}</h5>
+        <ion-row text-left *ngIf="tarea?.name">
+          <ion-col class="ion-no-padding ion-padding-start">
+            <h5>Profesor <br>
+              <ion-text color="tertiary">
+                <small>{{tarea?.name}}</small>
+              </ion-text>
+            </h5>
           </ion-col>
-        </ion-row> -->
+        </ion-row>
+
       </ion-grid>
     </ion-row>
 

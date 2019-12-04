@@ -19,11 +19,12 @@ export class ListaTareasPage implements OnInit {
   tareas;
   tipo = 'ACTUAL';
   detallesTareaId;
+  user;
 
   constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) {
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.cargarTareas();
   }
 
@@ -33,8 +34,10 @@ export class ListaTareasPage implements OnInit {
   cargarTareas() {
     this.tareas = this.auth.user.pipe(
       switchMap(user => {
-        if (user)
+        if (user) {
+          this.user = user;
           return this.db.get('lista-tareas?user_id=' + user.user_id + '&tipo=' + this.tipo)
+        }
         return of(null)
       }));
   }
@@ -48,7 +51,7 @@ export class ListaTareasPage implements OnInit {
   }
 
   setDetallesTareaId(id) {
-    if(id == this.detallesTareaId)
+    if (id == this.detallesTareaId)
       return this.detallesTareaId = '';
     this.detallesTareaId = id;
   }

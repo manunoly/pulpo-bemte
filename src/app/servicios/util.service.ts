@@ -142,7 +142,7 @@ export class UtilService {
       -Rechazado
       -En proceso
    */
-  estados(estado) {
+  estados(estado, tarea?) {
     switch (estado) {
       case 'Sin_Horas':
         return 'Por pagar';
@@ -157,7 +157,7 @@ export class UtilService {
         return 'Confirmado';
 
       case 'Terminado':
-        return 'Recibido';
+        return tarea && this.esProfesor ? 'Terminada' : 'Recibido';
 
       case 'Calificado':
         return 'Confirmado';
