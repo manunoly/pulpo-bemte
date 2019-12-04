@@ -39,7 +39,10 @@ export class TareaDetallesPage implements OnInit {
 
   accionHoras($event) {
     console.log('la accion de las horas es', $event);
-    this.cargarTarea();
+    if ($event)
+      this.cargarTarea();
+    else if ($event == false)
+      this.router.navigateByUrl('lista-tareas');
   }
 
   async openChat(tareaD) {
@@ -55,14 +58,14 @@ export class TareaDetallesPage implements OnInit {
 
     const now = Date.now();
 
-    console.log(anterior.getTime(),Date.now(),posterior.getTime());
+    // console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
-    if (anterior.getTime() > now || now > posterior.getTime())
-      return this.util.showMessage(`El chat se activará desde las ${tareaD.hora_inicio} hasta las ${tareaD.hora_fin}`);
+    // if (anterior.getTime() > now || now > posterior.getTime())
+    //   return this.util.showMessage(`El chat estará activo hasta 24 horas después de la hora de entrega.`);
 
     const modal = await this.modalController.create({
       component: ChatPage,
-      componentProps: { tarea: tareaD }
+      componentProps: { tarea: tareaD, tipo: 'tarea' }
     });
     return await modal.present();
   }
@@ -174,8 +177,8 @@ export class TareaDetallesPage implements OnInit {
 
     await alert.present();
   }
-  
-  async descargarArchivo(tarea){
+
+  async descargarArchivo(tarea) {
     this.util.showMessage('Descargar Archivo');
   }
 

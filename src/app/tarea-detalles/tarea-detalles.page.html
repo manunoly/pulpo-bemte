@@ -99,8 +99,57 @@
         </ion-row>
       </div>
 
+      <div padding *ngIf="tarea.estado == 'Terminado' || tarea.estado == 'Calificado'">
+        <ion-text color="primary">
+          <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
+        </ion-text>
+
+        <ion-grid padding>
+          <ion-row class="lineBotton">
+            <ion-col offset="1" size="3" class="ion-no-padding">
+              <img style="height: 60px; width: 60px;"
+                [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
+            </ion-col>
+            <ion-col class="ion-text-left">
+              <ion-text color="tertiary">
+                <h5 no-padding no-margin>{{tarea.materia}}</h5>
+                <small text-wrap>{{tarea?.tema}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-text color="danger">
+                <h1 padding><b>TERMINADA</b></h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-text color="tertiary">
+                <h5>
+                  Usted ya ha <b> realizado </b> esta tarea.
+                </h5>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <br>
+        <ion-grid padding>
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <ion-button expand="block" shape="round" color="secondary" (click)="util.atras()">
+                Continuar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+
       <!-- tarea aceptada o asignada -->
-      <div *ngIf="tarea.estado == 'Aceptado' || tarea.estado == 'Calificado'  || tarea.estado == 'Pago_Aprobado'">
+      <div *ngIf="tarea.estado == 'Aceptado' || tarea.estado == 'Pago_Aprobado'">
 
         <app-header-user-prof></app-header-user-prof>
 
@@ -127,9 +176,9 @@
 
         <div *ngIf="verDetalles">
           <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
-            <ion-col class="ion-text-center">
-              <h5 no-padding>Descripcion</h5>
+            <ion-col class="ion-text-left">
               <ion-text color="tertiary">
+                <h5 no-padding>Descripcion</h5>
                 <p no-padding no-margin> {{tarea?.descripcion}} </p>
               </ion-text>
             </ion-col>
@@ -156,31 +205,31 @@
         </div>
 
         <ion-row class="lineBotton">
-          <ion-col no-padding size="12" class="ion-text-center">
-            <h5 no-padding>Rango de entrega</h5>
+          <ion-col class="ion-no-padding" size="12" class="ion-text-center">
             <ion-text color="tertiary">
-              <p no-padding no-margin style="font-size: 30px">
-                {{tarea?.hora_inicio}} - {{tarea?.hora_fin}}
-              </p>
-              <p no-padding no-margin style="font-size: 30px">{{tarea?.fecha_entrega | date: 'EEEE, MMMM d, y'}}</p>
+              <h5 class="ion-text-left">Tu tarea debe ser entregada entre:</h5>
+              <p style="font-size: 35px;" class="ion-no-padding ion-no-margin">{{tarea?.hora_inicio}} -
+                {{tarea?.hora_fin}}</p>
+
+              <p style="font-size: 20px;" class="ion-no-padding ion-vertical-padding">
+                {{tarea?.fecha_entrega | date:"fullDate"}}</p>
             </ion-text>
           </ion-col>
         </ion-row>
 
-        <div *ngIf="tarea.estado == 'Aceptado'">
-          <ion-row>
-            <ion-col offset="2" size="8">
-              <a no-padding color="tertiary" (click)="confirmarCancelar(tarea, 1)">
-                <ion-text color="tertiary">
-                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar tarea</h3>
-                </ion-text>
-              </a>
-              <ion-text color="dark">
-                <p no-padding>Recuerda que si cancelas la tarea tandrás multa.</p>
-              </ion-text>
-            </ion-col>
-          </ion-row>
-        </div>
+        <ion-row class="lineBotton">
+          <ion-col>
+            <ion-text color="tertiary">
+              <p>El chat estará activo hasta 24 horas depues de la hora de entrega.</p>
+            </ion-text>
+            <ion-item (click)="openChat(tarea)" class="borderC">
+              <ion-input readonly></ion-input>
+              <ion-button fill="clear" slot="end">
+                <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
         <!-- <ng-template #continuarB> -->
         <ion-row>
@@ -302,7 +351,7 @@
             <ion-text color="tertiary">
               <h5>
                 <b>Lo sentimos</b>,<br>
-                la tarea no ha podido confirmarse, permanece atento a ms solicitudes.
+                la tarea no ha podido confirmarse, permanece atento a más solicitudes.
               </h5>
             </ion-text>
           </ion-col>
@@ -320,7 +369,7 @@
 
       </div>
 
-      <div *ngIf="util.estados(tarea.estado) == 'Recibido'">
+      <!-- <div *ngIf="util.estados(tarea.estado) == 'Recibido'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
         </ion-text>
@@ -449,7 +498,7 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-      </div>
+      </div> -->
 
     </ion-grid>
   </div>
@@ -457,8 +506,20 @@
   <ng-template #estudianteDivData>
     <ion-grid *ngIf="(tareaO | async) as tarea; else loadD">
 
-      <!-- <div *ngIf="tarea.estado == 'Aceptado' || tarea.estado == 'Pago_Aprobado'"> -->
-      <div>
+
+      <div *ngIf="tarea.estado == 'Sin_Horas'">
+        <app-header-user></app-header-user>
+
+        <div padding>
+          <ion-text color="danger">
+            <h3>No tienes horas suficientes</h3>
+          </ion-text>
+          <app-horas-seleccionar [tarea_id]="tarea.id" (accion)="accionHoras($event)"></app-horas-seleccionar>
+        </div>
+      </div>
+
+
+      <div *ngIf="tarea.estado == 'Aceptado' || tarea.estado == 'Pago_Aprobado'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA TAREA</b></h1>
         </ion-text>
@@ -497,17 +558,13 @@
 
         <ion-row class="lineBotton">
           <ion-col>
-            <h5 class="ion-text-left">Tu tarea será entregada entre:</h5>
             <ion-text color="tertiary">
-              <ion-text color="tertiary">
-                <p style="font-size: 35px;" class="ion-no-padding ion-no-margin">{{tarea?.hora_inicio}} -
-                  {{tarea?.hora_fin}}</p>
-              </ion-text>
+              <h5 class="ion-text-left">Tu tarea será entregada entre:</h5>
+              <p style="font-size: 35px;" class="ion-no-padding ion-no-margin">{{tarea?.hora_inicio}} -
+                {{tarea?.hora_fin}}</p>
 
-              <ion-text color="tertiary">
-                <p style="font-size: 20px;" class="ion-no-padding ion-vertical-padding">
-                  {{tarea?.fecha_entrega | date:"fullDate"}}</p>
-              </ion-text>
+              <p style="font-size: 20px;" class="ion-no-padding ion-vertical-padding">
+                {{tarea?.fecha_entrega | date:"fullDate"}}</p>
             </ion-text>
           </ion-col>
         </ion-row>
