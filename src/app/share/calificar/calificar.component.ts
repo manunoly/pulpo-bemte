@@ -18,12 +18,15 @@ export class CalificarComponent implements OnInit {
   @Input() tipo?: string;
   otroD;
   urlPhoto;
+  user;
 
   constructor(public auth: AuthService, private db: DbService, public util: UtilService, public modalController: ModalController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await this.auth.getUserData();
+
     this.urlPhoto = environment.photo_url;
-    console.log('esto recibo', this.calificarData);
+    console.log('esto recibo', this.calificarData, 'tipo', this.tipo);
   }
 
   public rate(index: number) {
@@ -56,10 +59,8 @@ export class CalificarComponent implements OnInit {
   }
 
   async calificar() {
-    const user = await this.auth.getUserData();
     let data = {};
-    if (user) {
-      console.log(user);
+    if (this.user) {
 
       if (this.rating > 3 || this.opinion == undefined)
         data['comment'] = 'Sin Comentario';
@@ -72,7 +73,7 @@ export class CalificarComponent implements OnInit {
 
       let url = 'calificar-profesor';
 
-      if (user['tipo'] === 'Profesor') {
+      if (this.user['tipo'] === 'Profesor') {
         url = 'calificar-alumno';
         data['user_id_calif'] = this.calificarData.user_id;
       } else {
@@ -89,7 +90,7 @@ export class CalificarComponent implements OnInit {
       }
 
       /**FIXME: preguntar que es el user_id_calif vs user_id */
-      data['user_id'] = user.user_id;
+      data['user_id'] = this.user.user_id;
       data['calificacion'] = this.rating;
 
       try {
@@ -111,5 +112,19 @@ export class CalificarComponent implements OnInit {
 
   close() {
     this.modalController.dismiss();
+  }
+
+  async infoTareaNoEntregada() {
+    let msg = `
+    Si tu tarea no a fue entregada envia un reclamo al mail:
+    bemtereclamos@gmail.com 
+    Con los siguientes datos:<br>
+    -Nombres y Apellidos <br>
+    -Usuario  <br>
+    -Celular <br>
+    -Fecha y hora de entrega <br>
+    -Screenshot la Tarea`;
+
+    this.util.presentAlert(msg, '', ['Aceptar'], '', 'fondoVerde alertDefault')
   }
 }
