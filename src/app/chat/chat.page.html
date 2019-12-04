@@ -1,14 +1,19 @@
-<app-header-bemte-prof *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+<app-header-bemte-prof [popup]="true" *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
 </app-header-bemte-prof>
 
 <ng-template #estudianteDiv>
-  <app-header-bemte></app-header-bemte>
+  <app-header-bemte [popup]="true"></app-header-bemte>
 </ng-template>
 
 <ion-content text-center #content>
 
   <div *ngIf="datosMostrar">
-    <ion-text color="primary">
+
+    <div class="ion-text-right ion-no-padding ion-no-margin" *ngIf="tipo == ' TAREA'">
+      <ion-button color="success" size="small" shape="round" (click)="finalizarTarea()">Finalizar Tarea</ion-button>
+    </div>
+
+    <ion-text color="tertiary">
       <h1 class="lineBotton"><b>CHAT</b></h1>
     </ion-text>
 
@@ -19,19 +24,16 @@
             <ion-icon slot="icon-only" name="ios-arrow-back"></ion-icon>
           </ion-button>
         </ion-col>
-        <ion-col size="4">
-          <img style="height: 60px; width: 60px;" src="/assets/img/chat.png">
-        </ion-col>
-
-        <ion-col size="6">
+        <ion-col size="8">
           <ion-text text-left color="tertiary">
-            <h1 style="font-size: 2em"><b>Chat</b></h1>
+            <h1 style="font-size: 3em"><b>Chat</b></h1>
           </ion-text>
         </ion-col>
       </ion-row>
       <ion-row class="lineBotton">
         <ion-col offset="1" size="3" class="ion-no-padding">
-          <img style="height: 60px; width: 60px;" [src]="datosMostrar.icono ? util.photoUrl + datosMostrar.icono : '/assets/icon/favicon.png'">
+          <img style="height: 60px; width: 60px;"
+            [src]="datosMostrar.icono ? util.photoUrl + datosMostrar.icono : '/assets/icon/favicon.png'">
         </ion-col>
         <ion-col class="ion-text-left">
           <ion-text color="tertiary">
