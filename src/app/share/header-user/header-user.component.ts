@@ -15,6 +15,7 @@ import { of } from 'rxjs';
 export class HeaderUserComponent implements OnInit {
   userD;
   @Input() query = true;
+  @Input() popup = false;
 
   constructor(public auth: AuthService,
     private router: Router,
@@ -27,9 +28,9 @@ export class HeaderUserComponent implements OnInit {
           if (this.query)
             this.db.get('calificaciones-alumno?user_id=' + user.user_id).then(calificar => {
               if (calificar.clase_id != 0) {
-                this.calificar(calificar['clase']);
+                this.calificar(calificar['clase'], 'clase');
               } else if (calificar.tarea_id != 0) {
-                console.log('tarea');
+                this.calificar(calificar['tarea'], 'tarea');
               }
             }).catch();
           return this.db.get('alumno?user_id=' + user.user_id);
@@ -48,17 +49,18 @@ export class HeaderUserComponent implements OnInit {
   }
 
 
-  async calificar(data) {
+  async calificar(data, tipoD) {
     const modal = await this.modalController.create({
       component: CalificarComponent,
-      componentProps: { calificarData: data, tipo: 'clase' }
+      componentProps: { calificarData: data, tipo: tipoD }
     });
     modal.onDidDismiss().then(data => console.log(data));
     return await modal.present();
   }
 
   goTo(url) {
-    console.log(url);
+    if (this.popup)
+      this.modalController.dismiss();
     this.router.navigateByUrl(url);
   }
 }

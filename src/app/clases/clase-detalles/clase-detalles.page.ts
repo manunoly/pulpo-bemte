@@ -109,7 +109,7 @@ export class ClaseDetallesPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: ChatPage,
-      componentProps: { clase: claseD }
+      componentProps: { clase: claseD, tipo: 'clase' }
     });
     return await modal.present();
   }
