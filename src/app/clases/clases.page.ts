@@ -106,6 +106,11 @@ export class ClasesPage implements OnInit {
     } else this.router.navigateByUrl("inicio");
   }
 
+  personasClase(est){
+    if (est > 1)
+      this.util.showMessage('De dos alumno en adelante, se te descontará 1 hora extra por cada alumno adicional.')
+  }
+  
   buildForm() {
     this.claseForm = this.fb.group({
       user_id: [this.user ? this.user.user_id : "", Validators.required],

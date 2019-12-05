@@ -47,7 +47,7 @@
                         <ion-label position="stacked">
                             <b>Cantidad de Alumnos</b>
                         </ion-label>
-                        <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
+                        <ion-select style="width: 60%; margin: 0 auto;" okText="Seleccionar" (ionChange)="personasClase($event.detail.value)" cancelText="Cancelar"
                             class="ion-text-center borderRound" formControlName="personas">
                             <ion-select-option value="1">1</ion-select-option>
                             <ion-select-option value="2">2</ion-select-option>
@@ -56,6 +56,7 @@
                             <ion-select-option value="5">5</ion-select-option>
                         </ion-select>
                     </ion-item>
+                    <!-- <small *ngIf="claseForm.value.personas > 1"></small> -->
                 </ion-col>
             </ion-row>
 
