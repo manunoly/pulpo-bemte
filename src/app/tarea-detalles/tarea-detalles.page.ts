@@ -16,6 +16,7 @@ export class TareaDetallesPage implements OnInit {
   tareaO;
   verDetalles;
   user;
+  tareaPago;
 
   constructor(private route: ActivatedRoute,
     private db: DbService,
@@ -29,6 +30,7 @@ export class TareaDetallesPage implements OnInit {
   ionViewWillEnter() {
     this.tareaId = this.route.snapshot.paramMap.get("id");
     this.cargarTarea();
+    this.tareaPago = false;
   }
 
   async ngOnInit() {
@@ -37,6 +39,41 @@ export class TareaDetallesPage implements OnInit {
 
   cargarTarea() {
     this.tareaO = this.db.get('devuelve-tarea?tarea_id=' + this.tareaId);
+  }
+
+  async confirmaPagarCombo(tarea) {
+    const alert = await this.alertController.create({
+      message: `Se te descontarán ${tarea.tiempo_estimado} horas de tu combo`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'fondoVerde alertDefault',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Aceptar',
+          handler: () => {
+            this.pagarConCombo(tarea);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async pagarConCombo(tarea) {
+    try {
+      this.util.showLoading();
+      const resp = await this.db.post('pagar-con-combo', { user_id: this.user.user_id, tarea_id: tarea.id, clase_id: 0 })
+      if (resp && resp.success)
+        this.cargarTarea();
+      this.util.dismissLoading();
+    } catch (error) {
+      this.util.dismissLoading();
+    }
   }
 
   accionHoras($event) {
@@ -68,6 +105,9 @@ export class TareaDetallesPage implements OnInit {
     const modal = await this.modalController.create({
       component: ChatPage,
       componentProps: { tarea: tareaD, tipo: 'tarea' }
+    });
+    modal.onDidDismiss().then(_ => {
+      this.cargarTarea();
     });
     return await modal.present();
   }
@@ -210,7 +250,7 @@ export class TareaDetallesPage implements OnInit {
 
   async actualizar(event) {
     this.cargarTarea();
-
+    this.tareaPago = false;
     setTimeout(() => {
       event.target.complete();
     }, 600);
