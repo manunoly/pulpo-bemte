@@ -9,24 +9,22 @@
 
   <div *ngIf="datosMostrar">
 
-    <div class="ion-text-right ion-no-padding ion-no-margin" *ngIf="tipo == ' TAREA'">
-      <ion-button color="success" size="small" shape="round" (click)="finalizarTarea()">Finalizar Tarea</ion-button>
-    </div>
-
-    <ion-text color="tertiary">
-      <h1 class="lineBotton"><b>CHAT</b></h1>
-    </ion-text>
-
     <ion-grid>
+      <ion-row class="lineBotton" *ngIf="tipo == ' TAREA'">
+        <ion-col class="ion-text-right ion-no-padding ion-no-margin" offset="6" size="6">
+          <ion-button color="success" size="small" shape="round" (click)="finalizarTarea()">Finalizar Tarea</ion-button>
+        </ion-col>
+      </ion-row>
+
       <ion-row class="lineBotton">
-        <ion-col size="2">
+        <ion-col size="2" class="ion-align-self-center">
           <ion-button (click)="close()" fill="clear" size="large">
             <ion-icon slot="icon-only" name="ios-arrow-back"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col size="8">
           <ion-text text-left color="tertiary">
-            <h1 style="font-size: 3em"><b>Chat</b></h1>
+            <h1 class="ion-text-center" style="font-size: 3em"><b>Chat</b></h1>
           </ion-text>
         </ion-col>
       </ion-row>
