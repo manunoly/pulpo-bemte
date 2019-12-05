@@ -18,11 +18,20 @@ export class TareasPage implements OnInit {
   tareaForm: FormGroup;
   materias;
   user;
-  rangosHorarios = [{ hora_inicio: '12:00', hora_fin: '13:00' }, { hora_inicio: '14:00', hora_fin: '16:00' }];
+  rangosHorarios = [
+    { hora_inicio: '6:00', hora_fin: '9:00' },
+    { hora_inicio: '9:00', hora_fin: '12:00' },
+    { hora_inicio: '12:00', hora_fin: '15:00' },
+    { hora_inicio: '15:00', hora_fin: '18:00' },
+    { hora_inicio: '18:00', hora_fin: '21:00' },
+    { hora_inicio: '21:00', hora_fin: '00:00' },
+    { hora_inicio: '00:00', hora_fin: '06:00' },
+  ];
   img;
   fechaMaxima;
   fechaMinima;
   hoy;
+  customActionSheetOptions: any = {cssClass: 'fondoVerde alertDefault'};
 
   constructor(public auth: AuthService, private db: DbService, private router: Router,
     private fb: FormBuilder, public util: UtilService, public upload: UploadService) {
@@ -63,7 +72,8 @@ export class TareasPage implements OnInit {
       if (this.img && this.img.length > 0) {
         this.tareaForm.controls['archivo'].setValue(this.img[0].name);
       }
-      let dataPost = this.tareaForm.value;
+      let dataPost = JSON.stringify(this.tareaForm.value);
+      dataPost = JSON.parse(dataPost);
 
       dataPost['hora_inicio'] = hora.hora_inicio;
       dataPost['hora_fin'] = hora.hora_fin;

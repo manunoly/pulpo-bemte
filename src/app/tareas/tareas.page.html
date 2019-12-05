@@ -52,8 +52,8 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Hora entrega</b></ion-label>
-                        <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
-                            formControlName="hora_rango">
+                        <ion-select [interfaceOptions]="customActionSheetOptions" okText="Aceptar" cancelText="Cancelar"
+                            class="ion-text-center" formControlName="hora_rango">
                             <ion-select-option *ngFor="let hora of rangosHorarios" [value]="hora">{{hora.hora_inicio}} -
                                 {{hora.hora_fin}}</ion-select-option>
                         </ion-select>
@@ -61,8 +61,9 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Formato</b></ion-label>
-                        <ion-select style="width: 80%; margin: 0 auto;" okText="Seleccionar" cancelText="Cancelar"
-                            class="ion-text-center" formControlName="formato_entrega">
+                        <ion-select [interfaceOptions]="customActionSheetOptions" style="width: 80%; margin: 0 auto;"
+                            okText="Aceptar" cancelText="Cancelar" class="ion-text-center"
+                            formControlName="formato_entrega">
                             <ion-select-option value="foto">Foto</ion-select-option>
                             <ion-select-option value="word">Word</ion-select-option>
                             <ion-select-option value="excel">Excel</ion-select-option>
@@ -83,8 +84,9 @@
                         </ion-label>
                     </ion-item>
                 </ion-col>
-                
-                <ion-col *ngIf="!img || img.length === 0; else imgData" size="6">
+
+                <ion-col *ngIf="!img || img.length === 0; else imgData" size="3" offset="2"
+                    class="ion-align-self-center ion-text-center" style="margin: auto">
                     <ion-fab style="position: relative;" color="success" (click)="subir()">
                         <ion-fab-button>
                             <ion-icon name="camera"></ion-icon>
@@ -92,7 +94,8 @@
                     </ion-fab>
                 </ion-col>
 
-                <ion-col *ngIf="!img || img.length === 0; else imgData" size="6">
+                <ion-col *ngIf="!img || img.length === 0; else imgData" size="3" offset="2"
+                    class="ion-align-self-center ion-text-center" style="margin: auto">
                     <ion-fab style="position: relative;" color="success" (click)="subir()">
                         <ion-fab-button>
                             <ion-icon name="camera"></ion-icon>
