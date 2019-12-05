@@ -15,6 +15,7 @@ export class TareaDetallesPage implements OnInit {
   tareaId;
   tareaO;
   verDetalles;
+  user;
 
   constructor(private route: ActivatedRoute,
     private db: DbService,
@@ -30,7 +31,8 @@ export class TareaDetallesPage implements OnInit {
     this.cargarTarea();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = await this.auth.getUserData();
   }
 
   cargarTarea() {
@@ -109,22 +111,22 @@ export class TareaDetallesPage implements OnInit {
     }
   }
 
+  verificarProfeAplicado(profes) {
+    if (profes.includes(this.user.user_id))
+      return true;
+    return false;
+  }
+
   async aplicar(tarea) {
     const alert = await this.alertController.create({
       header: 'Aplicar a la tarea',
-      subHeader: '¿Cuánto te demoras?',
+      subHeader: '¿Cuánto te demoras?  (mínimo 1, máximo 40)',
       cssClass: 'fondoAzul alertDefaultBotonVerde',
       inputs: [
         {
           name: 'tiempo',
           type: 'number',
           placeholder: 'Tiempo en horas de la tarea',
-          min: 0
-        },
-        {
-          name: 'inversion',
-          type: 'number',
-          placeholder: 'Costo de la tarea',
           min: 0
         }
       ],
@@ -137,8 +139,11 @@ export class TareaDetallesPage implements OnInit {
         }, {
           text: 'Aplicar',
           handler: async (data) => {
-            if (!data || !data.tiempo || !data.inversion)
+            if (!data || !data.tiempo)
               return this.util.showMessage('Por favor revisar los datos ingresados');
+
+            if (data.tiempo < 1 || data.tiempo > 40)
+              return this.util.showMessage('El tiempo debe estar entre 1 y 40');
 
             this.util.showLoading();
             try {
@@ -153,9 +158,9 @@ export class TareaDetallesPage implements OnInit {
               this.util.dismissLoading();
               if (resp && resp.success) {
                 this.util.showMessage(resp.success);
-
-                this.util.setTemporalData({ data: tarea, tipo: 'Tareas' });
-                this.router.navigateByUrl('clase-aplicada-profesor');
+                this.cargarTarea();
+                // this.util.setTemporalData({ data: tarea, tipo: 'Tareas' });
+                // this.router.navigateByUrl('clase-aplicada-profesor');
                 // const modal = await this.modalController.create({
                 //   component: ClaseAplicadaProfesorPage,
                 //   componentProps: { data: tarea, tipo: 'Tareas' } 

@@ -21,82 +21,120 @@
       <div *ngIf="tarea.estado == 'Solicitado'">
         <app-header-user-prof></app-header-user-prof>
 
-        <ion-row class="lineBotton">
-          <ion-col text-center>
-            <ion-text color="primary">
-              <h1 no-padding><b>TAREAS</b></h1>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+        <div *ngIf="verificarProfeAplicado(tarea.profAplicados); else aplicarTarea">
+          <ion-row class="lineBotton">
+            <ion-col offset="1" size="8">
+              <ion-item lines="none">
+                <ion-thumbnail slot="start">
+                  <img [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
+                </ion-thumbnail>
+                <ion-label class="ion-text-wrap ion-padding-left">
+                  <h2> {{tarea?.materia}} </h2>
+                  <h5> {{tarea?.tema}}</h5>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <ion-row class="lineBotton">
-          <ion-col offset="1" size="3" class="ion-no-padding">
-            <img style="height: 60px; width: 60px;"
-              [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
-          </ion-col>
-          <ion-col class="ion-text-left">
-            <ion-text color="tertiary">
-              <h5 no-padding no-margin>{{tarea.materia}}</h5>
-              <small text-wrap>{{tarea?.tema}}</small>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+          <ion-row padding>
+            <ion-col>
+              <ion-text color="primary">
+                <h5 padding>
+                  Gracias por aplicar<br>
+                  se confirmará en un plazo máximo de 1 hora
+                </h5>
+              </ion-text>
+              <ion-progress-bar padding color="primary" type="indeterminate"></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <ion-button expand="block" shape="round" color="secondary" routerLink="/lista-tareas">
+                CONTINUAR
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
 
-        <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
-          <ion-col class="ion-text-center">
-            <h5 no-padding>Descripcion</h5>
-            <ion-text color="tertiary">
-              <p no-padding no-margin> {{tarea?.descripcion}} </p>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+        <ng-template #aplicarTarea>
+          <ion-row class="lineBotton">
+            <ion-col text-center>
+              <ion-text color="primary">
+                <h1 no-padding><b>TAREAS</b></h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
 
-        <ion-row class="lineBotton">
-          <ion-col no-padding class="ion-text-center">
-            <h5 no-padding>Fecha de entrega</h5>
-            <ion-text color="tertiary">
-              <p no-padding no-margin style="font-size: 30px">{{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}}</p>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+          <ion-row class="lineBotton">
+            <ion-col offset="1" size="3" class="ion-no-padding">
+              <img style="height: 60px; width: 60px;"
+                [src]="tarea.icono ? util.photoUrl + tarea.icono : '/assets/icon/favicon.png'">
+            </ion-col>
+            <ion-col class="ion-text-left">
+              <ion-text color="tertiary">
+                <h5 no-padding no-margin>{{tarea.materia}}</h5>
+                <small text-wrap>{{tarea?.tema}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
 
-        <ion-row class="lineBotton">
-          <ion-col no-padding size="12" class="ion-text-center">
-            <h5 no-padding>Rango de entrega</h5>
-            <ion-text color="tertiary">
-              <p no-padding no-margin style="font-size: 30px">
-                {{tarea?.hora_inicio}} - {{tarea?.hora_fin}}
-              </p>
-            </ion-text>
-          </ion-col>
-        </ion-row>
+          <ion-row *ngIf="tarea?.descripcion" class="lineBotton">
+            <ion-col class="ion-text-center">
+              <h5 no-padding>Descripcion</h5>
+              <ion-text color="tertiary">
+                <p no-padding no-margin> {{tarea?.descripcion}} </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
 
-        <ion-row class="lineBotton">
-          <ion-col no-padding size="8" class="ion-text-center">
-            <h5 no-padding>Formato de entrega</h5>
-            <ion-text color="tertiary">
-              <p no-padding no-margin class="ion-text-uppercase" style="font-size: 30px">
-                {{tarea?.formato_entrega}}
-              </p>
-            </ion-text>
-          </ion-col>
+          <ion-row class="lineBotton">
+            <ion-col no-padding class="ion-text-center">
+              <h5 no-padding>Fecha de entrega</h5>
+              <ion-text color="tertiary">
+                <p no-padding no-margin style="font-size: 30px">{{tarea?.fecha_entrega | date: 'dd/MM/yyyy'}}</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
 
-          <ion-col size="4" no-padding class="ion-text-center">
-            <h5 no-padding>Archivo</h5>
-            <ion-button color="success" (click)="descargarArchivo(tarea)">
-              <ion-icon slot="icon-only" name="arrow-round-down" color="light"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
+          <ion-row class="lineBotton">
+            <ion-col no-padding size="12" class="ion-text-center">
+              <h5 no-padding>Rango de entrega</h5>
+              <ion-text color="tertiary">
+                <p no-padding no-margin style="font-size: 30px">
+                  {{tarea?.hora_inicio}} - {{tarea?.hora_fin}}
+                </p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
 
-        <!--  codigo para aplicar a una tarea.-->
-        <ion-row>
-          <ion-col size="6" offset="3">
-            <ion-button color="secondary" (click)="aplicar(tarea)" shape="round" expand="block">
-              Aplicar
-            </ion-button>
-          </ion-col>
-        </ion-row>
+          <ion-row class="lineBotton">
+            <ion-col no-padding size="8" class="ion-text-center">
+              <h5 no-padding>Formato de entrega</h5>
+              <ion-text color="tertiary">
+                <p no-padding no-margin class="ion-text-uppercase" style="font-size: 30px">
+                  {{tarea?.formato_entrega}}
+                </p>
+              </ion-text>
+            </ion-col>
+
+            <ion-col size="4" no-padding class="ion-text-center">
+              <h5 no-padding>Archivo</h5>
+              <ion-button color="success" (click)="descargarArchivo(tarea)">
+                <ion-icon slot="icon-only" name="arrow-round-down" color="light"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+          <!--  codigo para aplicar a una tarea.-->
+          <ion-row>
+            <ion-col size="6" offset="3">
+              <ion-button color="secondary" (click)="aplicar(tarea)" shape="round" expand="block">
+                Aplicar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-template>
       </div>
 
       <div padding *ngIf="tarea.estado == 'Terminado' || tarea.estado == 'Calificado'">
@@ -575,7 +613,7 @@
               <p>El chat estará activo hasta 24 horas depues de la hora de entrega.</p>
             </ion-text>
             <ion-item (click)="openChat(tarea)" class="borderC">
-              <ion-input readonly  placeholder="Escribe un mensaje"></ion-input>
+              <ion-input readonly placeholder="Escribe un mensaje"></ion-input>
               <ion-button fill="clear" slot="end">
                 <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
               </ion-button>
