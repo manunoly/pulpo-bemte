@@ -16,9 +16,125 @@
   <div *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDivData">
     <ion-grid *ngIf="(claseO | async) as clase; else loadD">
 
+      <div *ngIf="clase.estado == 'Aceptado' || clase.estado == 'Pago_Aprobado'">
+
+        <ion-text color="primary">
+          <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
+        </ion-text>
+
+          <ion-row class="lineBotton">
+            <ion-col size="12" class="ion-text-center">
+              <ion-text color="tertiary">
+                <h1 style="font-size: 3em"><b>Confirmada</b></h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="lineBotton" (click)="verDetalles = !verDetalles">
+            <ion-col offset="1" size="3" class="ion-no-padding">
+              <img style="height: 60px; width: 60px;"
+                [src]="clase.icono ? util.photoUrl + clase.icono : '/assets/icon/favicon.png'">
+            </ion-col>
+            <ion-col class="ion-text-left">
+              <ion-text color="tertiary">
+                <h5 no-padding no-margin>{{clase.materia}}</h5>
+                <small text-wrap>{{clase?.tema}}</small>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <div *ngIf="verDetalles">
+            <ion-row *ngIf="clase?.descripcion" class="lineBotton">
+              <ion-col>
+                <h5 class="ion-no-margin ion-no-padding">Descripcion</h5>
+                <ion-text color="tertiary">
+                  <p> {{clase?.descripcion}} </p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="lineBotton">
+              <ion-col no-padding no-margin size="3">
+                <small>Hora</small><br>
+                <ion-text color="tertiary">
+                  <p>{{clase.hora1}}</p>
+                </ion-text>
+              </ion-col>
+              <ion-col no-padding no-margin size="3">
+                <small>Duración</small><br>
+                <ion-text color="tertiary">
+                  <p>{{clase.duracion}}</p>
+                </ion-text>
+              </ion-col>
+              <ion-col no-padding no-margin size="4">
+                <small>Fecha</small><br>
+                <ion-text color="tertiary">
+                  <p>{{clase.fecha | date: 'dd/MM/yyyy' }}</p>
+                </ion-text>
+              </ion-col>
+              <ion-col no-padding no-margin size="2">
+                <small>Alumnos</small><br>
+                <ion-text color="tertiary">
+                  <p>{{clase.personas}}</p>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="lineBotton" *ngIf="clase?.coordenadas" (click)="map(clase.coordenadas)">
+              <ion-col class="ion-align-self-center" size="2">
+                <ion-icon size="large" name="pin" color="primary"></ion-icon>
+              </ion-col>
+              <ion-col no-padding no-margin>
+                <ion-text color="tertiary">
+                  <h5> {{clase?.ubicacion}} </h5>
+                </ion-text>
+              </ion-col>
+              <ion-col class="ion-align-self-center" size="3">
+                <ion-button size="small" shape="round">Mapa</ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <ion-row *ngIf="clase.estado == 'Aceptado' || clase.estado == 'Pago_Aprobado'" class="lineBotton">
+            <ion-col>
+              <ion-text color="tertiary">
+                <p>El chat se activará 1 hora antes de la clase</p>
+
+              </ion-text>
+              <ion-item (click)="openChat(clase)" class="borderC">
+                <ion-input readonly placeholder="Escribe un mensaje"></ion-input>
+                <ion-button fill="clear" slot="end">
+                  <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
+                <ion-text color="tertiary">
+                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+                </ion-text>
+              </a>
+              <ion-text color="dark">
+                <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col offset="2" size="8">
+              <ion-button expand="block" shape="round" color="success" (click)="util.atras()">
+                Continuar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+
+      </div>
+
       <!-- Seccion para aplicar a la clase -->
-      <div
-        *ngIf="clase.estado == 'Solicitado' || clase.estado == 'Aceptado' || clase.estado == 'Calificado'  || clase.estado == 'Pago_Aprobado'">
+      <div *ngIf="clase.estado == 'Solicitado' || clase.estado == 'Calificado'">
 
         <app-header-user-prof></app-header-user-prof>
 
@@ -46,7 +162,7 @@
         <div *ngIf="verDetalles">
           <ion-row *ngIf="clase?.descripcion" class="lineBotton">
             <ion-col>
-              <h5 no-margin no-padding>Descripcion</h5>
+              <h5 class="ion-no-margin ion-no-padding">Descripcion</h5>
               <ion-text color="tertiary">
                 <p> {{clase?.descripcion}} </p>
               </ion-text>
@@ -57,13 +173,13 @@
             <ion-col no-padding no-margin size="7">
               <p no-padding>Hora</p>
               <ion-text color="tertiary">
-                <p no-margin no-padding style="font-size: 30px">{{clase.hora1}}</p>
+                <p class="ion-no-margin ion-no-padding" style="font-size: 30px">{{clase.hora1}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="5">
               <p no-padding>Duración</p>
               <ion-text color="tertiary">
-                <p no-margin no-padding style="font-size: 30px">{{clase.duracion}}</p>
+                <p class="ion-no-margin ion-no-padding" style="font-size: 30px">{{clase.duracion}}</p>
               </ion-text>
             </ion-col>
           </ion-row>
@@ -72,13 +188,13 @@
             <ion-col no-padding no-margin size="7">
               <p no-padding>Fecha</p>
               <ion-text color="tertiary">
-                <p no-margin no-padding style="font-size: 30px">{{clase.fecha | date: 'dd/MM/yyyy'}}</p>
+                <p class="ion-no-margin ion-no-padding" style="font-size: 30px">{{clase.fecha | date: 'dd/MM/yyyy'}}</p>
               </ion-text>
             </ion-col>
             <ion-col no-padding no-margin size="5">
               <p no-padding>Alumnos</p>
               <ion-text color="tertiary">
-                <p no-margin no-padding style="font-size: 30px">{{clase.personas}}</p>
+                <p class="ion-no-margin ion-no-padding" style="font-size: 30px">{{clase.personas}}</p>
               </ion-text>
             </ion-col>
           </ion-row>
@@ -94,36 +210,6 @@
             </ion-col>
             <ion-col class="ion-align-self-center" size="3">
               <ion-button color="success" size="small" shape="round">Mapa</ion-button>
-            </ion-col>
-          </ion-row>
-        </div>
-
-        <ion-row *ngIf="clase.estado == 'Aceptado' || clase.estado == 'Pago_Aprobado'" class="lineBotton">
-          <ion-col>
-            <ion-text color="tertiary">
-              <p>El chat se activará 1 hora antes de la clase</p>
-            </ion-text>
-            <ion-item (click)="openChat(clase)" class="borderC">
-              <ion-input readonly placeholder="Escribe un mensaje"></ion-input>
-              <ion-button fill="clear" slot="end">
-                <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
-              </ion-button>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-
-        <div *ngIf="clase.estado == 'Aceptado'">
-          <ion-row>
-            <ion-col offset="2" size="8">
-              <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
-                <ion-text color="tertiary">
-                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
-                </ion-text>
-              </a>
-              <ion-text color="dark">
-                <p no-padding>Recuerda que si cancelas la clase tandrás multa.</p>
-              </ion-text>
             </ion-col>
           </ion-row>
         </div>
@@ -305,7 +391,7 @@
           <div *ngIf="verDetalles">
             <ion-row *ngIf="clase?.descripcion" class="lineBotton">
               <ion-col>
-                <h5 no-margin no-padding>Descripcion</h5>
+                <h5 class="ion-no-margin ion-no-padding">Descripcion</h5>
                 <ion-text color="tertiary">
                   <p> {{clase?.descripcion}} </p>
                 </ion-text>
@@ -614,7 +700,6 @@
         </ion-grid>
       </div>
 
-
       <div padding *ngIf="clase.estado == 'Confirmando_Pago'">
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
@@ -657,6 +742,7 @@
 
       <div padding
         *ngIf="clase.estado == 'Aceptado' || clase.estado == 'Terminado' || clase.estado == 'Calificado'  || clase.estado == 'Pago_Aprobado'">
+
         <ion-text color="primary">
           <h1 class="lineBotton"><b>ESTADO DE LA CLASE</b></h1>
         </ion-text>
@@ -686,7 +772,7 @@
           <div *ngIf="verDetalles">
             <ion-row *ngIf="clase?.descripcion" class="lineBotton">
               <ion-col>
-                <h5 no-margin no-padding>Descripcion</h5>
+                <h5 class="ion-no-margin ion-no-padding">Descripcion</h5>
                 <ion-text color="tertiary">
                   <p> {{clase?.descripcion}} </p>
                 </ion-text>
@@ -782,7 +868,7 @@
 
           <ion-row>
             <ion-col offset="2" size="8">
-              <ion-button expand="block" shape="round" color="primary" routerLink="/inicio">
+              <ion-button expand="block" shape="round" color="primary" routerLink="/lista-clases">
                 Aceptar
               </ion-button>
             </ion-col>

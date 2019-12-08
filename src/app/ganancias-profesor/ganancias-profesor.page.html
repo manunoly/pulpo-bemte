@@ -14,8 +14,8 @@
           <p class="ion-no-padding ion-no-margin"> <small> {{ user?.nombres }} {{ user?.apellidos }} </small> <br>
           </p>
           <ion-row no-padding no-margin>
-            <ion-col offset="5" size="1" no-padding no-margin>
-              5
+            <ion-col style="white-space: nowrap" offset="3" size="3" class="ion-no-padding ion-no-margin">
+              {{ (ranking?.ranking * 1).toFixed(1) }}
             </ion-col>
             <ion-col size="1" no-padding no-margin>
               <ion-icon color="warning" name="star"></ion-icon>

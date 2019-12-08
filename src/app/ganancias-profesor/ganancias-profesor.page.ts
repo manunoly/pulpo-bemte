@@ -16,7 +16,8 @@ export class GananciasProfesorPage implements OnInit {
   ganancias;
   tipo = 'CLASES';
   dataDetalles;
-
+  ranking;
+  
   constructor(private route: ActivatedRoute, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService) { }
 
   ngOnInit() {
@@ -31,8 +32,13 @@ export class GananciasProfesorPage implements OnInit {
   cargarGanancias() {
     this.ganancias = this.auth.user.pipe(
       switchMap(user => {
-        if (user)
+        if (user) {
+          if (this.util.esProfesor)
+            this.db.get('profesor?user_id=' + user.user_id).then(resp => {
+              this.ranking = resp;
+            }).catch()
           return this.db.get('cuenta-profesor?user_id=' + user.user_id + '&tipo=' + this.tipo);
+        }
         return of(null)
       }
       ));
