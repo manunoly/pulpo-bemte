@@ -108,8 +108,8 @@
 
                     <ion-item no-padding no-margin lines="none" (click)="goToMap()">
                         <ion-icon no-padding no-margin color="primary" size="large" name="pin" slot="start"></ion-icon>
-                        <ion-label no-padding no margin text-center class="ion-text-wrap" no-padding no margin>
-                            <b>Ubicación</b> {{claseForm?.value?.ubicacion}}
+                        <ion-label no-padding no-margin text-center class="ion-text-wrap">
+                            <b>Ubicación de la clase</b> {{claseForm?.value?.ubicacion}}
                         </ion-label>
                         <ion-button slot="end" shape="round" size="small">Mapa</ion-button>
                     </ion-item>
@@ -117,11 +117,11 @@
             </ion-row>
 
             <ion-row>
-                <ion-col size="4" offset="1">
+                <!-- <ion-col size="4" offset="1">
                     <ion-button (click)="atras()" shape="round" expand="block" size="small" color="tertiary">Atras
                     </ion-button>
-                </ion-col>
-                <ion-col size="4" offset="1">
+                </ion-col> -->
+                <ion-col size="6" offset="3">
                     <ion-button [disabled]="!claseForm.valid" (click)="confirmarClase()" shape="round" expand="block"
                         size="small">Siguiente
                     </ion-button>

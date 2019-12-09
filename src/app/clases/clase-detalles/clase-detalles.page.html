@@ -114,7 +114,7 @@
             <ion-col offset="2" size="8">
               <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
                 <ion-text color="tertiary">
-                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+                  <h5 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h5>
                 </ion-text>
               </a>
               <ion-text color="dark">
@@ -214,6 +214,9 @@
           </ion-row>
         </div>
 
+        <div *ngIf="!verDetalles">
+          <br><br>
+        </div>
         <!--  codigo para aplicar a una clase.-->
         <ion-row *ngIf="clase.estado == 'Solicitado'; else continuarB">
           <ion-col size="6" offset="3">
@@ -475,7 +478,7 @@
             <ion-col offset="2" size="8">
               <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
                 <ion-text color="tertiary">
-                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+                  <h5 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h5>
                 </ion-text>
               </a>
               <ion-text color="dark">
@@ -857,7 +860,7 @@
             <ion-col offset="2" size="8">
               <a no-padding color="tertiary" (click)="confirmarCancelar(clase)">
                 <ion-text color="tertiary">
-                  <h3 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h3>
+                  <h5 style="border-bottom: 1px solid; padding: 0px">Cancelar clase</h5>
                 </ion-text>
               </a>
               <ion-text color="dark">
@@ -869,7 +872,7 @@
           <ion-row>
             <ion-col offset="2" size="8">
               <ion-button expand="block" shape="round" color="primary" routerLink="/lista-clases">
-                Aceptar
+                Continuar
               </ion-button>
             </ion-col>
           </ion-row>

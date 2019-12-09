@@ -104,8 +104,8 @@ export class ClaseDetallesPage implements OnInit {
 
     console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
-    if (anterior.getTime() > now || now > posterior.getTime())
-      return this.util.showMessage('El chat estará activo una hora antes de la clase.');
+    if (now > posterior.getTime())
+      return this.util.showMessage('El chat no se encuentra activo para la clase.');
 
     const modal = await this.modalController.create({
       component: ChatPage,
@@ -118,12 +118,12 @@ export class ClaseDetallesPage implements OnInit {
     if (!clase || clase == {})
       return;
     let msg;
-    let estilo= 'fondoVerde alertRojo';
+    let estilo= 'fondoVerde alertDefault';
     if (profesorD)
       msg = `Se te descontarán 2 horas.`;
     else{
       msg = `Se te descontará 1 hora chaval.`;
-      estilo = 'radioBlanco fondoVerde alertRojo'
+      estilo = 'fondoVerde alertDefault'
     }
     const alert = await this.alertController.create({
       header: '¿Estás seguro que deseas cancelar?',
