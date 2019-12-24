@@ -120,7 +120,7 @@
 
             <ion-col size="4" no-padding class="ion-text-center">
               <h5 no-padding>Archivo</h5>
-              <ion-button color="success" (click)="descargarArchivo(tarea)">
+              <ion-button [disabled]="!tarea.archivo" color="success" (click)="descargarArchivo(tarea)">
                 <ion-icon slot="icon-only" name="arrow-round-down" color="light"></ion-icon>
               </ion-button>
             </ion-col>

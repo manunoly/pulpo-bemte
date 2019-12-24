@@ -85,7 +85,7 @@
                     </ion-item>
                 </ion-col>
 
-                <ion-col *ngIf="!img || img.length === 0; else imgData" size="3" offset="2"
+                <ion-col *ngIf="!fichero && !img; else imgData" size="3" offset="2"
                     class="ion-align-self-center ion-text-center" style="margin: auto">
                     <ion-fab style="position: relative;" color="success" (click)="subir()">
                         <ion-fab-button>
@@ -94,16 +94,16 @@
                     </ion-fab>
                 </ion-col>
 
-                <ion-col *ngIf="!img || img.length === 0; else imgData" size="3" offset="2"
+                <ion-col *ngIf="!fichero && !img; else imgData" size="3" offset="2"
                     class="ion-align-self-center ion-text-center" style="margin: auto">
-                    <ion-fab style="position: relative;" color="success" (click)="subir()">
+                    <ion-fab style="position: relative;" color="success" (click)="seleccionarArchivo()">
                         <ion-fab-button>
-                            <ion-icon name="camera"></ion-icon>
+                            <ion-icon name="document"></ion-icon>
                         </ion-fab-button>
                     </ion-fab>
                 </ion-col>
                 <ng-template #imgData>
-                    <ion-col size="10" offset="1">
+                    <ion-col size="10" offset="1" *ngIf="img && img.length > 0">
                         <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
                             <ion-thumbnail slot="start">
                                 <ion-img [src]="imgD.path"></ion-img>
@@ -117,10 +117,22 @@
                             </ion-button>
                         </ion-item>
                     </ion-col>
+
+                    <ion-col size="10" offset="1" *ngIf="fichero">
+                        <ion-item text-wrap>
+                            <ion-label position="stacked">
+                                <h5>{{ fichero.get('filename')}}</h5>
+                            </ion-label>
+
+                            <ion-button slot="end" fill="clear" (click)="fichero = undefined">
+                                <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+                            </ion-button>
+                        </ion-item>
+                    </ion-col>
                 </ng-template>
             </ion-row>
-            <ion-row>
 
+            <ion-row>
                 <ion-col size="6" offset="3">
                     <ion-button color="success" shape="round" [disabled]="!tareaForm.valid" (click)="confirmarTarea()"
                         size="block">Siguiente

@@ -1,3 +1,4 @@
+import { UploadFileImageService } from './../service/upload-file-image.service';
 import { UploadService } from './../servicios/upload.service';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
@@ -5,8 +6,6 @@ import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { switchMap, first } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-tareas',
@@ -18,6 +17,7 @@ export class TareasPage implements OnInit {
   tareaForm: FormGroup;
   materias;
   user;
+  fichero;
   rangosHorarios = [
     { hora_inicio: '6:00', hora_fin: '9:00' },
     { hora_inicio: '9:00', hora_fin: '12:00' },
@@ -31,10 +31,11 @@ export class TareasPage implements OnInit {
   fechaMaxima;
   fechaMinima;
   hoy;
-  customActionSheetOptions: any = {cssClass: 'fondoVerde alertDefault'};
+  customActionSheetOptions: any = { cssClass: 'fondoVerde alertDefault' };
 
   constructor(public auth: AuthService, private db: DbService, private router: Router,
-    private fb: FormBuilder, public util: UtilService, public upload: UploadService) {
+    private fb: FormBuilder, public util: UtilService, public upload: UploadService,
+    private uploadFile: UploadFileImageService) {
     let currentDate = new Date();
     this.hoy = currentDate;
     this.hoy.setHours(1);
@@ -72,6 +73,11 @@ export class TareasPage implements OnInit {
       if (this.img && this.img.length > 0) {
         this.tareaForm.controls['archivo'].setValue(this.img[0].name);
       }
+
+      if (this.fichero && this.fichero.get('filename')) {
+        this.tareaForm.controls['archivo'].setValue(this.fichero.get('filename'));
+      }
+
       let dataPost = JSON.stringify(this.tareaForm.value);
       dataPost = JSON.parse(dataPost);
 
@@ -82,9 +88,13 @@ export class TareasPage implements OnInit {
 
       this.util.showLoading();
       const resp = await this.db.post('solicitar-tarea', dataPost);
-      this.util.dismissLoading();
       if (resp && resp.success) {
-        await this.transferir();
+        if (this.img && this.img.length > 0)
+          await this.transferir();
+        if (this.fichero && this.fichero.get('filename')) {
+          await this.uploadFile.uploadImageData(this.fichero);
+        }
+        this.util.dismissLoading();
         this.util.showMessage(resp.success);
         this.buildForm();
         this.router.navigateByUrl('tarea-detalles/' + resp.tarea.id);
@@ -112,10 +122,27 @@ export class TareasPage implements OnInit {
     });
   }
 
-  async subir() {
+  async seleccionarImagen() {
     try {
       this.upload.imagesSubject.subscribe(img => this.img = img);
       await this.upload.selectImage();
+    } catch (error) {
+    }
+  }
+
+  async seleccionarArchivo() {
+    this.fichero = await this.uploadFile.selectFile();
+  }
+
+  async subirImagen() {
+    await this.uploadFile.uploadImageData(this.fichero);
+  }
+
+
+  async subirFichero() {
+    try {
+      this.upload.imagesSubject.subscribe(img => this.img = img);
+      await this.upload.selectFile();
     } catch (error) {
     }
   }

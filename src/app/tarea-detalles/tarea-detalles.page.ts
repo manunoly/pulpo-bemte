@@ -5,6 +5,7 @@ import { DbService } from './../servicios/db.service';
 import { ActivatedRoute, Router, NavigationExtras } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '../servicios/util.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-tarea-detalles',
@@ -23,7 +24,8 @@ export class TareaDetallesPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     public util: UtilService,
-    private router: Router,
+    private router: Router, 
+    private iab: InAppBrowser,
     public auth: AuthService
   ) { }
 
@@ -224,7 +226,9 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async descargarArchivo(tarea) {
-    this.util.showMessage('Descargar Archivo');
+    if(tarea.archivo == "")
+      return this.util.showMessage('No contiene adjunto');
+    this.iab.create(this.db.photoUrl + tarea.archivo, '_system');
   }
 
   goToCancelada(tarea) {
