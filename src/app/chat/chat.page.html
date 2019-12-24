@@ -45,6 +45,12 @@
         <ion-row style="padding-top: 3px;" *ngFor="let item of chatD">
           <ion-col padding [offset]="user.user_id == item.user_escribe ? 4 : 0" size="8"
             [ngClass]="user.user_id == item.user_escribe ? 'ion-text-end ion-padding-end borderUser':'borderOtherUser ion-text-start ion-padding-start'">
+            <div [ngClass]="user.user_id != item.user_escribe ? 'ion-no-padding ion-padding-end' : ''"
+              *ngIf="item.imagen" class="ion-float-left">
+              <ion-button fill="outline" size="small" (click)="downloadFile(item.imagen)">
+                <ion-icon name="download" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
             <ion-text color="tertiary">
               {{item?.texto}}
             </ion-text>
@@ -62,10 +68,30 @@
 
 <ion-footer>
   <ion-item class="borderC">
-    <ion-input spellcheck="true" autoComplete="true" autocorrect="true" maxlength="500" type="text"
-      (keyup.enter)="enviarChat(newMessage); newMessage=''" placeholder="..." [(ngModel)]="newMessage"></ion-input>
-    <ion-button fill="clear" slot="end" [disabled]="!newMessage && !img"
-      (click)="enviarChat(newMessage); newMessage=''">
+    <div slot="start">
+      <ion-buttons *ngIf="!fichero && img.length == 0; else adjunto" color="tertiary" class="ion-no-padding ion-no-margin">
+        <ion-button size="small" (click)="seleccionarFoto()" class="ion-no-padding">
+          <ion-icon slot="icon-only" name="camera" color="tertiary"></ion-icon>
+        </ion-button>
+        <ion-button size="small" (click)="seleccionarArchivo()" class="ion-no-padding">
+          <ion-icon slot="icon-only" name="document" color="tertiary"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <ng-template #adjunto>
+        <a class="ion-no-padding" (click)="confirmaEnviarArchivo()">
+          <small>
+            {{fichero && fichero.get('filename') ? fichero.get('filename') : img.length > 0 ? img[0].name:''}}
+          </small>
+        </a>
+      </ng-template>
+    </div>
+
+    <ion-input style="margin-left: -10px; min-height: 40px;" class="ion-no-padding ion-no-margin" spellcheck="true" autoComplete="true" autocorrect="true"
+      maxlength="500" type="text" (keyup.enter)="enviarChat(); newMessage=''" placeholder="..."
+      [(ngModel)]="newMessage"></ion-input>
+    <ion-button fill="clear" slot="end" [disabled]="!newMessage" (click)="enviarChat(); newMessage=''"
+      class="ion-no-padding">
       <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-item>

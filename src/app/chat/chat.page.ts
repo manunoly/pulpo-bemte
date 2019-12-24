@@ -1,3 +1,5 @@
+import { UploadService } from './../servicios/upload.service';
+import { UploadFileImageService } from './../service/upload-file-image.service';
 import { DbService } from './../servicios/db.service';
 import { UtilService } from './../servicios/util.service';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -5,6 +7,7 @@ import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { interval } from 'rxjs';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +19,8 @@ export class ChatPage implements OnInit {
   user
   chatD;
   tarea;
-  img;
+  img = [];
+  fichero;
   newMessage;
   @ViewChild('content') private content: any;
   $counter;
@@ -24,7 +28,10 @@ export class ChatPage implements OnInit {
   datosMostrar;
   tipo;
 
-  constructor(private alertController: AlertController, private db: DbService, public util: UtilService, public auth: AuthService, private modalController: ModalController) { }
+  constructor(private alertController: AlertController, private db: DbService,
+    public upload: UploadService, private iab: InAppBrowser,
+    private uploadFile: UploadFileImageService, public util: UtilService,
+    public auth: AuthService, private modalController: ModalController) { }
 
   async ngOnInit() {
     console.log('recibo clase', this.clase);
@@ -44,6 +51,10 @@ export class ChatPage implements OnInit {
 
   ionViewDidLeave() {
     this.$counter.unsubscribe();
+    if (this.img && this.img.length > 0)
+      this.upload.deleteImage(this.img[0]);
+    if (this.fichero)
+      this.fichero = '';
   }
 
   recargarChatAutomatico() {
@@ -74,6 +85,8 @@ export class ChatPage implements OnInit {
     }
   }
 
+
+
   async scrollToBottomOnInit(chats) {
     if (this.cant != chats.length) {
       this.chatD = chats;
@@ -84,7 +97,13 @@ export class ChatPage implements OnInit {
   }
 
 
-  enviarChat(textSend = null) {
+  async enviarChat(adj?) {
+
+    if (!adj && (this.fichero || this.img.length > 0)) {
+      return this.confirmaEnviarArchivo();
+    }
+
+
     let tareaid = '0';
     let claseid = '0';
 
@@ -94,13 +113,23 @@ export class ChatPage implements OnInit {
     if (this.tarea && this.tarea.id)
       tareaid = this.tarea.id;
 
-    this.db.post('enviar-chat', {
+    let imgData = null;
+    if (this.fichero) {
+      imgData = this.fichero.get('filename');
+    }
+    if (this.img && this.img.length > 0) {
+      imgData = this.img[0].name;
+    }
+    await this.db.post('enviar-chat', {
       user_id: this.user.user_id,
       tarea_id: tareaid,
       clase_id: claseid,
-      texto: textSend,
-      img: this.img
-    }).then(_ => this.cargarChat()).catch(_ => this.cargarChat())
+      texto: this.newMessage,
+      imagen: imgData
+    });
+
+    await this.cargarChat();
+    return true;
   }
 
   close() {
@@ -165,6 +194,90 @@ export class ChatPage implements OnInit {
       await alert.present();
     }
 
+  }
+
+  async seleccionarArchivo() {
+    this.fichero = await this.uploadFile.selectFile();
+    if (this.fichero)
+      this.confirmaEnviarArchivo();
+  }
+
+  async seleccionarFoto() {
+    try {
+      this.upload.imagesSubject.subscribe(img => {
+        this.img = img;
+        console.log(this.img);
+        if (this.img && this.img.length > 0)
+          this.confirmaEnviarArchivo();
+      });
+      await this.upload.selectImage();
+    } catch (error) {
+    }
+  }
+
+  async confirmaEnviarArchivo() {
+    {
+      let tipo = 'Profesor';
+      if (this.user.tipo == 'Profesor')
+        tipo = 'Estudiante'
+      const alert = await this.alertController.create({
+        header: 'Confirme acción!',
+        message: `Confirme desea enviar archivo o eliminarlo`,
+        cssClass: 'fondoVerde alertDefault',
+        inputs: [
+          {
+            name: 'Si',
+            type: 'radio',
+            label: 'Si',
+            value: true
+          },
+          {
+            name: 'No',
+            type: 'radio',
+            label: 'No',
+            value: false
+          }],
+        buttons: [
+          {
+            text: 'Eliminar',
+            role: 'cancel',
+            handler: (data) => {
+              if (data) {
+                if (this.fichero) {
+                  this.fichero = '';
+                }
+                if (this.img && this.img.length > 0) {
+                  this.upload.deleteImage(this.img[0]);
+                }
+              }
+            }
+          }, {
+            text: 'Enviar',
+            handler: async (data) => {
+              if (data) {
+                if (this.fichero) {
+                  await this.uploadFile.uploadImageData(this.fichero);
+                  await this.enviarChat(true);
+                  this.fichero = '';
+                }
+                if (this.img && this.img.length > 0) {
+                  await this.upload.startUpload(this.img[0]);
+                  await this.enviarChat(true);
+                  this.upload.deleteImage(this.img[0]);
+                }
+              }
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+  }
+
+
+  downloadFile(url) {
+    this.iab.create(this.db.photoUrl + url, '_system');
   }
 
 }
