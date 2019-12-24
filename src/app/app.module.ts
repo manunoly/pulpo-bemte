@@ -20,6 +20,8 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { IonicSelectableModule } from 'ionic-selectable';
+import { Chooser } from '@ionic-native/chooser/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,8 +42,10 @@ import { IonicSelectableModule } from 'ionic-selectable';
     File,
     WebView,
     FilePath,
+    Chooser,
     FCM,
-    Geolocation
+    Geolocation,
+    InAppBrowser
   ],
   bootstrap: [AppComponent]
 })
