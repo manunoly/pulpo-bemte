@@ -248,7 +248,8 @@ export class UploadFileImageService {
           if (res["success"]) {
             this.util.showMessage("Archivo subido exitosamente.");
             setTimeout(async () => {
-              this.deleteImage(formData);
+              if(this.images && this.images.length > 0)
+                this.deleteImage(formData);
             }, 2000);
           } else {
             this.util.showMessage("Error subiendo archivo desde el servidor.");
