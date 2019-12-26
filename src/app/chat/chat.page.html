@@ -6,9 +6,7 @@
 </ng-template>
 
 <ion-content text-center #content>
-
   <div *ngIf="datosMostrar">
-
     <ion-grid>
       <ion-row class="lineBotton" *ngIf="tipo == ' TAREA'">
         <ion-col class="ion-text-right ion-no-padding ion-no-margin" offset="6" size="6">
@@ -31,7 +29,7 @@
       <ion-row class="lineBotton">
         <ion-col offset="1" size="3" class="ion-no-padding">
           <img style="height: 60px; width: 60px;"
-            [src]="datosMostrar.icono ? util.photoUrl + datosMostrar.icono : '/assets/icon/favicon.png'">
+            [src]="datosMostrar.icono ? util.photoUrl + datosMostrar.icono : '/assets/icon/favicon.png'" />
         </ion-col>
         <ion-col class="ion-text-left">
           <ion-text color="tertiary">
@@ -61,36 +59,35 @@
           <h5>Sin Historial</h5>
         </ion-text>
       </div>
-
     </ion-grid>
   </div>
 </ion-content>
 
 <ion-footer>
-  <ion-item class="borderC">
-    <div slot="start">
-      <ion-buttons *ngIf="!fichero && img.length == 0; else adjunto" color="tertiary" class="ion-no-padding ion-no-margin">
-        <ion-button size="small" (click)="seleccionarFoto()" class="ion-no-padding">
-          <ion-icon slot="icon-only" name="camera" color="tertiary"></ion-icon>
-        </ion-button>
-        <ion-button size="small" (click)="seleccionarArchivo()" class="ion-no-padding">
-          <ion-icon slot="icon-only" name="document" color="tertiary"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+  <ion-item>
+    <div slot="start" class="ion-no-padding">
+      <ion-button color="tertiary" fill="clear" *ngIf="!fichero && img.length == 0" size="small"
+        (click)="seleccionarFoto()" class="ion-no-padding">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>
+      <ion-button color="tertiary" fill="clear" *ngIf="!fichero && img.length == 0;" size="small"
+        (click)="seleccionarArchivo()" class="ion-no-padding">
+        <ion-icon slot="icon-only" name="document"></ion-icon>
+      </ion-button>
 
-      <ng-template #adjunto>
-        <a class="ion-no-padding" (click)="confirmaEnviarArchivo()">
-          <small>
-            {{fichero && fichero.get('filename') ? fichero.get('filename') : img.length > 0 ? img[0].name:''}}
-          </small>
-        </a>
-      </ng-template>
+      <a style="max-width: 100px;" *ngIf="fichero || img.length > 0" class="ion-no-padding ion-text-nowrap"
+        (click)="confirmaEnviarArchivo()">
+        <small>
+          {{fichero && fichero.get('filename') ? fichero.get('filename') :
+            img.length > 0 ? img[0].name:''}}
+        </small>
+      </a>
     </div>
 
-    <ion-input style="margin-left: -10px; min-height: 40px;" class="ion-no-padding ion-no-margin" spellcheck="true" autoComplete="true" autocorrect="true"
-      maxlength="500" type="text" (keyup.enter)="enviarChat(); newMessage=''" placeholder="..."
+    <ion-input style="height: 40px;" class="ion-no-padding ion-no-margin" spellcheck="true" autoComplete="true"
+      autocorrect="true" maxlength="500" type="text" (keyup.enter)="confirmaEnviarArchivo();" placeholder="..."
       [(ngModel)]="newMessage"></ion-input>
-    <ion-button fill="clear" slot="end" [disabled]="!newMessage" (click)="enviarChat(); newMessage=''"
+    <ion-button fill="clear" slot="end" [disabled]="!newMessage" (click)="confirmaEnviarArchivo();"
       class="ion-no-padding">
       <ion-icon size="large" color="tertiary" name="ios-send" slot="icon-only"></ion-icon>
     </ion-button>

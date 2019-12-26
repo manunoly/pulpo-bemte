@@ -99,9 +99,7 @@ export class ChatPage implements OnInit {
 
   async enviarChat(adj?) {
 
-    if (!adj && (this.fichero || this.img.length > 0)) {
-      return this.confirmaEnviarArchivo();
-    }
+
 
 
     let tareaid = '0';
@@ -127,8 +125,9 @@ export class ChatPage implements OnInit {
       texto: this.newMessage,
       imagen: imgData
     });
-
+    this.newMessage = '';
     await this.cargarChat();
+
     return true;
   }
 
@@ -198,17 +197,12 @@ export class ChatPage implements OnInit {
 
   async seleccionarArchivo() {
     this.fichero = await this.uploadFile.selectFile();
-    if (this.fichero)
-      this.confirmaEnviarArchivo();
   }
 
   async seleccionarFoto() {
     try {
       this.upload.imagesSubject.subscribe(img => {
         this.img = img;
-        console.log(this.img);
-        if (this.img && this.img.length > 0)
-          this.confirmaEnviarArchivo();
       });
       await this.upload.selectImage();
     } catch (error) {
@@ -217,6 +211,11 @@ export class ChatPage implements OnInit {
 
   async confirmaEnviarArchivo() {
     {
+
+      if ((!this.fichero && this.img.length == 0)) {
+        return this.enviarChat();
+      }
+
       let tipo = 'Profesor';
       if (this.user.tipo == 'Profesor')
         tipo = 'Estudiante'
@@ -261,9 +260,8 @@ export class ChatPage implements OnInit {
                   this.fichero = '';
                 }
                 if (this.img && this.img.length > 0) {
-                  await this.upload.startUpload(this.img[0]);
                   await this.enviarChat(true);
-                  this.upload.deleteImage(this.img[0]);
+                  await this.upload.startUpload(this.img[0]);
                 }
               }
             }

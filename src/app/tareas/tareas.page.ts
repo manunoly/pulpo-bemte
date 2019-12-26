@@ -134,19 +134,6 @@ export class TareasPage implements OnInit {
     this.fichero = await this.uploadFile.selectFile();
   }
 
-  async subirImagen() {
-    await this.uploadFile.uploadImageData(this.fichero);
-  }
-
-
-  async subirFichero() {
-    try {
-      this.upload.imagesSubject.subscribe(img => this.img = img);
-      await this.upload.selectFile();
-    } catch (error) {
-    }
-  }
-
   async transferir() {
     try {
       return await this.upload.startUpload();
