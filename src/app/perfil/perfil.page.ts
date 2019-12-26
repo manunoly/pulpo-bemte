@@ -63,7 +63,7 @@ export class PerfilPage implements OnInit {
     }).catch(error => {
       this.util.showMessage('Error cargando datos del usuario');
       console.log(error);
-      this.router.navigateByUrl('inicio');
+      this.util.atras();
     });
   }
 
@@ -147,8 +147,6 @@ export class PerfilPage implements OnInit {
         this.auth.setAuth(resp.profile);
         if (this.imgPerfil) {
           this.img.unsubscribe();
-          this.upload.deleteImage(this.imgPerfil);
-          this.imgPerfil = '';
         }
       }
       this.util.dismissLoading();
