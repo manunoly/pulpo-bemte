@@ -98,7 +98,9 @@ export class TareasPage implements OnInit {
         this.util.showMessage(resp.success);
         this.buildForm();
         this.router.navigateByUrl('tarea-detalles/' + resp.tarea.id);
-
+      }
+      else {
+        this.util.dismissLoading();
       }
     } catch (error) {
       this.util.dismissLoading();

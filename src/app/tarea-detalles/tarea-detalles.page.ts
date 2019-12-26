@@ -24,7 +24,7 @@ export class TareaDetallesPage implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     public util: UtilService,
-    private router: Router, 
+    private router: Router,
     private iab: InAppBrowser,
     public auth: AuthService
   ) { }
@@ -46,11 +46,11 @@ export class TareaDetallesPage implements OnInit {
   async confirmaPagarCombo(tarea) {
     const alert = await this.alertController.create({
       message: `Se te descontarán ${tarea.tiempo_estimado} horas de tu combo`,
+      cssClass: 'fondoVerde alertDefault',
       buttons: [
         {
           text: 'Cancelar',
           role: 'cancel',
-          cssClass: 'fondoVerde alertDefault',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
@@ -226,7 +226,7 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async descargarArchivo(tarea) {
-    if(tarea.archivo == "")
+    if (!tarea.archivo)
       return this.util.showMessage('No contiene adjunto');
     this.iab.create(this.db.photoUrl + tarea.archivo, '_system');
   }

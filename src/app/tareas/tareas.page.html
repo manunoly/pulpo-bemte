@@ -94,8 +94,8 @@
                     </ion-fab>
                 </ion-col>
 
-                <ion-col *ngIf="!fichero && !img; else imgData" size="3" offset="2"
-                    class="ion-align-self-center ion-text-center" style="margin: auto">
+                <ion-col *ngIf="!fichero && !img" size="3" offset="2" class="ion-align-self-center ion-text-center"
+                    style="margin: auto">
                     <ion-fab style="position: relative;" color="success" (click)="seleccionarArchivo()">
                         <ion-fab-button>
                             <ion-icon name="document"></ion-icon>
@@ -120,9 +120,8 @@
 
                     <ion-col size="10" offset="1" *ngIf="fichero">
                         <ion-item text-wrap>
-                            <ion-label position="stacked">
-                                <h5>{{ fichero.get('filename')}}</h5>
-                            </ion-label>
+
+                            <h5>{{ fichero.get('filename')}}</h5>
 
                             <ion-button slot="end" fill="clear" (click)="fichero = undefined">
                                 <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
