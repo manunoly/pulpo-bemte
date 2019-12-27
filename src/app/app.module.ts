@@ -22,6 +22,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { Chooser } from '@ionic-native/chooser/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -44,6 +46,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     FilePath,
     Chooser,
     FCM,
+    Facebook,
+    GooglePlus,
     Geolocation,
     InAppBrowser
   ],

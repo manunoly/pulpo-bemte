@@ -41,7 +41,18 @@
         </ion-col>
       </ion-row>
 
-     <!-- <ion-row>
+      <ion-row>
+        <ion-col size="6" offset="3">
+          <ion-button color="tertiary" size="small" expand="block" [routerLink]="['/registrarse-profesor']"
+            shape="round">
+            <b>
+              Registrarse
+            </b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row>
         <ion-col size="6" offset="3">
           <ion-button color="tertiary" size="small" expand="block" [routerLink]="['/registrarse']" shape="round">
             <b>
@@ -51,16 +62,30 @@
         </ion-col>
       </ion-row> -->
 
-       <ion-row>
-        <ion-col size="6" offset="3">
-          <ion-button color="tertiary" size="small" expand="block" [routerLink]="['/registrarse-profesor']"
-            shape="round">
-            <b>
-              Registrarse
-            </b>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text color="medium">
+            <h5 class="ion-text-center ion-no-padding ion-no-margin ion-padding-top">
+              --o ingresar con--
+            </h5> <br>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button color="danger" size="small" expand="block" shape="round" (click)="googleLogin()">
+            <ion-icon name="logo-google"></ion-icon>
+            Google
           </ion-button>
         </ion-col>
-      </ion-row> 
+
+        <ion-col size="6">
+          <ion-button color="tertiary" size="small" expand="block" shape="round" (click)="fbLogin()">
+            <ion-icon name="logo-facebook"></ion-icon>
+            Facebook
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
 
       <br>
       <ion-row class="ion-padding">

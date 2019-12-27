@@ -31,15 +31,16 @@ export class RegistrarsePage implements OnInit {
     private modalController: ModalController,
     private auth: AuthService
   ) {
+    const data = this.util.getTemporalData();
     this.registroForm = this.fb.group({
       celular: ["", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       paisCelular: ["+593", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
+      email: [data['email'] ? data['email'] : "", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password1: ["", [Validators.required, Validators.minLength(8)]],
-      nombre: ["", Validators.required],
-      apellido: ["", Validators.required],
-      apodo: ["", [Validators.required, Validators.minLength(8)]],
+      nombre: [data['first_name'] ? data['first_name'] : "", Validators.required],
+      apellido: [data['last_name'] ? data['last_name'] : "", Validators.required],
+      apodo: [data['email'] ? data['email'].split('@')[0] : "", [Validators.required, Validators.minLength(8)]],
       cedula: [""],
       token: [""],
       sistema: [""],
