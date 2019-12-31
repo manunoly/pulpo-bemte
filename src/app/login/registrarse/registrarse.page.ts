@@ -19,6 +19,7 @@ export class RegistrarsePage implements OnInit {
   registroForm: FormGroup;
   paisNumber;
   ciudades;
+  universidades;
   eye = 'password';
 
   constructor(
@@ -35,25 +36,25 @@ export class RegistrarsePage implements OnInit {
     this.registroForm = this.fb.group({
       celular: ["", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       paisCelular: ["+593", Validators.required],
-      email: [data['email'] ? data['email'] : "", [Validators.required, Validators.email]],
+      email: [data && data['email'] ? data['email'] : "", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password1: ["", [Validators.required, Validators.minLength(8)]],
-      nombre: [data['first_name'] ? data['first_name'] : "", Validators.required],
-      apellido: [data['last_name'] ? data['last_name'] : "", Validators.required],
-      apodo: [data['email'] ? data['email'].split('@')[0] : "", [Validators.required, Validators.minLength(8)]],
+      nombre: [data && data['first_name'] ? data['first_name'] : "", Validators.required],
+      apellido: [data && data['last_name'] ? data['last_name'] : "", Validators.required],
+      apodo: [data && data['email'] ? data['email'].split('@')[0] : "", [Validators.required, Validators.minLength(8)]],
       cedula: [""],
       token: [""],
       sistema: [""],
       pais: ["", Validators.required],
-      ciudad: ["Quito", Validators.required],
+      ciudad: ["", Validators.required],
       tipo: ["Alumno", Validators.required],
+      sede: ["", Validators.required],
       ubicacion: ["", Validators.required]
     });
   }
 
   async ngOnInit() {
     this.paisNumber = this.db.get('lista-paises');
-
     if (this.util.isMobile()) {
       const token = await this.fcm.getToken();
       if (token) this.registroForm.controls["token"].setValue(token);
@@ -159,14 +160,28 @@ export class RegistrarsePage implements OnInit {
   }
 
 
-  cargarCiudades(pais) {
+  async cargarCiudades(pais) {
     this.util.showLoading();
 
-    this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
+    this.ciudades = await this.db.get('lista-ciudad-pais?pais=' + pais);
 
     setTimeout(() => {
       this.util.dismissLoading();
     }, 1000);
+  }
+
+  async cargarUniversidades(ciudad) {
+    this.util.showLoading();
+
+    this.universidades = await this.db.get('sedes-por-ciudad?ciudad=' + ciudad);
+
+    setTimeout(() => {
+      this.util.dismissLoading();
+    }, 1000);
+  }
+
+  async actualizarUbicacion() {
+    this.registroForm.controls["ubicacion"].setValue(this.registroForm.value.sede);
   }
 
 }
