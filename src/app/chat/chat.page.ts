@@ -157,7 +157,7 @@ export class ChatPage implements OnInit {
         tipo = 'Estudiante'
       const alert = await this.alertController.create({
         header: 'Finalizar la tarea!',
-        message: `Al finalizar la tarea, se finaliza tambien el contacto con el ${tipo}.`,
+        message: `Al finalizar la tarea, se finaliza tambien el contacto con el ${tipo}. <br> ¿Estas seguro que deseas finalizar?`,
         cssClass: 'fondoVerde alertDefault',
         inputs: [
           {

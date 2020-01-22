@@ -45,9 +45,16 @@
             [ngClass]="user.user_id == item.user_escribe ? 'ion-text-end ion-padding-end borderUser':'borderOtherUser ion-text-start ion-padding-start'">
             <div [ngClass]="user.user_id != item.user_escribe ? 'ion-no-padding ion-padding-end' : ''"
               *ngIf="item.imagen" class="ion-float-left">
-              <ion-button fill="outline" size="small" (click)="downloadFile(item.imagen)">
-                <ion-icon name="download" slot="icon-only"></ion-icon>
-              </ion-button>
+
+              <img *ngIf="item.imagen && (item.imagen.includes('.png') || item.imagen.includes('.jpg') || item.imagen.includes('.jpeg')) else adjunto"
+                [src]="util.photoUrl + item.imagen" (click)="downloadFile(item.imagen)">
+
+              <ng-template #adjunto>
+                <ion-button fill="outline" size="small" (click)="downloadFile(item.imagen)">
+                  <ion-icon name="download" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ng-template>
+
             </div>
             <ion-text color="tertiary">
               {{item?.texto}}
