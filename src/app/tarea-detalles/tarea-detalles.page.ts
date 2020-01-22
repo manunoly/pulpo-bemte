@@ -101,8 +101,8 @@ export class TareaDetallesPage implements OnInit {
 
     // console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
-    // if (anterior.getTime() > now || now > posterior.getTime())
-    //   return this.util.showMessage(`El chat estará activo hasta 24 horas después de la hora de entrega.`);
+    if (now > posterior.getTime())
+      return this.util.showMessage(`El chat estará activo hasta 24 horas después de la hora de entrega.`);
 
     const modal = await this.modalController.create({
       component: ChatPage,

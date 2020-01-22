@@ -94,7 +94,6 @@ export class UtilService {
       duration: 14000
     });
     await this.loading.present();
-
   }
 
   async dismissLoading() {

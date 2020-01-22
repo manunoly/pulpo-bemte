@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: '',
     component: ListaTareasPage
+  },
+  {
+    path: ':tipo',
+    component: ListaTareasPage
   }
 ];
 

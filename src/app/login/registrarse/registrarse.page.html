@@ -18,18 +18,24 @@
 
       <ion-row no-padding>
         <ion-col size="4">
-          <ion-label position="stacked">
-            Celular*
-          </ion-label>
-          <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center" formControlName="paisCelular">
-            <ion-select-option *ngFor="let paisN of paisNumber | async" [value]="paisN?.codigo">
-              {{paisN?.codigo}}
-            </ion-select-option>
-          </ion-select>
+          <ion-item class="ion-no-padding">
+            <ion-label position="stacked">
+              Celular*
+            </ion-label>
+            <ion-select okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
+              formControlName="paisCelular">
+              <ion-select-option *ngFor="let paisN of paisNumber | async" [value]="paisN?.codigo">
+                {{paisN?.codigo}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
 
         <ion-col size="8">
           <ion-item no-padding>
+            <ion-label position="stacked">
+              
+            </ion-label>
             <ion-input type="tel" formControlName="celular"></ion-input>
           </ion-item>
         </ion-col>
@@ -107,8 +113,8 @@
           <ion-item>
             <ion-label position="stacked">Colegio o Universidad</ion-label>
             <!-- <ion-input formControlName="ubicacion">  </ion-input> -->
-            <ion-select [disabled]="!universidades" okText="Seleccionar" cancelText="Cancelar"
-              formControlName="sede" (ionChange)="actualizarUbicacion()">
+            <ion-select [disabled]="!universidades" okText="Seleccionar" cancelText="Cancelar" formControlName="sede"
+              (ionChange)="actualizarUbicacion()">
               <ion-select-option *ngFor="let u of universidades" [value]="u?.nombre">
                 {{u?.nombre}}
               </ion-select-option>

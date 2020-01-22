@@ -63,7 +63,7 @@ export class InicioProfesorPage implements OnInit {
     this.tipo = tipo;
     if (this.tipo == "clases") {
       this.cargarClases();
-    } else if (this.tipo == "clases") {
+    } else if (this.tipo == "tareas") {
       this.cargarTareas();
     }
   }

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilService } from './../servicios/util.service';
 import { DbService } from './../servicios/db.service';
 import { AuthService } from './../servicios/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 
@@ -21,10 +21,12 @@ export class ListaTareasPage implements OnInit {
   detallesTareaId;
   user;
 
-  constructor(public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) {
+  constructor(private route: ActivatedRoute, public alertController: AlertController, public auth: AuthService, private db: DbService, private router: Router, public util: UtilService, public modalController: ModalController) {
   }
 
   ionViewWillEnter() {
+    if (this.route.snapshot.paramMap.get("tipo"))
+      this.tipo = this.route.snapshot.paramMap.get("tipo");
     this.cargarTareas();
   }
 

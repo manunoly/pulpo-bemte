@@ -117,7 +117,7 @@ export class CalificarComponent implements OnInit {
   async infoTareaNoEntregada() {
     let msg = `
     Si tu tarea no a fue entregada envia un reclamo al mail:
-    bemtereclamos@gmail.com 
+    bemteinformacion@gmail.com 
     Con los siguientes datos:<br>
     -Nombres y Apellidos <br>
     -Usuario  <br>
