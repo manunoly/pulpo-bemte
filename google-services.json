@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "936528253935-9bgo9cmi9b0rs2cikf5i36ducumh89a4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bemte.ecuador",
+            "certificate_hash": "35943c7247d608a3e90a0758397c3a767465967a"
+          }
+        },
+        {
+          "client_id": "936528253935-4sephbkt69ms6m5mfshv3ci9o5ev6hug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "bemte.ecuador",
+            "certificate_hash": "1540a2b0c9bcd01d615e2713841eceb177fc7dc2"
+          }
+        },
+        {
           "client_id": "936528253935-47kbp3l66okesaf7tbgst91imbeu38v1.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -46,7 +62,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:936528253935:android:4988397e878f18773f5c1a",
         "android_client_info": {
-          "package_name": "bemte.ecuador.profesor"
+          "package_name": "bemte.ecuador"
         }
       },
       "oauth_client": [
