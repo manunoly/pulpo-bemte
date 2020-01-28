@@ -23,17 +23,22 @@ export class FcmService {
 
   async manejarNotificacion() {
     this.fcm.onNotification().subscribe(data => {
-      console.log(data);
+      console.log('notificacion', data);
       if (data.wasTapped) {
         console.log("Received in background");
       } else {
-        let style;
-        if (data.body && data.body.toLowerCase().includes('cancelad'))
-          style = 'fondoRojo alertDefault';
-        else
-          style = 'fondoVerde alertDefault';
+        if (data && data.chat && data.chat == "true") {
+          let msg = 'Nuevo Mensaje en el Chat';
+          this.util.showMessage(data.body ? data.title + ': ' + data.body : msg);
+        } else {
+          let style = ' alertDefault';
+          if (data && data.color)
+            style = data.color + style;
+          else
+            style = 'fondoDeault alertDefault';
 
-        this.util.presentAlert(data.body, data.title ? data.title : 'Información', undefined, undefined, style);
+          this.util.presentAlert(data && data.body ? data.body : data.title, data.title ? data.title : 'Información', undefined, undefined, style);
+        }
       };
     });
   }
