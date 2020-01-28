@@ -21,7 +21,6 @@ export class MapPage implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild("searchD", { read: ElementRef }) searchD: ElementRef;
 
-
   constructor(public auth: AuthService, private geolocation: Geolocation, public util: UtilService, public modalController: ModalController) { }
 
   ngOnInit() {

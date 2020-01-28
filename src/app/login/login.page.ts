@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
     private googlePlus: GooglePlus
   ) {
     this.authForm = this.fb.group({
-      'email': ['', [Validators.required, Validators.email]],
+      'email': ['', [Validators.required, Validators.minLength(6)]],
       'password': ['', [Validators.required, Validators.minLength(6)]],
       // 'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
       // 'password': ['12345678', Validators.required,],
