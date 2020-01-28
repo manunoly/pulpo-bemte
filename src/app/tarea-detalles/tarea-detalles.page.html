@@ -189,12 +189,18 @@
       <!-- tarea aceptada o asignada -->
       <div *ngIf="tarea.estado == 'Aceptado' || tarea.estado == 'Pago_Aprobado'">
 
-        <app-header-user-prof></app-header-user-prof>
+        <ion-row class="lineBotton">
+          <ion-col text-center>
+            <ion-text color="primary">
+              <h3 no-padding><b>ESTADO DE LA TAREA</b></h3>
+            </ion-text>
+          </ion-col>
+        </ion-row>
 
         <ion-row class="lineBotton">
           <ion-col text-center>
             <ion-text color="primary">
-              <h1 no-padding><b>TAREAS</b></h1>
+              <h1><b>Confirmada</b></h1>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -460,6 +466,15 @@
                 <p> {{tarea?.descripcion}} </p>
               </ion-text>
             </ion-col>
+
+            <ion-col size="12" *ngIf="tarea.apodoProfesor" class="ion-text-left">
+              <ion-text color="black">
+                <h5 class="ion-no-padding"> Tu tarea ha sido asignada a </h5>
+              </ion-text>
+              <ion-text color="tertiary">
+                <h4 class="ion-no-padding"> {{tarea?.apodoProfesor}} </h4>
+              </ion-text>
+            </ion-col>
           </ion-row>
         </div>
 
@@ -479,7 +494,7 @@
         <ion-row class="lineBotton">
           <ion-col>
             <ion-text color="tertiary">
-              <p>El chat estará activo hasta 24 horas depues de la hora de entrega.</p>
+              <p>El chat estará activo hasta 24 horas depues de la hora de entrega, <b> para correcciones</b></p>
             </ion-text>
             <ion-item (click)="openChat(tarea)" class="borderC">
               <ion-input readonly placeholder="Escribe un mensaje"></ion-input>
