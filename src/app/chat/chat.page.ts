@@ -82,6 +82,7 @@ export class ChatPage implements OnInit {
 
       const chats = await this.db.get('obtener-chat?user_id=' + this.user.user_id + '&tarea_id=' + tareaid + '&clase_id=' + claseid);
       this.scrollToBottomOnInit(chats);
+      return;
     }
   }
 
@@ -98,9 +99,6 @@ export class ChatPage implements OnInit {
 
 
   async enviarChat(adj?) {
-
-
-
 
     let tareaid = '0';
     let claseid = '0';
@@ -135,6 +133,52 @@ export class ChatPage implements OnInit {
     this.modalController.dismiss();
   }
 
+  async deleteChat(id) {
+
+    const alert = await this.alertController.create({
+      header: 'Confirme Eliminar!',
+      message: `¡Seguro desea realizar esta acción?`,
+      cssClass: 'fondoRojo alertDefault',
+      inputs: [
+        {
+          name: 'Si',
+          type: 'radio',
+          label: 'Si',
+          value: true
+        },
+        {
+          name: 'No',
+          type: 'radio',
+          label: 'No',
+          value: false
+        }],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Aceptar',
+          handler: async (data) => {
+            if (data) {
+              try {
+                this.util.showLoading();
+                await this.db.post('eliminarChat', { id: id });
+                await this.cargarChat();
+                this.util.dismissLoading();
+              } catch (error) {
+                this.util.dismissLoading();
+              }
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   async terminar() {
     try {
@@ -256,12 +300,17 @@ export class ChatPage implements OnInit {
               if (data) {
                 if (this.fichero) {
                   await this.uploadFile.uploadImageData(this.fichero);
-                  await this.enviarChat(true);
-                  this.fichero = '';
+                  setTimeout(async () => {
+                    await this.enviarChat(true);
+                    this.fichero = '';
+                  }, 1700);
                 }
                 if (this.img && this.img.length > 0) {
                   await this.enviarChat(true);
                   await this.upload.startUpload(this.img[0]);
+                  setTimeout(async () => {
+                    await this.enviarChat(true);
+                  }, 1700);
                 }
               }
             }
