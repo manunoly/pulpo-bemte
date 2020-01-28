@@ -1,4 +1,3 @@
-import { MapPage } from "./../map/map.page";
 import { ModalController } from "@ionic/angular";
 import { Location } from "@angular/common";
 import { UtilService } from "./../servicios/util.service";
@@ -7,6 +6,8 @@ import { AuthService } from "./../servicios/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MapPage } from "./../map/map.page";
 
 @Component({
   selector: "app-clases",
@@ -38,7 +39,8 @@ export class ClasesPage implements OnInit {
     private db: DbService,
     private router: Router,
     private fb: FormBuilder,
-    public util: UtilService
+    public util: UtilService,
+    private geolocation: Geolocation
   ) {
     this.customPickerOptions = {
       columns: [{
@@ -73,26 +75,11 @@ export class ClasesPage implements OnInit {
 
     this.util.showLoading();
 
-    // this.auth.currentUser
-    //   .pipe(
-    //     switchMap(user => {
-    //       if (user) {
-    //         this.user = user;
-    //         return this.db.get('horas-totales?user_id=' + this.user.user_id);
-    //       }
-    //       return of(null);
-    //     }),
-    //     first()
-    //   ).toPromise().then(horas => {
-    //     console.log('horas disponibles', horas);
-    //     this.horasDisponibles = horas;
-    //   }).catch();
-    // this.claseForm.controls["user_id"].setValue(this.user.user_id);
-
     this.user = await this.auth.getUserData();
 
     setTimeout(() => {
       this.util.dismissLoading();
+      this.geolocation.getCurrentPosition().then(_=>{}).catch(_=>{});
     }, 1300);
 
     if (this.user) {
@@ -107,7 +94,7 @@ export class ClasesPage implements OnInit {
   }
 
   personasClase(est){
-    if (est > 1)
+    if (est > 2)
       this.util.showMessage('De dos alumno en adelante, se te descontará 1 hora extra por cada alumno adicional.')
   }
   
