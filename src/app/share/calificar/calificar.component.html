@@ -27,7 +27,8 @@
 
       <ion-row>
         <ion-text color="tertiary">
-          <h5>Califica a {{calificarData?.name}} ({{tipo}})</h5>
+          <h5 *ngIf="tipo == 'clase'">Califica a {{calificarData?.name}} ({{tipo}})</h5>
+          <h5 *ngIf="tipo == 'tarea'">Califica a {{calificarData?.apodoAlumno}} ({{tipo}})</h5>
         </ion-text>
 
         <ion-col text-center size="8" offset="2">
@@ -182,7 +183,7 @@
   <ng-template #calificaAlumno>
 
     <app-header-user [query]="false" [popup]="true"></app-header-user>
- 
+
     <ion-grid class="ion-no-padding" *ngIf="calificarData" padding>
 
       <ion-row class="lineBotton ion-no-padding">
@@ -201,7 +202,8 @@
 
       <ion-row>
         <ion-text color="tertiary">
-          <h5>Califica al profe {{calificarData?.name}} ({{tipo}})</h5>
+          <h5 *ngIf="tipo == 'clase'">Califica a {{calificarData?.name}} ({{tipo}})</h5>
+          <h5 *ngIf="tipo == 'tarea'">Califica a {{calificarData?.apodoProfesor}} ({{tipo}})</h5>
         </ion-text>
 
         <ion-col text-center size="8" offset="2">
