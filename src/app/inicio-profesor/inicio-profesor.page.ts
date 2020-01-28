@@ -21,7 +21,7 @@ export class InicioProfesorPage implements OnInit {
 
   constructor(
     public auth: AuthService,
-    private db: DbService,
+    public db: DbService,
     public util: UtilService,
     private fcm: FcmService,
     // private modalController: ModalController

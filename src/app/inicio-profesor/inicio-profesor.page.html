@@ -23,7 +23,11 @@
     </ion-row>
   </ion-grid>
 
-  <div *ngIf="tipo=='clases'">
+  <ion-text color="danger" *ngIf="!db.getEstadoProfesor()" >
+    <h3 class="ion-text-center">Usted se encuentra Ocupado</h3>
+  </ion-text>
+
+  <div *ngIf="tipo=='clases' && db.getEstadoProfesor()">
     <ion-grid *ngIf="(clases | async) as clasesD; else loadD">
       <ion-row class="lineBotton ion-no-padding ion-text-center" *ngFor="let clase of clasesD; let first = first;"
         [routerLink]="['/clase-detalles/'+clase.id]">
@@ -56,7 +60,7 @@
     </ion-grid>
   </div>
 
-  <div *ngIf="tipo == 'tareas'">
+  <div *ngIf="tipo == 'tareas' && db.getEstadoProfesor()">
     <ion-grid *ngIf="tareas | async as tareasD; else loadD">
 
       <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD"
