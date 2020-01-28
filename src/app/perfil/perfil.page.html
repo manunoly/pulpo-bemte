@@ -91,7 +91,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item class="ion-no-padding ion-text-wrap">
-            <ion-label class="ion-text-wrap ion-no-padding" position="stacked">País de Residencia</ion-label>
+            <ion-label class="ion-text-wrap ion-no-padding" position="stacked"><span style="white-space: nowrap"> País de Residencia </span></ion-label>
             <ion-select [disabled]="user.tipo == 'Profesor'" okText="Seleccionar" cancelText="Cancelar"
               formControlName="pais" (ionChange)="cargarCiudades($event.detail.value)">
               <ion-select-option *ngFor="let pais of paisNumber | async" [value]="pais?.pais">
