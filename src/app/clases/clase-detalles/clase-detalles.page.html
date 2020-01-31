@@ -110,6 +110,21 @@
             </ion-col>
           </ion-row>
 
+          <ion-row class="lineBotton" *ngIf="clase.alumno">
+            <ion-col offset="2" size="6" no-padding no-margin text-center>
+              <h5 no-padding> <small> Alumno/a </small><br>
+                <ion-text color="tertiary">
+                  {{clase?.alumno}}
+                </ion-text>
+              </h5>
+            </ion-col>
+            <ion-col size="2" (click)="detallesImg('Alumno', clase.alumnoAvatar, clase.alumnoCalif, clase.alumno)">
+              <ion-avatar>
+                <img [src]="clase.alumnoAvatar ? urlPhoto + clase.alumnoAvatar : '/assets/icon/favicon.png'">
+              </ion-avatar>
+            </ion-col>
+          </ion-row>
+          
           <ion-row>
             <ion-col offset="2" size="8">
               <a no-padding color="tertiary" (click)="confirmarCancelar(clase, 1)">
@@ -159,7 +174,7 @@
           </ion-col>
         </ion-row>
 
-        <div *ngIf="verDetalles">
+        <div>
           <ion-row *ngIf="clase?.descripcion" class="lineBotton">
             <ion-col>
               <h5 class="ion-no-margin ion-no-padding">Descripcion</h5>

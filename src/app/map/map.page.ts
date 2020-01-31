@@ -17,7 +17,7 @@ export class MapPage implements OnInit {
   markerUbicacion;
   ubicacion;
   searchDestinationText;
-
+  zoom = 15;
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild("searchD", { read: ElementRef }) searchD: ElementRef;
 
@@ -25,6 +25,9 @@ export class MapPage implements OnInit {
 
   ngOnInit() {
     console.log('la ubicacion recibida', this.ubicacion);
+  }
+
+  ionViewWillEnter(){
     this.loadMap();
   }
 
@@ -44,7 +47,7 @@ export class MapPage implements OnInit {
     // const mapEle: HTMLElement = this.mapElement.nativeElement;
     this.mapRef = new google.maps.Map(mapEle, {
       center: myLatLng,
-      zoom: 15,
+      zoom: this.zoom,
       disableDefaultUI: true
     });
 
@@ -53,7 +56,7 @@ export class MapPage implements OnInit {
         console.log('esta listo el mapa');
         this.addMaker(myLatLng.lat, myLatLng.lng);
         setTimeout(async () => {
-          if(!this.ubicacion)
+          if (!this.ubicacion)
             this.initAutocomplete();
           await this.util.dismissLoading();
         }, 100);
@@ -125,7 +128,7 @@ export class MapPage implements OnInit {
     let autocomplete = new google.maps.places.Autocomplete(inputElement
       , { componentRestrictions: { country: 'ec' } }
     );
-    
+
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       let place = autocomplete.getPlace();
       console.log(place);

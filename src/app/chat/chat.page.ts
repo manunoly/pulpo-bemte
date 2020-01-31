@@ -99,7 +99,7 @@ export class ChatPage implements OnInit {
 
 
   async enviarChat(adj?) {
-
+    this.util.showLoading();
     let tareaid = '0';
     let claseid = '0';
 
@@ -125,7 +125,7 @@ export class ChatPage implements OnInit {
     });
     this.newMessage = '';
     await this.cargarChat();
-
+    this.util.dismissLoading();
     return true;
   }
 
@@ -304,9 +304,8 @@ export class ChatPage implements OnInit {
                     await this.enviarChat(true);
                     this.fichero = '';
                   }, 1700);
-                }
+                }else
                 if (this.img && this.img.length > 0) {
-                  await this.enviarChat(true);
                   await this.upload.startUpload(this.img[0]);
                   setTimeout(async () => {
                     await this.enviarChat(true);
