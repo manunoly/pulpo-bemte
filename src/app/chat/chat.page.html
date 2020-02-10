@@ -56,10 +56,6 @@
                 </ion-button>
               </ng-template>
               
-              <ion-button *ngIf="user.user_id == item.user_escribe" class="ion-float-left" fill="clear" size="small"
-                (click)="deleteChat(item.id)">
-                <ion-icon name="trash" color="danger" slot="icon-only"></ion-icon>
-              </ion-button>
             </div>
             <ion-text color="tertiary">
               {{item?.texto}}

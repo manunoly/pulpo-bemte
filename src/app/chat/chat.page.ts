@@ -133,53 +133,6 @@ export class ChatPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  async deleteChat(id) {
-
-    const alert = await this.alertController.create({
-      header: 'Confirme Eliminar!',
-      message: `¡Seguro desea realizar esta acción?`,
-      cssClass: 'fondoRojo alertDefault',
-      inputs: [
-        {
-          name: 'Si',
-          type: 'radio',
-          label: 'Si',
-          value: true
-        },
-        {
-          name: 'No',
-          type: 'radio',
-          label: 'No',
-          value: false
-        }],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Aceptar',
-          handler: async (data) => {
-            if (data) {
-              try {
-                this.util.showLoading();
-                await this.db.post('eliminarChat', { id: id });
-                await this.cargarChat();
-                this.util.dismissLoading();
-              } catch (error) {
-                this.util.dismissLoading();
-              }
-            }
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
   async terminar() {
     try {
       this.util.showLoading();
