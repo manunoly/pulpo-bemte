@@ -97,6 +97,10 @@ export class ClasesPage implements OnInit {
     if (est > 2)
       this.util.showMessage('De dos alumno en adelante, se te descontará 1 hora extra por cada alumno adicional.')
   }
+
+  showMessage() {
+    this.util.presentAlert('De dos alumno en adelante, se te descontará 1 hora extra por cada alumno adicional.', 'Información importante', ['Aceptar'], '', 'fondoVerde alertDefault');
+  }
   
   buildForm() {
     this.claseForm = this.fb.group({

@@ -25,11 +25,7 @@
 
                     <ion-item>
                         <ion-label position="stacked">
-                            <ion-button color="tertiary" fill="clear" (click)="showMessage()" size="small"
-                                class="ion-no-padding ion-no-margin" style="text-transform:none">
-                                <b> Tema </b>
-                                <ion-icon slot="end" name="help" color="success"> </ion-icon>
-                            </ion-button>
+                            <b> Tema </b>
                         </ion-label>
 
 
@@ -40,6 +36,10 @@
                         <ion-label position="stacked"><b>Descripcion</b></ion-label>
                         <ion-textarea placeholder="Cantidad de hojas, Parámetros" formControlName="descripcion">
                         </ion-textarea>
+                        <ion-button style="position: absolute; top: 6px; left: 25%; z-index: 9;" fill="clear" size="small"
+                            (click)="showMessage()">
+                            <ion-icon slot="icon-only" color="success" name="help-circle"></ion-icon>
+                        </ion-button>
                     </ion-item>
 
                     <ion-item lines="none">
