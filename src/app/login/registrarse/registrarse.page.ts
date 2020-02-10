@@ -32,15 +32,29 @@ export class RegistrarsePage implements OnInit {
     private modalController: ModalController,
     private auth: AuthService
   ) {
+  }
+
+  async ngOnInit() {
+    this.iniciar();
+    this.paisNumber = this.db.get('lista-paises');
+    if (this.util.isMobile()) {
+      const token = await this.fcm.getToken();
+      if (token) this.registroForm.controls["token"].setValue(token);
+      this.registroForm.controls["sistema"].setValue(this.util.getSo());
+    }
+  }
+
+  async iniciar() {
     const data = this.util.getTemporalData();
+    console.log(data);
     this.registroForm = this.fb.group({
       celular: ["", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]],
       paisCelular: ["+593", Validators.required],
       email: [data && data['email'] ? data['email'] : "", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
       password1: ["", [Validators.required, Validators.minLength(8)]],
-      nombre: [data && data['first_name'] ? data['first_name'] : "", Validators.required, Validators.minLength(3)],
-      apellido: [data && data['last_name'] ? data['last_name'] : "", Validators.required, Validators.minLength(3)],
+      nombre: [data && data['first_name'] ? data['first_name'] : "", [Validators.required, Validators.minLength(3)]],
+      apellido: [data && data['last_name'] ? data['last_name'] : "", [Validators.required, Validators.minLength(3)]],
       apodo: [data && data['email'] ? data['email'].split('@')[0] : "", [Validators.required, Validators.minLength(8)]],
       cedula: [""],
       token: [""],
@@ -52,16 +66,6 @@ export class RegistrarsePage implements OnInit {
       ubicacion: ["", Validators.required]
     });
   }
-
-  async ngOnInit() {
-    this.paisNumber = this.db.get('lista-paises');
-    if (this.util.isMobile()) {
-      const token = await this.fcm.getToken();
-      if (token) this.registroForm.controls["token"].setValue(token);
-      this.registroForm.controls["sistema"].setValue(this.util.getSo());
-    }
-  }
-
 
   async validarCorreo() {
     const resp = await this.db.get('correo-disponible?email=' + this.registroForm.value.email);
