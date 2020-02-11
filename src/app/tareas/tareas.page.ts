@@ -182,6 +182,6 @@ export class TareasPage implements OnInit {
   }
 
   showMessage() {
-    this.util.presentAlert('Si tu formato de entrega es otros... escribe en que formato deseas la entrega aquí.', 'Información importante', ['Aceptar'], '', 'fondoVerde alertDefault');
+    this.util.presentAlert('“Recuerda que tu deber será realizado de acuerdo a tus indicaciones, escribe de forma clara y completa lo que necesitas. Si tu formato de entrega es otros, escribe en qué formato deseas la entrega.', 'Información importante', ['Aceptar'], '', 'fondoVerde alertDefault');
   }
 }
