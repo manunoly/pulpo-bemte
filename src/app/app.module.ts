@@ -25,6 +25,12 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
+
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es-AR';
+registerLocaleData(localeEs, 'es-AR');
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,6 +41,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicSelectableModule
+
   ],
   providers: [
     StatusBar,
@@ -49,7 +56,9 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     Facebook,
     GooglePlus,
     Geolocation,
-    InAppBrowser
+    InAppBrowser,
+    {provide: LOCALE_ID, useValue: 'es-AR' }
+
   ],
   bootstrap: [AppComponent]
 })
