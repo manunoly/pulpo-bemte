@@ -150,7 +150,7 @@ export class ChatPage implements OnInit {
   async finalizarTarea() {
     {
       let tipo = 'Profesor';
-      if (this.user.tipo == 'Profesor')
+      if (this.user.tipo != 'Profesor')
         tipo = 'Estudiante'
       const alert = await this.alertController.create({
         header: 'Finalizar la tarea!',
@@ -213,9 +213,6 @@ export class ChatPage implements OnInit {
         return this.enviarChat();
       }
 
-      let tipo = 'Profesor';
-      if (this.user.tipo == 'Profesor')
-        tipo = 'Estudiante'
       const alert = await this.alertController.create({
         header: 'Confirme acción!',
         message: `Confirme desea enviar archivo o eliminarlo`,
@@ -236,8 +233,8 @@ export class ChatPage implements OnInit {
         buttons: [
           {
             text: 'Eliminar',
-            role: 'cancel',
             handler: (data) => {
+              console.log(data);
               if (data) {
                 if (this.fichero) {
                   this.fichero = '';
