@@ -116,13 +116,17 @@ export class ChatPage implements OnInit {
     if (this.img && this.img.length > 0) {
       imgData = this.img[0].name;
     }
-    await this.db.post('enviar-chat', {
-      user_id: this.user.user_id,
-      tarea_id: tareaid,
-      clase_id: claseid,
-      texto: this.newMessage,
-      imagen: imgData
-    });
+    try {
+      await this.db.post('enviar-chat', {
+        user_id: this.user.user_id,
+        tarea_id: tareaid,
+        clase_id: claseid,
+        texto: this.newMessage,
+        imagen: imgData
+      });
+    } catch (error) {
+
+    }
     this.newMessage = '';
     await this.cargarChat();
     this.util.dismissLoading();
@@ -254,13 +258,13 @@ export class ChatPage implements OnInit {
                     await this.enviarChat(true);
                     this.fichero = '';
                   }, 1700);
-                }else
-                if (this.img && this.img.length > 0) {
-                  await this.upload.startUpload(this.img[0]);
-                  setTimeout(async () => {
-                    await this.enviarChat(true);
-                  }, 1700);
-                }
+                } else
+                  if (this.img && this.img.length > 0) {
+                    await this.upload.startUpload(this.img[0]);
+                    setTimeout(async () => {
+                      await this.enviarChat(true);
+                    }, 1700);
+                  }
               }
             }
           }
