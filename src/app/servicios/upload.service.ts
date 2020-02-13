@@ -266,6 +266,14 @@ export class UploadService {
       );
   }
 
+  async eliminarImagenes() {
+    const imgs = await this.loadStoredImages();
+    if (imgs && imgs.length > 0)
+      imgs.forEach(element => {
+        this.deleteImage(element);
+      });
+  }
+
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Selecciona imagen",

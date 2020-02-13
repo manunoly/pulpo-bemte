@@ -225,10 +225,10 @@ export class TareaDetallesPage implements OnInit {
     await alert.present();
   }
 
-  async descargarArchivo(tarea) {
-    if (!tarea.archivo)
-      return this.util.showMessage('No contiene adjunto');
-    this.iab.create(this.db.photoUrl + tarea.archivo, '_system');
+  async descargarArchivo(archivo) {
+    if(!archivo)
+      return;
+    this.iab.create(this.db.photoUrl + archivo, '_system');
   }
 
   goToCancelada(tarea) {

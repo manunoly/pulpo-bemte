@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { UploadFileImageService } from './../service/upload-file-image.service';
 import { UploadService } from './../servicios/upload.service';
 import { UtilService } from './../servicios/util.service';
@@ -17,7 +18,7 @@ export class TareasPage implements OnInit {
   tareaForm: FormGroup;
   materias;
   user;
-  fichero;
+  fichero = [];
   rangosHorarios = [
     { hora_inicio: '6:00', hora_fin: '9:00' },
     { hora_inicio: '9:00', hora_fin: '12:00' },
@@ -70,13 +71,6 @@ export class TareasPage implements OnInit {
   async confirmarTarea() {
     try {
       const hora = this.tareaForm.value.hora_rango;
-      if (this.img && this.img.length > 0) {
-        this.tareaForm.controls['archivo'].setValue(this.img[0].name);
-      }
-
-      if (this.fichero && this.fichero.get('filename')) {
-        this.tareaForm.controls['archivo'].setValue(this.fichero.get('filename'));
-      }
 
       let dataPost = JSON.stringify(this.tareaForm.value);
       dataPost = JSON.parse(dataPost);
@@ -89,11 +83,24 @@ export class TareasPage implements OnInit {
       this.util.showLoading();
       const resp = await this.db.post('solicitar-tarea', dataPost);
       if (resp && resp.success) {
-        if (this.img && this.img.length > 0)
-          await this.transferir();
-        if (this.fichero && this.fichero.get('filename')) {
-          await this.uploadFile.uploadImageData(this.fichero);
+
+        if (this.fichero && this.fichero.length > 0) {
+          this.fichero.forEach(formData => {
+            this.uploadFile.uploadImageData(formData);
+          });
+
+          this.fichero.forEach(async (formData) => {
+            await this.db.post('subir-ejercicio', {
+              user_id: this.tareaForm.value.user_id,
+              tarea_id: resp.tarea.id,
+              clase_id: 0,
+              archivo: formData.get('filename'),
+              drive: 0
+            });
+          });
+
         }
+
         this.util.dismissLoading();
         this.util.showMessage(resp.success);
         this.buildForm();
@@ -133,7 +140,32 @@ export class TareasPage implements OnInit {
   }
 
   async seleccionarArchivo() {
-    this.fichero = await this.uploadFile.selectFile();
+    const file = await this.uploadFile.selectFile();
+    if (file && file.get('filename')) {
+      this.fichero.push(file);
+    }
+    console.log('seleccionarArchivo', this.fichero);
+
+  }
+
+
+  async selectImage() {
+    this.uploadFile.selectImage();
+    let obj = this.uploadFile.imagesSubject$.subscribe(async (img) => {
+      if (img) {
+        this.fichero.push(await this.uploadFile.getFormDataToUpload(img));
+        setTimeout(() => {
+          obj.unsubscribe();
+          this.uploadFile.imagesSubject$.next('');
+        }, 1000);
+      }
+      console.log('fichero de la accion selectImage', img, this.fichero);
+
+    })
+  }
+
+  eliminar(key) {
+    this.fichero = this.fichero.filter(f => f && f.get('filename') != key);
   }
 
   async transferir() {

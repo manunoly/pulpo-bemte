@@ -109,7 +109,7 @@
           </ion-row>
 
           <ion-row class="lineBotton">
-            <ion-col no-padding size="8" class="ion-text-center">
+            <ion-col no-padding size="6" class="ion-text-center">
               <h5 no-padding>Formato de entrega</h5>
               <ion-text color="tertiary">
                 <p no-padding no-margin class="ion-text-uppercase" style="font-size: 30px">
@@ -118,9 +118,10 @@
               </ion-text>
             </ion-col>
 
-            <ion-col size="4" no-padding class="ion-text-center">
-              <h5 no-padding>Archivo</h5>
-              <ion-button [disabled]="!tarea.archivo" color="success" (click)="descargarArchivo(tarea)">
+            <ion-col size="6" no-padding class="ion-text-center" *ngIf="tarea?.archivos && tarea?.archivos.length > 0">
+              <h5 no-padding>Archivo(s)</h5>
+              <ion-button *ngFor="let item of tarea.archivos" color="success"
+                (click)="descargarArchivo(item.archivo ? item.archivo : '')">
                 <ion-icon slot="icon-only" name="arrow-round-down" color="light"></ion-icon>
               </ion-button>
             </ion-col>
@@ -229,7 +230,7 @@
           </ion-row>
 
           <ion-row class="lineBotton">
-            <ion-col no-padding size="8" class="ion-text-center">
+            <ion-col no-padding size="6" class="ion-text-center">
               <h5 no-padding>Formato de entrega</h5>
               <ion-text color="tertiary">
                 <p no-padding no-margin class="ion-text-uppercase" style="font-size: 30px">
@@ -238,9 +239,11 @@
               </ion-text>
             </ion-col>
 
-            <ion-col size="4" no-padding class="ion-text-center">
-              <h5 no-padding>Archivo</h5>
-              <ion-button color="success" (click)="descargarArchivo(tarea)">
+
+            <ion-col size="6" no-padding class="ion-text-center" *ngIf="tarea?.archivos && tarea?.archivos.length > 0">
+              <h5 no-padding>Archivo(s)</h5>
+              <ion-button *ngFor="let item of tarea.archivos" color="success"
+                (click)="descargarArchivo(item.archivo ? item.archivo : '')">
                 <ion-icon slot="icon-only" name="arrow-round-down" color="light"></ion-icon>
               </ion-button>
             </ion-col>
