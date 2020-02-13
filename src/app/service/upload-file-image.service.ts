@@ -22,7 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UploadFileImageService {
   images;
-  public imagesSubject = new BehaviorSubject(this.images);
+  public imagesSubject$ = new BehaviorSubject(this.images);
 
   constructor(
     private camera: Camera,
@@ -104,42 +104,58 @@ export class UploadFileImageService {
     return newFileName;
   }
 
-  takePicture(sourceType: PictureSourceType) {
-    var options: CameraOptions = {
-      quality: 40,
-      sourceType: sourceType,
-      saveToPhotoAlbum: false,
-      correctOrientation: true
-    };
+  takePicture(sourceType: PictureSourceType){
 
-    this.camera.getPicture(options).then(imagePath => {
-      console.log('esta es la imagen en bruto takePicture', imagePath)
-      if (
-        this.platform.is("android") &&
-        sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
-      ) {
-        this.filePath.resolveNativePath(imagePath).then(filePath => {
-          let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
-          let currentName = imagePath.substring(
-            imagePath.lastIndexOf("/") + 1,
-            imagePath.lastIndexOf("?")
-          );
-          this.copyFileToLocalDir(
-            correctPath,
-            currentName,
-            this.createFileName()
-          );
-        });
-      } else {
-        var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
-        var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
-        this.copyFileToLocalDir(
-          correctPath,
-          currentName,
-          this.createFileName()
-        );
-      }
-    });
+      var options: CameraOptions = {
+        quality: 40,
+        sourceType: sourceType,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
+
+      this.camera.getPicture(options).then(imagePath => {
+
+        console.log('esta es la imagen en bruto takePicture', imagePath)
+        if (
+          this.platform.is("android") &&
+          sourceType === this.camera.PictureSourceType.PHOTOLIBRARY
+        ) {
+          this.filePath.resolveNativePath(imagePath).then(filePath => {
+            let correctPath = filePath.substr(0, filePath.lastIndexOf("/") + 1);
+            let currentName = imagePath.substring(
+              imagePath.lastIndexOf("/") + 1,
+              imagePath.lastIndexOf("?")
+            );
+
+            let resPath = this.pathForImage(correctPath);
+
+            let newEntry = {
+              name: currentName,
+              path: resPath + currentName,
+              filePath: correctPath + currentName
+            };
+
+            console.log('esta es la newEntry platform.is("android', newEntry);
+            this.imagesSubject$.next(newEntry);
+
+          });
+        } else {
+          var currentName = imagePath.substr(imagePath.lastIndexOf("/") + 1);
+          var correctPath = imagePath.substr(0, imagePath.lastIndexOf("/") + 1);
+
+          let resPath = this.pathForImage(correctPath);
+
+          let newEntry = {
+            name: currentName,
+            path: resPath + currentName,
+            filePath: correctPath + currentName
+          };
+
+          console.log('esta es la newEntry', newEntry);
+          this.imagesSubject$.next(newEntry);
+
+        }
+      });
   }
 
 
@@ -150,43 +166,6 @@ export class UploadFileImageService {
       let converted = this.webview.convertFileSrc(img);
       return converted;
     }
-  }
-
-  copyFileToLocalDir(namePath, currentName, newFileName) {
-    this.file
-      .copyFile(namePath, currentName, this.file.dataDirectory, newFileName)
-      .then(
-        success => {
-          let filePath = this.file.dataDirectory + newFileName;
-          let resPath = this.pathForImage(filePath);
-
-          let newEntry = {
-            name: newFileName,
-            path: resPath,
-            filePath: filePath
-          };
-
-          this.imagesSubject.next(newEntry);
-        },
-        error => {
-          this.util.showMessage("Error obteniendo el archivo.");
-        }
-      )
-      .catch(error => {
-        this.util.showMessage("Error leyendo el fichero.");
-      });
-  }
-
-
-  async deleteImage(imgEntry) {
-
-    var correctPath = imgEntry.filePath.substr(
-      0,
-      imgEntry.filePath.lastIndexOf("/") + 1
-    );
-
-    this.imagesSubject.next('');
-    return await this.file.removeFile(correctPath, imgEntry.name)
   }
 
 
@@ -218,8 +197,9 @@ export class UploadFileImageService {
           type: file.type
         });
         formData.append("mimeType", "multipart/form-data");
-        // formData.append("image", imgBlob, file.name);
-        formData.append("image", imgBlob, file.name);
+        formData.append("file", imgBlob, file.name);
+        formData.append("filename", file.name);
+        console.log('el readFile', formData);
         resolve(formData);
       };
       reader.onerror = reject;
@@ -247,10 +227,6 @@ export class UploadFileImageService {
         res => {
           if (res["success"]) {
             this.util.showMessage("Archivo subido exitosamente.");
-            setTimeout(async () => {
-              if(this.images && this.images.length > 0)
-                this.deleteImage(formData);
-            }, 2000);
           } else {
             this.util.showMessage("Error subiendo archivo desde el servidor.");
           }
