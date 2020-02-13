@@ -24,7 +24,7 @@
   </ion-grid>
 
   <ion-text color="danger" *ngIf="!db.getEstadoProfesor()" >
-    <h3 class="ion-text-center">Usted se encuentra Ocupado</h3>
+    <h3 class="ion-text-center">Si estas ocupado no puedes aplicar</h3>
   </ion-text>
 
   <div *ngIf="tipo=='clases' && db.getEstadoProfesor()">
