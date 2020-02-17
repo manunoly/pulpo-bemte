@@ -162,7 +162,7 @@ export class TareaDetallesPage implements OnInit {
   async aplicar(tarea) {
     const alert = await this.alertController.create({
       header: 'Aplicar a la tarea',
-      subHeader: '¿Cuánto te demoras?  (mínimo 1, máximo 40)',
+      subHeader: `¿Cuánto te demoras?  <br> (Ingresar números enteros)`,
       cssClass: 'fondoAzul alertDefaultBotonVerde',
       inputs: [
         {
@@ -181,6 +181,9 @@ export class TareaDetallesPage implements OnInit {
         }, {
           text: 'Aplicar',
           handler: async (data) => {
+
+            // poner Numeros en blanco. mas grande Validar sean numeros enteros y redondear 
+
             if (!data || !data.tiempo)
               return this.util.showMessage('Por favor revisar los datos ingresados');
 

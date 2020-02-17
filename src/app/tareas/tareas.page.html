@@ -35,7 +35,7 @@
                     <ion-item>
                         <ion-label position="stacked"><b>Descripcion</b></ion-label>
                         <ion-textarea
-                            placeholder="Indicaciones, cantidad de hojas, número de fuentes bibliográficas, rúbrica"
+                            placeholder="Indicaciones, cantidad de hojas, número de fuentes bibliográficas, rúbrica, etc."
                             formControlName="descripcion">
                         </ion-textarea>
                         <ion-button style="position: absolute; top: 6px; left: 25%; z-index: 9;" fill="clear"
@@ -54,7 +54,7 @@
 
                     <ion-item lines="none">
                         <ion-label position="stacked"><b>Hora entrega</b></ion-label>
-                        <ion-select [interfaceOptions]="customActionSheetOptions" okText="Aceptar" cancelText="Cancelar"
+                        <ion-select [interfaceOptions]="customActionSheetOptions" style="width: 80%; margin: 0 auto;" okText="Aceptar" cancelText="Cancelar"
                             class="ion-text-center" formControlName="hora_rango">
                             <ion-select-option *ngFor="let hora of rangosHorarios" [value]="hora">{{hora.hora_inicio}} -
                                 {{hora.hora_fin}}</ion-select-option>
