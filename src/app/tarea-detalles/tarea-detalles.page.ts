@@ -1,3 +1,4 @@
+import { CalificarComponent } from './../share/calificar/calificar.component';
 import { AuthService } from './../servicios/auth.service';
 import { ChatPage } from './../chat/chat.page';
 import { ModalController, AlertController } from '@ionic/angular';
@@ -108,9 +109,36 @@ export class TareaDetallesPage implements OnInit {
       component: ChatPage,
       componentProps: { tarea: tareaD, tipo: 'tarea' }
     });
-    modal.onDidDismiss().then(_ => {
+    modal.onDidDismiss().then(data => {
+      console.log('terminar', data);
       this.cargarTarea();
+      if (data && data.data && data.data['terminar']) {
+        setTimeout(() => {
+          let url = 'calificaciones-alumno?user_id=';
+          if (this.util.esProfesor){
+            url = 'calificaciones-profesor?user_id=';
+          }
+          this.db.get(url + this.user.user_id).then(calificar => {
+            if (calificar.clase_id != 0) {
+              this.calificar(calificar['clase'], 'clase');
+            } else if (calificar.tarea_id != 0) {
+              this.calificar(calificar['tarea'], 'tarea');
+            }
+          }).catch();
+
+        }, 1000);
+      }
+
     });
+    return await modal.present();
+  }
+
+  async calificar(data, tipoD) {
+    const modal = await this.modalController.create({
+      component: CalificarComponent,
+      componentProps: { calificarData: data, tipo: tipoD }
+    });
+    modal.onDidDismiss().then(data => console.log(data));
     return await modal.present();
   }
 
@@ -160,15 +188,16 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async aplicar(tarea) {
+    this.util.showMessage('Solo números enteros entre 1 y 40');
+
     const alert = await this.alertController.create({
       header: 'Aplicar a la tarea',
-      subHeader: `¿Cuánto te demoras?  <br> (Ingresar números enteros)`,
-      cssClass: 'fondoAzul alertDefaultBotonVerde',
+      subHeader: `¿Cuánto te demoras?   (Ingresar números enteros)`,
+      cssClass: 'inputBlancoGrande fondoAzul alertDefaultBotonVerde',
       inputs: [
         {
           name: 'tiempo',
           type: 'number',
-          placeholder: 'Tiempo en horas de la tarea',
           min: 0
         }
       ],
@@ -187,7 +216,15 @@ export class TareaDetallesPage implements OnInit {
             if (!data || !data.tiempo)
               return this.util.showMessage('Por favor revisar los datos ingresados');
 
-            if (data.tiempo < 1 || data.tiempo > 40)
+            let tiempo;
+
+            if (!Number.isInteger(Number(data.tiempo))) {
+              this.util.showMessage('Su valor será convertido a entero');
+              tiempo = Math.round(data.tiempo);
+            } else
+              tiempo = data.tiempo;
+
+            if (tiempo < 1 || tiempo > 40)
               return this.util.showMessage('El tiempo debe estar entre 1 y 40');
 
             this.util.showLoading();
@@ -229,7 +266,7 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async descargarArchivo(archivo) {
-    if(!archivo)
+    if (!archivo)
       return;
     this.iab.create(this.db.photoUrl + archivo, '_system');
   }
