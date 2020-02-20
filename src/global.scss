@@ -112,11 +112,27 @@ ion-fab {
   --background: var(--ion-color-success) !important;
 }
 
+
+.fondoAmarillo {
+  --background: var(--ion-color-warning) !important;
+}
+
 //TODO:pintar los radio buton de las confirmaciones de blanco.
 
 .fondoRojo {
   --background: var(--ion-color-danger) !important;
 }
+
+.inputBlancoGrande{
+  input{
+    color: white !important;
+    font-size: 40px !important;
+  }
+  alert-input{
+    color: white !important;
+    font-size: 40px !important;
+  }
+} 
 
 .fondoAzul {
   --background: var(--ion-color-tertiary) !important;
