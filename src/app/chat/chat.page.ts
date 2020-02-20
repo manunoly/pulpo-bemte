@@ -58,7 +58,7 @@ export class ChatPage implements OnInit {
   }
 
   recargarChatAutomatico() {
-    this.$counter = interval(10000).pipe(
+    this.$counter = interval(6000).pipe(
       switchMap(() => this.cargarChat())
     ).subscribe();
   }
@@ -144,7 +144,7 @@ export class ChatPage implements OnInit {
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.close();
+        this.modalController.dismiss({terminar:true});
       }
     } catch (error) {
       this.util.dismissLoading();
