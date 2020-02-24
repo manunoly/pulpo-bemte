@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { throwError } from 'rxjs';
+import { throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class DbService {
   combo;
   headers;
   estadoNotificacion;
+  newChat$ = new BehaviorSubject<any>(false);
   
   public estadoProfesor;
   public photo_url;
@@ -23,7 +24,6 @@ export class DbService {
   ) {
     this.getHeader();
   }
-
 
   get photoUrl(){
     if(!this.photo_url)

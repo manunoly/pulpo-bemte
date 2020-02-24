@@ -16,12 +16,16 @@ export class HeaderBemteProfComponent implements OnInit {
   user;
   public notificion;
   @Input() popup = false;
-
+  @Input() chatPage = false;
+  chat;
+  
   constructor(private router: Router,
     private alertController: AlertController,
     private db: DbService, private auth: AuthService, private util: UtilService, private modalController: ModalController) { }
 
   async ngOnInit() {
+    this.db.newChat$.subscribe(chat => this.chat = chat);
+
     this.user = await this.auth.getUserData();
     // console.log('en el header del prof', this.user);
 
@@ -47,6 +51,10 @@ export class HeaderBemteProfComponent implements OnInit {
     if (this.popup)
       this.modalController.dismiss();
     this.router.navigateByUrl(url);
+  }
+
+  descartarChat() {
+    this.db.newChat$.next(false);
   }
 
   async actualizarEstadoDB() {

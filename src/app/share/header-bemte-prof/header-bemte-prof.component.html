@@ -18,4 +18,16 @@
     </ion-fab-button>
   </ion-toolbar>
 
+  <ion-item *ngIf="chat && !chatPage" lines="none">
+    <ion-button slot="start" color="primary" fill="clear" (click)="descartarChat()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+
+    <ion-label color="tertiary"><b> Nuevo mensaje en el chat </b> </ion-label>
+
+    <ion-button color="primary" fill="clear" (click)="goTo('chat/1/1')" class="animated pulse">
+      <ion-icon slot="icon-only" name="eye"></ion-icon>
+    </ion-button>
+  </ion-item>
+  
 </ion-header>

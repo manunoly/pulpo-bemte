@@ -23,13 +23,26 @@ export class FcmService {
 
   async manejarNotificacion() {
     this.fcm.onNotification().subscribe(data => {
-      console.log('notificacion', data);
+      console.log('nueva notificacion', data);
       if (data.wasTapped) {
-        console.log("Received in background");
+        if (data && data.chat && data.chat == "true") {
+          let newChat = {};
+          newChat['tarea_id'] = data.tarea_id ? data.tarea_id : '0';
+          newChat['clase_id'] = data.clase_id ? data.clase_id : '0';
+
+          this.util.setStorage('chat', JSON.stringify(newChat));
+          this.db.newChat$.next(newChat);
+        }
       } else {
         if (data && data.chat && data.chat == "true") {
           let msg = 'Nuevo Mensaje en el Chat';
           this.util.showMessage(data.body ? data.title + ': ' + data.body : msg);
+          let newChat = {};
+          newChat['tarea_id'] = data.tarea_id ? data.tarea_id : '0';
+          newChat['clase_id'] = data.clase_id ? data.clase_id : '0';
+
+          this.db.newChat$.next(newChat);
+
         } else {
           let style = ' alertDefault';
           if (data && data.color)
