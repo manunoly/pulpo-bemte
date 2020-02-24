@@ -5,7 +5,7 @@ import { UtilService } from './../servicios/util.service';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AuthService } from './../servicios/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { interval } from 'rxjs';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
@@ -27,6 +27,7 @@ export class ChatPage implements OnInit {
   cant = 0;
   datosMostrar;
   tipo;
+  nomodal;
 
   constructor(private alertController: AlertController, private db: DbService,
     public upload: UploadService, private iab: InAppBrowser,
@@ -34,27 +35,61 @@ export class ChatPage implements OnInit {
     public auth: AuthService, private modalController: ModalController) { }
 
   async ngOnInit() {
-    console.log('recibo clase', this.clase);
-    console.log('recibo tarea', this.tarea);
-    console.log('tipo', this.tipo);
-    if (!this.clase && !this.tarea) {
-      this.util.showMessage('No hemos podido obtener los datos');
-      setTimeout(() => {
-        this.close()
-      }, 1000);
-      return;
-    }
     this.user = await this.auth.getUserData();
-    this.cargarChat();
-    this.recargarChatAutomatico();
+
+    this.db.newChat$.pipe(take(1)).subscribe(async (chat) => {
+      if (chat && !this.clase && !this.tarea) {
+        this.nomodal = true;
+        try {
+
+          this.util.showLoading();
+          if (chat.tarea_id && chat.tarea_id != "0") {
+            this.tarea = await this.db.get('devuelve-tarea?tarea_id=' + chat.tarea_id);
+            // this.tarea = chat;
+            // this.tarea['id'] = chat.tarea_id;
+          }
+          else {
+            if (chat.clase_id && chat.clase_id != "0") {
+              this.clase = await this.db.get('devuelve-clase?clase_id=' + chat.clase_id);
+              // this.clase = chat;
+              // this.clase['id'] = chat.clase_id;
+            }
+          }
+          this.util.dismissLoading();
+
+        } catch (error) {
+          this.util.dismissLoading();
+        }
+      }
+
+      console.log('recibo clase', this.clase);
+      console.log('recibo tarea', this.tarea);
+      console.log('tipo', this.tipo);
+      if (!this.clase && !this.tarea) {
+        this.util.showMessage('No hemos podido obtener los datos');
+        setTimeout(() => {
+          this.close()
+        }, 1000);
+        return;
+      }
+      this.cargarChat();
+      this.recargarChatAutomatico();
+    })
+
   }
 
   ionViewDidLeave() {
-    this.$counter.unsubscribe();
+
+    this.util.removeStorage('chat');
+    this.db.newChat$.next(null);
+    if(this.$counter)
+      this.$counter.unsubscribe();
+
     if (this.img && this.img.length > 0)
       this.upload.deleteImage(this.img[0]);
     if (this.fichero)
       this.fichero = '';
+
   }
 
   recargarChatAutomatico() {
@@ -113,9 +148,11 @@ export class ChatPage implements OnInit {
     if (this.fichero) {
       imgData = this.fichero.get('filename');
     }
+
     if (this.img && this.img.length > 0) {
       imgData = this.img[0].name;
     }
+
     try {
       await this.db.post('enviar-chat', {
         user_id: this.user.user_id,
@@ -134,6 +171,8 @@ export class ChatPage implements OnInit {
   }
 
   close() {
+    if (this.nomodal)
+      return this.util.atras();
     this.modalController.dismiss();
   }
 
@@ -144,7 +183,9 @@ export class ChatPage implements OnInit {
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        this.modalController.dismiss({terminar:true});
+        if (this.nomodal)
+          return this.util.atras();
+        this.modalController.dismiss({ terminar: true });
       }
     } catch (error) {
       this.util.dismissLoading();

@@ -1,8 +1,8 @@
-<app-header-bemte-prof [popup]="true" *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
+<app-header-bemte-prof [popup]="!nomodal" [chatPage]="true" *ngIf="(auth.currentUser | async)?.tipo == 'Profesor';else estudianteDiv">
 </app-header-bemte-prof>
 
 <ng-template #estudianteDiv>
-  <app-header-bemte [popup]="true"></app-header-bemte>
+  <app-header-bemte [popup]="!nomodal" [chatPage]="true"></app-header-bemte>
 </ng-template>
 
 <ion-content text-center #content>
