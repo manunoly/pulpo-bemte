@@ -34,6 +34,12 @@ export class InicioProfesorPage implements OnInit {
         if (user) {
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
+
+          this.util.getStorage('chat').then(chat => {
+            console.log('chat en el getStorage inicio', chat);
+            if (chat)
+              this.db.newChat$.next(JSON.parse(chat));
+          }).catch(_ => { })
         }
       } catch (error) { }
     }
@@ -52,6 +58,10 @@ export class InicioProfesorPage implements OnInit {
   setDetallesTareaId(id) {
     if (id == this.detallesTareaId) return (this.detallesTareaId = "");
     this.detallesTareaId = id;
+  }
+
+  alertaAplicada() {
+    this.util.presentAlert('Usted ya ha aplicado a esta tarea', 'Información', undefined, '', 'fondoAzul alertDefaultBotonVerde');
   }
 
   setDetallesClaseId(id) {
@@ -96,6 +106,6 @@ export class InicioProfesorPage implements OnInit {
       this.reload = true;
       event.target.complete();
     }, 1000);
-  
+
   }
 }

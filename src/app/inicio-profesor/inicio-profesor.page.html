@@ -23,7 +23,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-text color="danger" *ngIf="!db.getEstadoProfesor()" >
+  <ion-text color="danger" *ngIf="!db.getEstadoProfesor()">
     <h3 class="ion-text-center">Si estas ocupado no puedes aplicar</h3>
   </ion-text>
 
@@ -63,8 +63,7 @@
   <div *ngIf="tipo == 'tareas' && db.getEstadoProfesor()">
     <ion-grid *ngIf="tareas | async as tareasD; else loadD">
 
-      <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD"
-        [routerLink]="['/tarea-detalles/'+tarea.id]">
+      <ion-row class="ion-no-padding" class="lineBotton" *ngFor="let tarea of tareasD">
         <ion-col size="8">
           <ion-item lines="none">
             <ion-thumbnail slot="start">
@@ -78,9 +77,16 @@
         </ion-col>
 
         <ion-col class="ion-align-self-center lineLateral" text-center size="4">
-          <ion-button shape="round" color="success" size="small">
+          <ion-button *ngIf="tarea.aplico == '0'; else aplicada" shape="round" color="success" size="small"
+            [routerLink]="['/tarea-detalles/'+tarea.id]">
             <small class="ion-no-padding ion-no-margin"><b>Aplicar</b></small>
           </ion-button>
+
+          <ng-template #aplicada>
+            <ion-button shape="round" color="medium" size="small" (click)="alertaAplicada()">
+              <small class="ion-no-padding ion-no-margin"><b>Aplicada</b></small>
+            </ion-button>
+          </ng-template>
         </ion-col>
 
         <ion-grid [routerLink]="['/tarea-detalles/'+tarea.id]" text-center no-padding
