@@ -9,6 +9,14 @@
   </ion-refresher>
 
   <div *ngIf="(auth.currentUser | async) as user; else loadD">
+    
+    <div *ngIf="chat">
+      <ion-label>
+        Tienes mensajes sin leer en el chat
+      </ion-label>
+      <ion-button slot="end" color="primary" size="large" shape="round">Abrir</ion-button>
+    </div>
+
     <app-header-user *ngIf="reload"></app-header-user>
 
     <ion-text color="tertiary">
@@ -37,8 +45,8 @@
       </ion-row>
     </ion-grid>
   </div>
-  
-<!-- 
+
+  <!-- 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button>
       <label for="input" style="font-size: 20pt; padding: 30px">

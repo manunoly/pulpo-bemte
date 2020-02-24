@@ -1,3 +1,4 @@
+import { DbService } from 'src/app/servicios/db.service';
 import { UtilService } from "src/app/servicios/util.service";
 import { FcmService } from "./../servicios/fcm.service";
 import { AuthService } from "./../servicios/auth.service";
@@ -11,12 +12,14 @@ import { Component, OnInit } from "@angular/core";
 })
 export class InicioPage implements OnInit {
   reload = true;
+  chat;
 
   constructor(
     public util: UtilService,
     private fcm: FcmService,
     private router: Router,
-    public auth: AuthService
+    public auth: AuthService,
+    private db: DbService
   ) { }
 
   async ngOnInit() {
@@ -26,6 +29,12 @@ export class InicioPage implements OnInit {
         if (user) {
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
+
+          this.util.getStorage('chat').then(chat => {
+            console.log('chat en el getStorage inicio', chat);
+            if (chat)
+              this.db.newChat$.next(JSON.parse(chat));
+          }).catch(_ => { })
         }
       } catch (error) { }
     }
