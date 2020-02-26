@@ -285,7 +285,7 @@ export class UploadService {
           }
         },
         {
-          text: "Usar Camara",
+          text: "Usar Camara", 
           handler: () => {
             return this.takePicture(this.camera.PictureSourceType.CAMERA);
           }

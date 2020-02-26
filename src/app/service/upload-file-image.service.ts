@@ -74,22 +74,22 @@ export class UploadFileImageService {
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Select image",
+      header: "Seleciona la imagen",
       buttons: [
         {
-          text: "From galery",
+          text: "Cargar desde galeria local",
           handler: () => {
             return this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
           }
         },
         {
-          text: "From Camera",
+          text: "Usar Camara",
           handler: () => {
             return this.takePicture(this.camera.PictureSourceType.CAMERA);
           }
         },
         {
-          text: "Cancel",
+          text: "Cancelar",
           role: "cancel"
         }
       ]
