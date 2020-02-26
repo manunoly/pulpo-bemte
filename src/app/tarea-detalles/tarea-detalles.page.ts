@@ -240,7 +240,8 @@ export class TareaDetallesPage implements OnInit {
               this.util.dismissLoading();
               if (resp && resp.success) {
                 this.util.showMessage(resp.success);
-                this.cargarTarea();
+                // this.cargarTarea();
+                this.util.atras();
                 // this.util.setTemporalData({ data: tarea, tipo: 'Tareas' });
                 // this.router.navigateByUrl('clase-aplicada-profesor');
                 // const modal = await this.modalController.create({
