@@ -74,11 +74,14 @@ export class AuthService {
   }
 
   setAuth(user) {
-    
+
     // valido solo puedan acceder estudiantes
     if (user && user.tipo && user.tipo == 'Profesor') {
       this.util.presentAlert('Solo estudiantes por favor!', 'Atencion', undefined, undefined, 'fondoRojo alertDefault');
-      return this.purgeAuth();
+      setTimeout(() => {
+        this.purgeAuth();
+      }, 500);
+      return;
     }
 
     if (user && user['avatar'] && user['avatar'] != '' && user['avatar'] != 'users/default.png')

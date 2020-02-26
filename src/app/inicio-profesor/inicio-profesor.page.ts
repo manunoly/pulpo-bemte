@@ -34,16 +34,6 @@ export class InicioProfesorPage implements OnInit {
       try {
         const user = await this.auth.getUserData();
         if (user) {
-          setTimeout(() => {
-            this.util.getStorage('chat').then(chat => {
-              console.log('chat en el getStorage inicio', chat);
-              if (chat) {
-                this.db.newChat$.next(JSON.parse(chat));
-                this.router.navigateByUrl('chat/1/1');
-              }
-            }).catch(_ => { })
-          }, 500);
-
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
 
@@ -56,6 +46,18 @@ export class InicioProfesorPage implements OnInit {
     this.cargarClases();
     this.cargarTareas();
     this.reload = true;
+  }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.util.getStorage('chat').then(chat => {
+        console.log('chat en el getStorage inicio', chat);
+        if (chat) {
+          this.db.newChat$.next(JSON.parse(chat));
+          this.router.navigateByUrl('chat/1/1');
+        }
+      }).catch(_ => { })
+    }, 500);
   }
 
   ionViewDidLeave() {
