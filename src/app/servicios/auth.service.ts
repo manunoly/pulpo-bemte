@@ -45,9 +45,9 @@ export class AuthService {
       return 'profeVerificando';
     }
 
-    else if (!user.profile.activo) 
+    else if (!user.profile.activo)
       this.util.showMessage('Su usuario no se encuentra activo');
-  
+
     return false;
   }
 
@@ -74,6 +74,13 @@ export class AuthService {
   }
 
   setAuth(user) {
+    
+    // valido solo puedan acceder estudiantes
+    if (user && user.tipo && user.tipo == 'Profesor') {
+      this.util.presentAlert('Solo estudiantes por favor!', 'Atencion', undefined, undefined, 'fondoRojo alertDefault');
+      return this.purgeAuth();
+    }
+
     if (user && user['avatar'] && user['avatar'] != '' && user['avatar'] != 'users/default.png')
       user['avatar'] = environment.photo_url + user['avatar'];
     else
