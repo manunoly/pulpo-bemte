@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="bemte.ecuador.profesor" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>BemteTeacher</name>
-    <description>BembeTeacher</description>
+    <name>Bemte Teacher</name>
+    <description>Bembe Teacher</description>
     <author email="manunoly@gmail.com" href="http://ionicframework.com/">Manuel Almaguer</author>
     <content src="index.html" />
     <access origin="*" />

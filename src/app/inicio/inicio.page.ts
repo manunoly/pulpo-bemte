@@ -27,14 +27,17 @@ export class InicioPage implements OnInit {
       try {
         const user = await this.auth.getUserData();
         if (user) {
+          this.util.getStorage('chat').then(chat => {
+            console.log('chat en el getStorage inicio', chat);
+            if (chat){
+              this.db.newChat$.next(JSON.parse(chat));
+              this.router.navigateByUrl('chat/1/1');
+            }
+          }).catch(_ => { })
+          
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
 
-          this.util.getStorage('chat').then(chat => {
-            console.log('chat en el getStorage inicio', chat);
-            if (chat)
-              this.db.newChat$.next(JSON.parse(chat));
-          }).catch(_ => { })
         }
       } catch (error) { }
     }

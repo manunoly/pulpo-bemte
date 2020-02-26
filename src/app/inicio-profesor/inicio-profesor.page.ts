@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FcmService } from "./../servicios/fcm.service";
 import { DbService } from "./../servicios/db.service";
 import { AuthService } from "./../servicios/auth.service";
@@ -24,6 +25,7 @@ export class InicioProfesorPage implements OnInit {
     public db: DbService,
     public util: UtilService,
     private fcm: FcmService,
+    private router: Router,
     // private modalController: ModalController
   ) { }
 
@@ -32,14 +34,17 @@ export class InicioProfesorPage implements OnInit {
       try {
         const user = await this.auth.getUserData();
         if (user) {
+          this.util.getStorage('chat').then(chat => {
+            console.log('chat en el getStorage inicio', chat);
+            if (chat){
+              this.db.newChat$.next(JSON.parse(chat));
+              this.router.navigateByUrl('chat/1/1');
+            }
+          }).catch(_ => { })
+          
           if (!user.token || user.token != (await this.fcm.getToken()))
             this.fcm.actualizarToken();
 
-          this.util.getStorage('chat').then(chat => {
-            console.log('chat en el getStorage inicio', chat);
-            if (chat)
-              this.db.newChat$.next(JSON.parse(chat));
-          }).catch(_ => { })
         }
       } catch (error) { }
     }
