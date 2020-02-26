@@ -34,8 +34,6 @@ export class LoginPage implements OnInit {
     this.authForm = this.fb.group({
       'email': ['', [Validators.required, Validators.minLength(6)]],
       'password': ['', [Validators.required, Validators.minLength(6)]],
-      // 'email': ['manunoly@gmail.com', [Validators.required, Validators.email]],
-      // 'password': ['12345678', Validators.required,],
       'social': ['']
     });
   }
@@ -183,7 +181,6 @@ export class LoginPage implements OnInit {
 
   async confirmaEnviarArchivo(res?) {
     {
-
       const alert = await this.alertController.create({
         header: 'Nuevo Usuario!',
         message: `Te gustaria Registrarte`,
