@@ -30,8 +30,12 @@ export class FcmService {
           newChat['tarea_id'] = data.tarea_id ? data.tarea_id : '0';
           newChat['clase_id'] = data.clase_id ? data.clase_id : '0';
 
-          this.util.setStorage('chat', JSON.stringify(newChat));
+          this.util.setStorage('chat', JSON.stringify(newChat))
+            .then(resp => console.log('escribiendo el chat respuesta', resp))
+            .catch(error => console.log('error escribiendo el chat'));
           this.db.newChat$.next(newChat);
+
+          console.log('debi escribir este chat al hacer click', newChat);
         }
       } else {
         if (data && data.chat && data.chat == "true") {
