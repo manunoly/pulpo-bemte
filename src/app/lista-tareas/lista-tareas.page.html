@@ -71,7 +71,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row [ngClass]="tarea.name ? 'lineBotton': ''">
+        <ion-row [ngClass]="tarea.apodoProfesor ? 'lineBotton': ''">
           <ion-col class="ion-no-padding ion-no-margin" size="6">
             <p>Hora de entrega</p>
             <ion-text color="tertiary">
@@ -87,11 +87,11 @@
           </ion-col>
         </ion-row>
 
-        <ion-row text-left *ngIf="tarea?.name">
+        <ion-row text-left *ngIf="tarea?.apodoProfesor">
           <ion-col class="ion-no-padding ion-padding-start">
             <h5>Profesor <br>
               <ion-text color="tertiary">
-                <small>{{tarea?.name}}</small>
+                <small>{{tarea?.apodoProfesor}}</small>
               </ion-text>
             </h5>
           </ion-col>
