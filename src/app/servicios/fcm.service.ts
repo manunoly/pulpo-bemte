@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { UtilService } from './util.service';
 import { DbService } from './db.service';
@@ -9,7 +10,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 })
 export class FcmService {
 
-  constructor(private fcm: FCM, private db: DbService, private util: UtilService, private auth: AuthService) {
+  constructor(private router: Router, private fcm: FCM, private db: DbService, private util: UtilService, private auth: AuthService) {
     this.fcm.subscribeToTopic('bemteAll');
     this.manejarNotificacion();
     this.fcm.onTokenRefresh().subscribe(async (token) => {
@@ -33,8 +34,9 @@ export class FcmService {
           this.util.setStorage('chat', JSON.stringify(newChat))
             .then(resp => console.log('escribiendo el chat respuesta', resp))
             .catch(error => console.log('error escribiendo el chat'));
+          
           this.db.newChat$.next(newChat);
-
+          this.router.navigateByUrl('chat/1/1');
           console.log('debi escribir este chat al hacer click', newChat);
         }
       } else {
