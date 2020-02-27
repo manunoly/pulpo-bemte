@@ -195,7 +195,7 @@ export class ChatPage implements OnInit {
   async finalizarTarea() {
     {
       let tipo = 'Profesor';
-      if (this.user.tipo != 'Profesor')
+      if (this.user.tipo == 'Profesor')
         tipo = 'Estudiante'
       const alert = await this.alertController.create({
         header: 'Finalizar la tarea!',
