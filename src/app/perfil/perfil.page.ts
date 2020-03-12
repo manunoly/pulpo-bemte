@@ -169,7 +169,7 @@ export class PerfilPage implements OnInit {
       'apellido': [user.apellidos, [Validators.required, Validators.minLength(3)]],
       'apodo': [user.apodo, [Validators.required, Validators.minLength(8)]],
       // 'pais': [user.pais, user.calificacion],
-      'pais': [user.pais, user.calificacion],
+      'pais': [user.pais, user.required],
       'ciudad': [user.ciudad, Validators.required],
       'tipo': [user.tipo, Validators.required],
       'ubicacion': [user.ubicacion ? user.ubicacion : ' ', Validators.required],
