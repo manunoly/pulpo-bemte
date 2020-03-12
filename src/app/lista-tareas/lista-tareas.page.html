@@ -68,6 +68,13 @@
                 <small>{{tarea?.descripcion}}</small>
               </ion-text>
             </h5>
+
+            <div *ngIf="tarea.duracion">
+              <ion-text color="tertiary">
+                <p>Duración: <b>{{tarea?.duracion}}</b></p>
+              </ion-text>
+            </div>
+
           </ion-col>
         </ion-row>
 
