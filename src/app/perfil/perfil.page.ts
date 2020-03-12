@@ -49,6 +49,9 @@ export class PerfilPage implements OnInit {
     this.paisNumber = this.db.get('lista-paises');
     this.auth.getUserData().then(user => {
       this.user = user;
+      if(user && user.pais)
+        this.ciudades = this.db.get('lista-ciudad-pais?pais=' + user.pais).then(ciudades=>this.ciudades = ciudades).catch(_=>{});
+        
       console.log('usuario a editar', this.user);
       this.buildForm(this.user);
       if (this.util.esProfesor)
@@ -212,14 +215,13 @@ export class PerfilPage implements OnInit {
           this.materia5 = this.materias.filter(x => x.nombre == this.user.materia5)[0];
       }
     }
-    this.cargarCiudades('Ecuador');
 
   }
 
-  cargarCiudades(pais?) {
+  async cargarCiudades(pais?) {
     if (!pais)
       pais = this.registroForm.value.pais;
-    this.ciudades = this.db.get('lista-ciudad-pais?pais=' + pais);
+    this.ciudades = await this.db.get('lista-ciudad-pais?pais=' + pais);
   }
 
   setClasesTareas(status) {
