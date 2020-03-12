@@ -89,21 +89,21 @@ export class TareaDetallesPage implements OnInit {
 
   async openChat(tareaD) {
 
-    const tareaHora = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_inicio));
+    // const tareaHora = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_inicio));
 
-    let anterior = new Date(tareaHora);
+    // let anterior = new Date(tareaHora);
 
-    const tareaHoraFin = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_fin));
+    // const tareaHoraFin = new Date(Date.parse(tareaD.fecha_entrega + 'T' + tareaD.hora_fin));
 
-    let posterior = new Date(tareaHoraFin);
-    posterior.setHours(posterior.getDate() + 1);
+    // let posterior = new Date(tareaHoraFin);
+    // posterior.setHours(posterior.getDate() + 1);
 
-    const now = Date.now();
+    // const now = Date.now();
 
     // console.log(anterior.getTime(), Date.now(), posterior.getTime());
 
-    if (now > posterior.getTime())
-      return this.util.showMessage(`El chat estará activo hasta 24 horas después de la hora de entrega.`);
+    // if (now > posterior.getTime())
+    //   return this.util.showMessage(`El chat estará activo hasta 24 horas después de la hora de entrega.`);
 
     const modal = await this.modalController.create({
       component: ChatPage,
