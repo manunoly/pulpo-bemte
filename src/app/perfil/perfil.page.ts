@@ -46,12 +46,14 @@ export class PerfilPage implements OnInit {
     public util: UtilService,
     public upload: UploadService
   ) {
-    this.paisNumber = this.db.get('lista-paises');
+    this.db.get('lista-paises').then(paises => this.paisNumber = paises).catch(_ => { });
+
     this.auth.getUserData().then(user => {
       this.user = user;
-      if(user && user.pais)
-        this.ciudades = this.db.get('lista-ciudad-pais?pais=' + user.pais).then(ciudades=>this.ciudades = ciudades).catch(_=>{});
-        
+      
+      if (user && user.pais)
+      this.db.get('lista-ciudad-pais?pais=' + user.pais).then(ciudades => this.ciudades = ciudades).catch(_ => { });
+
       console.log('usuario a editar', this.user);
       this.buildForm(this.user);
       if (this.util.esProfesor)

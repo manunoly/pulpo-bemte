@@ -89,25 +89,25 @@
 
 
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="paisNumber" >
           <ion-item class="ion-no-padding ion-text-wrap">
             <ion-label class="ion-text-wrap ion-no-padding" position="stacked"><span style="white-space: nowrap"> País
                 de Residencia </span></ion-label>
             <ion-select [disabled]="user.tipo == 'Profesor'" okText="Seleccionar" cancelText="Cancelar"
               formControlName="pais" (ionChange)="cargarCiudades($event.detail.value)">
-              <ion-select-option *ngFor="let pais of paisNumber | async" [value]="pais?.pais">
+              <ion-select-option *ngFor="let pais of paisNumber" [value]="pais?.pais">
                 {{pais?.pais}}
               </ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
 
-        <ion-col size="6">
+        <ion-col size="6" *ngIf="ciudades" >
           <ion-item class="ion-no-padding">
             <ion-label class="ion-text-wrap ion-no-padding" position="stacked">
               <span style="font-size: 12px;">Ciudad de Residencia</span>
             </ion-label>
-            <ion-select [disabled]="user.tipo == 'Profesor'" [disabled]="!ciudades" okText="Seleccionar"
+            <ion-select [disabled]="user.tipo == 'Profesor'" okText="Seleccionar"
               cancelText="Cancelar" formControlName="ciudad">
               <ion-select-option *ngFor="let c of ciudades" [value]="c?.ciudad">
                 {{c?.ciudad}}
@@ -124,7 +124,7 @@
           </ion-label>
           <ion-select disabled okText="Seleccionar" cancelText="Cancelar" class="ion-text-center"
             formControlName="paisCelular">
-            <ion-select-option *ngFor="let paisN of paisNumber | async" [value]="paisN?.codigo">
+            <ion-select-option *ngFor="let paisN of paisNumber" [value]="paisN?.codigo">
               {{paisN?.codigo}}
             </ion-select-option>
           </ion-select>
