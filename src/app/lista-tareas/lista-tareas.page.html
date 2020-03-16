@@ -69,12 +69,6 @@
               </ion-text>
             </h5>
 
-            <div *ngIf="tarea.duracion">
-              <ion-text color="tertiary">
-                <p>Duración: <b>{{tarea?.duracion}}</b></p>
-              </ion-text>
-            </div>
-
           </ion-col>
         </ion-row>
 
@@ -94,7 +88,16 @@
           </ion-col>
         </ion-row>
 
-        <ion-row text-left *ngIf="tarea?.apodoProfesor">
+        <ion-row class="ion-text-center" *ngIf="tarea?.apodoProfesor">
+          
+          <ion-col size="6" *ngIf="tarea.tiempo_estimado" class="ion-no-padding ion-padding-start">
+            <h5>Duración <br>
+              <ion-text color="tertiary">
+                <small>{{tarea?.tiempo_estimado}}</small>
+              </ion-text>
+            </h5>
+          </ion-col>
+
           <ion-col class="ion-no-padding ion-padding-start">
             <h5>Profesor <br>
               <ion-text color="tertiary">

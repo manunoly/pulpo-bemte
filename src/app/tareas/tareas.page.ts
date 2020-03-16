@@ -201,7 +201,7 @@ export class TareasPage implements OnInit {
       hoy.getMonth() == fecha.getMonth() &&
       hoy.getDate() == fecha.getDate()
     ) {
-      this.util.showMessage("La tarea debe ser solicitada con 3 horas de antelación");
+      this.util.showMessage("La tarea debe ser solicitada con 1 hora de antelación");
 
       // FIXME:arreglar la validacion para la fecha del mismo dia
       // console.log("la fecha es hoy");
