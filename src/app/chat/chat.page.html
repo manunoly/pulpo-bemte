@@ -5,7 +5,7 @@
   <app-header-bemte [popup]="!nomodal" [chatPage]="true"></app-header-bemte>
 </ng-template>
 
-<ion-content text-center #content>
+<ion-content text-center #content overflow-scroll="true">
   <div *ngIf="datosMostrar">
     <ion-grid>
       <ion-row class="lineBotton" *ngIf="tipo == ' TAREA'">
@@ -57,9 +57,12 @@
               </ng-template>
               
             </div>
-            <ion-text color="tertiary">
-              {{item?.texto}}
-            </ion-text>
+            
+            <div class="copyText">
+              <ion-text color="tertiary" (click)="openLink($event)" [innerHTML]="sanitizerUrl(item?.texto)">
+                
+              </ion-text>
+            </div>
           </ion-col>
         </ion-row>
 

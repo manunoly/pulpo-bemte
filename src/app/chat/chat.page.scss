@@ -2,6 +2,9 @@
 //   border: 1px var(--ion-color-primary) solid;
 //   border-radius: 20px !important;
 // }
+.copyText {
+  -webkit-user-select: auto;
+}
 
 .borderC {
   --border-radius: 20px 20px 20px 20px;

@@ -8,6 +8,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { switchMap, take } from 'rxjs/operators';
 import { interval } from 'rxjs';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class ChatPage implements OnInit {
   clase;
-  user
+  user;
   chatD;
   tarea;
   img = [];
@@ -29,10 +30,17 @@ export class ChatPage implements OnInit {
   tipo;
   nomodal;
 
-  constructor(private alertController: AlertController, private db: DbService,
-    public upload: UploadService, private iab: InAppBrowser,
-    private uploadFile: UploadFileImageService, public util: UtilService,
-    public auth: AuthService, private modalController: ModalController) { }
+  constructor(
+    private alertController: AlertController,
+    private db: DbService,
+    public upload: UploadService,
+    private iab: InAppBrowser,
+    private uploadFile: UploadFileImageService,
+    public util: UtilService,
+    public auth: AuthService,
+    private sanitizer: DomSanitizer,
+    private modalController: ModalController
+  ) {}
 
   async ngOnInit() {
     this.user = await this.auth.getUserData();
@@ -41,22 +49,23 @@ export class ChatPage implements OnInit {
       if (chat && !this.clase && !this.tarea) {
         this.nomodal = true;
         try {
-
           this.util.showLoading();
-          if (chat.tarea_id && chat.tarea_id != "0") {
-            this.tarea = await this.db.get('devuelve-tarea?tarea_id=' + chat.tarea_id);
+          if (chat.tarea_id && chat.tarea_id != '0') {
+            this.tarea = await this.db.get(
+              'devuelve-tarea?tarea_id=' + chat.tarea_id
+            );
             // this.tarea = chat;
             // this.tarea['id'] = chat.tarea_id;
-          }
-          else {
-            if (chat.clase_id && chat.clase_id != "0") {
-              this.clase = await this.db.get('devuelve-clase?clase_id=' + chat.clase_id);
+          } else {
+            if (chat.clase_id && chat.clase_id != '0') {
+              this.clase = await this.db.get(
+                'devuelve-clase?clase_id=' + chat.clase_id
+              );
               // this.clase = chat;
               // this.clase['id'] = chat.clase_id;
             }
           }
           this.util.dismissLoading();
-
         } catch (error) {
           this.util.dismissLoading();
         }
@@ -68,34 +77,28 @@ export class ChatPage implements OnInit {
       if (!this.clase && !this.tarea) {
         this.util.showMessage('No hemos podido obtener los datos');
         setTimeout(() => {
-          this.close()
+          this.close();
         }, 1000);
         return;
       }
       this.cargarChat();
       this.recargarChatAutomatico();
-    })
-
+    });
   }
 
   ionViewDidLeave() {
-
     this.util.removeStorage('chat');
     this.db.newChat$.next(null);
-    if(this.$counter)
-      this.$counter.unsubscribe();
+    if (this.$counter) this.$counter.unsubscribe();
 
-    if (this.img && this.img.length > 0)
-      this.upload.deleteImage(this.img[0]);
-    if (this.fichero)
-      this.fichero = '';
-
+    if (this.img && this.img.length > 0) this.upload.deleteImage(this.img[0]);
+    if (this.fichero) this.fichero = '';
   }
 
   recargarChatAutomatico() {
-    this.$counter = interval(6000).pipe(
-      switchMap(() => this.cargarChat())
-    ).subscribe();
+    this.$counter = interval(6000)
+      .pipe(switchMap(() => this.cargarChat()))
+      .subscribe();
   }
 
   async cargarChat() {
@@ -104,7 +107,7 @@ export class ChatPage implements OnInit {
       let claseid = '0';
 
       if (this.clase && this.clase.id) {
-        claseid = this.clase.id
+        claseid = this.clase.id;
         this.datosMostrar = this.clase;
         this.tipo = ' CLASE';
       }
@@ -115,13 +118,18 @@ export class ChatPage implements OnInit {
         this.tipo = ' TAREA';
       }
 
-      const chats = await this.db.get('obtener-chat?user_id=' + this.user.user_id + '&tarea_id=' + tareaid + '&clase_id=' + claseid);
+      const chats = await this.db.get(
+        'obtener-chat?user_id=' +
+          this.user.user_id +
+          '&tarea_id=' +
+          tareaid +
+          '&clase_id=' +
+          claseid
+      );
       this.scrollToBottomOnInit(chats);
       return;
     }
   }
-
-
 
   async scrollToBottomOnInit(chats) {
     if (this.cant != chats.length) {
@@ -132,17 +140,14 @@ export class ChatPage implements OnInit {
     }
   }
 
-
   async enviarChat(adj?) {
     this.util.showLoading();
     let tareaid = '0';
     let claseid = '0';
 
-    if (this.clase && this.clase.id)
-      claseid = this.clase.id
+    if (this.clase && this.clase.id) claseid = this.clase.id;
 
-    if (this.tarea && this.tarea.id)
-      tareaid = this.tarea.id;
+    if (this.tarea && this.tarea.id) tareaid = this.tarea.id;
 
     let imgData = null;
     if (this.fichero) {
@@ -159,11 +164,9 @@ export class ChatPage implements OnInit {
         tarea_id: tareaid,
         clase_id: claseid,
         texto: this.newMessage,
-        imagen: imgData
+        imagen: imgData,
       });
-    } catch (error) {
-
-    }
+    } catch (error) {}
     this.newMessage = '';
     await this.cargarChat();
     this.util.dismissLoading();
@@ -171,20 +174,24 @@ export class ChatPage implements OnInit {
   }
 
   close() {
-    if (this.nomodal)
-      return this.util.atras();
+    if (this.nomodal) return this.util.atras();
     this.modalController.dismiss();
   }
 
   async terminar() {
     try {
       this.util.showLoading();
-      const resp = await this.db.post('tarea-terminar', { clase_id: 0, tarea_id: this.tarea.id, user_id: this.user.user_id, cancelar: 0, profesor: 0 });
+      const resp = await this.db.post('tarea-terminar', {
+        clase_id: 0,
+        tarea_id: this.tarea.id,
+        user_id: this.user.user_id,
+        cancelar: 0,
+        profesor: 0,
+      });
       this.util.dismissLoading();
       if (resp && resp.success) {
         this.util.showMessage(resp.success);
-        if (this.nomodal)
-          return this.util.atras();
+        if (this.nomodal) return this.util.atras();
         this.modalController.dismiss({ terminar: true });
       }
     } catch (error) {
@@ -195,8 +202,7 @@ export class ChatPage implements OnInit {
   async finalizarTarea() {
     {
       let tipo = 'Profesor';
-      if (this.user.tipo == 'Profesor')
-        tipo = 'Estudiante'
+      if (this.user.tipo == 'Profesor') tipo = 'Estudiante';
       const alert = await this.alertController.create({
         header: 'Finalizar la tarea!',
         message: `Al finalizar la tarea, se finaliza tambien el contacto con el ${tipo}. <br> ¿Estas seguro que deseas finalizar?`,
@@ -206,35 +212,36 @@ export class ChatPage implements OnInit {
             name: 'Si',
             type: 'radio',
             label: 'Si',
-            value: true
+            value: true,
           },
           {
             name: 'No',
             type: 'radio',
             label: 'No',
-            value: false
-          }],
+            value: false,
+          },
+        ],
         buttons: [
           {
             text: 'Atrás',
             role: 'cancel',
             handler: (blah) => {
               console.log('Confirm Cancel: blah');
-            }
-          }, {
+            },
+          },
+          {
             text: 'Aceptar',
             handler: (data) => {
               if (data) {
                 this.terminar();
               }
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
 
       await alert.present();
     }
-
   }
 
   async seleccionarArchivo() {
@@ -243,18 +250,16 @@ export class ChatPage implements OnInit {
 
   async seleccionarFoto() {
     try {
-      this.upload.imagesSubject.subscribe(img => {
+      this.upload.imagesSubject.subscribe((img) => {
         this.img = img;
       });
       await this.upload.selectImage();
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   async confirmaEnviarArchivo() {
     {
-
-      if ((!this.fichero && this.img.length == 0)) {
+      if (!this.fichero && this.img.length == 0) {
         return this.enviarChat();
       }
 
@@ -267,14 +272,15 @@ export class ChatPage implements OnInit {
             name: 'Si',
             type: 'radio',
             label: 'Si',
-            value: true
+            value: true,
           },
           {
             name: 'No',
             type: 'radio',
             label: 'No',
-            value: false
-          }],
+            value: false,
+          },
+        ],
         buttons: [
           {
             text: 'Eliminar',
@@ -288,8 +294,9 @@ export class ChatPage implements OnInit {
                   this.upload.deleteImage(this.img[0]);
                 }
               }
-            }
-          }, {
+            },
+          },
+          {
             text: 'Enviar',
             handler: async (data) => {
               if (data) {
@@ -299,26 +306,44 @@ export class ChatPage implements OnInit {
                     await this.enviarChat(true);
                     this.fichero = '';
                   }, 1700);
-                } else
-                  if (this.img && this.img.length > 0) {
-                    await this.upload.startUpload(this.img[0]);
-                    setTimeout(async () => {
-                      await this.enviarChat(true);
-                    }, 1700);
-                  }
+                } else if (this.img && this.img.length > 0) {
+                  await this.upload.startUpload(this.img[0]);
+                  setTimeout(async () => {
+                    await this.enviarChat(true);
+                  }, 1700);
+                }
               }
-            }
-          }
-        ]
+            },
+          },
+        ],
       });
 
       await alert.present();
     }
   }
 
-
   downloadFile(url) {
     this.iab.create(this.db.photoUrl + url, '_system');
+  }
+
+  openLink(evt) {
+    const href = evt.target.getAttribute('href');
+    console.log('open this link', href);
+    if (href) {
+       evt.preventDefault();
+       this.iab.create(href, '_system');
+    }
+  }
+
+  sanitizerUrl(url) {
+    return this.sanitizer.bypassSecurityTrustHtml(this.convertLink(url));
+  }
+
+  convertLink(text?) {
+    var urlRegex = /(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=_|!:,.;]*[-A-Z0-9+&@#\/%=_|])/gi;
+    return text.replace(urlRegex, (url) => {
+      return `<a style="color:blue !important" href="${url}"> ${url} </a>`;
+    });
   }
 
 }
