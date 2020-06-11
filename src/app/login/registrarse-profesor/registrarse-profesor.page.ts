@@ -66,8 +66,8 @@ export class RegistrarseProfesorPage implements OnInit {
     this.registroForm = new FormGroup({
 
       datosRegistro: new FormGroup({
-        nombre: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
-        apellido: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(110)]),
+        nombre: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+        apellido: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
         fecha_nacimiento: new FormControl("", Validators.required),
         pais: new FormControl("", Validators.required),
         ciudad: new FormControl("", Validators.required),
@@ -76,12 +76,12 @@ export class RegistrarseProfesorPage implements OnInit {
       }),
 
       datosAcceso: new FormGroup({
-        apodo: new FormControl("", [Validators.required, Validators.minLength(8)]),
-        email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(110)]),
+        apodo: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
+        email: new FormControl("", [Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(50)]),
         paisNumero: new FormControl("", Validators.required),
         celular: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(10)]),
-        password: new FormControl("", [Validators.required, Validators.minLength(8)]),
-        passwordC: new FormControl("", [Validators.required, Validators.minLength(8)]),  
+        password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
+        passwordC: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),  
       }),
 
       materia1: new FormControl("", Validators.required),
@@ -91,7 +91,7 @@ export class RegistrarseProfesorPage implements OnInit {
       materia5: new FormControl(""),
 
       tipo: new FormControl("Profesor", Validators.required),
-      descripcion: new FormControl(""),
+      descripcion: new FormControl("", Validators.maxLength(100)),
       clases: new FormControl(""),
       tareas: new FormControl(""),
       hojaVida: new FormControl(""),
