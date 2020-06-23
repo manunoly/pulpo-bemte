@@ -188,7 +188,7 @@ export class TareaDetallesPage implements OnInit {
   }
 
   async aplicar(tarea) {
-    this.util.showMessage('Solo números enteros entre 1 y 40');
+    // this.util.showMessage('Solo números enteros entre 1 y 40');
 
     const alert = await this.alertController.create({
       header: 'Aplicar a la tarea',
@@ -198,7 +198,8 @@ export class TareaDetallesPage implements OnInit {
         {
           name: 'tiempo',
           type: 'number',
-          min: 0
+          min: 0,
+          max: 100
         }
       ],
       buttons: [
@@ -224,8 +225,8 @@ export class TareaDetallesPage implements OnInit {
             } else
               tiempo = data.tiempo;
 
-            if (tiempo < 1 || tiempo > 40)
-              return this.util.showMessage('El tiempo debe estar entre 1 y 40');
+            if (tiempo < 1 || tiempo > 100)
+              return this.util.showMessage('El tiempo debe estar entre 1 y 100');
 
             this.util.showLoading();
             try {
