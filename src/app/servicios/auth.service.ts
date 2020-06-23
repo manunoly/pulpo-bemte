@@ -76,8 +76,8 @@ export class AuthService {
   setAuth(user) {
 
     // valido solo puedan acceder estudiantes
-    if (user && user.tipo && user.tipo == 'Profesor') {
-      this.util.presentAlert('Solo estudiantes por favor!', 'Atencion', undefined, undefined, 'fondoRojo alertDefault');
+    if (user && user.tipo && user.tipo != 'Profesor') {
+      this.util.presentAlert('Solo profesores por favor!', 'Atencion', undefined, undefined, 'fondoRojo alertDefault');
       setTimeout(() => {
         this.purgeAuth();
       }, 500);
