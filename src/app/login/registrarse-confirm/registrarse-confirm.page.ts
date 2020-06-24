@@ -1,3 +1,6 @@
+import { UtilService } from './../../servicios/util.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { DbService } from './../../servicios/db.service';
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,14 +10,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./registrarse-confirm.page.scss'],
 })
 export class RegistrarseConfirmPage implements OnInit {
+  constructor(
+    private modalController: ModalController,
+    private db: DbService,
+    private iab: InAppBrowser,
+    private util: UtilService
+  ) {}
 
-  constructor(private modalController: ModalController) { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  async leer() {
+    this.util.showLoading();
+    const terminos = await this.db.get('reglamento');
+
+    if (!terminos || !terminos.reglamentoUrl) return;
+    this.iab.create(terminos.reglamentoUrl, '_system');
+    this.util.dismissLoading();
   }
 
   back(ok?) {
     this.modalController.dismiss(ok);
-
   }
 }
