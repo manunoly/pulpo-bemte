@@ -98,10 +98,9 @@ export class ChatPage implements OnInit {
     if (this.fichero) this.fichero = '';
   }
 
-  async copyText(texto){
+  async copyText(texto){ 
     await this.clipboard.copy(texto);
     this.util.showMessage('Copiado '+ texto);
-    this.copyLine = "";
   }
 
   recargarChatAutomatico() {
