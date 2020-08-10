@@ -85,9 +85,14 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString("#003761");
+      this.statusBar.styleLightContent();
+
       setTimeout(() => {
         this.showSplash = false;
       }, 4000);
+
       this.checkRoll();
     });
   }
