@@ -99,7 +99,7 @@ export class ChatPage implements OnInit {
   }
 
   async copyText(texto){
-    await this.clipboard.copy('Hello world');
+    await this.clipboard.copy(texto);
     this.util.showMessage('Copiado '+ texto);
     this.copyLine = "";
   }
@@ -335,13 +335,7 @@ export class ChatPage implements OnInit {
     this.iab.create(this.db.photoUrl + url, '_system');
   }
 
-  openLink(evt, item = "") {
-    console.log('open this link', evt, item);
-    if(this.copyLine == item)
-      this.copyLine = "";
-    else
-      this.copyLine = item;
-
+  openLink(evt) { 
     const href = evt.target.getAttribute('href');
     console.log('open this link', href);
     if (href) {

@@ -59,7 +59,7 @@
             </div>
             
             <div class="copyText" *ngIf="item?.texto"> 
-              <ion-text color="tertiary" (click)="openLink($event, item)" [innerHTML]="sanitizerUrl(item?.texto)">
+              <ion-text color="tertiary" (click)="openLink($event)" [innerHTML]="sanitizerUrl(item?.texto)">
               </ion-text>
               <div style="position: absolute; right: 1px; bottom: -5px; z-index: 1;" *ngIf="copyLine && item.id == copyLine.id">
                 <ion-button fill="clear" size="small" (click)="copyText(item.texto)">
