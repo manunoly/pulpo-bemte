@@ -10,12 +10,10 @@
       <span>M</span>
       <span>T</span>
       <span>E</span>
-      <!-- SOLO para profesor -->
-      <!-- <span style="font-size: 35px">Teacher</span> -->
     </h1>
   </div>
 
-  <ion-fab *ngIf="auth.currentUser | async" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab *ngIf="showFabButton | async" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
