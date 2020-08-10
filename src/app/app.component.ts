@@ -6,66 +6,68 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { MenuController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
 })
 export class AppComponent {
   user;
   @ViewChild(IonFab) fab;
-
+  public showFabButton: Subject<boolean> = new Subject<boolean>();
+  private hiddenFabButtonRoutes = ['/chat'];
   public appPages = [];
   public profesorPages = [
     {
       title: 'Información',
       url: '/informacion',
-      icon: 'info_prof.png'
+      icon: 'info_prof.png',
     },
     {
       title: 'Mis Clases',
       url: '/lista-clases',
-      icon: 'clases_prof.png'
+      icon: 'clases_prof.png',
     },
     {
       title: 'Mis Tareas',
       url: '/lista-tareas',
-      icon: 'tareas_prof.png'
+      icon: 'tareas_prof.png',
     },
     {
       title: 'Billetera',
       url: '/ganancias-profesor',
-      icon: 'billetera_prof.png'
-    }];
+      icon: 'billetera_prof.png',
+    },
+  ];
 
   public estudiantePages = [
     {
       title: 'Información',
       url: '/informacion',
-      icon: 'info_est.png'
+      icon: 'info_est.png',
     },
     {
       title: 'Clase Gratis',
       url: '/clase-gratis',
-      icon: 'clases-free_est.png'
+      icon: 'clases-free_est.png',
     },
     {
       title: 'Billetera',
       url: '/billetera-estudiante',
-      icon: 'billetera_est.png'
+      icon: 'billetera_est.png',
     },
     {
       title: 'Mis Clases',
       url: '/lista-clases',
-      icon: 'clases_est.png'
+      icon: 'clases_est.png',
     },
     {
       title: 'Mis Tareas',
       url: '/lista-tareas',
-      icon: 'tareas_est.png'
-    }
-
+      icon: 'tareas_est.png',
+    },
   ];
   showSplash = true;
 
@@ -92,18 +94,25 @@ export class AppComponent {
       setTimeout(() => {
         this.showSplash = false;
       }, 4000);
-
       this.checkRoll();
+      this.checkRoute();
+    });
+  }
+
+  async checkRoute() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.fabButtonToggler();
+      }
     });
   }
 
   async checkRoll() {
-    this.auth.user.subscribe(user => {
+    this.auth.user.subscribe((user) => {
       this.user = user;
-      if (user && user.tipo == 'Profesor')
-        this.appPages = this.profesorPages;
-      else
-        this.appPages = this.estudiantePages;
+      this.fabButtonToggler();
+      if (user && user.tipo == 'Profesor') this.appPages = this.profesorPages;
+      else this.appPages = this.estudiantePages;
     });
   }
 
@@ -111,14 +120,27 @@ export class AppComponent {
     this.router.navigateByUrl(url);
   }
 
-  closeMenu(){
-    if(this.fab && this.fab.activated)
-      this.fab.close();
+  closeMenu() {
+    if (this.fab && this.fab.activated) this.fab.close();
   }
 
   exit() {
     this.menuCtrl.toggle();
     this.auth.purgeAuth();
+  }
 
+  fabButtonToggler() {
+    if (this.user == null) return this.showFabButton.next(false);
+    const url = this.router.url;
+    let match = false;
+    this.hiddenFabButtonRoutes.forEach((route) => {
+      if (url.includes(route) === true) {
+        match = true;
+      }
+    });
+    // console.log(url);
+    // console.log(match);
+    // console.log(this.user);
+    this.showFabButton.next(!match && this.user);
   }
 }
