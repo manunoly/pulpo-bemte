@@ -24,6 +24,7 @@ import { Chooser } from '@ionic-native/chooser/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 
 import { LOCALE_ID } from '@angular/core';
@@ -57,6 +58,7 @@ registerLocaleData(localeEs, 'es-AR');
     GooglePlus,
     Geolocation,
     InAppBrowser,
+    Clipboard,
     {provide: LOCALE_ID, useValue: 'es-AR' }
 
   ],

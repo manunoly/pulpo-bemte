@@ -9,6 +9,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { interval } from 'rxjs';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 
 @Component({
   selector: 'app-chat',
@@ -29,6 +30,7 @@ export class ChatPage implements OnInit {
   datosMostrar;
   tipo;
   nomodal;
+  copyLine;
 
   constructor(
     private alertController: AlertController,
@@ -39,7 +41,8 @@ export class ChatPage implements OnInit {
     public util: UtilService,
     public auth: AuthService,
     private sanitizer: DomSanitizer,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private clipboard: Clipboard
   ) {}
 
   async ngOnInit() {
@@ -93,6 +96,12 @@ export class ChatPage implements OnInit {
 
     if (this.img && this.img.length > 0) this.upload.deleteImage(this.img[0]);
     if (this.fichero) this.fichero = '';
+  }
+
+  async copyText(texto){
+    await this.clipboard.copy('Hello world');
+    this.util.showMessage('Copiado '+ texto);
+    this.copyLine = "";
   }
 
   recargarChatAutomatico() {
@@ -326,7 +335,13 @@ export class ChatPage implements OnInit {
     this.iab.create(this.db.photoUrl + url, '_system');
   }
 
-  openLink(evt) {
+  openLink(evt, item = "") {
+    console.log('open this link', evt, item);
+    if(this.copyLine == item)
+      this.copyLine = "";
+    else
+      this.copyLine = item;
+
     const href = evt.target.getAttribute('href');
     console.log('open this link', href);
     if (href) {

@@ -40,7 +40,7 @@
       </ion-row>
 
       <div *ngIf="chatD">
-        <ion-row style="padding-top: 3px;" *ngFor="let item of chatD">
+        <ion-row style="padding-top: 3px;" *ngFor="let item of chatD" (click)="copyLine = copyLine === item ? '': item">
           <ion-col padding [offset]="user.user_id == item.user_escribe ? 4 : 0" size="8"
             [ngClass]="user.user_id == item.user_escribe ? 'ion-text-end ion-padding-end borderUser':'borderOtherUser ion-text-start ion-padding-start'">
             <div [ngClass]="user.user_id != item.user_escribe ? 'ion-no-padding ion-padding-end' : ''"
@@ -58,10 +58,14 @@
               
             </div>
             
-            <div class="copyText">
-              <ion-text color="tertiary" (click)="openLink($event)" [innerHTML]="sanitizerUrl(item?.texto)">
-                
+            <div class="copyText" *ngIf="item?.texto"> 
+              <ion-text color="tertiary" (click)="openLink($event, item)" [innerHTML]="sanitizerUrl(item?.texto)">
               </ion-text>
+              <div style="position: absolute; right: 1px; bottom: -5px; z-index: 1;" *ngIf="copyLine && item.id == copyLine.id">
+                <ion-button fill="clear" size="small" (click)="copyText(item.texto)">
+                  <ion-icon name="copy" mode="ios" slot="icon-only" color="tertiary"></ion-icon>
+                </ion-button>
+              </div>
             </div>
           </ion-col>
         </ion-row>
