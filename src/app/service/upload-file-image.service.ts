@@ -40,19 +40,30 @@ export class UploadFileImageService {
 
   async selectFile() {
     try {
-      const file = await this.chooser.getFile();
+      const file = await this.chooser.getFile('image/*,' +
+          'application/msword,' +                                                             // .doc
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +        // .docx
+          'application/pdf,' +                                                                // .pdf
+          'application/vnd.ms-powerpoint,' +                                                  // .ppt
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation,' +      // .pptx
+          'application/vnd.ms-excel,' +                                                       // .xls
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'                 // .xlsx
+      );
       console.log('el await', file);
-      const formData = new FormData();
-      const imgBlob = new Blob([file.data], {
-        type: file.mediaType
-      });
+      if(file) {
+        const formData = new FormData();
+        const imgBlob = new Blob([file.data], {
+          type: file.mediaType
+        });
 
-      formData.append("mimeType", "multipart/form-data");
-      formData.append("file", imgBlob, file.name);
-      formData.append("filename", file.name);
-      console.log('el formdata error', formData);
-      return formData;
-
+        formData.append("mimeType", "multipart/form-data");
+        formData.append("file", imgBlob, file.name);
+        formData.append("filename", file.name);
+        console.log('el formdata error', formData);
+        return formData;
+      } else {
+        return;
+      }
     } catch (file) {
       console.log('en el error', file);
       //lo trabajo en el error por problemas de integracion nativos entre ionic y el plugin. tiene que existir el name y el fichero sino es un error verdadero
