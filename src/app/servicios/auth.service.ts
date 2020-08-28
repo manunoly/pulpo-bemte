@@ -84,10 +84,10 @@ export class AuthService {
       return;
     }
 
-    if (user && user['avatar'] && user['avatar'] != '' && user['avatar'] != 'users/default.png')
+    if (user && user['avatar'] && user['avatar'] != '')
       user['avatar'] = environment.photo_url + user['avatar'];
     else
-      user['avatar'] = '/assets/icon/favicon.png';
+      user['avatar'] = 'assets/icon/favicon.png';
 
     user = JSON.stringify(user);
 
