@@ -21,11 +21,11 @@ export class RegistrarseConfirmPage implements OnInit {
 
   async leer() {
     this.util.showLoading();
-    const terminos = await this.db.get('reglamento');
+    const data = await this.db.get('terminos');
 
-    if (!terminos || !terminos.reglamentoUrl) return;
-    this.iab.create(terminos.reglamentoUrl, '_system');
-    this.util.dismissLoading();
+    if (!data || !data.terminosUrl) return;
+    this.iab.create(data.terminosUrl, '_system');
+    this.util.dismissLoading(); 
   }
 
   back(ok?) {
