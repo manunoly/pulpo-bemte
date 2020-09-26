@@ -49,7 +49,7 @@ export class AppComponent {
       icon: 'info_est.png',
     },
     {
-      title: 'Clase Gratis',
+      title: 'Contactos',
       url: '/clase-gratis',
       icon: 'clases-free_est.png',
     },
