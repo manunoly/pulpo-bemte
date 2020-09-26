@@ -21,10 +21,10 @@ export class InformacionPage implements OnInit {
 
   async confirmarTerminos() {
       this.util.showLoading();
-      const terminos = await this.db.get('terminos');
+      const terminos = await this.db.get('reglamento');
   
-      if (!terminos || !terminos.terminosUrl) return;
-      this.iab.create(terminos.terminosUrl, '_system');
+      if (!terminos || !terminos.reglamentoUrl) return;
+      this.iab.create(terminos.reglamentoUrl, '_system');
       this.util.dismissLoading();
   }
 
