@@ -10,71 +10,128 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-text color="primary">
-        <h3>
-          Transferencia / Depósito
-        </h3>
-      </ion-text>
+      <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentModel">
+        <ion-segment-button value="transferencia">
+          <ion-label>Transferencia</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="credito">
+          <ion-label>Tarjeta de Crédito</ion-label>
+        </ion-segment-button>
+      </ion-segment>
     </ion-col>
   </ion-row>
-  <ion-row class="lineBotton ion-text-start">
-    <ion-col size="5">Banco:</ion-col>
-    <ion-col size="7">Banco Pichincha</ion-col>
-    <ion-col size="5">Cuenta Corriente:</ion-col>
-    <ion-col size="7">2100179092</ion-col>
-    <ion-col size="5">Nombre:</ion-col>
-    <ion-col size="7">Jefferson Almeida</ion-col>
-    <ion-col size="5">Cedula:</ion-col>
-    <ion-col size="7">1500640147</ion-col>
-    <ion-col size="5">Correo:</ion-col>
-    <ion-col size="7">pagos@bemte.ec</ion-col>
-  </ion-row>
-  <ion-row class="ion-text-start">
-    <ion-col size="5">Banco:</ion-col>
-    <ion-col size="7">Banco Del Pacífico</ion-col>
-    <ion-col size="5">Cuenta Corriente:</ion-col>
-    <ion-col size="7">1055703232</ion-col>
-    <ion-col size="5">Nombre:</ion-col>
-    <ion-col size="7">Be My Teacher Bemte SAS</ion-col>
-    <ion-col size="5">Ruc:</ion-col>
-    <ion-col size="7">1793081878001</ion-col>
-    <ion-col size="5">Correo:</ion-col>
-    <ion-col size="7">pagos@bemte.ec</ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col *ngIf="!img || img.length === 0; else imgData" size="10" offset="1">
-      <ion-item (click)="subir()" class="ion-no-padding ion-no-margin" lines="none">
-        <ion-label>
-          <ion-button size="block" shape="round">
-            Adjuntar imagen
-          </ion-button>
-        </ion-label>
-        <ion-icon slot="end" color="primary" size="large" name="camera"></ion-icon>
-      </ion-item>
-    </ion-col>
 
-    <ng-template #imgData>
-      <ion-col size="10" offset="1">
-        <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
-          <ion-thumbnail slot="start">
-            <ion-img [src]="imgD.path"></ion-img>
-          </ion-thumbnail>
+  <div *ngIf="segmentModel === 'transferencia'">
+    <ion-row>
+      <ion-col>
+        <ion-text color="primary">
+          <h3>
+            Transferencia / Depósito
+          </h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="lineBotton ion-text-start">
+      <ion-col size="5">Banco:</ion-col>
+      <ion-col size="7">Banco Pichincha</ion-col>
+      <ion-col size="5">Cuenta Corriente:</ion-col>
+      <ion-col size="7">2100179092</ion-col>
+      <ion-col size="5">Nombre:</ion-col>
+      <ion-col size="7">Jefferson Almeida</ion-col>
+      <ion-col size="5">Cedula:</ion-col>
+      <ion-col size="7">1500640147</ion-col>
+      <ion-col size="5">Correo:</ion-col>
+      <ion-col size="7">pagos@bemte.ec</ion-col>
+    </ion-row>
+    <ion-row class="ion-text-start">
+      <ion-col size="5">Banco:</ion-col>
+      <ion-col size="7">Banco Del Pacífico</ion-col>
+      <ion-col size="5">Cuenta Corriente:</ion-col>
+      <ion-col size="7">1055703232</ion-col>
+      <ion-col size="5">Nombre:</ion-col>
+      <ion-col size="7">Be My Teacher Bemte SAS</ion-col>
+      <ion-col size="5">Ruc:</ion-col>
+      <ion-col size="7">1793081878001</ion-col>
+      <ion-col size="5">Correo:</ion-col>
+      <ion-col size="7">pagos@bemte.ec</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="!img || img.length === 0; else imgData" size="10" offset="1">
+        <ion-item (click)="subir()" class="ion-no-padding ion-no-margin" lines="none">
           <ion-label>
-            <h5>{{ imgD.name }}</h5>
+            <ion-button size="block" shape="round">
+              Adjuntar imagen
+            </ion-button>
           </ion-label>
-          <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
-            <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
-          </ion-button>
+          <ion-icon slot="end" color="primary" size="large" name="camera"></ion-icon>
         </ion-item>
       </ion-col>
-
+      
+      <ng-template #imgData>
+        <ion-col size="10" offset="1">
+          <ion-item *ngFor="let imgD of img; index as pos" text-wrap>
+            <ion-thumbnail slot="start">
+              <ion-img [src]="imgD.path"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h5>{{ imgD.name }}</h5>
+            </ion-label>
+            <ion-button slot="end" fill="clear" (click)="upload.deleteImage(imgD, pos)">
+              <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-col>
+      
       <ion-col size="6" offset="3">
         <ion-button expand="block" shape="round" (click)="uploadData()" lines="none">
           <b>Confirmar</b>
         </ion-button>
       </ion-col>
-    </ng-template>
+      </ng-template>
+    
+    </ion-row>
+  </div>
+  
+  <div *ngIf="segmentModel === 'credito'">
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="ion-no-padding ion-no-maring">
+            <ion-label position="floating">Nombre y Apellido</ion-label>
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item class="ion-no-padding ion-no-maring">
+              <ion-label position="floating">No. Tarjeta</ion-label>
+              <ion-input formControlName="cardNumber" type="tel"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="ion-no-padding ion-no-maring">
+              <ion-label position="floating">Expira (MM/AA)</ion-label>
+              <ion-input formControlName="expiration"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="ion-no-padding ion-no-maring">
+            <div class="ion-text-wrap">
+              <ion-label position="floating">
+                  Código de Seguridad
+              </ion-label>
+            </div>
+            <ion-input formControlName="securityCode"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
-  </ion-row>
-
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" shape="round" (click)="pagarCredito()" lines="none" [disabled]="cardForm.invalid">
+            <b>Pagar</b>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form> 
+  </div>
 </ion-grid>
