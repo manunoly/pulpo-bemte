@@ -120,26 +120,30 @@ export class PerfilPage implements OnInit {
           return this.registroForm.controls['materia1'].setValue('');
         }
 
-        if (this.materia2)
+        if (this.materia2) {
           this.registroForm.controls['materia2'].setValue(this.materia2.nombre);
-        else
+        }
+        else {
           this.registroForm.controls['materia2'].setValue('');
-
-        if (this.materia3)
+        }
+        if (this.materia3) {
           this.registroForm.controls['materia3'].setValue(this.materia3.nombre);
-        else
+        }
+        else {
           this.registroForm.controls['materia3'].setValue('');
-
-        if (this.materia4)
+          }
+        if (this.materia4) {
           this.registroForm.controls['materia4'].setValue(this.materia4.nombre);
-        else
+        }
+        else {
           this.registroForm.controls['materia4'].setValue('');
-
-        if (this.materia5)
+          }
+        if (this.materia5) {
           this.registroForm.controls['materia5'].setValue(this.materia5.nombre);
-        else
+        }
+        else {
           this.registroForm.controls['materia5'].setValue('');
-      }
+      } }
 
       this.util.showLoading();
       if (this.imgPerfil) {

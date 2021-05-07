@@ -3,6 +3,7 @@ import { AuthService } from './../../servicios/auth.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { UploadService } from 'src/app/servicios/upload.service';
 import { UtilService } from 'src/app/servicios/util.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-subir-transferencia',
@@ -10,13 +11,31 @@ import { UtilService } from 'src/app/servicios/util.service';
   styleUrls: ['./subir-transferencia.component.scss'],
 })
 export class SubirTransferenciaComponent implements OnInit {
-
+  segmentModel = 'transferencia';
   img;
   @Input() clase_id = 0;
   @Input() tarea_id = 0
   @Input() combo = 0
   @Output('accion')
   change: EventEmitter<boolean> = new EventEmitter<boolean>();
+  
+  cardForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    cardNumber: new FormControl('', [
+      Validators.required,
+      Validators.minLength(16),
+      Validators.maxLength(16)
+    ]),
+    expiration: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)
+    ]),
+    securityCode: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(3)
+    ])
+  });
 
   constructor(public upload: UploadService, public util: UtilService, public auth: AuthService, public db: DbService) { }
 
@@ -77,5 +96,15 @@ export class SubirTransferenciaComponent implements OnInit {
     } catch (error) {
       this.util.dismissLoading();
     }
+  }
+
+  onResetClick() {
+    this.cardForm.reset();
+  }
+  pagarCredito(){
+    console.log(this.cardForm.value);
+  }
+  segmentChanged(ev: any) {
+    console.log('Segment changed', ev);
   }
 }

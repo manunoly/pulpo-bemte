@@ -1,6 +1,6 @@
 import { HeaderUserProfComponent } from './header-user-prof/header-user-prof.component';
 import { HeaderBemteProfComponent } from './header-bemte-prof/header-bemte-prof.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HorasSeleccionarComponent } from './horas-seleccionar/horas-seleccionar.component';
 import { CalificarComponent } from './calificar/calificar.component';
 import { NgModule } from '@angular/core';
@@ -12,7 +12,7 @@ import { SubirTransferenciaComponent } from './subir-transferencia/subir-transfe
 
 
 @NgModule({
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, ReactiveFormsModule],
   declarations: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent],
   exports: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent],
   entryComponents: [CalificarComponent, HeaderBemteComponent, HeaderUserComponent, HorasSeleccionarComponent, SubirTransferenciaComponent, HeaderBemteProfComponent, HeaderUserProfComponent]
