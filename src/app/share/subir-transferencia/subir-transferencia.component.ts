@@ -13,9 +13,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class SubirTransferenciaComponent implements OnInit {
   segmentModel = 'transferencia';
   img;
+  bemteTransaccionId;
   @Input() clase_id = 0;
   @Input() tarea_id = 0
   @Input() combo = 0
+  @Input() total = 0
   @Output('accion')
   change: EventEmitter<boolean> = new EventEmitter<boolean>();
   
@@ -97,6 +99,88 @@ export class SubirTransferenciaComponent implements OnInit {
       this.util.dismissLoading();
     }
   }
+
+  public async iniciarTransaccion(){
+    console.log('iniciar transaccion');
+    const user = await this.auth.getUserData();
+    if (!user) {
+      return this.util.showMessage('NO realizar pago, No hemos podido obtener los datos del usuario');
+    }
+    let data = {
+      user_id: user.user_id,
+      tarea_id: this.tarea_id,
+      clase_id: this.clase_id,
+      combo_id: '0'
+    }
+    if (this.tarea_id == 0 && this.clase_id == 0) {
+      data['combo_id'] = 'COMBO';
+      data['valor'] = this.combo['descuento'];
+      data['horas'] = this.combo['hora'];
+    }
+    try {
+      const resp = await this.db.post("inicioTransaccion",data);
+      //this.bemteTransaccionId = resp.transaccion_id;
+      this.bemteTransaccionId = 1;
+    } catch (e) {
+      this.util.showMessage('Hemos tenido un problema, NO realizar pago');
+    }
+  }
+
+  public async finTransaccion(response){
+    console.log('fin transaccion');
+    const user = await this.auth.getUserData();
+    if (!user) {
+      return this.util.showMessage(`Hemos tenido un problema, Bemte transaccion ${this.bemteTransaccionId}`);
+    }
+    //respuesta de error
+    response = {
+      "transaction":{
+          "status": "success", 
+          "id": "CB-81011", 
+          "status_detail": 3
+      }
+    };
+    //respuesta de error
+    response = {
+      "error": {
+        "type": "Server Error",
+        "help": "Try Again Later",
+        "description": "Sorry, there was a problem loading Checkout."
+      }
+    }
+    if(response && response.error){
+      return this.util.showMessage(`Hemos tenido un problema procesando el pago, ${response.description}, Bemte transaccion ${this.bemteTransaccionId}`);
+    }
+
+    if(response && response.status == "success"){
+      let data = {
+        bemteTransaccionId: this.bemteTransaccionId,
+        user_id: user.user_id,
+        tarea_id: this.tarea_id,
+        clase_id: this.clase_id,
+        combo_id: '0',
+        total: this.total,
+        description: 'pago bemte',
+        number_card: "1234",
+        status: response.status,  //datos de respuesta paymentez
+        id: response.id, 
+        status_detail: response.status_detail
+      }
+      if (this.tarea_id == 0 && this.clase_id == 0) {
+        data['combo_id'] = 'COMBO';
+        data['total'] = this.combo['descuento'];
+      }
+      try {
+        const resp = await this.db.post("finTransaccion", data);
+        //this.bemteTransaccionId = resp.transaccion_id;
+        this.bemteTransaccionId = 1;
+      } catch (e) {
+        this.util.showMessage(`Hemos tenido un problema, Bemte transaccion ${this.bemteTransaccionId}`);
+      }
+    }
+
+  }
+
 
   onResetClick() {
     this.cardForm.reset();
