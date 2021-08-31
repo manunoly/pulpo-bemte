@@ -620,7 +620,7 @@
         </div>
 
         <div *ngIf="tareaPago" padding>
-          <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event)"></app-subir-transferencia>
+          <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event) [total]="tarea?.valor_compra"></app-subir-transferencia>
         </div>
       </div>
 

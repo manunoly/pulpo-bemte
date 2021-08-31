@@ -559,7 +559,7 @@
         <app-header-user></app-header-user>
 
         <div padding>
-          <app-subir-transferencia [clase_id]="clase.id" (accion)="accionHoras($event)"></app-subir-transferencia>
+          <app-subir-transferencia [clase_id]="clase.id" (accion)="accionHoras($event)"  [total]="clase?.valor_compra"></app-subir-transferencia>
         </div>
       </div>
 
