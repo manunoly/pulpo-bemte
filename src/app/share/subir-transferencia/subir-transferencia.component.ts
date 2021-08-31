@@ -1,9 +1,13 @@
 import { DbService } from './../../servicios/db.service';
 import { AuthService } from './../../servicios/auth.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, NgZone } from '@angular/core';
 import { UploadService } from 'src/app/servicios/upload.service';
 import { UtilService } from 'src/app/servicios/util.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import * as $ from "jquery";
+//import * as postscribe from 'postscribe'
+import postscribe from 'postscribe';
 
 @Component({
   selector: 'app-subir-transferencia',
@@ -14,13 +18,14 @@ export class SubirTransferenciaComponent implements OnInit {
   segmentModel = 'transferencia';
   img;
   bemteTransaccionId;
+  user;
   @Input() clase_id = 0;
   @Input() tarea_id = 0
   @Input() combo = 0
-  @Input() total = 0
-  @Output('accion')
-  change: EventEmitter<boolean> = new EventEmitter<boolean>();
-  
+  @Input() total = 0;
+  @Output('accion')  change: EventEmitter<boolean> = new EventEmitter<boolean>();
+  pago = false;
+  config = false;
   cardForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     cardNumber: new FormControl('', [
@@ -39,11 +44,33 @@ export class SubirTransferenciaComponent implements OnInit {
     ])
   });
 
-  constructor(public upload: UploadService, public util: UtilService, public auth: AuthService, public db: DbService) { }
+  constructor(public upload: UploadService, public util: UtilService, public auth: AuthService, public db: DbService,private _ngZone: NgZone) { 
+    window['angularComponentRef'] = {component: this, zone: _ngZone};
+  }
 
-  ngOnInit() { }
-  ionViewWillEnter() {
-    this.img = '';
+  
+  async ngOnInit() {
+    window['my'] = window['my'] || {};
+    window['my'].namespace = window['my'].namespace || {};
+    window['my'].namespace.iniciarTransaccion = this.iniciarTransaccion.bind(this);
+    window['my'].namespace.finTransaccion = this.finTransaccion.bind(this);
+    this.total = parseInt(this.total ? this.total : -1 as any);
+    window['my'].namespace.total = this.total;
+    this.user = await this.auth.getUserData();
+    window['my'].namespace.user = this.user;
+    //console.log('horas a pagar', this.total);
+
+  }
+
+  ngOnDestroy(){
+    console.log('destroy component');
+    if($('#postscribediv').length > 0) {
+      // postscribe('#postscribediv', `<script>
+      //   delete paymentCheckout;
+      // </script>`)
+      $('#postscribediv').remove();
+      delete window['my'];
+    }
   }
 
   async subir() {
@@ -100,12 +127,39 @@ export class SubirTransferenciaComponent implements OnInit {
     }
   }
 
+  onResetClick() {
+    this.cardForm.reset();
+  }
+  pagarCredito(){
+    console.log(this.cardForm.value);
+  }
+  segmentChanged(ev: any) {
+    //console.log('Segment changed', ev);
+    if(this.config){
+      return;
+    }
+    this.config = true;
+    setTimeout(() => {
+      window['angularComponentRef'].zone.run(()=>{
+        //console.log(postscribe);
+        this.pay();
+      })
+    }, 100);
+  }
+
+  done(){
+    this.change.emit(true);
+  }
+
+
+
   public async iniciarTransaccion(){
     console.log('iniciar transaccion');
     const user = await this.auth.getUserData();
     if (!user) {
       return this.util.showMessage('NO realizar pago, No hemos podido obtener los datos del usuario');
     }
+    await this.util.showLoading();
     let data = {
       user_id: user.user_id,
       tarea_id: this.tarea_id,
@@ -120,75 +174,151 @@ export class SubirTransferenciaComponent implements OnInit {
     try {
       const resp = await this.db.post("inicioTransaccion",data);
       //this.bemteTransaccionId = resp.transaccion_id;
-      this.bemteTransaccionId = 1;
+      this.bemteTransaccionId = resp.id;
+      window['my'].namespace.bemteTransaccionId = this.bemteTransaccionId.toString();
+      this.util.dismissLoading();
     } catch (e) {
+      this.util.dismissLoading();
       this.util.showMessage('Hemos tenido un problema, NO realizar pago');
     }
   }
 
+
   public async finTransaccion(response){
-    console.log('fin transaccion');
+    console.log('fin transaccion', response);
     const user = await this.auth.getUserData();
     if (!user) {
       return this.util.showMessage(`Hemos tenido un problema, Bemte transaccion ${this.bemteTransaccionId}`);
     }
+    //respuesta success
+    // response = {
+    //   "transaction":{
+    //       "status": "success", 
+    //       "id": "CB-81011", 
+    //       "status_detail": 3
+    //   }
+    // };
     //respuesta de error
-    response = {
-      "transaction":{
-          "status": "success", 
-          "id": "CB-81011", 
-          "status_detail": 3
-      }
-    };
-    //respuesta de error
-    response = {
-      "error": {
-        "type": "Server Error",
-        "help": "Try Again Later",
-        "description": "Sorry, there was a problem loading Checkout."
-      }
-    }
+    // response = {
+    //   "error": {
+    //     "type": "Server Error",
+    //     "help": "Try Again Later",
+    //     "description": "Sorry, there was a problem loading Checkout."
+    //   }
+    // }
     if(response && response.error){
-      return this.util.showMessage(`Hemos tenido un problema procesando el pago, ${response.description}, Bemte transaccion ${this.bemteTransaccionId}`);
+      return this.util.showMessage(`Hemos tenido un problema procesando el pago, ${response.error.description}, Bemte transaccion ${this.bemteTransaccionId}`);
     }
 
-    if(response && response.status == "success"){
+    if(response && response.hasOwnProperty("card") && response.hasOwnProperty("transaction")){
       let data = {
-        bemteTransaccionId: this.bemteTransaccionId,
+        id: this.bemteTransaccionId,
         user_id: user.user_id,
         tarea_id: this.tarea_id,
         clase_id: this.clase_id,
         combo_id: '0',
         total: this.total,
         description: 'pago bemte',
-        number_card: "1234",
-        status: response.status,  //datos de respuesta paymentez
-        id: response.id, 
-        status_detail: response.status_detail
+        number_card: response.card.number,
+        status: response.transaction.status_detail,
+        holder_name: 'holder_name',
+        //datos de respuesta paymentez
+        //id: response.transaction.id, 
+        paymentez_transaction: JSON.stringify(response.transaction),
+        paymentez_card: JSON.stringify(response.card),
       }
       if (this.tarea_id == 0 && this.clase_id == 0) {
         data['combo_id'] = 'COMBO';
         data['total'] = this.combo['descuento'];
       }
       try {
-        const resp = await this.db.post("finTransaccion", data);
+        //const resp = await this.db.post("finTransaccion", data);
         //this.bemteTransaccionId = resp.transaccion_id;
-        this.bemteTransaccionId = 1;
+        //this.util.showMessage('Transacción exitosa');
+
+        setTimeout(async () => {
+          await this.util.presentAlert(`<h3>Transacción exitosa Bemte id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}</h3>`, 'Importante');
+        }, 2000);
+        setTimeout(() => {
+          this.change.emit(true);
+        }, 100);
       } catch (e) {
+        document.getElementById('response').innerHTML = `<h3>Error en Bemte transaccion id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}, REPORTAR!!</h3>`;
         this.util.showMessage(`Hemos tenido un problema, Bemte transaccion ${this.bemteTransaccionId}`);
       }
     }
 
   }
 
+  async pay(){
+    console.log($('#postscribediv').length);
+      $("body").append("<div id='postscribediv'>");
+     // `prod`, `stg`, `local` to change environment. Default is `stg`
+      postscribe('#postscribediv', `<script>
+      window['angularComponentRef']['paymentCheckout'] = new PaymentCheckout.modal({
+        client_app_code: 'TPP3-EC-CLIENT', // Client Credentials
+        client_app_key: 'ZfapAKOk4QFXheRNvndVib9XU3szzg', // Client Credentials
+        locale: 'es', // User's preferred language (es, en, pt). English will be used by default.
+        env_mode: 'stg',
+        onOpen: function () {
+          console.log('modal open');
+          //window['angularComponentRef'].component.iniciarTransaccion().then((value) => {}).catch((err) => {});
+        },
+        onClose: function () {
+          console.log('modal closed');
+          //window['angularComponentRef'].component.finTransaccion('close modal').then((value) => {}).catch((err) => {});
 
-  onResetClick() {
-    this.cardForm.reset();
-  }
-  pagarCredito(){
-    console.log(this.cardForm.value);
-  }
-  segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
-  }
+        },
+        onResponse: function (response) { // The callback to invoke when the Checkout process is completed
+          console.log('response', response);
+          window['angularComponentRef'].component.finTransaccion(response).then((value) => {}).catch((err) => {});
+          
+          /*
+            In Case of an error, this will be the response.
+            response = {
+              "error": {
+                "type": "Server Error",
+                "help": "Try Again Later",
+                "description": "Sorry, there was a problem loading Checkout."
+              }
+            }
+    
+            When the User completes all the Flow in the Checkout, this will be the response.
+            response = {
+              "transaction":{
+                  "status": "success", // success or failure
+                  "id": "CB-81011", // transaction_id
+                  "status_detail": 3 // for the status detail please refer to: https://paymentez.github.io/api-doc/#status-details
+              }
+            }
+          */
+          //console.log('modal response');
+          //document.getElementById('response').innerHTML = JSON.stringify(response);
+        }
+      });
+    
+      window['angularComponentRef']['btnOpenCheckout'] = document.querySelector('.js-payment-checkout');
+      window['angularComponentRef']['btnOpenCheckout'].addEventListener('click', function () {
+        window['angularComponentRef'].component.iniciarTransaccion().then((value) => {
+          window['angularComponentRef']['paymentCheckout'].open({
+            user_id: window['my'].namespace.user.user_id.toString(),
+            user_email: window['my'].namespace.user.correo, //optional
+            user_phone: window['my'].namespace.user.celular, //optional
+            order_description: 'pago bemte',
+            order_amount: window['my'].namespace.total,
+            order_vat: 0,
+            order_reference: window['my'].namespace.bemteTransaccionId,
+            //order_installments_type: 2, // optional: The installments type are only available for Ecuador and Mexico. The valid values are: https://paymentez.github.io/api-doc/#payment-methods-cards-debit-with-token-base-case-installments-type
+            order_taxable_amount: 0, // optional: Only available for Ecuador. The taxable amount, if it is zero, it is calculated on the total. Format: Decimal with two fraction digits.
+            order_tax_percentage: 0 // optional: Only available for Ecuador. The tax percentage to be applied to this order.
+          });
+        }).catch((err) => {});
+      });
+    
+      window.addEventListener('popstate', function () {
+        window['angularComponentRef']['paymentCheckout'].close();
+      });
+</script>`)
+}
+
 }
