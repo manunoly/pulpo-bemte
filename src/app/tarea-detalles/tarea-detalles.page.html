@@ -607,7 +607,7 @@
 
             <ion-col size="6">
               <ion-button size="small" expand="block" shape="round" color="success" (click)="tareaPago = true">
-                Transferencia
+                Dinero
               </ion-button>
             </ion-col>
 
@@ -620,7 +620,7 @@
         </div>
 
         <div *ngIf="tareaPago" padding>
-          <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event) [total]="tarea?.valor_compra"></app-subir-transferencia>
+          <app-subir-transferencia [tarea_id]="tarea.id" (accion)="accionHoras($event)" [total]="tarea?.valor_compra"></app-subir-transferencia>
         </div>
       </div>
 
@@ -799,6 +799,7 @@
                   <ng-template #cancelProf>
                     <span>
                       <b>Lamentamos informarte que el profesor ha cancelado la tarea</b>,
+                      {{tarea?.materia}}, {{tarea?.tema}} <br>
                       por favor vuelve a solicitar.
                     </span>
                   </ng-template>

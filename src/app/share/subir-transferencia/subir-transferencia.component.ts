@@ -65,9 +65,6 @@ export class SubirTransferenciaComponent implements OnInit {
   ngOnDestroy(){
     console.log('destroy component');
     if($('#postscribediv').length > 0) {
-      // postscribe('#postscribediv', `<script>
-      //   delete paymentCheckout;
-      // </script>`)
       $('#postscribediv').remove();
       delete window['my'];
     }
@@ -135,10 +132,6 @@ export class SubirTransferenciaComponent implements OnInit {
   }
   segmentChanged(ev: any) {
     //console.log('Segment changed', ev);
-    if(this.config){
-      return;
-    }
-    this.config = true;
     setTimeout(() => {
       window['angularComponentRef'].zone.run(()=>{
         //console.log(postscribe);
@@ -232,7 +225,8 @@ export class SubirTransferenciaComponent implements OnInit {
         data['total'] = this.combo['descuento'];
       }
       try {
-        //const resp = await this.db.post("finTransaccion", data);
+        await this.util.showLoading();
+        const resp = await this.db.post("finTransaccion", data);
         //this.bemteTransaccionId = resp.transaccion_id;
         //this.util.showMessage('Transacción exitosa');
 
@@ -242,6 +236,7 @@ export class SubirTransferenciaComponent implements OnInit {
         setTimeout(() => {
           this.change.emit(true);
         }, 100);
+        this.util.dismissLoading();
       } catch (e) {
         document.getElementById('response').innerHTML = `<h3>Error en Bemte transaccion id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}, REPORTAR!!</h3>`;
         this.util.showMessage(`Hemos tenido un problema, Bemte transaccion ${this.bemteTransaccionId}`);

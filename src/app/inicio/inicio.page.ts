@@ -75,9 +75,9 @@ export class InicioPage implements OnInit {
           this.router.navigateByUrl('chat/1/1');
         }
       }).catch(_ => { })
-      window['angularComponentRef'].zone.run(()=>{
-        this.pay();
-      })
+      // window['angularComponentRef'].zone.run(()=>{
+      //   this.pay();
+      // })
     }, 500);
   }
 
