@@ -43,7 +43,7 @@
               <a (click)=pagadasHoras(false)>Cambiar</a>
             </h3>
           </ion-text>
-          <app-subir-transferencia (accion)="pagadasHoras($event)" [combo]="horasComprar"></app-subir-transferencia>
+          <app-subir-transferencia (accion)="pagadasHoras($event)" [combo]="horasComprar" [total]="horasComprar.descuento"></app-subir-transferencia>
         </div>
       </ng-template>
     </div>
