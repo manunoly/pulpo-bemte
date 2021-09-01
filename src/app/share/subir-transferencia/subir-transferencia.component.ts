@@ -229,13 +229,35 @@ export class SubirTransferenciaComponent implements OnInit {
         const resp = await this.db.post("finTransaccion", data);
         //this.bemteTransaccionId = resp.transaccion_id;
         //this.util.showMessage('Transacción exitosa');
+        let status = '';
+        switch (response.transaction.status_detail) {
+          case 3:
+            status = 'exitosa';
+            break;
+          case 9:
+            status = 'denegada';
+            break;
+          case 1:
+            status = 'pendiente de confirmar';
+            break;
+          case 11:
+            status = 'denegada, fraude';
+            break;
+          case 12:
+            status = 'denegada, tarjeta en lista negra';
+            break;
+          default:
+            status = 'estado desconocida';
+        }
 
         setTimeout(async () => {
-          await this.util.presentAlert(`<h3>Transacción exitosa Bemte id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}</h3>`, 'Importante');
-        }, 2000);
-        setTimeout(() => {
-          this.change.emit(true);
-        }, 100);
+          await this.util.presentAlert(`<h3>Transacción ${status}, Bemte id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}</h3>`, 'Importante');
+        }, 1000);
+        if(response.transaction.status_detail == 1 || response.transaction.status_detail == 3){
+          setTimeout(() => {
+            this.change.emit(true);
+          }, 100);
+        }
         this.util.dismissLoading();
       } catch (e) {
         document.getElementById('response').innerHTML = `<h3>Error en Bemte transaccion id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}, REPORTAR!!</h3>`;
