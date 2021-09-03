@@ -319,6 +319,7 @@
                   <ng-template #cancelEst>
                     <span>
                       <b>Lamentamos informarte que el estudiante ha cancelado la clase</b>,
+                      {{clase?.materia}}, {{clase?.tema}} <br>
                       permanece atento a mas solicitudes.
                     </span>
                   </ng-template>
@@ -698,8 +699,7 @@
                   <ng-template #cancelProf>
                     <span>
                       <b>Lamentamos informarte que el profesor ha cancelado la clase</b>,
-                      {{clase?.materia}}
-                      {{clase?.tema}} <br>
+                      {{clase?.materia}}, {{clase?.tema}} <br>
                       por favor vuelve a solicitar.
                     </span>
                   </ng-template>
