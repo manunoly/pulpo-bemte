@@ -229,29 +229,44 @@ export class SubirTransferenciaComponent implements OnInit {
         const resp = await this.db.post("finTransaccion", data);
         //this.bemteTransaccionId = resp.transaccion_id;
         //this.util.showMessage('Transacción exitosa');
-        let status = '';
+        let msg = '';
+        let fondo = 'fondoVerde alertDefault notificacionStyle';
+        if (this.tarea_id == 0 && this.clase_id == 0) {
+          msg = 'En breves vamos a acreditar tus horas';
+        }else{
+          if(this.clase_id != 0){
+            msg = ' para su tarea.';
+          }
+          if(this.tarea_id != 0){
+            msg = ' para su clase.';
+          }
+        }
         switch (response.transaction.status_detail) {
           case 3:
-            status = 'exitosa';
+            msg = 'Tu transacción ha sido aceptada, '.concat(msg);
             break;
           case 9:
-            status = 'denegada';
+            msg = 'Tu tarjeta ha sido rechazada, comunícate con tu banco para obtener mas información';
+            fondo = 'fondoRojo alertDefault';
             break;
           case 1:
-            status = 'pendiente de confirmar';
+            msg = 'Tu transacción se encuentra pendiente de aprobación, '.concat(msg);
             break;
           case 11:
-            status = 'denegada, fraude';
+            msg = 'Tu tarjeta ha sido rechazada, comunícate con tu banco para obtener mas información';
+            fondo = 'fondoRojo alertDefault';
             break;
           case 12:
-            status = 'denegada, tarjeta en lista negra';
+            msg = 'Tu tarjeta ha sido rechazada, comunícate con tu banco para obtener mas información';
+            fondo = 'fondoRojo alertDefault';
             break;
           default:
-            status = 'estado desconocida';
+            msg = 'Estado de transacción desconocida';
         }
 
         setTimeout(async () => {
-          await this.util.presentAlert(`<h3>Transacción ${status}, Bemte id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}</h3>`, 'Importante');
+          await this.util.presentAlert(msg, 'Transacción', ['Aceptar'], '', fondo);
+          //await this.util.presentAlert(`<h3>Transacción ${status}, Bemte id: ${this.bemteTransaccionId}, Pago id transaccion: ${response.transaction.id}</h3>`, 'Importante');
         }, 1000);
         if(response.transaction.status_detail == 1 || response.transaction.status_detail == 3){
           setTimeout(() => {
@@ -273,10 +288,12 @@ export class SubirTransferenciaComponent implements OnInit {
      // `prod`, `stg`, `local` to change environment. Default is `stg`
       postscribe('#postscribediv', `<script>
       window['angularComponentRef']['paymentCheckout'] = new PaymentCheckout.modal({
-        client_app_code: 'TPP3-EC-CLIENT', // Client Credentials
-        client_app_key: 'ZfapAKOk4QFXheRNvndVib9XU3szzg', // Client Credentials
+        //client_app_code: 'TPP3-EC-CLIENT', // Client Credentials
+        //client_app_key: 'ZfapAKOk4QFXheRNvndVib9XU3szzg', // Client Credentials
+        client_app_code: 'BEMTEBEMYTEACHERSAS-EC-CLIENT', // Client Credentials
+        client_app_key: 'rreeVtXg0LtLmqSHnSHF4hfT1PsTo0', // Client Credentials
         locale: 'es', // User's preferred language (es, en, pt). English will be used by default.
-        env_mode: 'stg',
+        env_mode: 'prod',
         onOpen: function () {
           console.log('modal open');
           //window['angularComponentRef'].component.iniciarTransaccion().then((value) => {}).catch((err) => {});
