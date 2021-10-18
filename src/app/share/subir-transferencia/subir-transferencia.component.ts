@@ -232,18 +232,18 @@ export class SubirTransferenciaComponent implements OnInit {
         let msg = '';
         let fondo = 'fondoVerde alertDefault notificacionStyle';
         if (this.tarea_id == 0 && this.clase_id == 0) {
-          msg = 'En breves vamos a acreditar tus horas';
+          msg = 'En breves momentos vamos a acreditar tus horas';
         }else{
           if(this.clase_id != 0){
-            msg = ' para su tarea.';
+            msg = ' para su clase.';
           }
           if(this.tarea_id != 0){
-            msg = ' para su clase.';
+            msg = ' para su tarea.';
           }
         }
         switch (response.transaction.status_detail) {
           case 3:
-            msg = 'Tu transacción ha sido aceptada, '.concat(msg);
+            msg = 'Tu transacción ha sido aceptada. '.concat(msg);
             break;
           case 9:
             msg = 'Tu tarjeta ha sido rechazada, comunícate con tu banco para obtener mas información';
@@ -288,12 +288,13 @@ export class SubirTransferenciaComponent implements OnInit {
      // `prod`, `stg`, `local` to change environment. Default is `stg`
       postscribe('#postscribediv', `<script>
       window['angularComponentRef']['paymentCheckout'] = new PaymentCheckout.modal({
-        //client_app_code: 'TPP3-EC-CLIENT', // Client Credentials
-        //client_app_key: 'ZfapAKOk4QFXheRNvndVib9XU3szzg', // Client Credentials
-        client_app_code: 'BEMTEBEMYTEACHERSAS-EC-CLIENT', // Client Credentials
-        client_app_key: 'rreeVtXg0LtLmqSHnSHF4hfT1PsTo0', // Client Credentials
+        client_app_code: 'TPP3-EC-CLIENT', // Client Credentials
+        client_app_key: 'ZfapAKOk4QFXheRNvndVib9XU3szzg', // Client Credentials
+        // client_app_code: 'BEMTEBEMYTEACHERSAS-EC-CLIENT', // Client Credentials
+        // client_app_key: 'rreeVtXg0LtLmqSHnSHF4hfT1PsTo0', // Client Credentials
         locale: 'es', // User's preferred language (es, en, pt). English will be used by default.
-        env_mode: 'prod',
+        env_mode: 'stg',
+        // env_mode: 'prod',
         onOpen: function () {
           console.log('modal open');
           //window['angularComponentRef'].component.iniciarTransaccion().then((value) => {}).catch((err) => {});
